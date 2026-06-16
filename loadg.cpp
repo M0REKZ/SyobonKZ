@@ -10,6 +10,9 @@ extern Mix_Chunk *oto[19];
 extern int anx[160], any[160];
 extern int ne[40], nf[40];
 
+extern SDL_Surface *Main_GFX_KZ[1]; //+KZ
+extern SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
+
 void loadg(void)
 {
 
@@ -55,6 +58,12 @@ grap[t][tt]=0;
     mgrap[30] = LoadGraph("res/syobon3.PNG", false);
 //プレイヤー (Player)
     mgrap[0] = LoadGraph("res/player.PNG");
+
+//Added by +KZ:
+    Main_GFX_KZ[0] = LoadGraph("res/decoration_kz.png");
+
+    Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
+    Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);
 
 
 //プレイヤー読み込み (Player loading)
@@ -148,7 +157,14 @@ grap[t][tt]=0;
     grap[5][x1] = DerivationGraph(222, 0, 28, 60, mgrap[x1]);
     grap[6][x1] = DerivationGraph(151, 143, 90, 40, mgrap[x1]);
     grap[30][x1] = DerivationGraph(293, 0, 149, 90, mgrap[x1]);
-    grap[31][x1] = DerivationGraph(293, 92, 64, 29, mgrap[x1]); //+KZ: grap[31][4] is 3-1 grass?? 3-1 also wants a grap[32][4] sprite
+
+    //+KZ: grap[31][4] is 3-1 grass?? 3-1 also wants a grap[32][4] sprite, which seems to be a cloud
+    //sadly there is not a official Syobon Action 2 release containing the missing sprites.
+    //grap[32][4] was not even in this list, so probably the creator of that mod
+    //forgot to upload loadg.cpp and the assets in the latest game zip...
+    //im using alternative edited versions for now
+    grap[31][x1] = Sliced_GFX_KZ[0]; //DerivationGraph(293, 92, 64, 29, mgrap[x1]);
+    grap[32][x1] = Sliced_GFX_KZ[1];
 
 //中間フラグ (Intermediate flag)
     grap[20][x1] = DerivationGraph(40, 182, 40, 60, mgrap[x1]);

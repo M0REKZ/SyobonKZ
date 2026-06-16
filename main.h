@@ -75,6 +75,8 @@ void fillarc(int a, int b, int c, int d);
 void FillScreen();
 SDL_Surface *grap[161][8];
 SDL_Surface *mgrap[51];
+SDL_Surface *Main_GFX_KZ[1]; //+KZ
+SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 SDL_Surface *loadimage(std::string b);
 SDL_Surface *loadimage(int a, int x, int y, int r, int z);
 int mirror;
