@@ -1,4 +1,4 @@
-+KZ NOTE: This file is from https://yaruki0.net/programs/action.html
++KZ NOTE: This file is from Syobon Action 2 original zip file
 
 このゲームは ver0.81です
 
