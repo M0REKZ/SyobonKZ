@@ -148,7 +148,7 @@ grap[t][tt]=0;
     grap[5][x1] = DerivationGraph(222, 0, 28, 60, mgrap[x1]);
     grap[6][x1] = DerivationGraph(151, 143, 90, 40, mgrap[x1]);
     grap[30][x1] = DerivationGraph(293, 0, 149, 90, mgrap[x1]);
-    grap[31][x1] = DerivationGraph(293, 92, 64, 29, mgrap[x1]);
+    grap[31][x1] = DerivationGraph(293, 92, 64, 29, mgrap[x1]); //+KZ: grap[31][4] is 3-1 grass?? 3-1 also wants a grap[32][4] sprite
 
 //中間フラグ (Intermediate flag)
     grap[20][x1] = DerivationGraph(40, 182, 40, 60, mgrap[x1]);

@@ -75,7 +75,7 @@ void rpaint()
 		if (ntype[t] != 3) {
 		    if ((ntype[t] == 1 || ntype[t] == 2)
 			&& stagecolor == 5) {
-			drawimage(grap[ntype[t] + 30]
+			drawimage(grap[ntype[t] + 30] //+KZ: so.. this draws the broken grass in 3-1, did it even work correctly in any syobon action version?
 				  [4], xx[0] / 100, xx[1] / 100);
 		    } else {
 			drawimage(grap[ntype[t]][4],
