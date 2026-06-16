@@ -1,0 +1,15 @@
+[submodule "lib/SDL_gfx"]
+	path = lib/SDL_gfx
+	url = https://github.com/M0REKZ/SDL_gfx.git
+[submodule "lib/SDL_mixer"]
+	path = lib/SDL_mixer
+	url = https://github.com/libsdl-org/SDL_mixer.git
+	branch = SDL-1.2
+[submodule "lib/SDL_ttf"]
+	path = lib/SDL_ttf
+	url = https://github.com/libsdl-org/SDL_ttf.git
+	branch = SDL-1.2
+[submodule "lib/SDL_image"]
+	path = lib/SDL_image
+	url = https://github.com/libsdl-org/SDL_image.git
+	branch = SDL-1.2
