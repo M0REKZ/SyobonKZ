@@ -16,6 +16,13 @@ It is also known as:
 * Cat MeOUCHio
 * *and other names.....*
 
+Supported platforms:
+-----
+* [x] Windows
+* [x] Linux
+* [x] macOS
+* [x] Web Browsers (with Emscripten)
+
 About the license
 -----
 Chiku released the source code of Syobon Action to allow others modifying it, however he didnt use a license...
