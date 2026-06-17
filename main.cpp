@@ -1263,8 +1263,8 @@ void Mainprogram()
 	if (CheckHitKey(KEY_INPUT_O) == 1) {
 	    if (mhp >= 1)
 		mhp = 0;
-	    if (stc >= 5) {
-		stc = 0;
+	    if (SyobonSection >= 5) {
+		SyobonSection = 0;
 		stagepoint = 0;
 	    }
 	}
@@ -1466,7 +1466,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 	    if (mb <= -6000) {
 		blackx = 1;
 		blacktm = 20;
-		stc += 5;
+		SyobonSection += 5;
 		stagerr = 0;
 		Mix_HaltMusic();
 		mtm = 0;
@@ -1579,9 +1579,9 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		    }
 		    if (mtm == 20) {
 			if (mxtype == 6) {
-			    stc += 10;
+			    SyobonSection += 10;
 			} else {
-			    stc++;
+			    SyobonSection++;
 			}
 			mb = -80000000;
 			mxtype = 0;
@@ -1611,12 +1611,12 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		    mc = 0;
 		}
 		if (mtm == 250) {
-		    stb++;
-		    stc = 0;
+		    SyobonLevel++;
+		    SyobonSection = 0;
 		    zxon = 0;
 		    tyuukan = 0;
 		    SyobonState = ESyobonState::LIVES_SPLASH;
-		    maintm = 0;
+		    SyobonStateTimer = 0;
 		}
 	    }			//mtype==300
 
@@ -1673,19 +1673,19 @@ if (mc>=800 || mc<=-800){md=-1800;}
 			    nco = 0;
 		    }
 		}
-//スタッフロールへ
+//スタッフロールへ (Go to the credits)
 
 		if (mtm == 440) {
 		    if (mtype == 301) {
 			ending = 1;
 		    } else {
-			sta++;
-			stb = 1;
-			stc = 0;
+			SyobonWorld++;
+			SyobonLevel = 1;
+			SyobonSection = 0;
 			zxon = 0;
 			tyuukan = 0;
 			SyobonState = ESyobonState::LIVES_SPLASH;
-			maintm = 0;
+			SyobonStateTimer = 0;
 		    }
 		}
 
@@ -4080,7 +4080,7 @@ break;
 					= 60;
 				    amsgtype[t]
 					= rand(7)
-					+ 1 + 1000 + (stb - 1)
+					+ 1 + 1000 + (SyobonLevel - 1)
 					* 10;
 				}
 
@@ -4112,7 +4112,7 @@ break;
 					= 60;
 				    amsgtype[t]
 					= rand(7)
-					+ 1 + 1000 + (stb - 1)
+					+ 1 + 1000 + (SyobonLevel - 1)
 					* 10;
 				}
 
@@ -4343,7 +4343,7 @@ if (atype[t]==133){msoubi=4;}
 
 //スタッフロール
     if (SyobonState == ESyobonState::CREDITS) {
-	maintm++;
+	SyobonStateTimer++;
 
 	xx[7] = 46;
 	if (CheckHitKey(KEY_INPUT_1) == 1) {
@@ -4355,8 +4355,8 @@ if (atype[t]==133){msoubi=4;}
 	    }
 	}
 
-	if (maintm <= 1) {
-	    maintm = 2;
+	if (SyobonStateTimer <= 1) {
+	    SyobonStateTimer = 2;
 	    bgmchange(otom[5]);
 	    xx[10] = 0;
 	    for (t = 0; t <= xx[7]; t += 1) {
@@ -4402,19 +4402,19 @@ if (atype[t]==133){msoubi=4;}
 	if (xx[30] <= -400) {
 	    SyobonState = ESyobonState::TITLE;
 	    nokori = 2;
-	    maintm = 0;
+	    SyobonStateTimer = 0;
 	    ending = 0;
 	}
 
     }				//mainZ==2
 
     if (SyobonState == ESyobonState::LIVES_SPLASH) {
-	maintm++;
+	SyobonStateTimer++;
 
 	if (fast == 1)
-	    maintm += 2;
-	if (maintm >= 30) {
-	    maintm = 0;
+	    SyobonStateTimer += 2;
+	if (SyobonStateTimer >= 30) {
+	    SyobonStateTimer = 0;
 	    SyobonState = ESyobonState::IN_GAME;
 	    zxon = 0;
 	}
@@ -4423,60 +4423,60 @@ if (atype[t]==133){msoubi=4;}
 //タイトル (Title)
 //+KZ: This is the part that handles pressed keys in title
     if (SyobonState == ESyobonState::TITLE) {
-	maintm++;
+	SyobonStateTimer++;
 	xx[0] = 0;
-	if (maintm <= 10) {
-	    maintm = 11;
-	    sta = 1;
-	    stb = 1;
-	    stc = 0;
+	if (SyobonStateTimer <= 10) {
+	    SyobonStateTimer = 11;
+	    SyobonWorld = 1;
+	    SyobonLevel = 1;
+	    SyobonSection = 0;
 	    over = 0;
 	}
 
 	if (CheckHitKey(KEY_INPUT_1) == 1) {
-	    sta = 1;
-	    stb = 1;
-	    stc = 0;
+	    SyobonWorld = 1;
+	    SyobonLevel = 1;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_2) == 1) {
-	    sta = 1;
-	    stb = 2;
-	    stc = 0;
+	    SyobonWorld = 1;
+	    SyobonLevel = 2;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_3) == 1) {
-	    sta = 1;
-	    stb = 3;
-	    stc = 0;
+	    SyobonWorld = 1;
+	    SyobonLevel = 3;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_4) == 1) {
-	    sta = 1;
-	    stb = 4;
-	    stc = 0;
+	    SyobonWorld = 1;
+	    SyobonLevel = 4;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_5) == 1) {
-	    sta = 2;
-	    stb = 1;
-	    stc = 0;
+	    SyobonWorld = 2;
+	    SyobonLevel = 1;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_6) == 1) {
-	    sta = 2;
-	    stb = 2;
-	    stc = 0;
+	    SyobonWorld = 2;
+	    SyobonLevel = 2;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_7) == 1) {
-	    sta = 2;
-	    stb = 3;
-	    stc = 0;
+	    SyobonWorld = 2;
+	    SyobonLevel = 3;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_8) == 1) {
-	    sta = 2;
-	    stb = 4;
-	    stc = 0;
+	    SyobonWorld = 2;
+	    SyobonLevel = 4;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_9) == 1) {
-	    sta = 3;
-	    stb = 1;
-	    stc = 0;
+	    SyobonWorld = 3;
+	    SyobonLevel = 1;
+	    SyobonSection = 0;
 	}
 	if (CheckHitKey(KEY_INPUT_0) == 1) {
 	    xx[0] = 1;
@@ -4494,7 +4494,7 @@ if (atype[t]==133){msoubi=4;}
 	if (xx[0] == 1) {
 	    SyobonState = ESyobonState::LIVES_SPLASH;
 	    zxon = 0;
-	    maintm = 0;
+	    SyobonStateTimer = 0;
 	    nokori = 2;
 
 	    fast = 0;

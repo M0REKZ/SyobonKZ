@@ -13,11 +13,13 @@
 //: a variable called 'main'!?
 //: The new define is after the main method
 ESyobonState SyobonState = ESyobonState::TITLE;
-int maintm = 0;
+int SyobonStateTimer = 0;
 
 //ステージ
 int stagecolor = 1;
-int sta = 1, stb = 4, stc = 0;
+int SyobonWorld;
+int SyobonLevel;
+int SyobonSection;
 
 //クイック
 int fast = 1;

@@ -6,7 +6,7 @@
 void HandleSyobonActionOneLevels()
 {
     // 1-1
-    if (sta == 1 && stb == 1 && stc == 0)
+    if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
     {
 
         // new byte stagedate[16][801]={
@@ -381,7 +381,7 @@ void HandleSyobonActionOneLevels()
     } // sta1
 
     // 1-2(地上)
-    if (sta == 1 && stb == 2 && stc == 0)
+    if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 0)
     {
 
         // マリ　地上　入れ
@@ -693,7 +693,7 @@ void HandleSyobonActionOneLevels()
     } // sta2
 
     // 1-2-1(地下)
-    if (sta == 1 && stb == 2 && stc == 1)
+    if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 1)
     {
 
         // マリ　地下　入れ
@@ -1280,7 +1280,7 @@ void HandleSyobonActionOneLevels()
     } // sta1-2-1
 
     // 1-2(地上)
-    if (sta == 1 && stb == 2 && stc == 2)
+    if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 2)
     {
 
         // マリ　地上　入れ
@@ -1782,11 +1782,11 @@ void HandleSyobonActionOneLevels()
     // 必要BGM+SE
 
     // 1-3(地上)
-    if (sta == 1 && stb == 3 && stc == 6)
+    if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 6)
     {
-        stc = 0;
+        SyobonSection = 0;
     }
-    if (sta == 1 && stb == 3 && stc == 0)
+    if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 0)
     {
 
         // Mix_HaltMusic();
@@ -2448,7 +2448,7 @@ void HandleSyobonActionOneLevels()
     } // sta3
 
     // 1-3(地下)
-    if (sta == 1 && stb == 3 && stc == 1)
+    if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 1)
     {
 
         // マリ　地上　入れ
@@ -2749,7 +2749,7 @@ void HandleSyobonActionOneLevels()
         tco = 0;
         // tyobi(15*29,12*29-12,111);
 
-        stc = 0;
+        SyobonSection = 0;
 
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -2763,7 +2763,7 @@ void HandleSyobonActionOneLevels()
     } // sta3
 
     // 1-3(空中)
-    if (sta == 1 && stb == 3 && stc == 5)
+    if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 5)
     {
 
         stagecolor = 3;
@@ -3056,7 +3056,7 @@ void HandleSyobonActionOneLevels()
     } // sta5
 
     // 1-4(地下)
-    if (sta == 1 && stb == 4 && stc == 0)
+    if (SyobonWorld == 1 && SyobonLevel == 4 && SyobonSection == 0)
     {
 
         // マリ　地上　入れ
@@ -3666,7 +3666,7 @@ void HandleSyobonActionOneLevels()
         sre[t] = 0;
         srco++;
 
-        stc = 0;
+        SyobonSection = 0;
 
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -3682,7 +3682,7 @@ void HandleSyobonActionOneLevels()
 
 void HandleSyobonActionTwoLevels()
 {
-    if (sta == 2 && stb == 1 && stc == 0)
+    if (SyobonWorld == 2 && SyobonLevel == 1 && SyobonSection == 0)
     { // 2-1
         ma = 5600;
         mb = 32000;
@@ -4029,7 +4029,7 @@ void HandleSyobonActionTwoLevels()
         }
     }
 
-    if (sta == 2 && stb == 2 && stc == 0)
+    if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 0)
     { // 2-2(地上)
         bgmchange(otom[1]);
         stagecolor = 1;
@@ -4095,7 +4095,7 @@ void HandleSyobonActionTwoLevels()
         }
     }
 
-    if (sta == 2 && stb == 2 && stc == 1)
+    if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 1)
     { // 2-2(地下)
         bgmchange(otom[2]);
         stagecolor = 2;
@@ -4569,7 +4569,7 @@ void HandleSyobonActionTwoLevels()
         }
     }
 
-    if (sta == 2 && stb == 2 && stc == 2)
+    if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 2)
     { // 2-2 地上
         //
         bgmchange(otom[1]);
@@ -4727,7 +4727,7 @@ void HandleSyobonActionTwoLevels()
         }
     }
     //
-    if (sta == 2 && stb == 3 && stc == 0)
+    if (SyobonWorld == 2 && SyobonLevel == 3 && SyobonSection == 0)
     { // 2-3
         ma = 7500;
         mb = 3000 * 8;
@@ -5091,9 +5091,9 @@ void HandleSyobonActionTwoLevels()
         }
     }
     //
-    if (sta == 2 && stb == 4 && (stc == 0 || stc == 10 || stc == 12))
+    if (SyobonWorld == 2 && SyobonLevel == 4 && (SyobonSection == 0 || SyobonSection == 10 || SyobonSection == 12))
     { // 2-4(1番)
-        if (stc == 0)
+        if (SyobonSection == 0)
         {
             ma = 7500;
             mb = 3000 * 4;
@@ -5102,7 +5102,7 @@ void HandleSyobonActionTwoLevels()
         {
             ma = 19500;
             mb = 3000 * 11;
-            stc = 0;
+            SyobonSection = 0;
         }
         bgmchange(otom[4]);
         stagecolor = 4;
@@ -5243,7 +5243,7 @@ void HandleSyobonActionTwoLevels()
         }
     }
 
-    if (sta == 2 && stb == 4 && stc == 1)
+    if (SyobonWorld == 2 && SyobonLevel == 4 && SyobonSection == 1)
     { // 2-4(2番)
         ma = 4500;
         mb = 3000 * 11;
@@ -5332,7 +5332,7 @@ void HandleSyobonActionTwoLevels()
         }
     }
 
-    if (sta == 2 && stb == 4 && stc == 2)
+    if (SyobonWorld == 2 && SyobonLevel == 4 && SyobonSection == 2)
     { // 2-4(3番)
         ma = 4500;
         mb = 3000 * 11;
@@ -5822,7 +5822,7 @@ void HandleSyobonActionTwoLevels()
         }
     }
 
-    if (sta == 3 && stb == 1 && stc == 0)
+    if (SyobonWorld == 3 && SyobonLevel == 1 && SyobonSection == 0)
     { // 3-1
         ma = 5600;
         mb = 32000;
@@ -6165,7 +6165,7 @@ void HandleSyobonActionTwoLevels()
 // Extremely incomplete
 void HandleSyobonActionThreeLevels()
 {
-    if (sta == 1 && stb == 1 && stc == 0)
+    if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
     {
         scrollx = 1000000;
         byte stagedatex21[17][1001];

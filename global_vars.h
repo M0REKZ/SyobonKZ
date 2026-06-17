@@ -25,11 +25,17 @@ enum class ESyobonState
 //
 // @attention +KZ: int mainZ is now ESyobonState SyobonState
 extern ESyobonState SyobonState;
-extern int maintm;
+// @attention +KZ: int maintm is now int SyobonStateTimer
+extern int SyobonStateTimer;
 
 //ステージ (Stage)
 extern int stagecolor;
-extern int sta, stb, stc;
+// @attention +KZ: int sta is now int SyobonWorld
+extern int SyobonWorld;
+// @attention +KZ: int stb is now int SyobonLevel
+extern int SyobonLevel;
+// @attention +KZ: int stc is now int SyobonSection
+extern int SyobonSection;
 
 //クイック (Quick)
 extern int fast;
