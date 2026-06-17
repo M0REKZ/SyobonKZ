@@ -33,6 +33,7 @@
 
     #define wait(i) SDL_Delay(i)
 
+    void MainLoop();
 #endif
 
 #endif
