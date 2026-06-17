@@ -83,6 +83,7 @@ void UpdateKeys();
 byte ProcessMessage();
 byte CheckHitKey(int key);
 byte WaitKey();
+void Emscripten_WaitKey();
 
 #define GetColor(r, g, b) SDL_MapRGB(screen->format, r, g, b)
 

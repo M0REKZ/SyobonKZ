@@ -1,3 +1,6 @@
+#ifdef __EMSCRIPTEN__
+	#include <emscripten.h>
+#endif
 #include "DxLib.h"
 
 #define SYOBON_COLOR_KEY(img) SDL_MapRGB(img, 9 * 16 + 9, 255, 255)
@@ -40,6 +43,27 @@
         }
 
         SDL_UnlockSurface(pSurface);
+    }
+
+    //+KZ: Emscripten needs a custom WaitKey, otherwise the browser will freeze
+    void Emscripten_WaitKey_Loop(void * args /* (args is not used and should not be) */)
+    {
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_KEYDOWN)
+            {
+                return;
+            }
+        }
+        //+KZ: keep pushing ourselves until a key is pressed
+        emscripten_push_main_loop_blocker(Emscripten_WaitKey_Loop, nullptr);
+    }
+
+    //+KZ: starts the WaitKey loop
+    void Emscripten_WaitKey()
+    {
+        emscripten_push_main_loop_blocker(Emscripten_WaitKey_Loop, nullptr);
     }
 #endif
 

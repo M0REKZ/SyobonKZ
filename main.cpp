@@ -4,17 +4,29 @@
 
 #include "main.h"
 
+#ifdef __EMSCRIPTEN__
+	//+KZ: Emscripten needs a custom WaitKey, otherwise the website will freeze
+	#define WaitKey() Emscripten_WaitKey()
+
+	void MainloopEmscripten()
+	{
+		UpdateKeys();
+		maint = 0;
+		Mainprogram();
+		if (maint == 3)
+			return;
+		static int prevFPS = 30;
+		if(prevFPS != xx[0])
+		{
+			emscripten_cancel_main_loop();
+			prevFPS = xx[0];
+			emscripten_set_main_loop(MainloopEmscripten, xx[0], 1);
+		}
+	}
+#endif
+
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
-
-void MainloopEmscripten()
-{
-	UpdateKeys();
-	maint = 0;
-	Mainprogram();
-	if (maint == 3)
-	    return;
-}
 
 int main(int argc, char *argv[])
 {
@@ -1037,13 +1049,16 @@ void rpaint()
 		tmsgy = 0;
 		tmsgtype = 3;
 		tmsgtm = 15 + 1;
+		WaitKey();
 	    }
 
 	    else if (tmsgtype == 3) {
 		xx[0] = 1200;
 		tmsgy += xx[0];
-		if (tmsgtm == 15)
+		/*
+		if (tmsgtm == 15) //+KZ: WaitKey() works better above
 		    WaitKey();
+		*/
 		if (tmsgtm == 1) {
 		    tmsgtm = 0;
 		    tmsgtype = 0;
@@ -4509,7 +4524,10 @@ if (atype[t]==133){msoubi=4;}
     if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
 	xx[0] = 60;
     }
+//+KZ: on emscripten FPS is done differently, check MainloopEmscripten()
+#ifndef __EMSCRIPTEN__
     wait2(stime, long (GetNowCount()), 1000 / xx[0]);
+#endif
 
 //wait(20);
 
