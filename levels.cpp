@@ -284,15 +284,15 @@ void HandleSyobonActionOneLevels()
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
         // 追加情報
-        tyobi(8 * 29, 9 * 29 - 12, 100);
+        BlockCreate(8 * 29, 9 * 29 - 12, 100);
         txtype[tco] = 2;
-        tyobi(13 * 29, 9 * 29 - 12, 102);
+        BlockCreate(13 * 29, 9 * 29 - 12, 102);
         txtype[tco] = 0;
-        tyobi(14 * 29, 5 * 29 - 12, 101);
-        tyobi(35 * 29, 8 * 29 - 12, 110);
-        tyobi(47 * 29, 9 * 29 - 12, 103);
-        tyobi(59 * 29, 9 * 29 - 12, 112);
-        tyobi(67 * 29, 9 * 29 - 12, 104);
+        BlockCreate(14 * 29, 5 * 29 - 12, 101);
+        BlockCreate(35 * 29, 8 * 29 - 12, 110);
+        BlockCreate(47 * 29, 9 * 29 - 12, 103);
+        BlockCreate(59 * 29, 9 * 29 - 12, 112);
+        BlockCreate(67 * 29, 9 * 29 - 12, 104);
 
         sco = 0;
         t = sco;
@@ -645,11 +645,11 @@ void HandleSyobonActionOneLevels()
         tco = 0;
         // ヒント1
         txtype[tco] = 1;
-        tyobi(4 * 29, 9 * 29 - 12, 300);
-        // tyobi(7*29,9*29-12,300);
+        BlockCreate(4 * 29, 9 * 29 - 12, 300);
+        // BlockCreate(7*29,9*29-12,300);
 
         // 毒1
-        tyobi(13 * 29, 8 * 29 - 12, 114);
+        BlockCreate(13 * 29, 8 * 29 - 12, 114);
 
         // t=28;
         sco = 0;
@@ -1035,23 +1035,23 @@ void HandleSyobonActionOneLevels()
 
         tco = 0;
         txtype[tco] = 2;
-        tyobi(7 * 29, 9 * 29 - 12, 102);
-        tyobi(10 * 29, 9 * 29 - 12, 101);
+        BlockCreate(7 * 29, 9 * 29 - 12, 102);
+        BlockCreate(10 * 29, 9 * 29 - 12, 101);
 
         txtype[tco] = 2;
-        tyobi(49 * 29, 9 * 29 - 12, 114);
+        BlockCreate(49 * 29, 9 * 29 - 12, 114);
 
         for (t = 0; t >= -7; t--)
         {
-            tyobi(53 * 29, t * 29 - 12, 1);
+            BlockCreate(53 * 29, t * 29 - 12, 1);
         }
 
         txtype[tco] = 1;
-        tyobi(80 * 29, 5 * 29 - 12, 104);
+        BlockCreate(80 * 29, 5 * 29 - 12, 104);
         txtype[tco] = 2;
-        tyobi(78 * 29, 5 * 29 - 12, 102);
+        BlockCreate(78 * 29, 5 * 29 - 12, 102);
 
-        // txtype[tco]=1;tyobi(11*29,9*29-12,114);//毒1
+        // txtype[tco]=1;BlockCreate(11*29,9*29-12,114);//毒1
 
         sco = 0;
         t = sco;
@@ -1256,11 +1256,11 @@ void HandleSyobonActionOneLevels()
         srco++;
 
         // ヒント1
-        // tyobi(4*29,9*29-12,300);
-        // tyobi(7*29,9*29-12,300);
+        // BlockCreate(4*29,9*29-12,300);
+        // BlockCreate(7*29,9*29-12,300);
 
         // 毒1
-        // tyobi(13*29,8*29-12,114);
+        // BlockCreate(13*29,8*29-12,114);
 
         // t=28;
         // sco=0;
@@ -1733,7 +1733,7 @@ void HandleSyobonActionOneLevels()
 
         /*
         //毒1
-        tyobi(13*29,8*29-12,114);
+        BlockCreate(13*29,8*29-12,114);
 
         //t=28;
         sco=0;
@@ -2240,44 +2240,44 @@ void HandleSyobonActionOneLevels()
                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
         tco = 0;
-        tyobi(22 * 29, 3 * 29 - 12, 1);
+        BlockCreate(22 * 29, 3 * 29 - 12, 1);
         // 毒1
-        tyobi(54 * 29, 9 * 29 - 12, 116);
+        BlockCreate(54 * 29, 9 * 29 - 12, 116);
         // 音符+
-        tyobi(18 * 29, 14 * 29 - 12, 117);
-        tyobi(19 * 29, 14 * 29 - 12, 117);
-        tyobi(20 * 29, 14 * 29 - 12, 117);
+        BlockCreate(18 * 29, 14 * 29 - 12, 117);
+        BlockCreate(19 * 29, 14 * 29 - 12, 117);
+        BlockCreate(20 * 29, 14 * 29 - 12, 117);
         txtype[tco] = 1;
-        tyobi(61 * 29, 9 * 29 - 12, 101); // 5
-        tyobi(74 * 29, 9 * 29 - 12, 7);   // 6
+        BlockCreate(61 * 29, 9 * 29 - 12, 101); // 5
+        BlockCreate(74 * 29, 9 * 29 - 12, 7);   // 6
 
         // ヒント2
         txtype[tco] = 2;
-        tyobi(28 * 29, 9 * 29 - 12, 300); // 7
+        BlockCreate(28 * 29, 9 * 29 - 12, 300); // 7
         // ファイア
         txtype[tco] = 3;
-        tyobi(7 * 29, 9 * 29 - 12, 101);
+        BlockCreate(7 * 29, 9 * 29 - 12, 101);
         // ヒント3
         txtype[tco] = 4;
-        tyobi(70 * 29, 8 * 29 - 12, 300); // 9
+        BlockCreate(70 * 29, 8 * 29 - 12, 300); // 9
 
         // もろいぶろっく×３
         txtype[tco] = 1;
-        tyobi(58 * 29, 13 * 29 - 12, 115);
+        BlockCreate(58 * 29, 13 * 29 - 12, 115);
         txtype[tco] = 1;
-        tyobi(59 * 29, 13 * 29 - 12, 115);
+        BlockCreate(59 * 29, 13 * 29 - 12, 115);
         txtype[tco] = 1;
-        tyobi(60 * 29, 13 * 29 - 12, 115);
+        BlockCreate(60 * 29, 13 * 29 - 12, 115);
 
         // ヒントブレイク
         txtype[tco] = 0;
-        tyobi(111 * 29, 6 * 29 - 12, 301);
+        BlockCreate(111 * 29, 6 * 29 - 12, 301);
         // ジャンプ
         txtype[tco] = 0;
-        tyobi(114 * 29, 9 * 29 - 12, 120);
+        BlockCreate(114 * 29, 9 * 29 - 12, 120);
 
         // ファイア
-        // tyobi(7*29,9*29-12,101);
+        // BlockCreate(7*29,9*29-12,101);
 
         bco = 0;
         t = bco;
@@ -2747,7 +2747,7 @@ void HandleSyobonActionOneLevels()
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
         tco = 0;
-        // tyobi(15*29,12*29-12,111);
+        // BlockCreate(15*29,12*29-12,111);
 
         SyobonSection = 0;
 
@@ -3036,11 +3036,11 @@ void HandleSyobonActionOneLevels()
         // t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
 
         txtype[tco] = 0;
-        tyobi(12 * 29, 4 * 29 - 12, 112);
+        BlockCreate(12 * 29, 4 * 29 - 12, 112);
         // ヒント3
         txtype[tco] = 3;
-        tyobi(12 * 29, 8 * 29 - 12, 300);
-        // txtype[tco]=0;tyobi(13*29,4*29-12,110);
+        BlockCreate(12 * 29, 8 * 29 - 12, 300);
+        // txtype[tco]=0;BlockCreate(13*29,4*29-12,110);
 
         // stc=0;
 
@@ -3600,51 +3600,51 @@ void HandleSyobonActionOneLevels()
         tco = 0;
         // ON-OFFブロック
         txtype[tco] = 1;
-        tyobi(29 * 29, 3 * 29 - 12, 130);
+        BlockCreate(29 * 29, 3 * 29 - 12, 130);
         // 1-2
-        tyobi(34 * 29, 9 * 29 - 12, 5);
-        tyobi(35 * 29, 9 * 29 - 12, 5);
+        BlockCreate(34 * 29, 9 * 29 - 12, 5);
+        BlockCreate(35 * 29, 9 * 29 - 12, 5);
         // 隠し
-        tyobi(55 * 29 + 15, 6 * 29 - 12, 7);
-        // tyobi(62*29,9*29-12,2);
+        BlockCreate(55 * 29 + 15, 6 * 29 - 12, 7);
+        // BlockCreate(62*29,9*29-12,2);
         // 隠しON-OFF
         txtype[tco] = 10;
-        tyobi(50 * 29, 9 * 29 - 12, 114);
+        BlockCreate(50 * 29, 9 * 29 - 12, 114);
         // ヒント3
         txtype[tco] = 5;
-        tyobi(1 * 29, 5 * 29 - 12, 300);
+        BlockCreate(1 * 29, 5 * 29 - 12, 300);
         // ファイア
         txtype[tco] = 3;
-        tyobi(86 * 29, 9 * 29 - 12, 101);
+        BlockCreate(86 * 29, 9 * 29 - 12, 101);
         // キノコなし　普通
-        // txtype[tco]=2;tyobi(81*29,1*29-12,5);
+        // txtype[tco]=2;BlockCreate(81*29,1*29-12,5);
         // 音符
         txtype[tco] = 2;
-        tyobi(86 * 29, 6 * 29 - 12, 117);
+        BlockCreate(86 * 29, 6 * 29 - 12, 117);
 
         // もろいぶろっく×３
         for (t = 0; t <= 2; t++)
         {
             txtype[tco] = 3;
-            tyobi((79 + t) * 29, 13 * 29 - 12, 115);
+            BlockCreate((79 + t) * 29, 13 * 29 - 12, 115);
         }
 
         // ジャンプ
         txtype[tco] = 3;
-        tyobi(105 * 29, 11 * 29 - 12, 120);
+        BlockCreate(105 * 29, 11 * 29 - 12, 120);
         // 毒1
         txtype[tco] = 3;
-        tyobi(109 * 29, 7 * 29 - 12, 102);
+        BlockCreate(109 * 29, 7 * 29 - 12, 102);
         // デフラグ
         txtype[tco] = 4;
-        tyobi(111 * 29, 7 * 29 - 12, 101);
+        BlockCreate(111 * 29, 7 * 29 - 12, 101);
         // 剣
-        tyobi(132 * 29, 8 * 29 - 12 - 3, 140);
-        tyobi(131 * 29, 9 * 29 - 12, 141);
+        BlockCreate(132 * 29, 8 * 29 - 12 - 3, 140);
+        BlockCreate(131 * 29, 9 * 29 - 12, 141);
         // メロン
-        tyobi(161 * 29, 12 * 29 - 12, 142);
+        BlockCreate(161 * 29, 12 * 29 - 12, 142);
         // ファイアバー強化
-        tyobi(66 * 29, 4 * 29 - 12, 124);
+        BlockCreate(66 * 29, 4 * 29 - 12, 124);
 
         // リフト
         srco = 0;
@@ -3923,28 +3923,28 @@ void HandleSyobonActionTwoLevels()
         tco = 0;
         //
         txtype[tco] = 6;
-        tyobi(1 * 29, 9 * 29 - 12, 300);
+        BlockCreate(1 * 29, 9 * 29 - 12, 300);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(40 * 29, 9 * 29 - 12, 110);
+        BlockCreate(40 * 29, 9 * 29 - 12, 110);
         tco += 1;
         //
         txtype[tco] = 7;
-        tyobi(79 * 29, 7 * 29 - 12, 300);
+        BlockCreate(79 * 29, 7 * 29 - 12, 300);
         tco += 1;
         //
         txtype[tco] = 2;
-        tyobi(83 * 29, 7 * 29 - 12, 102);
+        BlockCreate(83 * 29, 7 * 29 - 12, 102);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(83 * 29, 2 * 29 - 12, 114);
+        BlockCreate(83 * 29, 2 * 29 - 12, 114);
         tco += 1;
         //
         for (int i = -1; i > -7; i -= 1)
         {
-            tyobi(85 * 29, i * 29 - 12, 4);
+            BlockCreate(85 * 29, i * 29 - 12, 4);
             tco += 1;
         }
         //
@@ -4083,7 +4083,7 @@ void HandleSyobonActionTwoLevels()
         sxtype[sco] = 1;
         sco += 1;
         //
-        tyobi(6 * 29, 9 * 29 - 12, 110);
+        BlockCreate(6 * 29, 9 * 29 - 12, 110);
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -4515,48 +4515,48 @@ void HandleSyobonActionTwoLevels()
         //
         tco = 0;
         txtype[tco] = 0;
-        tyobi(0 * 29, 0 * 29 - 12, 4);
+        BlockCreate(0 * 29, 0 * 29 - 12, 4);
         tco = 1;
         txtype[tco] = 0;
-        tyobi(2 * 29, 9 * 29 - 12, 4);
+        BlockCreate(2 * 29, 9 * 29 - 12, 4);
         tco = 2;
         txtype[tco] = 0;
-        tyobi(3 * 29, 9 * 29 - 12, 4);
+        BlockCreate(3 * 29, 9 * 29 - 12, 4);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(5 * 29, 9 * 29 - 12, 115);
+        BlockCreate(5 * 29, 9 * 29 - 12, 115);
         tco += 1;
         txtype[tco] = 1;
-        tyobi(6 * 29, 9 * 29 - 12, 115);
-        tco += 1;
-        //
-        txtype[tco] = 1;
-        tyobi(5 * 29, 10 * 29 - 12, 115);
-        tco += 1;
-        txtype[tco] = 1;
-        tyobi(6 * 29, 10 * 29 - 12, 115);
+        BlockCreate(6 * 29, 9 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(5 * 29, 11 * 29 - 12, 115);
+        BlockCreate(5 * 29, 10 * 29 - 12, 115);
         tco += 1;
         txtype[tco] = 1;
-        tyobi(6 * 29, 11 * 29 - 12, 115);
-        tco += 1;
-        //
-        txtype[tco] = 1;
-        tyobi(5 * 29, 12 * 29 - 12, 115);
-        tco += 1;
-        txtype[tco] = 1;
-        tyobi(6 * 29, 12 * 29 - 12, 115);
+        BlockCreate(6 * 29, 10 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(70 * 29, 7 * 29 - 12, 115);
+        BlockCreate(5 * 29, 11 * 29 - 12, 115);
         tco += 1;
         txtype[tco] = 1;
-        tyobi(71 * 29, 7 * 29 - 12, 115);
+        BlockCreate(6 * 29, 11 * 29 - 12, 115);
+        tco += 1;
+        //
+        txtype[tco] = 1;
+        BlockCreate(5 * 29, 12 * 29 - 12, 115);
+        tco += 1;
+        txtype[tco] = 1;
+        BlockCreate(6 * 29, 12 * 29 - 12, 115);
+        tco += 1;
+        //
+        txtype[tco] = 1;
+        BlockCreate(70 * 29, 7 * 29 - 12, 115);
+        tco += 1;
+        txtype[tco] = 1;
+        BlockCreate(71 * 29, 7 * 29 - 12, 115);
         tco += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -4997,28 +4997,28 @@ void HandleSyobonActionTwoLevels()
         txtype[tco] = 0;
         for (int i = -1; i > -7; i -= 1)
         {
-            tyobi(55 * 29, i * 29 - 12, 4);
+            BlockCreate(55 * 29, i * 29 - 12, 4);
             tco += 1;
         }
         //
         txtype[tco] = 0;
-        tyobi(64 * 29, 12 * 29 - 12, 120);
+        BlockCreate(64 * 29, 12 * 29 - 12, 120);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(66 * 29, 3 * 29 - 12, 115);
+        BlockCreate(66 * 29, 3 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(67 * 29, 3 * 29 - 12, 115);
+        BlockCreate(67 * 29, 3 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(68 * 29, 3 * 29 - 12, 115);
+        BlockCreate(68 * 29, 3 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 8;
-        tyobi(60 * 29, 6 * 29 - 12, 300);
+        BlockCreate(60 * 29, 6 * 29 - 12, 300);
         tco += 1;
         /*
            bco = 1;
@@ -5176,23 +5176,23 @@ void HandleSyobonActionTwoLevels()
         //
         tco = 0;
         txtype[tco] = 0;
-        tyobi(0 * 29, -1 * 29 - 12, 5);
+        BlockCreate(0 * 29, -1 * 29 - 12, 5);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(4 * 29, -1 * 29 - 12, 5);
+        BlockCreate(4 * 29, -1 * 29 - 12, 5);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(1 * 29, 14 * 29 - 12, 5);
+        BlockCreate(1 * 29, 14 * 29 - 12, 5);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(6 * 29, 14 * 29 - 12, 5);
+        BlockCreate(6 * 29, 14 * 29 - 12, 5);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(7 * 29, 14 * 29 - 12, 5);
+        BlockCreate(7 * 29, 14 * 29 - 12, 5);
         tco += 1;
         //
         bco = 0;
@@ -5278,15 +5278,15 @@ void HandleSyobonActionTwoLevels()
         //
         tco = 0;
         txtype[tco] = 1;
-        tyobi(12 * 29, 13 * 29 - 12, 115);
+        BlockCreate(12 * 29, 13 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(13 * 29, 13 * 29 - 12, 115);
+        BlockCreate(13 * 29, 13 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(14 * 29, 13 * 29 - 12, 115);
+        BlockCreate(14 * 29, 13 * 29 - 12, 115);
         tco += 1;
         //
         sco = 0;
@@ -5602,35 +5602,35 @@ void HandleSyobonActionTwoLevels()
         //
         tco = 0;
         txtype[tco] = 0;
-        tyobi(1 * 29, 14 * 29 - 12, 5);
+        BlockCreate(1 * 29, 14 * 29 - 12, 5);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(2 * 29, 14 * 29 - 12, 5);
+        BlockCreate(2 * 29, 14 * 29 - 12, 5);
         tco += 1;
         //
         txtype[tco] = 9;
-        tyobi(3 * 29, 4 * 29 - 12, 300);
+        BlockCreate(3 * 29, 4 * 29 - 12, 300);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(32 * 29, 9 * 29 - 12, 115);
+        BlockCreate(32 * 29, 9 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(76 * 29, 14 * 29 - 12, 5);
+        BlockCreate(76 * 29, 14 * 29 - 12, 5);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(108 * 29, 11 * 29 - 12, 141);
+        BlockCreate(108 * 29, 11 * 29 - 12, 141);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(109 * 29, 10 * 29 - 12 - 3, 140);
+        BlockCreate(109 * 29, 10 * 29 - 12 - 3, 140);
         tco += 1;
         //
         txtype[tco] = 0;
-        tyobi(121 * 29, 10 * 29 - 12, 142);
+        BlockCreate(121 * 29, 10 * 29 - 12, 142);
         tco += 1;
         //
         bco = 0;
@@ -6076,15 +6076,15 @@ void HandleSyobonActionTwoLevels()
         tco = 0;
         //
         txtype[tco] = 10;
-        tyobi(2 * 29, 9 * 29 - 12, 300);
+        BlockCreate(2 * 29, 9 * 29 - 12, 300);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(63 * 29, 13 * 29 - 12, 115);
+        BlockCreate(63 * 29, 13 * 29 - 12, 115);
         tco += 1;
         //
         txtype[tco] = 1;
-        tyobi(64 * 29, 13 * 29 - 12, 115);
+        BlockCreate(64 * 29, 13 * 29 - 12, 115);
         tco += 1;
         //
         sco = 0;
@@ -6462,7 +6462,7 @@ void HandleSyobonActionThreeLevels()
 
 
         txtype[tco] = 4; //nブロック[nブロックco].xtype = 4;
-        tyobi(348, 249, 102);
+        BlockCreate(348, 249, 102);
         int t_9 = sco;
         sa[t_9] = 8700; //n地面[t_9].a = 8700;
         sb[t_9] = 36500; //n地面[t_9].b = 36500;

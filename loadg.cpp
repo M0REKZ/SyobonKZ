@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "global_vars.h"
+#include "main.h"
 
 int x1;
 
@@ -188,21 +189,21 @@ void loadg(void)
     anx[85] = 25 * 100;
     any[85] = 30 * 10 * 100;
 
-    // 背景サイズ収得
+    // 背景サイズ収得 (Background size acquisition)
     x1 = 4;
     for (t = 0; t < 40; t++)
     {
         if (grap[t][x1])
         {
-            ne[t] = grap[t][x1]->w;
-            nf[t] = grap[t][x1]->h;
+            BackgroundWidth[t] = grap[t][x1]->w;
+            BackgroundHeight[t] = grap[t][x1]->h;
             // GetGraphSize(grap[t][x1] ,&ne[t] ,&nf[t]);
             // ne[t]*=100;nf[t]*=100;
         }
         else
         {
-            ne[t] = 0;
-            nf[t] = 0;
+            BackgroundWidth[t] = 0;
+            BackgroundHeight[t] = 0;
         }
     }
 

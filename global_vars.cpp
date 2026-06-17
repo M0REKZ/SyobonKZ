@@ -35,8 +35,9 @@ int tyuukan = 0;
 int ending = 0;
 
 
-//ステージ読み込みループ(いじらない)
-int stagerr, stagepoint;
+//ステージ読み込みループ(いじらない) (Stage loading loop (do not modify))
+//+KZ removed "int stagerr" because was unused
+int stagepoint;
 //オーバーフローさせる
 int SyobonRandomMode = 0;
 
@@ -95,12 +96,13 @@ int sgtype[smax];
 
 //プレイヤー
 int mainmsgtype;
-int ma, mb, mnobia, mnobib, mhp;
+int ma, mb, mnobia, mnobib, Health;
 int mc, md, macttype, atkon, atktm, mactsok, msstar, mactp, mact;
 int Lives = 3;
 
 int mtype, mxtype, mtm, mzz;
-int mzimen, mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
+int PlayerGrounded, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
+EGroundType GroundType;
 int mmutekitm, mmutekion;
 int mztm, mztype;
 int actaon[7];
@@ -147,7 +149,7 @@ int btype[bmax], bxtype[bmax], bz[bmax];
 //背景
 int nxxmax, nco;
 int na[nmax], nb[nmax], nc[nmax], nd[nmax], ntype[nmax];
-int ne[nmax], nf[nmax], ng[nmax], nx[nmax];
+int BackgroundWidth[nmax], BackgroundHeight[nmax], ng[nmax], nx[nmax];
 
 
 //リフト

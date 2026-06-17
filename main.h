@@ -11,7 +11,7 @@ void parseArgs(int argc, char* argv[]);
 
 //String 使用
 
-//メインプログラム
+//メインプログラム (Main Program)
 void Mainprogram();
 void rpaint();
 
@@ -23,7 +23,7 @@ void wait2(long stime, long etime, int FLAME_TIME);
 int rand(int Rand);
 #define end() exit(0)
 
-//描画
+//描画 (Drawing)
 void setfont(int a);
 void setcolor(int red, int green, int blue);
 void setc0();
@@ -35,14 +35,19 @@ void fillrect(int a, int b, int c, int d);
 void drawarc(int a, int b, int c, int d);
 void fillarc(int a, int b, int c, int d);
 void FillScreen();
-SDL_Surface *loadimage(std::string b);
-SDL_Surface *loadimage(int a, int x, int y, int r, int z);
+
+//+KZ: these functions are not used
+//SDL_Surface *loadimage(std::string b);
+//SDL_Surface *loadimage(int a, int x, int y, int r, int z);
+
 void drawimage(SDL_Surface * mx, int a, int b);
 void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f);
-void setre();
-void setre2();
-void setno();
-void ot(Mix_Chunk * x);
+//void setre(); //+KZ: function does not exist
+//void setre2(); //+KZ: function does not exist
+//void setno(); //+KZ: function does not exist
+
+// @attention +KZ: void ot() is now void PlaySound()
+void PlaySound(Mix_Chunk * x);
 void bgmchange(Mix_Music * x);
 
 //文字
@@ -57,21 +62,25 @@ void stagep();
 
 
 
-//ブロック
-void tyobi(int x, int y, int type);
-void brockbreak(int t);
+//ブロック (Block)
+// @attention +KZ: void tyobi() is now void BlockCreate()
+void BlockCreate(int x, int y, int type);
+// @attention +KZ: void brockbreak() is now void BlockBreak()
+void BlockBreak(int t);
 
-//メッセージブロック
+//メッセージブロック (Message Block)
 void ttmsg();
 void txmsg(std::string x, int a);
 void setfont(int x, int y);
 
-//効果を持たないグラ
+//効果を持たないグラ (Grass with no effect)
 void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
 	   int xnobib, int xgtype, int xtm);
 
-//敵キャラ
-void ayobi(int xa, int xb, int xc, int xd, int xnotm, int xtype,
+//敵キャラ (Enemy character)
+// @attention +KZ: void ayobi() is now void CreateEntity()
+// @attention +KZ: int xtype is now int EntityType
+void CreateEntity(int xa, int xb, int xc, int xd, int xnotm, int EntityType,
 	   int xxtype);
 // @attention +KZ: void tekizimen() is now void HandleTiles()
 void HandleTiles();

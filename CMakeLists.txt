@@ -87,10 +87,16 @@ add_executable(${EXECUTABLE_NAME}
     loadg.cpp
     DxLib.h
     DxLib.cpp
+
+    # files added by +KZ to split the code
+    entities.h
+    entities.cpp
     global_vars.h
     global_vars.cpp
     levels.h
     levels.cpp
+    title.h
+    title.cpp
 
     # a thing filled with macros and preprocessor checks
     crossplatform.h

@@ -40,10 +40,10 @@ extern int SyobonSection;
 //クイック (Quick)
 extern int fast;
 
-//トラップ表示
+//トラップ表示 (Trap display) //+KZ: ??
 extern int trap;
 
-//中間ゲート
+//中間ゲート (Intermediate gate) //+KZ: ??
 extern int tyuukan;
 
 
@@ -51,8 +51,9 @@ extern int tyuukan;
 extern int ending;
 
 
-//ステージ読み込みループ(いじらない)
-extern int stagerr, stagepoint;
+//ステージ読み込みループ(いじらない) (Stage loading loop (do not modify))
+//+KZ removed "int stagerr" because was unused
+extern int stagepoint;
 //オーバーフローさせる (Overflow)
 // @attention +KZ: int over is now int SyobonRandomMode
 extern int SyobonRandomMode;
@@ -83,25 +84,26 @@ extern Mix_Music *Music[7];
 // @attention +KZ: Mix_Chunk *oto is now Mix_Chunk *Sounds
 extern Mix_Chunk *Sounds[19];
 
-//1-ステージ
-//10-ステージ前
+//1-ステージ (1-Stage)
+//10-ステージ前 (10-Before Stage)
 //
 
-//ループ
+//ループ (Loop)
+//+KZ: these should be local variables in many places inside main.cpp
 extern int t, tt, t1, t2, t3, t4;
 
 
-//初期化
+//初期化 (Initialization)
 extern int zxon, zzxon;
 
-//キーコンフィグ
+//キーコンフィグ (Key Configuration)
 extern int key, keytm;
 
-//三角関数
+//三角関数 (Trigonometric functions)
 extern double pai;
 
 
-//地面
+//地面 (Ground)
 #define smax 31
 extern int sx, sco;
 extern int sa[smax], sb[smax], sc[smax], sd[smax], stype[smax], sxtype[smax], sr[smax];
@@ -109,15 +111,27 @@ extern int sgtype[smax];
 
 
 
-//プレイヤー
+//プレイヤー (Player)
 extern int mainmsgtype;
-extern int ma, mb, mnobia, mnobib, mhp;
+extern int ma, mb, mnobia, mnobib;
+// Condition "Health <= 0 && Health >= -9" makes the player die
+// @attention +KZ: int mhp is now int Health
+extern int Health;
 extern int mc, md, macttype, atkon, atktm, mactsok, msstar, mactp, mact;
 // @attention +KZ: int nokori is now int Lives;
 extern int Lives;
 
 extern int mtype, mxtype, mtm, mzz;
-extern int mzimen, mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
+// @attention +KZ: int mzimen is now int PlayerGrounded
+extern int PlayerGrounded;
+enum class EGroundType
+{
+    NORMAL = 0,
+    SLIP = 1,
+};
+// @attention +KZ: int mrzimen is now EGroundType GroundType
+extern EGroundType GroundType;
+extern int mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
 extern int mmutekitm, mmutekion;
 extern int mztm, mztype;
 extern int actaon[7];
@@ -126,23 +140,23 @@ extern int mmsgtm, mmsgtype;
 
 extern int mascrollmax;	//9000
 
-//ブロック
+//ブロック (Block)
 #define tmax 641
 extern int tco;
 extern int ta[tmax], tb[tmax], tc[tmax], td[tmax], thp[tmax], ttype[tmax];
 extern int titem[tmax], txtype[tmax];
 
-//メッセージブロック
+//メッセージブロック (Message Block)
 extern int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
 
-//効果を持たないグラ
+//効果を持たないグラ (Grass with no effect)
 #define emax 201
 extern int eco;
 extern int ea[emax], eb[emax], enobia[emax], enobib[emax], ec[emax], ed[emax];
 extern int ee[emax], ef[emax], etm[emax];
 extern int egtype[emax];
 
-//敵キャラ
+//敵キャラ (Enemy character)
 #define amax 24
 extern int aco;
 extern int aa[amax], ab[amax], anobia[amax], anobib[amax], ac[amax], ad[amax];
@@ -153,21 +167,24 @@ extern int anotm[amax], anx[160], any[160];
 extern int atm[amax], a2tm[amax];
 extern int amsgtm[amax], amsgtype[amax];
 
-//敵出現
+//敵出現 (Enemy Appearance)
 #define bmax 81
 extern int bco;
 extern int ba[bmax], bb[bmax], btm[bmax];
 extern int btype[bmax], bxtype[bmax], bz[bmax];
 
 
-//背景
+//背景 (Background)
 #define nmax 41
 extern int nxxmax, nco;
 extern int na[nmax], nb[nmax], nc[nmax], nd[nmax], ntype[nmax];
-extern int ne[nmax], nf[nmax], ng[nmax], nx[nmax];
+// @attention +KZ int ne[nmax] renamed to BackgroundWidth[nmax]
+// @attention +KZ int nf[nmax] renamed to BackgroundHeight[nmax]
+extern int BackgroundWidth[nmax], BackgroundHeight[nmax];
+extern int ng[nmax], nx[nmax];
 
 
-//リフト
+//リフト (Lift)
 #define srmax 21
 extern int srco;
 extern int sra[srmax], srb[srmax], src[srmax], srd[srmax], sre[srmax], srf[srmax];
@@ -179,18 +196,18 @@ extern int srsok[srmax], srmovep[srmax], srmove[srmax];
 
 
 
-//スクロール範囲
+//スクロール範囲 (Scroll range)
 extern int fx, fy, fzx, fzy, scrollx, scrolly;
-//全体のポイント
+//全体のポイント (Overall points)
 
 //Open Syobon Action: "fma" already exists, so call it something else and add a define
 //+KZ: done
 extern int fmaZ;
 extern int fmb;
 
-//強制スクロール
+//強制スクロール (Force Scroll)
 extern int kscroll;
-//画面サイズ(ファミコンサイズ×2)(256-224)
+//画面サイズ(ファミコンサイズ×2)(256-224) (Screen size (NES size x 2) (256 x 224))
 extern int fxmax, fymax;
 
 
