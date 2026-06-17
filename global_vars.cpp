@@ -12,7 +12,8 @@
 //: This is unexcusable. How could someone in their right mind define
 //: a variable called 'main'!?
 //: The new define is after the main method
-int mainZ = 100, maintm = 0;
+ESyobonState SyobonState = ESyobonState::TITLE;
+int maintm = 0;
 
 //ステージ
 int stagecolor = 1;

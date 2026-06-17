@@ -1,7 +1,7 @@
 
-#include "main.h"
 #include "global_vars.h"
 #include "levels.h"
+#include "main.h"
 
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
@@ -52,9 +52,9 @@ void rpaint()
 //: Clear screen
     FillScreen();
 
-    if (mainZ == 1 && zxon >= 1) {
+    if (SyobonState == ESyobonState::IN_GAME && zxon >= 1) {
 
-//背景
+//背景 (Background)
 	for (t = 0; t < nmax; t++) {
 	    xx[0] = na[t] - fx;
 	    xx[1] = nb[t] - fy;
@@ -86,19 +86,19 @@ void rpaint()
 
 //51
 		if (ntype[t] == 100) {
-		    DrawFormatString(xx[0] / 100 + fma,
+		    DrawFormatString(xx[0] / 100 + fmaZ,
 				     xx[1] / 100 + fmb,
 				     GetColor(255, 255, 255), "51");
 		}
 
 		if (ntype[t] == 101)
-		    DrawFormatString(xx[0] / 100 + fma,
+		    DrawFormatString(xx[0] / 100 + fmaZ,
 				     xx[1] / 100 + fmb,
 				     GetColor(255, 255,
 					      255),
 				     "ゲームクリアー");
 		if (ntype[t] == 102)
-		    DrawFormatString(xx[0] / 100 + fma,
+		    DrawFormatString(xx[0] / 100 + fmaZ,
 				     xx[1] / 100 + fmb,
 				     GetColor(255, 255,
 					      255),
@@ -116,11 +116,11 @@ void rpaint()
 	    if (xx[0] + xx[2] * 100 >= -10 && xx[1] <= fxmax
 		&& xx[1] + xx[3] * 100 >= -10 - 8000 && xx[3] <= fymax) {
 
-//コイン
+//コイン (Coin)
 		if (egtype[t] == 0)
 		    drawimage(grap[0][2], xx[0] / 100, xx[1] / 100);
 
-//ブロックの破片
+//ブロックの破片 (Block fragments)
 		if (egtype[t] == 1) {
 		    if (stagecolor == 1 || stagecolor == 3
 			|| stagecolor == 5)
@@ -535,57 +535,57 @@ void rpaint()
 
 		if (stype[t] == 0) {
 		    setcolor(40, 200, 40);
-		    fillrect((sa[t] - fx) / 100 + fma,
+		    fillrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb,
 			     sc[t] / 100, sd[t] / 100);
-		    drawrect((sa[t] - fx) / 100 + fma,
+		    drawrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb,
 			     sc[t] / 100, sd[t] / 100);
 		}
 //土管
 		if (stype[t] == 1) {
 		    setcolor(0, 230, 0);
-		    fillrect((sa[t] - fx) / 100 + fma,
+		    fillrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb,
 			     sc[t] / 100, sd[t] / 100);
 		    setc0();
-		    drawrect((sa[t] - fx) / 100 + fma,
+		    drawrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb,
 			     sc[t] / 100, sd[t] / 100);
 		}
 //土管(下)
 		if (stype[t] == 2) {
 		    setcolor(0, 230, 0);
-		    fillrect((sa[t] - fx) / 100 + fma,
+		    fillrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb + 1,
 			     sc[t] / 100, sd[t] / 100);
 		    setc0();
-		    drawline((sa[t] - fx) / 100 + fma,
+		    drawline((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb,
-			     (sa[t] - fx) / 100 + fma,
+			     (sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb + sd[t] / 100);
-		    drawline((sa[t] - fx) / 100 + fma +
+		    drawline((sa[t] - fx) / 100 + fmaZ +
 			     sc[t] / 100,
 			     (sb[t] - fy) / 100 + fmb,
-			     (sa[t] - fx) / 100 + fma +
+			     (sa[t] - fx) / 100 + fmaZ +
 			     sc[t] / 100,
 			     (sb[t] - fy) / 100 + fmb + sd[t] / 100);
 		}
 //土管(横)
 		if (stype[t] == 5) {
 		    setcolor(0, 230, 0);
-		    fillrect((sa[t] - fx) / 100 + fma,
+		    fillrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb + 1,
 			     sc[t] / 100, sd[t] / 100);
 		    setc0();
-		    drawline((sa[t] - fx) / 100 + fma,
+		    drawline((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb,
-			     (sa[t] - fx) / 100 + fma +
+			     (sa[t] - fx) / 100 + fmaZ +
 			     sc[t] / 100, (sb[t] - fy) / 100 + fmb);
-		    drawline((sa[t] - fx) / 100 + fma,
+		    drawline((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb +
 			     sd[t] / 100,
-			     (sa[t] - fx) / 100 + fma +
+			     (sa[t] - fx) / 100 + fmaZ +
 			     sc[t] / 100,
 			     (sb[t] - fy) / 100 + fmb + sd[t] / 100);
 		}
@@ -596,7 +596,7 @@ void rpaint()
 			    drawimage(grap[1][1],
 				      (sa[t] -
 				       fx) / 100 +
-				      fma + 29 * t3,
+				      fmaZ + 29 * t3,
 				      (sb[t] - fy) / 100 + fmb);
 			}
 		    }
@@ -605,7 +605,7 @@ void rpaint()
 			    drawimage(grap[31][1],
 				      (sa[t] -
 				       fx) / 100 +
-				      fma + 29 * t3,
+				      fmaZ + 29 * t3,
 				      (sb[t] - fy) / 100 + fmb);
 			}
 		    }
@@ -616,7 +616,7 @@ void rpaint()
 					  [1], (sa[t]
 						-
 						fx) /
-					  100 + fma + 29 * t3, (sb[t]
+					  100 + fmaZ + 29 * t3, (sb[t]
 								-
 								fy) /
 					  100 + 29 * t2 + fmb);
@@ -629,7 +629,7 @@ void rpaint()
 			    drawimage(grap[65][1],
 				      (sa[t] -
 				       fx) / 100 +
-				      fma + 29 * t3,
+				      fmaZ + 29 * t3,
 				      (sb[t] - fy) / 100 + fmb);
 			}
 		    }
@@ -656,14 +656,14 @@ void rpaint()
 				       xx[29]][1],
 				      (sa[t] -
 				       fx) / 100 +
-				      fma + 29 * t3,
+				      fmaZ + 29 * t3,
 				      (sb[t] - fy) / 100 + fmb);
 			    if (stagecolor != 4) {
 				drawimage(grap[6 + xx[29]]
 					  [1], (sa[t]
 						-
 						fx) /
-					  100 + fma + 29 * t3, (sb[t]
+					  100 + fmaZ + 29 * t3, (sb[t]
 								-
 								fy) /
 					  100 + fmb + 29);
@@ -672,7 +672,7 @@ void rpaint()
 					  [1], (sa[t]
 						-
 						fx) /
-					  100 + fma + 29 * t3, (sb[t]
+					  100 + fmaZ + 29 * t3, (sb[t]
 								-
 								fy) /
 					  100 + fmb + 29);
@@ -684,7 +684,7 @@ void rpaint()
 					  [1], (sa[t]
 						-
 						fx) /
-					  100 + fma + 29 * t3, (sb[t]
+					  100 + fmaZ + 29 * t3, (sb[t]
 								-
 								fy) /
 					  100 + fmb + 29 * t2);
@@ -697,7 +697,7 @@ void rpaint()
 					  [1], (sa[t]
 						-
 						fx) /
-					  100 + fma + 29 * t3, (sb[t]
+					  100 + fmaZ + 29 * t3, (sb[t]
 								-
 								fy) /
 					  100 + fmb + 29 * t2);
@@ -715,7 +715,7 @@ void rpaint()
 			if (stagecolor == 2 || stagecolor == 4)
 			    setc1();
 			drawrect((sa[t] - fx) / 100 +
-				 fma,
+				 fmaZ,
 				 (sb[t] - fy) / 100 +
 				 fmb, sc[t] / 100, sd[t] / 100);
 		    }
@@ -750,36 +750,36 @@ void rpaint()
 //入る土管(右)
 		if (stype[t] == 40) {
 		    setcolor(0, 230, 0);
-		    fillrect((sa[t] - fx) / 100 + fma,
+		    fillrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb + 1,
 			     sc[t] / 100, sd[t] / 100);
 		    setc0();
-		    drawrect((sa[t] - fx) / 100 + fma,
+		    drawrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb + 1,
 			     sc[t] / 100, sd[t] / 100);
 		}
 //とぶ土管
 		if (stype[t] == 50) {
 		    setcolor(0, 230, 0);
-		    fillrect((sa[t] - fx) / 100 + fma + 5,
+		    fillrect((sa[t] - fx) / 100 + fmaZ + 5,
 			     (sb[t] - fy) / 100 + fmb + 30,
 			     50, sd[t] / 100 - 30);
 		    setc0();
-		    drawline((sa[t] - fx) / 100 + 5 + fma,
+		    drawline((sa[t] - fx) / 100 + 5 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb + 30,
-			     (sa[t] - fx) / 100 + fma + 5,
+			     (sa[t] - fx) / 100 + fmaZ + 5,
 			     (sb[t] - fy) / 100 + fmb + sd[t] / 100);
-		    drawline((sa[t] - fx) / 100 + 5 + fma +
+		    drawline((sa[t] - fx) / 100 + 5 + fmaZ +
 			     50,
 			     (sb[t] - fy) / 100 + fmb + 30,
-			     (sa[t] - fx) / 100 + fma + 50 +
+			     (sa[t] - fx) / 100 + fmaZ + 50 +
 			     5, (sb[t] - fy) / 100 + fmb + sd[t] / 100);
 
 		    setcolor(0, 230, 0);
-		    fillrect((sa[t] - fx) / 100 + fma,
+		    fillrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb + 1, 60, 30);
 		    setc0();
-		    drawrect((sa[t] - fx) / 100 + fma,
+		    drawrect((sa[t] - fx) / 100 + fmaZ,
 			     (sb[t] - fy) / 100 + fmb + 1, 60, 30);
 		}
 //地面(ブロック)
@@ -789,7 +789,7 @@ void rpaint()
 			    drawimage(grap[65][1],
 				      (sa[t] -
 				       fx) / 100 +
-				      fma + 29 * t3,
+				      fmaZ + 29 * t3,
 				      (sb[t] - fy) / 100 + 29 * t2 + fmb);
 			}
 		    }
@@ -1081,7 +1081,7 @@ void rpaint()
 	}			//blacktm
     }
 
-    if (mainZ == 2) {
+    if (SyobonState == ESyobonState::CREDITS) {
 
 	setcolor(255, 255, 255);
 	str("制作・プレイに関わった方々",
@@ -1109,7 +1109,7 @@ void rpaint()
 	str("プレイしていただき　ありがとうございました〜", 240 - 22 * 20 / 2, xx[30] / 100);
     }
 //Showing lives
-    if (mainZ == 10) {
+    if (SyobonState == ESyobonState::LIVES_SPLASH) {
 
 	setc0();
 	FillScreen();
@@ -1122,8 +1122,8 @@ void rpaint()
 			 nokori);
 
     }
-//タイトル
-    if (mainZ == 100) {
+//タイトル (Title)
+    if (SyobonState == ESyobonState::TITLE) {
 
 	setcolor(160, 180, 250);
 	fillrect(0, 0, fxmax, fymax);
@@ -1159,11 +1159,11 @@ void Mainprogram()
     stime = long (GetNowCount());
 
     if (ending == 1)
-	mainZ = 2;
+	SyobonState = ESyobonState::CREDITS;
 
 //キー
 
-    if (mainZ == 1 && tmsgtype == 0) {
+    if (SyobonState == ESyobonState::IN_GAME && tmsgtype == 0) {
 
 	if (zxon == 0) {
 	    zxon = 1;
@@ -1257,7 +1257,7 @@ void Mainprogram()
 	}
 //if (CheckHitKey(KEY_INPUT_F1)==1){end();}
 	if (CheckHitKey(KEY_INPUT_F1) == 1) {
-	    mainZ = 100;
+	    SyobonState = ESyobonState::TITLE;
 	}
 //if (CheckHitKey(KEY_INPUT_Q)==1){mkeytm=0;}
 	if (CheckHitKey(KEY_INPUT_O) == 1) {
@@ -1448,7 +1448,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 	    }
 	    if (mtm >= 100 || fast == 1) {
 		zxon = 0;
-		mainZ = 10;
+		SyobonState = ESyobonState::LIVES_SPLASH;
 		mtm = 0;
 		mkeytm = 0;
 		nokori--;
@@ -1615,7 +1615,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		    stc = 0;
 		    zxon = 0;
 		    tyuukan = 0;
-		    mainZ = 10;
+		    SyobonState = ESyobonState::LIVES_SPLASH;
 		    maintm = 0;
 		}
 	    }			//mtype==300
@@ -1684,7 +1684,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 			stc = 0;
 			zxon = 0;
 			tyuukan = 0;
-			mainZ = 10;
+			SyobonState = ESyobonState::LIVES_SPLASH;
 			maintm = 0;
 		    }
 		}
@@ -4342,7 +4342,7 @@ if (atype[t]==133){msoubi=4;}
     }				//if (mainZ==1){
 
 //スタッフロール
-    if (mainZ == 2) {
+    if (SyobonState == ESyobonState::CREDITS) {
 	maintm++;
 
 	xx[7] = 46;
@@ -4400,7 +4400,7 @@ if (atype[t]==133){msoubi=4;}
 	    bgmchange(otom[5]);
 	}
 	if (xx[30] <= -400) {
-	    mainZ = 100;
+	    SyobonState = ESyobonState::TITLE;
 	    nokori = 2;
 	    maintm = 0;
 	    ending = 0;
@@ -4408,20 +4408,21 @@ if (atype[t]==133){msoubi=4;}
 
     }				//mainZ==2
 
-    if (mainZ == 10) {
+    if (SyobonState == ESyobonState::LIVES_SPLASH) {
 	maintm++;
 
 	if (fast == 1)
 	    maintm += 2;
 	if (maintm >= 30) {
 	    maintm = 0;
-	    mainZ = 1;
+	    SyobonState = ESyobonState::IN_GAME;
 	    zxon = 0;
 	}
     }				//if (mainZ==10){
 
-//タイトル
-    if (mainZ == 100) {
+//タイトル (Title)
+//+KZ: This is the part that handles pressed keys in title
+    if (SyobonState == ESyobonState::TITLE) {
 	maintm++;
 	xx[0] = 0;
 	if (maintm <= 10) {
@@ -4491,7 +4492,7 @@ if (atype[t]==133){msoubi=4;}
 	}
 
 	if (xx[0] == 1) {
-	    mainZ = 10;
+	    SyobonState = ESyobonState::LIVES_SPLASH;
 	    zxon = 0;
 	    maintm = 0;
 	    nokori = 2;

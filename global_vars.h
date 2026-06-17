@@ -11,17 +11,27 @@
 //main-10
 //タイトル-100
 
+enum class ESyobonState
+{
+    IN_GAME = 1,
+    CREDITS = 2,
+    LIVES_SPLASH = 10,
+    TITLE = 100,
+};
 //Open Syobon Action:
 // This is unexcusable. How could someone in their right mind define
 // a variable called 'main'!?
 // The new define is after the main method
-extern int mainZ, maintm;
+//
+// @attention +KZ: int mainZ is now ESyobonState SyobonState
+extern ESyobonState SyobonState;
+extern int maintm;
 
-//ステージ
+//ステージ (Stage)
 extern int stagecolor;
 extern int sta, stb, stc;
 
-//クイック
+//クイック (Quick)
 extern int fast;
 
 //トラップ表示
@@ -159,8 +169,9 @@ extern int fx, fy, fzx, fzy, scrollx, scrolly;
 //全体のポイント
 
 //Open Syobon Action: "fma" already exists, so call it something else and add a define
-extern int fmaZ, fmb;
-#define fma fmaZ
+//+KZ: done
+extern int fmaZ;
+extern int fmb;
 
 //強制スクロール
 extern int kscroll;
@@ -177,7 +188,8 @@ extern int blacktm, blackx;
 
 
 
-//自由な値
+//自由な値 (Free value)
+//+KZ: these should be local variables in many places inside main.cpp
 extern int xx[91];
 extern double xd[11];
 extern std::string xs[31];
