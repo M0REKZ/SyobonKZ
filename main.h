@@ -255,4 +255,7 @@ std::string xs[31];
 long stimeZ;
 #define stime stimeZ
 
+//+KZ
+#define PLUSKZ_EDITION_TEXT "+KZ Edition"
+
 #endif

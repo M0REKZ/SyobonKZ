@@ -1145,6 +1145,10 @@ void rpaint()
 	setcolor(160, 180, 250);
 	fillrect(0, 0, fxmax, fymax);
 
+	//+KZ
+	setcolor(0, 0, 0);
+	str(PLUSKZ_EDITION_TEXT, 480/2 - (sizeof(PLUSKZ_EDITION_TEXT) * 10)/2, 120);
+
 	drawimage(mgrap[30], 240 - 380 / 2, 60);
 
 	drawimage(grap[0][4], 12 * 30, 10 * 29 - 12);

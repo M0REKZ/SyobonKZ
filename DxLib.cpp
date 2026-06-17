@@ -91,7 +91,7 @@ int DxLib_Init()
 	return -1;
     }
 
-    SDL_WM_SetCaption("Syobon Action (しょぼんのアクション)",
+    SDL_WM_SetCaption("Syobon Action - +KZ Edition!",
 		      NULL);
     SDL_ShowCursor(SDL_DISABLE);
 
