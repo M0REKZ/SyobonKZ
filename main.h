@@ -54,7 +54,11 @@ int maint;
 
 //サブクラス
 //(ウエイト系
-#define wait(i) SDL_Delay(i)
+#ifndef __EMSCRIPTEN__
+    #define wait(i) SDL_Delay(i)
+#else
+    #define wait(i)
+#endif
 void wait2(long stime, long etime, int FLAME_TIME);
 int rand(int Rand);
 #define end() exit(0)

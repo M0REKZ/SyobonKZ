@@ -1,7 +1,21 @@
+#ifdef __EMSCRIPTEN__
+	#include <emscripten.h>
+#endif
+
 #include "main.h"
 
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
+
+void MainloopEmscripten()
+{
+	UpdateKeys();
+	maint = 0;
+	Mainprogram();
+	if (maint == 3)
+	    return;
+}
+
 int main(int argc, char *argv[])
 {
     parseArgs(argc, argv);
@@ -17,6 +31,7 @@ int main(int argc, char *argv[])
 
 //ループ
 //for (maint=0;maint<=2;maint++){
+#ifndef __EMSCRIPTEN__
     while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
 	UpdateKeys();
 	maint = 0;
@@ -24,6 +39,9 @@ int main(int argc, char *argv[])
 	if (maint == 3)
 	    break;
     }
+#else
+	emscripten_set_main_loop(MainloopEmscripten, 30, 1);
+#endif
 
 //ＤＸライブラリ使用の終了処理
     end();

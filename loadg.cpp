@@ -41,23 +41,23 @@ grap[t][tt]=0;
 
 //+KZ: the first image should have the format that every other image should use
 //ブロック (Block)
-    mgrap[1] = LoadGraph("res/brock.PNG");
+    mgrap[1] = LoadGraph("res/brock.png");
 //アイテム (item)
-    mgrap[2] = LoadGraph("res/item.PNG");
+    mgrap[2] = LoadGraph("res/item.png");
 //敵 (enemy)
-    mgrap[3] = LoadGraph("res/teki.PNG");
+    mgrap[3] = LoadGraph("res/teki.png");
 //背景 (background)
-    mgrap[4] = LoadGraph("res/haikei.PNG");
+    mgrap[4] = LoadGraph("res/haikei.png");
 //ブロック2 (Block 2)
-    mgrap[5] = LoadGraph("res/brock2.PNG");
+    mgrap[5] = LoadGraph("res/brock2.png");
 //おまけ (Extra)
-    mgrap[6] = LoadGraph("res/omake.PNG");
+    mgrap[6] = LoadGraph("res/omake.png");
 //おまけ2 (Extra 2)
-    mgrap[7] = LoadGraph("res/omake2.PNG");
+    mgrap[7] = LoadGraph("res/omake2.png");
 //タイトル (Title)
-    mgrap[30] = LoadGraph("res/syobon3.PNG", false);
+    mgrap[30] = LoadGraph("res/syobon3.png", false);
 //プレイヤー (Player)
-    mgrap[0] = LoadGraph("res/player.PNG");
+    mgrap[0] = LoadGraph("res/player.png");
 
 //Added by +KZ:
     Main_GFX_KZ[0] = LoadGraph("res/decoration_kz.png");

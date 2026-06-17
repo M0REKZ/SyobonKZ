@@ -8,6 +8,16 @@ set(EXECUTABLE_NAME SyobonAction)
 # options
 option(SYOBONKZ_BUILD_SDL1_EXTENSIONS "Build SDL_image, SDL_mixer, SDL_gfx and SDL_ttf (requires submodules being cloned)" ON)
 
+# html
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+    set(SYOBONKZ_EMSCRIPTEN_C_FLAGS "-s USE_SDL=1 -s USE_SDL_IMAGE=1")
+    set(SYOBONKZ_EMSCRIPTEN_LINK_FLAGS "--use-preload-plugins --preload-file res --preload-file BGM --preload-file SE -sSTACK_SIZE=8MB")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${SYOBONKZ_EMSCRIPTEN_C_FLAGS} ${SYOBONKZ_EMSCRIPTEN_LINK_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SYOBONKZ_EMSCRIPTEN_C_FLAGS} ${SYOBONKZ_EMSCRIPTEN_LINK_FLAGS}")
+    set(SYOBONKZ_BUILD_SDL1_EXTENSIONS OFF)
+    set(CMAKE_EXECUTABLE_SUFFIX ".html")
+endif()
+
 # import ExternalProject module
 include(ExternalProject)
 
@@ -62,11 +72,13 @@ if(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
     )
 
 else()
-    find_package(SDL REQUIRED)
-    find_package(SDL_image REQUIRED)
-    find_package(SDL_mixer REQUIRED)
-    find_package(SDL_gfx REQUIRED)
-    find_package(SDL_ttf REQUIRED)
+    if(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
+        find_package(SDL REQUIRED)
+        find_package(SDL_image REQUIRED)
+        find_package(SDL_mixer REQUIRED)
+        find_package(SDL_gfx REQUIRED)
+        find_package(SDL_ttf REQUIRED)
+    endif()
 endif()
 
 add_executable(${EXECUTABLE_NAME}
@@ -74,6 +86,13 @@ add_executable(${EXECUTABLE_NAME}
     loadg.cpp
     DxLib.cpp
 )
+
+#html
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+    target_link_options(${EXECUTABLE_NAME} PRIVATE
+        ${SYOBONKZ_EMSCRIPTEN_LINK_FLAGS}
+    )
+endif()
 
 if(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
 
