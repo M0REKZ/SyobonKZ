@@ -5780,7 +5780,7 @@ void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
 
 } // eyobi
 
-// 敵キャラ、アイテム作成
+// 敵キャラ、アイテム作成 (Enemy character and item creation)
 void ayobi(int xa, int xb, int xc, int xd, int xnotm, int xtype,
 		   int xxtype)
 {
