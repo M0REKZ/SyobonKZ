@@ -85,6 +85,7 @@ add_executable(${EXECUTABLE_NAME}
     main.cpp
     loadg.cpp
     DxLib.cpp
+    global_vars.cpp
 )
 
 #html

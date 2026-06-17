@@ -3,6 +3,7 @@
 #endif
 
 #include "main.h"
+#include "global_vars.h"
 
 #ifdef __EMSCRIPTEN__
 	//+KZ: Emscripten needs a custom WaitKey, otherwise the website will freeze
