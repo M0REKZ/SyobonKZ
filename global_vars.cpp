@@ -191,7 +191,7 @@ std::string xs[31];
 long stimeZ;
 
 //+KZ
-ESyobonActionGame currentGame = SYOBON_ACTION_1;
+ESyobonActionGame currentGame = SYOBON_ACTION_3;
 
 
 //Syobon Action 3
