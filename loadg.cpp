@@ -10,63 +10,62 @@ extern Mix_Chunk *oto[19];
 extern int anx[160], any[160];
 extern int ne[40], nf[40];
 
-extern SDL_Surface *Main_GFX_KZ[1]; //+KZ
+extern SDL_Surface *Main_GFX_KZ[1];   //+KZ
 extern SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 
 void loadg(void)
 {
 
-    for (t = 0; t < 51; t++) {
-	mgrap[t] = 0;
+    for (t = 0; t < 51; t++)
+    {
+        mgrap[t] = 0;
     }
     for (int i = 0; i < 161; i++)
-	for (int j = 0; j < 8; j++)
-	    grap[i][j] = NULL;
+        for (int j = 0; j < 8; j++)
+            grap[i][j] = NULL;
 
-/*
-for (t=0;t<161;t++){
-for (tt=0;tt<8;tt++){
-grap[t][tt]=0;
-}}
-*/
+    /*
+    for (t=0;t<161;t++){
+    for (tt=0;tt<8;tt++){
+    grap[t][tt]=0;
+    }}
+    */
 
-//ma-=100;//mb==5000;
-//end();
+    // ma-=100;//mb==5000;
+    // end();
 
+    // 画像読み込み
 
-//画像読み込み
+    // 透過色を変更
+    // SetTransColor( 9*16+9 , 255 , 255 ) ;
 
-// 透過色を変更
-//SetTransColor( 9*16+9 , 255 , 255 ) ;
-
-//+KZ: the first image should have the format that every other image should use
-//ブロック (Block)
+    //+KZ: the first image should have the format that every other image should use
+    // ブロック (Block)
     mgrap[1] = LoadGraph("res/brock.png");
-//アイテム (item)
+    // アイテム (item)
     mgrap[2] = LoadGraph("res/item.png");
-//敵 (enemy)
+    // 敵 (enemy)
     mgrap[3] = LoadGraph("res/teki.png");
-//背景 (background)
+    // 背景 (background)
     mgrap[4] = LoadGraph("res/haikei.png");
-//ブロック2 (Block 2)
+    // ブロック2 (Block 2)
     mgrap[5] = LoadGraph("res/brock2.png");
-//おまけ (Extra)
+    // おまけ (Extra)
     mgrap[6] = LoadGraph("res/omake.png");
-//おまけ2 (Extra 2)
+    // おまけ2 (Extra 2)
     mgrap[7] = LoadGraph("res/omake2.png");
-//タイトル (Title)
+    // タイトル (Title)
     mgrap[30] = LoadGraph("res/syobon3.png", false);
-//プレイヤー (Player)
+    // プレイヤー (Player)
     mgrap[0] = LoadGraph("res/player.png");
 
-//Added by +KZ:
+    // Added by +KZ:
     Main_GFX_KZ[0] = LoadGraph("res/decoration_kz.png");
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
     Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);
 
-
-//プレイヤー読み込み (Player loading)
+    // プレイヤー読み込み (Player loading)
     grap[40][0] = DerivationGraph(0, 0, 30, 36, mgrap[0]);
     grap[0][0] = DerivationGraph(31 * 4, 0, 30, 36, mgrap[0]);
     grap[1][0] = DerivationGraph(31 * 1, 0, 30, 36, mgrap[0]);
@@ -75,12 +74,13 @@ grap[t][tt]=0;
     grap[41][0] = DerivationGraph(50, 0, 51, 73, mgrap[6]);
 
     x1 = 1;
-//ブロック読み込み (Block loading)
-    for (t = 0; t <= 6; t++) {
-	grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
-	grap[t + 30][x1] = DerivationGraph(33 * t, 33, 30, 30, mgrap[x1]);
-	grap[t + 60][x1] = DerivationGraph(33 * t, 66, 30, 30, mgrap[x1]);
-	grap[t + 90][x1] = DerivationGraph(33 * t, 99, 30, 30, mgrap[x1]);
+    // ブロック読み込み (Block loading)
+    for (t = 0; t <= 6; t++)
+    {
+        grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
+        grap[t + 30][x1] = DerivationGraph(33 * t, 33, 30, 30, mgrap[x1]);
+        grap[t + 60][x1] = DerivationGraph(33 * t, 66, 30, 30, mgrap[x1]);
+        grap[t + 90][x1] = DerivationGraph(33 * t, 99, 30, 30, mgrap[x1]);
     }
     grap[8][x1] = DerivationGraph(33 * 7, 0, 30, 30, mgrap[x1]);
     grap[16][x1] = DerivationGraph(33 * 6, 0, 24, 27, mgrap[2]);
@@ -88,10 +88,11 @@ grap[t][tt]=0;
     grap[40][x1] = DerivationGraph(33 * 9, 33, 30, 30, mgrap[x1]);
     grap[70][x1] = DerivationGraph(33 * 9, 66, 30, 30, mgrap[x1]);
     grap[100][x1] = DerivationGraph(33 * 9, 99, 30, 30, mgrap[x1]);
-//ブロック読み込み2 (Block loading 2)
+    // ブロック読み込み2 (Block loading 2)
     x1 = 5;
-    for (t = 0; t <= 6; t++) {
-	grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
+    for (t = 0; t <= 6; t++)
+    {
+        grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
     }
     grap[10][5] = DerivationGraph(33 * 1, 33, 30, 30, mgrap[x1]);
     grap[11][5] = DerivationGraph(33 * 2, 33, 30, 30, mgrap[x1]);
@@ -99,13 +100,14 @@ grap[t][tt]=0;
     grap[13][5] = DerivationGraph(33 * 1, 66, 30, 30, mgrap[x1]);
     grap[14][5] = DerivationGraph(33 * 2, 66, 30, 30, mgrap[x1]);
 
-//アイテム読み込み (Item loading)
+    // アイテム読み込み (Item loading)
     x1 = 2;
-    for (t = 0; t <= 5; t++) {
-	grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
+    for (t = 0; t <= 5; t++)
+    {
+        grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
     }
 
-//敵キャラ読み込み (Loading enemy characters)
+    // 敵キャラ読み込み (Loading enemy characters)
     x1 = 3;
     grap[0][x1] = DerivationGraph(33 * 0, 0, 30, 30, mgrap[x1]);
     grap[1][x1] = DerivationGraph(33 * 1, 0, 30, 43, mgrap[x1]);
@@ -121,11 +123,10 @@ grap[t][tt]=0;
     grap[9][x1] = DerivationGraph(33 * 7 + 1, 0, 26, 30, mgrap[x1]);
     grap[10][x1] = DerivationGraph(214, 0, 46, 16, mgrap[6]);
 
-//モララー (Molalla)
+    // モララー (Molalla)
     grap[30][x1] = DerivationGraph(0, 56, 30, 36, mgrap[7]);
     grap[155][x1] = DerivationGraph(31 * 3, 56, 30, 36, mgrap[7]);
     grap[31][x1] = DerivationGraph(50, 74, 49, 79, mgrap[6]);
-
 
     grap[80][x1] = DerivationGraph(151, 31, 70, 40, mgrap[4]);
     grap[81][x1] = DerivationGraph(151, 72, 70, 40, mgrap[4]);
@@ -142,12 +143,11 @@ grap[t][tt]=0;
     grap[101][x1] = DerivationGraph(33 * 7, 0, 30, 30, mgrap[2]);
     grap[102][x1] = DerivationGraph(33 * 3, 0, 30, 30, mgrap[2]);
 
-//grap[104][x1] = DerivationGraph( 33*2, 0, 30, 30, mgrap[5]) ;
+    // grap[104][x1] = DerivationGraph( 33*2, 0, 30, 30, mgrap[5]) ;
     grap[105][x1] = DerivationGraph(33 * 5, 0, 30, 30, mgrap[2]);
     grap[110][x1] = DerivationGraph(33 * 4, 0, 30, 30, mgrap[2]);
 
-
-//背景読み込み (Background loading)
+    // 背景読み込み (Background loading)
     x1 = 4;
     grap[0][x1] = DerivationGraph(0, 0, 150, 90, mgrap[x1]);
     grap[1][x1] = DerivationGraph(151, 0, 65, 29, mgrap[x1]);
@@ -159,92 +159,83 @@ grap[t][tt]=0;
     grap[30][x1] = DerivationGraph(293, 0, 149, 90, mgrap[x1]);
 
     //+KZ: grap[31][4] is 3-1 grass?? 3-1 also wants a grap[32][4] sprite, which seems to be a cloud
-    //sadly there is not a official Syobon Action 2 release containing the missing sprites.
-    //grap[32][4] was not even in this list, so probably the creator of that mod
-    //forgot to upload loadg.cpp and the assets in the latest game zip...
-    //im using alternative edited versions for now
-    grap[31][x1] = Sliced_GFX_KZ[0]; //DerivationGraph(293, 92, 64, 29, mgrap[x1]);
+    // sadly there is not a official Syobon Action 2 release containing the missing sprites.
+    // grap[32][4] was not even in this list, so probably the creator of that mod
+    // forgot to upload loadg.cpp and the assets in the latest game zip...
+    // im using alternative edited versions for now
+    grap[31][x1] = Sliced_GFX_KZ[0]; // DerivationGraph(293, 92, 64, 29, mgrap[x1]);
     grap[32][x1] = Sliced_GFX_KZ[1];
 
-//中間フラグ (Intermediate flag)
+    // 中間フラグ (Intermediate flag)
     grap[20][x1] = DerivationGraph(40, 182, 40, 60, mgrap[x1]);
 
-
-//グラ
+    // グラ
     x1 = 5;
     grap[0][x1] = DerivationGraph(167, 0, 45, 45, mgrap[6]);
 
-
-
-
-
-
-
-
-
-//敵サイズ収得
-//int GrHandle=0;
+    // 敵サイズ収得
+    // int GrHandle=0;
     x1 = 3;
-    for (t = 0; t <= 140; t++) {
-	if (grap[t][x1]) {
-	    anx[t] = grap[t][x1]->w;
-	    any[t] = grap[t][x1]->h;
-//GetGraphSize(grap[t][x1] ,&anx[t] ,&any[t]);
-	    anx[t] *= 100;
-	    any[t] *= 100;
-	} else {
-	    anx[t] = 0;
-	    any[t] = 0;
-	}
+    for (t = 0; t <= 140; t++)
+    {
+        if (grap[t][x1])
+        {
+            anx[t] = grap[t][x1]->w;
+            any[t] = grap[t][x1]->h;
+            // GetGraphSize(grap[t][x1] ,&anx[t] ,&any[t]);
+            anx[t] *= 100;
+            any[t] *= 100;
+        }
+        else
+        {
+            anx[t] = 0;
+            any[t] = 0;
+        }
     }
     anx[79] = 120 * 100;
     any[79] = 15 * 100;
     anx[85] = 25 * 100;
     any[85] = 30 * 10 * 100;
 
-//背景サイズ収得
+    // 背景サイズ収得
     x1 = 4;
-    for (t = 0; t < 40; t++) {
-	if (grap[t][x1]) {
-	    ne[t] = grap[t][x1]->w;
-	    nf[t] = grap[t][x1]->h;
-//GetGraphSize(grap[t][x1] ,&ne[t] ,&nf[t]);
-//ne[t]*=100;nf[t]*=100;
-	} else {
-	    ne[t] = 0;
-	    nf[t] = 0;
-	}
+    for (t = 0; t < 40; t++)
+    {
+        if (grap[t][x1])
+        {
+            ne[t] = grap[t][x1]->w;
+            nf[t] = grap[t][x1]->h;
+            // GetGraphSize(grap[t][x1] ,&ne[t] ,&nf[t]);
+            // ne[t]*=100;nf[t]*=100;
+        }
+        else
+        {
+            ne[t] = 0;
+            nf[t] = 0;
+        }
     }
 
-/*
-anx[0]=30;any[0]=30;
-anx[1]=30;any[1]=43;
-anx[2]=30;any[2]=30;
-anx[3]=30;any[3]=44;
-*/
+    /*
+    anx[0]=30;any[0]=30;
+    anx[1]=30;any[1]=43;
+    anx[2]=30;any[2]=30;
+    anx[3]=30;any[3]=44;
+    */
 
-
-
-
-
-
-
-
-
-//ogg読み込み
-//try{
-//oto[2] = LoadSoundMem( "SE/1.mp3" ) ;
-    otom[1] = LoadMusicMem("BGM/field.ogg"); //50
-    otom[2] = LoadMusicMem("BGM/dungeon.ogg"); //40
-    otom[3] = LoadMusicMem("BGM/star4.ogg"); //50
-    otom[4] = LoadMusicMem("BGM/castle.ogg"); //50
-    otom[5] = LoadMusicMem("BGM/puyo.ogg"); //50
-    otom[6] = LoadMusicMem( "BGM/field3.mp3"); //+KZ from Syobon Action 2 (English version)
-//otom[6]=LoadMusicMem( "BGM/last.ogg");
-//ChangeVolumeSoundMem(50, otom[6]);
+    // ogg読み込み
+    // try{
+    // oto[2] = LoadSoundMem( "SE/1.mp3" ) ;
+    otom[1] = LoadMusicMem("BGM/field.ogg");   // 50
+    otom[2] = LoadMusicMem("BGM/dungeon.ogg"); // 40
+    otom[3] = LoadMusicMem("BGM/star4.ogg");   // 50
+    otom[4] = LoadMusicMem("BGM/castle.ogg");  // 50
+    otom[5] = LoadMusicMem("BGM/puyo.ogg");    // 50
+    otom[6] = LoadMusicMem("BGM/field3.mp3");  //+KZ from Syobon Action 2 (English version)
+                                               // otom[6]=LoadMusicMem( "BGM/last.ogg");
+    // ChangeVolumeSoundMem(50, otom[6]);
 
     oto[1] = LoadSoundMem("SE/jump.ogg");
-//oto[2] = LoadSoundMem("SE/brockcoin.ogg");
+    // oto[2] = LoadSoundMem("SE/brockcoin.ogg");
     oto[3] = LoadSoundMem("SE/brockbreak.ogg");
     oto[4] = LoadSoundMem("SE/coin.ogg");
     oto[5] = LoadSoundMem("SE/humi.ogg");
@@ -262,22 +253,22 @@ anx[3]=30;any[3]=44;
     oto[17] = LoadSoundMem("SE/allclear.ogg");
     oto[18] = LoadSoundMem("SE/tekifire.ogg");
 
-//}catch( int num){end();}
+    //}catch( int num){end();}
 
-
-//ループ設定-20000-20秒
-//SetLoopPosSoundMem( 1,oto[104]) ;
-//SetLoopSamplePosSoundMem(44100,oto[104]);
-//SetLoopSamplePosSoundMem(22050,oto[104]);
-
+    // ループ設定-20000-20秒
+    // SetLoopPosSoundMem( 1,oto[104]) ;
+    // SetLoopSamplePosSoundMem(44100,oto[104]);
+    // SetLoopSamplePosSoundMem(22050,oto[104]);
 }
 
 extern bool sound;
-void parseArgs(int argc, char* argv[])
+void parseArgs(int argc, char *argv[])
 {
-    if(argc <= 1) return;
-    for(int i = 0; i < argc; i++)
+    if (argc <= 1)
+        return;
+    for (int i = 0; i < argc; i++)
     {
-        if(!strcasecmp(argv[i], "-nosound")) sound = false;
+        if (!strcasecmp(argv[i], "-nosound"))
+            sound = false;
     }
 }
