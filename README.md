@@ -93,9 +93,12 @@ Unimplemented
 Release Changelog
 -----------------
 **SyobonKZ V1 (in development)**
+* Added some "+KZ Edition" text
 * Fixed missing Syobon Action 2 assets
 * Fix non-transparent sprites
 * Make window resizable
+* Use CMake build system
+* Emscripten (web browser) support
 * Fix C++ warnings
 * Fix a out of bounds memory access
 * Fix including SDL libraries by using pkg-config
