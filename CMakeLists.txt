@@ -82,11 +82,19 @@ else()
 endif()
 
 add_executable(${EXECUTABLE_NAME}
+    main.h
     main.cpp
     loadg.cpp
+    DxLib.h
     DxLib.cpp
+    global_vars.h
     global_vars.cpp
+    levels.h
     levels.cpp
+
+    # a thing filled with macros and preprocessor checks
+    crossplatform.h
+    crossplatform.cpp
 )
 
 #html

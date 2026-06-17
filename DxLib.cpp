@@ -1,71 +1,9 @@
-#ifdef __EMSCRIPTEN__
-	#include <emscripten.h>
-#endif
+
 #include "DxLib.h"
 
+#include "crossplatform.h"
+
 #define SYOBON_COLOR_KEY(img) SDL_MapRGB(img, 9 * 16 + 9, 255, 255)
-
-#ifdef __EMSCRIPTEN__
-    //+KZ: Emscripten does not implement SDL_SetColorKey
-    //Empscripten_SetColorKey is a cheap (which means bad :p) replacement for it
-    #define SDL_SetColorKey(surface, flags, color) Empscripten_SetColorKey(surface, color)
-
-    void Empscripten_SetColorKey(SDL_Surface * pSurface, Uint32 Color)
-    {
-        SDL_LockSurface(pSurface);
-
-        union PixelColor32
-        {
-            Uint32 Pixel;
-            Uint8 Colors[4];
-        };
-        
-        PixelColor32 ColorKey;
-        ColorKey.Pixel = Color;
-
-        //Pixels are weird in emscripten for some reason and does not match exact value
-        //(or it is just me being bad at Emscripten SDL)
-        int Tolerance = 1;
-
-        size_t max = pSurface->w * pSurface->h;
-        for(int i = 0; i < max; ++i)
-        {
-            SDL_Color * pPixel = &((SDL_Color *)pSurface->pixels)[i];
-
-            if(
-                pPixel->r >= ColorKey.Colors[0] - Tolerance && pPixel->r < ColorKey.Colors[0] + Tolerance &&
-                pPixel->g >= ColorKey.Colors[1] - Tolerance && pPixel->g < ColorKey.Colors[1] + Tolerance &&
-                pPixel->b >= ColorKey.Colors[2] - Tolerance && pPixel->b < ColorKey.Colors[2] + Tolerance
-            )
-            {
-                *((Uint32 *)pPixel) = 0;
-            }
-        }
-
-        SDL_UnlockSurface(pSurface);
-    }
-
-    //+KZ: Emscripten needs a custom WaitKey, otherwise the browser will freeze
-    void Emscripten_WaitKey_Loop(void * args /* (args is not used and should not be) */)
-    {
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_KEYDOWN)
-            {
-                return;
-            }
-        }
-        //+KZ: keep pushing ourselves until a key is pressed
-        emscripten_push_main_loop_blocker(Emscripten_WaitKey_Loop, nullptr);
-    }
-
-    //+KZ: starts the WaitKey loop
-    void Emscripten_WaitKey()
-    {
-        emscripten_push_main_loop_blocker(Emscripten_WaitKey_Loop, nullptr);
-    }
-#endif
 
 SDL_Joystick* joystick;
 
@@ -241,16 +179,6 @@ byte CheckHitKey(int key)
 {
     if(key == SDLK_z && keysHeld[SDLK_SEMICOLON]) return true;
     return keysHeld[key];
-}
-
-byte WaitKey()
-{
-    SDL_Event event;
-    while (true) {
-	while (SDL_PollEvent(&event))
-	    if (event.type == SDL_KEYDOWN)
-		return event.key.keysym.sym;
-    }
 }
 
 /*Uint32 GetColor(byte r, byte g, byte b)

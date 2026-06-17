@@ -2,6 +2,7 @@
 #define SYOBON_MAIN_H
 
 #include "DxLib.h"
+#include "crossplatform.h"
 
 #define SHORT
 
@@ -17,11 +18,7 @@ void rpaint();
 
 //サブクラス
 //(ウエイト系
-#ifndef __EMSCRIPTEN__
-    #define wait(i) SDL_Delay(i)
-#else
-    #define wait(i)
-#endif
+//+KZ: wait() moved to crossplatform.h
 void wait2(long stime, long etime, int FLAME_TIME);
 int rand(int Rand);
 #define end() exit(0)

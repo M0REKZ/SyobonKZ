@@ -11,9 +11,10 @@
 //main-10
 //タイトル-100
 
-//: This is unexcusable. How could someone in their right mind define
-//: a variable called 'main'!?
-//: The new define is after the main method
+//Open Syobon Action:
+// This is unexcusable. How could someone in their right mind define
+// a variable called 'main'!?
+// The new define is after the main method
 extern int mainZ, maintm;
 
 //ステージ
@@ -157,7 +158,7 @@ extern int srsok[srmax], srmovep[srmax], srmove[srmax];
 extern int fx, fy, fzx, fzy, scrollx, scrolly;
 //全体のポイント
 
-//: "fma" already exists, so call it something else and add a define
+//Open Syobon Action: "fma" already exists, so call it something else and add a define
 extern int fmaZ, fmb;
 #define fma fmaZ
 
@@ -182,8 +183,8 @@ extern double xd[11];
 extern std::string xs[31];
 
 
-//タイマー測定
-//: Do with this what we did with fma
+//タイマー測定 (Timer measurement)
+//Open Syobon Action: Do with this what we did with fma
 extern long stimeZ;
 #define stime stimeZ
 

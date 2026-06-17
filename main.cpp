@@ -1,31 +1,7 @@
-#ifdef __EMSCRIPTEN__
-	#include <emscripten.h>
-#endif
 
 #include "main.h"
 #include "global_vars.h"
 #include "levels.h"
-
-#ifdef __EMSCRIPTEN__
-	//+KZ: Emscripten needs a custom WaitKey, otherwise the website will freeze
-	#define WaitKey() Emscripten_WaitKey()
-
-	void MainloopEmscripten()
-	{
-		UpdateKeys();
-		maint = 0;
-		Mainprogram();
-		if (maint == 3)
-			return;
-		static int prevFPS = 30;
-		if(prevFPS != xx[0])
-		{
-			emscripten_cancel_main_loop();
-			prevFPS = xx[0];
-			emscripten_set_main_loop(MainloopEmscripten, xx[0], 1);
-		}
-	}
-#endif
 
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
@@ -45,17 +21,7 @@ int main(int argc, char *argv[])
 
 //ループ
 //for (maint=0;maint<=2;maint++){
-#ifndef __EMSCRIPTEN__
-    while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
-	UpdateKeys();
-	maint = 0;
-	Mainprogram();
-	if (maint == 3)
-	    break;
-    }
-#else
-	emscripten_set_main_loop(MainloopEmscripten, 30, 1);
-#endif
+	MainLoop(); //+KZ
 
 //ＤＸライブラリ使用の終了処理
     end();
