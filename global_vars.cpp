@@ -3,9 +3,6 @@
 
 #include "global_vars.h"
 
-void loadg();
-void parseArgs(int argc, char* argv[]);
-
 //String 使用
 
 //プログラム中
@@ -45,62 +42,21 @@ int stageonoff = 0;
 
 
 //メインプログラム
-void Mainprogram();
-void rpaint();
 int maint;
-
-
-//サブクラス
-//(ウエイト系
-#ifndef __EMSCRIPTEN__
-    #define wait(i) SDL_Delay(i)
-#else
-    #define wait(i)
-#endif
-void wait2(long stime, long etime, int FLAME_TIME);
-int rand(int Rand);
-#define end() exit(0)
 
 //描画
 Uint32 color;
 Uint32 gfxcolor;
-void setfont(int a);
-void setcolor(int red, int green, int blue);
-void setc0();
-void setc1();
-void drawpixel(int a, int b);
-void drawline(int a, int b, int c, int d);
-void drawrect(int a, int b, int c, int d);
-void fillrect(int a, int b, int c, int d);
-void drawarc(int a, int b, int c, int d);
-void fillarc(int a, int b, int c, int d);
-void FillScreen();
+
 SDL_Surface *grap[161][8];
 SDL_Surface *mgrap[51];
 SDL_Surface *Main_GFX_KZ[1]; //+KZ
 SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
-SDL_Surface *loadimage(std::string b);
-SDL_Surface *loadimage(int a, int x, int y, int r, int z);
+
 int mirror;
-void drawimage(SDL_Surface * mx, int a, int b);
-void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f);
-void setre();
-void setre2();
-void setno();
+
 Mix_Music *otom[7]; //+KZ increased for Syobon Action 2 music
 Mix_Chunk *oto[19];
-void ot(Mix_Chunk * x);
-void bgmchange(Mix_Music * x);
-
-//文字
-void str(std::string c, int a, int b);
-
-
-//)
-
-void stagecls();
-void stage();
-void stagep();
 
 
 
@@ -127,7 +83,6 @@ double pai = 3.1415926535;
 
 
 //地面
-#define smax 31
 int sx, sco;
 int sa[smax], sb[smax], sc[smax], sd[smax], stype[smax], sxtype[smax],
     sr[smax];
@@ -155,23 +110,14 @@ int mascrollmax = 21000;	//9000
 
 
 //ブロック
-void tyobi(int x, int y, int type);
-void brockbreak(int t);
-#define tmax 641
 int tco;
 int ta[tmax], tb[tmax], tc[tmax], td[tmax], thp[tmax], ttype[tmax];
 int titem[tmax], txtype[tmax];
 
 //メッセージブロック
 int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
-void ttmsg();
-void txmsg(std::string x, int a);
-void setfont(int x, int y);
 
 //効果を持たないグラ
-void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
-	   int xnobib, int xgtype, int xtm);
-#define emax 201
 int eco;
 int ea[emax], eb[emax], enobia[emax], enobib[emax], ec[emax], ed[emax];
 int ee[emax], ef[emax], etm[emax];
@@ -180,10 +126,6 @@ int egtype[emax];
 
 
 //敵キャラ
-void ayobi(int xa, int xb, int xc, int xd, int xnotm, int xtype,
-	   int xxtype);
-void tekizimen();
-#define amax 24
 int aco;
 int aa[amax], ab[amax], anobia[amax], anobib[amax], ac[amax], ad[amax];
 int ae[amax], af[amax], abrocktm[amax];
@@ -194,21 +136,18 @@ int atm[amax], a2tm[amax];
 int amsgtm[amax], amsgtype[amax];
 
 //敵出現
-#define bmax 81
 int bco;
 int ba[bmax], bb[bmax], btm[bmax];
 int btype[bmax], bxtype[bmax], bz[bmax];
 
 
 //背景
-#define nmax 41
 int nxxmax, nco;
 int na[nmax], nb[nmax], nc[nmax], nd[nmax], ntype[nmax];
 int ne[nmax], nf[nmax], ng[nmax], nx[nmax];
 
 
 //リフト
-#define srmax 21
 int srco;
 int sra[srmax], srb[srmax], src[srmax], srd[srmax], sre[srmax], srf[srmax];
 int srtype[srmax], srgtype[srmax], sracttype[srmax], srsp[srmax];
@@ -225,7 +164,6 @@ int fx = 0, fy = 0, fzx, fzy, scrollx, scrolly;
 
 //: "fma" already exists, so call it something else and add a define
 int fmaZ = 0, fmb = 0;
-#define fma fmaZ
 
 //強制スクロール
 int kscroll = 0;
