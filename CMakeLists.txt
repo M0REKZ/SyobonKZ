@@ -95,6 +95,8 @@ add_executable(${EXECUTABLE_NAME}
     global_vars.cpp
     levels.h
     levels.cpp
+    player.h
+    player.cpp
     title.h
     title.cpp
 

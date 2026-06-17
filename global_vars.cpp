@@ -52,8 +52,10 @@ int SyobonQuit;
 Uint32 color;
 Uint32 gfxcolor;
 
-SDL_Surface *grap[161][8];
-SDL_Surface *mgrap[51];
+SDL_Surface *Sliced_GFX[161][8];
+SDL_Surface *Main_GFX[51];
+
+// +KZ: i added these
 SDL_Surface *Main_GFX_KZ[1]; //+KZ
 SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 

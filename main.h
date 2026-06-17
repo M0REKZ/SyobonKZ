@@ -26,8 +26,8 @@ int rand(int Rand);
 //描画 (Drawing)
 void setfont(int a);
 void setcolor(int red, int green, int blue);
-void setc0();
-void setc1();
+#define setc0() setcolor(0, 0, 0)
+#define setc1() setcolor(255, 255, 255)
 void drawpixel(int a, int b);
 void drawline(int a, int b, int c, int d);
 void drawrect(int a, int b, int c, int d);
@@ -56,10 +56,6 @@ void str(std::string c, int a, int b);
 
 //)
 
-void stagecls();
-void stage();
-void stagep();
-
 
 
 //ブロック (Block)
@@ -77,11 +73,6 @@ void setfont(int x, int y);
 void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
 	   int xnobib, int xgtype, int xtm);
 
-//敵キャラ (Enemy character)
-// @attention +KZ: void ayobi() is now void CreateEntity()
-// @attention +KZ: int xtype is now int EntityType
-void CreateEntity(int xa, int xb, int xc, int xd, int xnotm, int EntityType,
-	   int xxtype);
 // @attention +KZ: void tekizimen() is now void HandleTiles()
 void HandleTiles();
 

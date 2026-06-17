@@ -70,8 +70,12 @@ extern int SyobonQuit;
 extern Uint32 color;
 extern Uint32 gfxcolor;
 
-extern SDL_Surface *grap[161][8];
-extern SDL_Surface *mgrap[51];
+// @attention +KZ: renamed grap[][] to Sliced_GFX[][]
+extern SDL_Surface *Sliced_GFX[161][8];
+// @attention +KZ: renamed mgrap[][] to Main_GFX[][]
+extern SDL_Surface *Main_GFX[51];
+
+// +KZ: i added these
 extern SDL_Surface *Main_GFX_KZ[1]; //+KZ
 extern SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 

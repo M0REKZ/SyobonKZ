@@ -1238,8 +1238,8 @@ void PlaceEntities()
 
             for (tt = 0; tt <= 1; tt++)
             {
-                int local_xx_0 = 0; //xx[0] = 0;
-                int local_xx_1 = 0; //xx[1] = 0;
+                int local_xx_0 = 0; // xx[0] = 0;
+                int local_xx_1 = 0; // xx[1] = 0;
 
                 if (bz[t] == 0 && btm[t] < 0 && ba[t] - fx >= fxmax + 2000 && ba[t] - fx < fxmax + 2000 + mc && tt == 0)
                 {
@@ -1276,3 +1276,371 @@ void PlaceEntities()
         }
     } // t
 }
+
+void HandleLifts()
+{
+    // リフト (Lift)
+    for (t = 0; t < srmax; t++)
+    {
+        xx[10] = sra[t];
+        xx[11] = srb[t];
+        xx[12] = src[t];
+        xx[13] = srd[t];
+        xx[8] = xx[10] - fx;
+        xx[9] = xx[11] - fy;
+        if (xx[8] + xx[12] >= -10 - 12000 && xx[8] <= fxmax + 12100)
+        {
+            xx[0] = 500;
+            xx[1] = 1200;
+            xx[2] = 1000;
+            xx[7] = 2000;
+            if (md >= 100)
+            {
+                xx[1] = 900 + md;
+            }
+            // if (srtype[t]==1){xx[0]=600;}
+            if (md > xx[1])
+                xx[1] = md + 100;
+            // xx[18]=0;
+
+            srb[t] += sre[t];
+            sre[t] += srf[t];
+            // if (srf[t]>=500)srf[t]=0;
+
+            // 動き (Movement)
+            switch (sracttype[t])
+            {
+
+            case 1:
+                if (sron[t] == 1)
+                    srf[t] = 60;
+                break;
+
+            case 2:
+                /*
+                if (sra[t]<=srmovep[t]-srmove[t])srmuki[t]=1;
+                if (sra[t]>=srmovep[t]+srmove[t])srmuki[t]=0;
+                */
+                break;
+
+            case 3:
+                /*
+                if (srb[t]<=srmovep[t]-srmove[t])srmuki[t]=1;
+                if (srb[t]>=srmovep[t]+srmove[t])srmuki[t]=0;
+                */
+                break;
+
+                /*
+                case 4:
+                if (srmove[t]==0){srmuki[t]=0;}else{srmuki[t]=1;}
+                if (sra[t]-fx<-1100-src[t]){sra[t]=fymax+fx+scrollx;}
+                if (sra[t]-fx>24000+scrollx){sra[t]=-1100-src[t]+fx;}
+                break;
+                */
+
+            case 5:
+                if (srmove[t] == 0)
+                {
+                    srmuki[t] = 0;
+                }
+                else
+                {
+                    srmuki[t] = 1;
+                }
+                if (srb[t] - fy < -2100)
+                {
+                    srb[t] = fymax + fy + scrolly + 2000;
+                }
+                if (srb[t] - fy > fymax + scrolly + 2000)
+                {
+                    srb[t] = -2100 + fy;
+                }
+                break;
+
+            case 6:
+                if (sron[t] == 1)
+                    srf[t] = 40;
+                break;
+
+            case 7:
+                break;
+
+            } // sw
+
+            // if (srtype[t]==1){sre[10]=300;sre[11]=300;}
+
+            // 乗ったとき (When I got on)
+            if (!(mztm >= 1 && mztype == 1 && actaon[3] == 1) && Health >= 1)
+            {
+                if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + xx[12] - xx[0] && mb + mnobib > xx[9] && mb + mnobib < xx[9] + xx[1] && md >= -100)
+                {
+                    mb = xx[9] - mnobib + 100;
+                    // if (sracttype[t]!=7)PlayerGrounded=1;
+
+                    if (srtype[t] == 1)
+                    {
+                        sre[10] = 900;
+                        sre[11] = 900;
+                    }
+
+                    if (srsp[t] != 12)
+                    {
+                        PlayerGrounded = 1;
+                        md = 0;
+                    }
+                    else
+                    {
+                        // すべり (Slip)
+                        // md=0;GroundType=1;PlayerGrounded=1;
+                        md = -800;
+                    }
+
+                    /*
+                    md=0;
+                    if ((sracttype[t]==1 || sracttype[t]==6) && sron[t]==1)mb+=sre[t];
+
+                    if (sracttype[t]==2 || sracttype[t]==4){
+                    if (srmuki[t]==0)ma-=srsok[t];
+                    if (srmuki[t]==1)ma+=srsok[t];
+                    }
+                    */
+
+                    // 落下
+                    if ((sracttype[t] == 1) && sron[t] == 0)
+                        sron[t] = 1;
+
+                    if (sracttype[t] == 1 && sron[t] == 1 || sracttype[t] == 3 || sracttype[t] == 5)
+                    {
+                        mb += sre[t];
+                        // if (srmuki[t]==0)
+                        // if (srf[t]<0)
+                        // if (srmuki[t]==1)
+                        // if (srf[t]>0)
+                        // mb+=srsok[t];
+                    }
+
+                    if (sracttype[t] == 7)
+                    {
+                        if (actaon[2] != 1)
+                        {
+                            md = -600;
+                            mb -= 810;
+                        }
+                        if (actaon[2] == 1)
+                        {
+                            mb -= 400;
+                            md = -1400;
+                            mjumptm = 10;
+                        }
+                    }
+                    // 特殊 (Special)
+                    if (srsp[t] == 1)
+                    {
+                        PlaySound(Sounds[3]);
+                        eyobi(sra[t] + 200,
+                              srb[t] - 1000,
+                              -240, -1400, 0, 160, 4500, 4500, 2, 120);
+                        eyobi(sra[t] + 4500 -
+                                  200,
+                              srb[t] - 1000,
+                              240, -1400, 0, 160, 4500, 4500, 3, 120);
+                        sra[t] = -70000000;
+                    }
+
+                    if (srsp[t] == 2)
+                    {
+                        mc = -2400;
+                        srmove[t] += 1;
+                        if (srmove[t] >= 100)
+                        {
+                            Health = 0;
+                            mmsgtype = 53;
+                            mmsgtm = 30;
+                            srmove[t] = -5000;
+                        }
+                    }
+
+                    if (srsp[t] == 3)
+                    {
+                        mc = 2400;
+                        srmove[t] += 1;
+                        if (srmove[t] >= 100)
+                        {
+                            Health = 0;
+                            mmsgtype = 53;
+                            mmsgtm = 30;
+                            srmove[t] = -5000;
+                        }
+                    }
+                    // if (srtype[t]==1){md=-600;mb-=610;Health-=1;if (mmutekion!=1)mmutekitm=40;}
+                } // 判定内
+
+                // 疲れ初期化
+                if ((srsp[t] == 2 || srsp[t] == 3) && mc != -2400 && srmove[t] > 0)
+                {
+                    srmove[t]--;
+                }
+
+                if (srsp[t] == 11)
+                {
+                    if (ma + mnobia >
+                            xx[8] + xx[0] - 2000 &&
+                        ma < xx[8] + xx[12] - xx[0])
+                    {
+                        sron[t] = 1;
+                    } // && mb+mnobib>xx[9]-1000 && mb+mnobib<xx[9]+xx[1]+2000)
+                    if (sron[t] == 1)
+                    {
+                        srf[t] = 60;
+                        srb[t] += sre[t];
+                    }
+                }
+                // トゲ(下) (Spikes (below))
+                if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + xx[12] - xx[0] && mb > xx[9] - xx[1] / 2 && mb < xx[9] + xx[1] / 2)
+                {
+                    if (srtype[t] == 2)
+                    {
+                        if (md < 0)
+                        {
+                            md = -md;
+                        }
+                        mb += 110;
+                        if (mmutekitm <= 0)
+                            Health -= 1;
+                        if (mmutekion != 1)
+                            mmutekitm = 40;
+                    }
+                }
+                // 落下 (Falling)
+                if (sracttype[t] == 6)
+                {
+                    if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + xx[12] - xx[0])
+                    {
+                        sron[t] = 1;
+                    }
+                }
+
+            } //!
+
+            /*
+            //ジャンプ台
+            if (sracttype[t]==7){
+            if (ma+mnobia>xx[8]+xx[0] && ma<xx[8]+xx[12]-xx[0] && mb+mnobib>xx[9]+xx[1]/2 && mb+mnobib<xx[9]+xx[1]*3/2 && md>=-100){
+            if (actaon[2]!=1){md=-600;mb-=810;}
+            if (actaon[2]==1){mb-=400;md=-1400;mjumptm=10;}
+            }}
+            */
+
+            if (sracttype[t] == 2 || sracttype[t] == 4)
+            {
+                if (srmuki[t] == 0)
+                    sra[t] -= srsok[t];
+                if (srmuki[t] == 1)
+                    sra[t] += srsok[t];
+            }
+            if (sracttype[t] == 3 || sracttype[t] == 5)
+            {
+                if (srmuki[t] == 0)
+                    srb[t] -= srsok[t];
+                if (srmuki[t] == 1)
+                    srb[t] += srsok[t];
+            }
+            // 敵キャラ適用 (Applies to enemy characters)
+            for (tt = 0; tt < amax; tt++)
+            {
+                if (azimentype[tt] == 1)
+                {
+                    if (aa[tt] + anobia[tt] - fx > xx[8] + xx[0] && aa[tt] - fx < xx[8] + xx[12] - xx[0] && ab[tt] + anobib[tt] > xx[11] - 100 && ab[tt] + anobib[tt] < xx[11] + xx[1] + 500 && ad[tt] >= -100)
+                    {
+                        ab[tt] = xx[9] - anobib[tt] + 100;
+                        ad[tt] = 0;
+                        axzimen[tt] = 1;
+                    }
+                }
+            }
+        }
+    } // リフト (Lift)
+}
+
+// 敵キャラ、アイテム作成 (Enemy character and item creation)
+void CreateEntity(
+	int xa,
+	int xb,
+	int xc,
+	int xd,
+	int xnotm,
+	int EntityType, //int xtype
+	int xxtype
+)
+{
+	int rz = 0;
+	for (t1 = 0; t1 <= 1; t1++)
+	{
+		t1 = 2;
+		if (aa[aco] >= -9000 && aa[aco] <= 30000)
+			t1 = 0;
+		rz++;
+
+		if (rz <= amax)
+		{
+			t1 = 3;
+
+			aa[aco] = xa;
+			ab[aco] = xb; // ag[aco]=0;ah[aco]=0;ai[aco]=bb[t];//ad[t]=0;aeon[t]=1;
+			ac[aco] = xc;
+			ad[aco] = xd;
+			if (xxtype > 100)
+				ac[aco] = xxtype;
+			// ae[aco]=0;af[aco]=0;
+			atype[aco] = EntityType;
+			if (xxtype >= 0 && xxtype <= 99100)
+				axtype[aco] = xxtype; // ahp[aco]=iz[bxtype[t]];aytm[aco]=0;
+			// if (xxtype==1)end();
+			anotm[aco] = xnotm;
+			if (aa[aco] - fx <= ma + mnobia / 2)
+				amuki[aco] = 1;
+			if (aa[aco] - fx > ma + mnobia / 2)
+				amuki[aco] = 0;
+			if (abrocktm[aco] >= 1)
+				amuki[aco] = 1;
+			if (abrocktm[aco] == 20)
+				amuki[aco] = 0;
+
+			anobia[aco] = anx[atype[aco]];
+			anobib[aco] = any[atype[aco]];
+
+			// 大砲音 (Cannon sound)
+			if (EntityType == 7 && CheckSoundMem(Sounds[10]) == 0)
+			{
+				PlaySound(Sounds[10]);
+			}
+			// ファイア音 (Fire sound)
+			if (EntityType == 10 && CheckSoundMem(Sounds[18]) == 0)
+			{
+				PlaySound(Sounds[18]);
+			}
+
+			azimentype[aco] = 1;
+
+			// if (atype[aco]<=30 && atype[aco]!=4)atm[aco]=20;
+
+			// azimentype[aco]=1;
+
+			//+KZ removed empty switch
+
+			if (EntityType == 87)
+			{
+				atm[aco] = rand(179) + (-90);
+			}
+
+			aco += 1;
+			if (aco >= amax - 1)
+			{
+				aco = 0;
+			}
+		} // t1
+
+		// if (bz[t]==1){bz[t]=0;}
+	} // rz
+
+} // ayobi
