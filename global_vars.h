@@ -53,16 +53,19 @@ extern int ending;
 
 //ステージ読み込みループ(いじらない)
 extern int stagerr, stagepoint;
-//オーバーフローさせる
-extern int over;
+//オーバーフローさせる (Overflow)
+// @attention +KZ: int over is now int SyobonRandomMode
+extern int SyobonRandomMode;
 
-//ステージスイッチ
+//ステージスイッチ (Stage Switch)
+//+KZ: ON/OFF Tile
 extern int stageonoff;
 
-//メインプログラム
-extern int maint;
+//メインプログラム (Main Program)
+// @attention +KZ: int maint is now int SyobonQuit
+extern int SyobonQuit;
 
-//描画
+//描画 (Drawing)
 extern Uint32 color;
 extern Uint32 gfxcolor;
 
@@ -71,10 +74,14 @@ extern SDL_Surface *mgrap[51];
 extern SDL_Surface *Main_GFX_KZ[1]; //+KZ
 extern SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 
+//+KZ: mirrors the image drawn by drawimage()
 extern int mirror;
 
-extern Mix_Music *otom[7]; //+KZ increased for Syobon Action 2 music
-extern Mix_Chunk *oto[19];
+//+KZ increased it for Syobon Action 2 music
+// @attention +KZ: Mix_Music *otom is now Mix_Music *Music
+extern Mix_Music *Music[7];
+// @attention +KZ: Mix_Chunk *oto is now Mix_Chunk *Sounds
+extern Mix_Chunk *Sounds[19];
 
 //1-ステージ
 //10-ステージ前
@@ -105,7 +112,9 @@ extern int sgtype[smax];
 //プレイヤー
 extern int mainmsgtype;
 extern int ma, mb, mnobia, mnobib, mhp;
-extern int mc, md, macttype, atkon, atktm, mactsok, msstar, nokori, mactp, mact;
+extern int mc, md, macttype, atkon, atktm, mactsok, msstar, mactp, mact;
+// @attention +KZ: int nokori is now int Lives;
+extern int Lives;
 
 extern int mtype, mxtype, mtm, mzz;
 extern int mzimen, mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;

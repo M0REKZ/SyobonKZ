@@ -73,6 +73,7 @@ void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
 //敵キャラ
 void ayobi(int xa, int xb, int xc, int xd, int xnotm, int xtype,
 	   int xxtype);
-void tekizimen();
+// @attention +KZ: void tekizimen() is now void HandleTiles()
+void HandleTiles();
 
 #endif

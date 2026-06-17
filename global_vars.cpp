@@ -38,14 +38,14 @@ int ending = 0;
 //ステージ読み込みループ(いじらない)
 int stagerr, stagepoint;
 //オーバーフローさせる
-int over = 0;
+int SyobonRandomMode = 0;
 
 //ステージスイッチ
 int stageonoff = 0;
 
 
 //メインプログラム
-int maint;
+int SyobonQuit;
 
 //描画
 Uint32 color;
@@ -58,8 +58,8 @@ SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 
 int mirror;
 
-Mix_Music *otom[7]; //+KZ increased for Syobon Action 2 music
-Mix_Chunk *oto[19];
+Mix_Music *Music[7]; //+KZ increased for Syobon Action 2 music
+Mix_Chunk *Sounds[19];
 
 
 
@@ -96,8 +96,8 @@ int sgtype[smax];
 //プレイヤー
 int mainmsgtype;
 int ma, mb, mnobia, mnobib, mhp;
-int mc, md, macttype, atkon, atktm, mactsok, msstar, nokori =
-    3, mactp, mact;
+int mc, md, macttype, atkon, atktm, mactsok, msstar, mactp, mact;
+int Lives = 3;
 
 int mtype, mxtype, mtm, mzz;
 int mzimen, mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;

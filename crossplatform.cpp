@@ -10,9 +10,9 @@
 void MainloopEmscripten()
 {
     UpdateKeys();
-    maint = 0;
+    SyobonQuit = 0;
     Mainprogram();
-    if (maint == 3)
+    if (SyobonQuit == 3)
         return;
     static int prevFPS = 30;
     if (prevFPS != xx[0])
@@ -86,9 +86,9 @@ void MainLoop()
     while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
     {
         UpdateKeys();
-        maint = 0;
+        SyobonQuit = 0;
         Mainprogram();
-        if (maint == 3)
+        if (SyobonQuit == 3)
             break;
     }
 }

@@ -1,17 +1,8 @@
 #include "DxLib.h"
+#include "global_vars.h"
 
-extern int ma, t, tt;
-extern SDL_Surface *grap[161][8];
-extern SDL_Surface *mgrap[51];
 int x1;
-extern Mix_Music *otom[7];
-extern Mix_Chunk *oto[19];
 
-extern int anx[160], any[160];
-extern int ne[40], nf[40];
-
-extern SDL_Surface *Main_GFX_KZ[1];   //+KZ
-extern SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 
 void loadg(void)
 {
@@ -224,41 +215,41 @@ void loadg(void)
 
     // ogg読み込み
     // try{
-    // oto[2] = LoadSoundMem( "SE/1.mp3" ) ;
-    otom[1] = LoadMusicMem("BGM/field.ogg");   // 50
-    otom[2] = LoadMusicMem("BGM/dungeon.ogg"); // 40
-    otom[3] = LoadMusicMem("BGM/star4.ogg");   // 50
-    otom[4] = LoadMusicMem("BGM/castle.ogg");  // 50
-    otom[5] = LoadMusicMem("BGM/puyo.ogg");    // 50
-    otom[6] = LoadMusicMem("BGM/field3.mp3");  //+KZ from Syobon Action 2 (English version)
-                                               // otom[6]=LoadMusicMem( "BGM/last.ogg");
-    // ChangeVolumeSoundMem(50, otom[6]);
+    // Sounds[2] = LoadSoundMem( "SE/1.mp3" ) ;
+    Music[1] = LoadMusicMem("BGM/field.ogg");   // 50
+    Music[2] = LoadMusicMem("BGM/dungeon.ogg"); // 40
+    Music[3] = LoadMusicMem("BGM/star4.ogg");   // 50
+    Music[4] = LoadMusicMem("BGM/castle.ogg");  // 50
+    Music[5] = LoadMusicMem("BGM/puyo.ogg");    // 50
+    Music[6] = LoadMusicMem("BGM/field3.mp3");  //+KZ from Syobon Action 2 (English version)
+                                               // Music[6]=LoadMusicMem( "BGM/last.ogg");
+    // ChangeVolumeSoundMem(50, Music[6]);
 
-    oto[1] = LoadSoundMem("SE/jump.ogg");
-    // oto[2] = LoadSoundMem("SE/brockcoin.ogg");
-    oto[3] = LoadSoundMem("SE/brockbreak.ogg");
-    oto[4] = LoadSoundMem("SE/coin.ogg");
-    oto[5] = LoadSoundMem("SE/humi.ogg");
-    oto[6] = LoadSoundMem("SE/koura.ogg");
-    oto[7] = LoadSoundMem("SE/dokan.ogg");
-    oto[8] = LoadSoundMem("SE/brockkinoko.ogg");
-    oto[9] = LoadSoundMem("SE/powerup.ogg");
-    oto[10] = LoadSoundMem("SE/kirra.ogg");
-    oto[11] = LoadSoundMem("SE/goal.ogg");
-    oto[12] = LoadSoundMem("SE/death.ogg");
-    oto[13] = LoadSoundMem("SE/Pswitch.ogg");
-    oto[14] = LoadSoundMem("SE/jumpBlock.ogg");
-    oto[15] = LoadSoundMem("SE/hintBlock.ogg");
-    oto[16] = LoadSoundMem("SE/4-clear.ogg");
-    oto[17] = LoadSoundMem("SE/allclear.ogg");
-    oto[18] = LoadSoundMem("SE/tekifire.ogg");
+    Sounds[1] = LoadSoundMem("SE/jump.ogg");
+    // Sounds[2] = LoadSoundMem("SE/brockcoin.ogg");
+    Sounds[3] = LoadSoundMem("SE/brockbreak.ogg");
+    Sounds[4] = LoadSoundMem("SE/coin.ogg");
+    Sounds[5] = LoadSoundMem("SE/humi.ogg");
+    Sounds[6] = LoadSoundMem("SE/koura.ogg");
+    Sounds[7] = LoadSoundMem("SE/dokan.ogg");
+    Sounds[8] = LoadSoundMem("SE/brockkinoko.ogg");
+    Sounds[9] = LoadSoundMem("SE/powerup.ogg");
+    Sounds[10] = LoadSoundMem("SE/kirra.ogg");
+    Sounds[11] = LoadSoundMem("SE/goal.ogg");
+    Sounds[12] = LoadSoundMem("SE/death.ogg");
+    Sounds[13] = LoadSoundMem("SE/Pswitch.ogg");
+    Sounds[14] = LoadSoundMem("SE/jumpBlock.ogg");
+    Sounds[15] = LoadSoundMem("SE/hintBlock.ogg");
+    Sounds[16] = LoadSoundMem("SE/4-clear.ogg");
+    Sounds[17] = LoadSoundMem("SE/allclear.ogg");
+    Sounds[18] = LoadSoundMem("SE/tekifire.ogg");
 
     //}catch( int num){end();}
 
     // ループ設定-20000-20秒
-    // SetLoopPosSoundMem( 1,oto[104]) ;
-    // SetLoopSamplePosSoundMem(44100,oto[104]);
-    // SetLoopSamplePosSoundMem(22050,oto[104]);
+    // SetLoopPosSoundMem( 1,Sounds[104]) ;
+    // SetLoopSamplePosSoundMem(44100,Sounds[104]);
+    // SetLoopSamplePosSoundMem(22050,Sounds[104]);
 }
 
 extern bool sound;

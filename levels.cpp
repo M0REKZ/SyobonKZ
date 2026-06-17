@@ -386,7 +386,7 @@ void HandleSyobonActionOneLevels()
 
         // マリ　地上　入れ
         // Mix_HaltMusic();
-        bgmchange(otom[1]);
+        bgmchange(Music[1]);
         // PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
         scrollx = 0 * 100;
@@ -697,7 +697,7 @@ void HandleSyobonActionOneLevels()
     {
 
         // マリ　地下　入れ
-        bgmchange(otom[2]);
+        bgmchange(Music[2]);
 
         scrollx = 4080 * 100;
         ma = 6000;
@@ -1285,7 +1285,7 @@ void HandleSyobonActionOneLevels()
 
         // マリ　地上　入れ
         // Mix_HaltMusic();
-        bgmchange(otom[1]);
+        bgmchange(Music[1]);
         // PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
         scrollx = 900 * 100;
@@ -1790,7 +1790,7 @@ void HandleSyobonActionOneLevels()
     {
 
         // Mix_HaltMusic();
-        bgmchange(otom[1]);
+        bgmchange(Music[1]);
         // PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
         scrollx = 3900 * 100;
@@ -2453,7 +2453,7 @@ void HandleSyobonActionOneLevels()
 
         // マリ　地上　入れ
         // Mix_HaltMusic();
-        bgmchange(otom[2]);
+        bgmchange(Music[2]);
         // PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
         scrollx = 0 * 100;
@@ -2767,7 +2767,7 @@ void HandleSyobonActionOneLevels()
     {
 
         stagecolor = 3;
-        bgmchange(otom[3]);
+        bgmchange(Music[3]);
 
         scrollx = 0 * 100;
         ma = 3000;
@@ -3061,7 +3061,7 @@ void HandleSyobonActionOneLevels()
 
         // マリ　地上　入れ
         // Mix_HaltMusic();
-        bgmchange(otom[4]);
+        bgmchange(Music[4]);
         // PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
         scrollx = 4400 * 100;
@@ -3686,7 +3686,7 @@ void HandleSyobonActionTwoLevels()
     { // 2-1
         ma = 5600;
         mb = 32000;
-        bgmchange(otom[1]);
+        bgmchange(Music[1]);
         stagecolor = 1;
         scrollx = 2900 * (113 - 19);
         //
@@ -4031,7 +4031,7 @@ void HandleSyobonActionTwoLevels()
 
     if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 0)
     { // 2-2(地上)
-        bgmchange(otom[1]);
+        bgmchange(Music[1]);
         stagecolor = 1;
         scrollx = 2900 * (19 - 19);
         //
@@ -4097,7 +4097,7 @@ void HandleSyobonActionTwoLevels()
 
     if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 1)
     { // 2-2(地下)
-        bgmchange(otom[2]);
+        bgmchange(Music[2]);
         stagecolor = 2;
         ma = 7500;
         mb = 9000;
@@ -4572,7 +4572,7 @@ void HandleSyobonActionTwoLevels()
     if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 2)
     { // 2-2 地上
         //
-        bgmchange(otom[1]);
+        bgmchange(Music[1]);
         stagecolor = 1;
         scrollx = 2900 * (36 - 19);
         ma = 7500;
@@ -4731,7 +4731,7 @@ void HandleSyobonActionTwoLevels()
     { // 2-3
         ma = 7500;
         mb = 3000 * 8;
-        bgmchange(otom[1]);
+        bgmchange(Music[1]);
         stagecolor = 1;
         scrollx = 2900 * (126 - 19);
         //
@@ -5104,7 +5104,7 @@ void HandleSyobonActionTwoLevels()
             mb = 3000 * 11;
             SyobonSection = 0;
         }
-        bgmchange(otom[4]);
+        bgmchange(Music[4]);
         stagecolor = 4;
         scrollx = 2900 * (40 - 19);
         //
@@ -5247,7 +5247,7 @@ void HandleSyobonActionTwoLevels()
     { // 2-4(2番)
         ma = 4500;
         mb = 3000 * 11;
-        bgmchange(otom[4]);
+        bgmchange(Music[4]);
         stagecolor = 4;
         scrollx = 2900 * (21 - 19);
         //
@@ -5336,7 +5336,7 @@ void HandleSyobonActionTwoLevels()
     { // 2-4(3番)
         ma = 4500;
         mb = 3000 * 11;
-        bgmchange(otom[5]); // 6
+        bgmchange(Music[5]); // 6
         stagecolor = 4;
         scrollx = 2900 * (128 - 19);
         //
@@ -5826,7 +5826,7 @@ void HandleSyobonActionTwoLevels()
     { // 3-1
         ma = 5600;
         mb = 32000;
-        bgmchange(otom[6]);
+        bgmchange(Music[6]);
         stagecolor = 5;
         scrollx = 2900 * (112 - 19);
         byte stagedatex[17][1001] = {
