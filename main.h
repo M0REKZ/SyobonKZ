@@ -20,7 +20,8 @@ void rpaint();
 //(ウエイト系
 //+KZ: wait() moved to crossplatform.h
 void wait2(long stime, long etime, int FLAME_TIME);
-int rand(int Rand);
+// @attention +KZ: int rand() is now int SyobonRand()
+int SyobonRand(int Rand);
 #define end() exit(0)
 
 //描画 (Drawing)
@@ -50,7 +51,8 @@ void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f);
 void PlaySound(Mix_Chunk * x);
 void bgmchange(Mix_Music * x);
 
-//文字
+//文字 (Letter)
+//+KZ: Draws a std::string using DrawString()
 void str(std::string c, int a, int b);
 
 
@@ -72,8 +74,5 @@ void setfont(int x, int y);
 //効果を持たないグラ (Grass with no effect)
 void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
 	   int xnobib, int xgtype, int xtm);
-
-// @attention +KZ: void tekizimen() is now void HandleTiles()
-void HandleTiles();
 
 #endif

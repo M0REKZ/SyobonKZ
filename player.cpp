@@ -1723,11 +1723,99 @@ void HandlePlayerWalls()
                     {
                         sr[t] = 0;
                         CreateEntity(sa[t], 30000,
-                                     rand(600) - 300,
-                                     -1600 - rand(900), 0, 84, 0);
+                                     SyobonRand(600) - 300,
+                                     -1600 - SyobonRand(900), 0, 84, 0);
                     }
                 }
             }
         }
     } // 壁 (Wall)
+}
+
+void HandlePlayerMessage()
+{
+    // プレイヤーのメッセージ (Player's message)
+    setc0();
+    if (mmsgtm >= 1)
+    {
+        mmsgtm--;
+        xs[0] = "";
+
+        if (mmsgtype == 1)
+            xs[0] = "お、おいしい!!";
+        if (mmsgtype == 2)
+            xs[0] = "毒は無いが……";
+        if (mmsgtype == 3)
+            xs[0] = "刺さった!!";
+        if (mmsgtype == 10)
+            xs[0] = "食べるべきではなかった!!";
+        if (mmsgtype == 11)
+            xs[0] = "俺は燃える男だ!!";
+        if (mmsgtype == 50)
+            xs[0] = "体が……焼ける……";
+        if (mmsgtype == 51)
+            xs[0] = "たーまやー!!";
+        if (mmsgtype == 52)
+            xs[0] = "見事にオワタ";
+        if (mmsgtype == 53)
+            xs[0] = "足が、足がぁ!!";
+        if (mmsgtype == 54)
+            xs[0] = "流石は摂氏800度!!";
+        if (mmsgtype == 55)
+            xs[0] = "溶岩と合体したい……";
+
+        setc0();
+        str(xs[0], (ma + mnobia + 300) / 100 - 1, mb / 100 - 1);
+        str(xs[0], (ma + mnobia + 300) / 100 + 1, mb / 100 + 1);
+        setc1();
+        str(xs[0], (ma + mnobia + 300) / 100, mb / 100);
+
+    } // mmsgtm
+}
+
+void RenderPlayer()
+{
+    // プレイヤー描画 (Player rendering)
+    setcolor(0, 0, 255);
+
+    if (mactp >= 2000)
+    {
+        mactp -= 2000;
+        if (mact == 0)
+        {
+            mact = 1;
+        }
+        else
+        {
+            mact = 0;
+        }
+    }
+    if (mmuki == 0)
+        mirror = 1;
+
+    if (mtype != 200 && mtype != 1)
+    {
+        if (PlayerGrounded == 1)
+        {
+            // 読みこんだグラフィックを拡大描画 (Enlarged rendering of loaded graphics)
+            if (mact == 0)
+                drawimage(Sliced_GFX[0][0], ma / 100, mb / 100);
+            if (mact == 1)
+                drawimage(Sliced_GFX[1][0], ma / 100, mb / 100);
+        }
+        if (PlayerGrounded == 0)
+        {
+            drawimage(Sliced_GFX[2][0], ma / 100, mb / 100);
+        }
+    }
+    // 巨大化 (Huge)
+    else if (mtype == 1)
+    {
+        drawimage(Sliced_GFX[41][0], ma / 100, mb / 100);
+    }
+
+    else if (mtype == 200)
+    {
+        drawimage(Sliced_GFX[3][0], ma / 100, mb / 100);
+    }
 }

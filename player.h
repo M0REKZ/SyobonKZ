@@ -6,5 +6,8 @@ void HandlePlayer();
 void HandlePlayerInput();
 void HandlePlayerBlocks();
 void HandlePlayerWalls();
+void HandlePlayerMessage();
+
+void RenderPlayer();
 
 #endif

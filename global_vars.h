@@ -139,7 +139,7 @@ extern int mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
 extern int mmutekitm, mmutekion;
 extern int mztm, mztype;
 extern int actaon[7];
-//メッセージ
+//メッセージ (Message)
 extern int mmsgtm, mmsgtype;
 
 extern int mascrollmax;	//9000

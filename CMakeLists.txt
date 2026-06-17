@@ -89,8 +89,12 @@ add_executable(${EXECUTABLE_NAME}
     DxLib.cpp
 
     # files added by +KZ to split the code
+    blocks.h
+    blocks.cpp
     entities.h
     entities.cpp
+    extra_graphics.h
+    extra_graphics.cpp
     global_vars.h
     global_vars.cpp
     levels.h
