@@ -253,14 +253,14 @@ void Mainprogram()
 			mainmsgtype = 0;
 
 			stagecolor = 1;
-			ma = 5600;
-			mb = 32000;
-			mmuki = 1;
+			PlayerX = 5600;
+			PlayerY = 32000;
+			PlayerLookingDirection = 1;
 			Health = 1;
 			mc = 0;
 			md = 0;
-			mnobia = 3000;
-			mnobib = 3600;
+			PlayerSizeX = 3000;
+			PlayerSizeY = 3600;
 
 			mtype = 0;
 
@@ -283,8 +283,8 @@ void Mainprogram()
 				{
 					if (SyobonRand(3) <= 1)
 					{
-						ta[t] = (SyobonRand(500) - 1) * 29 * 100;
-						tb[t] = SyobonRand(14) * 100 * 29 - 1200;
+						BlockX[t] = (SyobonRand(500) - 1) * 29 * 100;
+						BlockY[t] = SyobonRand(14) * 100 * 29 - 1200;
 						ttype[t] = SyobonRand(142);
 						if (ttype[t] >= 9 && ttype[t] <= 99)
 						{
@@ -297,18 +297,18 @@ void Mainprogram()
 				{
 					if (SyobonRand(2) <= 1)
 					{
-						ba[t] = (SyobonRand(500) - 1) * 29 * 100;
-						bb[t] = SyobonRand(15) * 100 * 29 - 1200 - 3000;
+						EnemyAppearX[t] = (SyobonRand(500) - 1) * 29 * 100;
+						EnemyAppearY[t] = SyobonRand(15) * 100 * 29 - 1200 - 3000;
 						if (SyobonRand(6) == 0)
 						{
-							btype[t] = SyobonRand(9);
+							EnemyAppearType[t] = SyobonRand(9);
 						}
 					}
 				}
 
 				srco = 0;
 				t = srco;
-				sra[t] = ma + fx;
+				sra[t] = PlayerX + fx;
 				srb[t] = (13 * 29 - 12) * 100;
 				src[t] = 30 * 100;
 				srtype[t] = 0;
@@ -332,28 +332,7 @@ void Mainprogram()
 
 		HandleLifts();
 
-		// グラ
-		for (t = 0; t < emax; t++)
-		{
-			xx[0] = ea[t] - fx;
-			xx[1] = eb[t] - fy;
-			xx[2] = enobia[t] / 100;
-			xx[3] = enobib[t] / 100;
-			if (etm[t] >= 0)
-				etm[t]--;
-			if (xx[0] + xx[2] * 100 >= -10 && xx[1] <= fxmax && xx[1] + xx[3] * 100 >= -10 - 8000 && xx[3] <= fymax && etm[t] >= 0)
-			{
-				ea[t] += ec[t];
-				eb[t] += ed[t];
-				ec[t] += ee[t];
-				ed[t] += ef[t];
-			}
-			else
-			{
-				ea[t] = -9000000;
-			}
-
-		} // emax
+		HandleExtraGraphics();
 
 		PlaceEntities();
 		HandleEntities();
@@ -366,10 +345,10 @@ void Mainprogram()
 			xx[2] = mascrollmax;
 			xx[3] = 0;
 			xx[1] = xx[2];
-			if (ma > xx[1] && fzx < scrollx)
+			if (PlayerX > xx[1] && fzx < scrollx)
 			{
-				xx[5] = ma - xx[1];
-				ma = xx[1];
+				xx[5] = PlayerX - xx[1];
+				PlayerX = xx[1];
 				fx += xx[5];
 				fzx += xx[5];
 				if (xx[1] <= 5000)
@@ -707,8 +686,8 @@ void bgmchange(Mix_Music *x)
 void BlockCreate(int x, int y, int type)
 {
 
-	ta[tco] = x * 100;
-	tb[tco] = y * 100;
+	BlockX[tco] = x * 100;
+	BlockY[tco] = y * 100;
 	ttype[tco] = type;
 
 	tco++;
@@ -720,7 +699,7 @@ void BlockCreate(int x, int y, int type)
 void BlockBreak(int t)
 {
 	//+KZ removed useless code
-	ta[t] = -800000;
+	BlockX[t] = -800000;
 } // brock
 
 // メッセージ (Message)

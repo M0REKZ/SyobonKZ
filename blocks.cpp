@@ -7,8 +7,8 @@ void RenderBlocks()
     // ブロック描画 (Block drawing)
     for (t = 0; t < tmax; t++)
     {
-        xx[0] = ta[t] - fx;
-        xx[1] = tb[t] - fy;
+        xx[0] = BlockX[t] - fx;
+        xx[1] = BlockY[t] - fy;
         xx[2] = 32;
         xx[3] = xx[2];
         if (xx[0] + xx[2] * 100 >= -10 && xx[1] <= fxmax)

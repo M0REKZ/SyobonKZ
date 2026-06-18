@@ -53,7 +53,6 @@ void HandlePlayer()
                 }
             }
             actaon[0] = 3;
-            mkasok += 1;
         }
     }
 
@@ -87,17 +86,9 @@ void HandlePlayer()
                 }
             }
             actaon[0] = 3;
-            mkasok += 1;
         }
     }
-    if (actaon[0] == 0 && mkasok > 0)
-    {
-        mkasok -= 2;
-    }
-    if (mkasok > 8)
-    {
-        mkasok = 8;
-    }
+
     // すべり補正初期化 (Initialization of slip correction)
     if (PlayerGrounded != 1)
         GroundType = EGroundType::NORMAL;
@@ -107,7 +98,7 @@ void HandlePlayer()
         mjumptm--;
     if (actaon[1] == 1 && PlayerGrounded == 1)
     {
-        mb -= 400;
+        PlayerY -= 400;
         md = -1200;
         mjumptm = 10;
 
@@ -189,7 +180,7 @@ void HandlePlayer()
 
         mkeytm = 2;
         md = -1500;
-        if (mb <= -6000)
+        if (PlayerY <= -6000)
         {
             blackx = 1;
             blacktm = 20;
@@ -205,9 +196,9 @@ void HandlePlayer()
     if (mtype == 3)
     {
         md = -2400;
-        if (mb <= -6000)
+        if (PlayerY <= -6000)
         {
-            mb = -80000000;
+            PlayerY = -80000000;
             Health = 0;
         }
     }
@@ -226,12 +217,12 @@ void HandlePlayer()
                 t = 28;
                 if (mtm <= 16)
                 {
-                    mb += 240;
+                    PlayerY += 240;
                     mzz = 100;
                 }
                 if (mtm == 17)
                 {
-                    mb = -80000000;
+                    PlayerY = -80000000;
                 }
                 if (mtm == 23)
                 {
@@ -278,17 +269,17 @@ void HandlePlayer()
                 md = 0;
                 if (mtm <= 16)
                 {
-                    ma += 240;
+                    PlayerX += 240;
                 } // mzz=100;}
                 if (mtm == 16)
-                    mb -= 1100;
+                    PlayerY -= 1100;
                 if (mtm == 20)
                     PlaySound(Sounds[10]);
 
                 if (mtm >= 24)
                 {
-                    ma -= 2000;
-                    mmuki = 0;
+                    PlayerX -= 2000;
+                    PlayerLookingDirection = 0;
                 }
                 if (mtm >= 48)
                 {
@@ -302,27 +293,27 @@ void HandlePlayer()
                 md = 0;
                 if (mtm <= 16 && mxtype != 3)
                 {
-                    mb += 240;
+                    PlayerY += 240;
                 } // mzz=100;}
                 if (mtm <= 16 && mxtype == 3)
                 {
-                    ma += 240;
+                    PlayerX += 240;
                 }
                 if (mtm == 19 && mxtype == 2)
                 {
                     Health = 0;
                     mtype = 2000;
                     mtm = 0;
-                    mmsgtm = 30;
-                    mmsgtype = 51;
+                    PlayerMessageTimer = 30;
+                    PlayerMessageType = 51;
                 }
                 if (mtm == 19 && mxtype == 5)
                 {
                     Health = 0;
                     mtype = 2000;
                     mtm = 0;
-                    mmsgtm = 30;
-                    mmsgtype = 52;
+                    PlayerMessageTimer = 30;
+                    PlayerMessageType = 52;
                 }
                 if (mtm == 20)
                 {
@@ -334,7 +325,7 @@ void HandlePlayer()
                     {
                         SyobonSection++;
                     }
-                    mb = -80000000;
+                    PlayerY = -80000000;
                     mxtype = 0;
                     blackx = 1;
                     blacktm = 20;
@@ -354,7 +345,7 @@ void HandlePlayer()
             if (mtm >= 2 && mtm <= 42)
             {
                 md = 600;
-                mmuki = 1;
+                PlayerLookingDirection = 1;
             }
             if (mtm > 43 && mtm <= 108)
             {
@@ -362,7 +353,7 @@ void HandlePlayer()
             }
             if (mtm == 110)
             {
-                mb = -80000000;
+                PlayerY = -80000000;
                 mc = 0;
             }
             if (mtm == 250)
@@ -389,7 +380,7 @@ void HandlePlayer()
             if (mtm >= 2 && (mtype == 301 && mtm <= 102 || mtype == 302 && mtm <= 60))
             {
                 xx[5] = 500;
-                ma -= xx[5];
+                PlayerX -= xx[5];
                 fx += xx[5];
                 fzx += xx[5];
             }
@@ -397,7 +388,7 @@ void HandlePlayer()
             if ((mtype == 301 || mtype == 302) && mtm >= 2 && mtm <= 100)
             {
                 mc = 250;
-                mmuki = 1;
+                PlayerLookingDirection = 1;
             }
 
             if (mtm == 200)
@@ -456,7 +447,7 @@ void HandlePlayer()
 
             /*
             if (mtm<=1){mc=0;md=0;}
-            if (mtm>=2 && mtm<=42){md=600;mmuki=1;}
+            if (mtm>=2 && mtm<=42){md=600;PlayerLookingDirection=1;}
             if (mtm>43 && mtm<=108){mc=300;}
             if (mtm==110){mb=-80000000;mc=0;}
             if (mtm==250)end();
@@ -470,8 +461,8 @@ void HandlePlayer()
     {
         mkeytm--;
     } // mc=0;}
-    ma += mc;
-    mb += md;
+    PlayerX += mc;
+    PlayerY += md;
     if (mc < 0)
         mactp += (-mc);
     if (mc >= 0)
@@ -553,28 +544,28 @@ void HandlePlayer()
     // 地面判定初期化 (Initialize ground judgment)
     PlayerGrounded = 0;
 
-    // 場外
+    // 場外 (Outside the venue)
     if (mtype <= 9 && Health >= 1)
     {
-        if (ma < 100)
+        if (PlayerX < 100)
         {
-            ma = 100;
+            PlayerX = 100;
             mc = 0;
         }
-        if (ma + mnobia > fxmax)
+        if (PlayerX + PlayerSizeX > fxmax)
         {
-            ma = fxmax - mnobia;
+            PlayerX = fxmax - PlayerSizeX;
             mc = 0;
         }
     }
     // if (mb>=42000){mb=42000;PlayerGrounded=1;}
-    if (mb >= 38000 && Health >= 0 && stagecolor == 4)
+    if (PlayerY >= 38000 && Health >= 0 && stagecolor == 4)
     {
         Health = -2;
-        mmsgtm = 30;
-        mmsgtype = 55;
+        PlayerMessageTimer = 30;
+        PlayerMessageType = 55;
     }
-    if (mb >= 52000 && Health >= 0)
+    if (PlayerY >= 52000 && Health >= 0)
     {
         Health = -2;
     }
@@ -591,16 +582,16 @@ void HandlePlayerInput()
     actaon[3] = 0;
     if (mkeytm <= 0)
     {
-        if (CheckHitKey(KEY_INPUT_LEFT) && keytm <= 0)
+        if (CheckHitKey(KEY_INPUT_LEFT))
         {
             actaon[0] = -1;
-            mmuki = 0;
+            PlayerLookingDirection = 0;
             actaon[4] = -1;
         }
-        if (CheckHitKey(KEY_INPUT_RIGHT) && keytm <= 0)
+        if (CheckHitKey(KEY_INPUT_RIGHT))
         {
             actaon[0] = 1;
-            mmuki = 1;
+            PlayerLookingDirection = 1;
             actaon[4] = 1;
         }
         if (CheckHitKey(KEY_INPUT_DOWN))
@@ -661,7 +652,7 @@ void HandlePlayerInput()
         if (xx[0] == 0)
             actaon[1] = 10;
     }
-    // if (( key & PAD_INPUT_UP) && keytm<=0){actaon[0]=-1;mmuki=0;}
+    // if (( key & PAD_INPUT_UP) && keytm<=0){actaon[0]=-1;PlayerLookingDirection=0;}
 
     // xx[0]=200;
     // if (actaon[0]==-1){ma-=xx[0];}
@@ -680,9 +671,9 @@ void HandlePlayerBlocks()
         xx[1] = 3000;
         xx[2] = 1000;
         xx[3] = 3000; // xx[2]=1000
-        xx[8] = ta[t] - fx;
-        xx[9] = tb[t] - fy; // xx[15]=0;
-        if (ta[t] - fx + xx[1] >= -10 - xx[3] && ta[t] - fx <= fxmax + 12000 + xx[3])
+        xx[8] = BlockX[t] - fx;
+        xx[9] = BlockY[t] - fy; // xx[15]=0;
+        if (BlockX[t] - fx + xx[1] >= -10 - xx[3] && BlockX[t] - fx <= fxmax + 12000 + xx[3])
         {
             if (mtype != 200 && mtype != 1 && mtype != 2)
             {
@@ -698,20 +689,20 @@ void HandlePlayerBlocks()
                         // 上 (Above)
                         if (ttype[t] != 7 && ttype[t] != 110 && !(ttype[t] == 114))
                         {
-                            if (ma +
-                                        mnobia >
+                            if (PlayerX +
+                                        PlayerSizeX >
                                     xx[8] +
                                         xx[0] * 2 +
                                         100 &&
-                                ma <
+                                PlayerX <
                                     xx[8] +
                                         xx[1] -
                                         xx[0] * 2 - 100 &&
-                                mb + mnobib > xx[9] && mb + mnobib < xx[9] + xx[1] && md >= -100)
+                                PlayerY + PlayerSizeY > xx[9] && PlayerY + PlayerSizeY < xx[9] + xx[1] && md >= -100)
                             {
                                 if (ttype[t] != 115 && ttype[t] != 400 && ttype[t] != 117 && ttype[t] != 118 && ttype[t] != 120)
                                 {
-                                    mb = xx[9] - mnobib + 100;
+                                    PlayerY = xx[9] - PlayerSizeY + 100;
                                     md = 0;
                                     PlayerGrounded = 1;
                                     xx[16] = 1;
@@ -719,19 +710,19 @@ void HandlePlayerBlocks()
                                 else if (ttype[t] == 115)
                                 {
                                     PlaySound(Sounds[3]);
-                                    eyobi(ta[t] + 1200, tb[t] + 1200,
+                                    eyobi(BlockX[t] + 1200, BlockY[t] + 1200,
                                           300,
                                           -1000,
                                           0, 160, 1000, 1000, 1, 120);
-                                    eyobi(ta[t] + 1200, tb[t] + 1200,
+                                    eyobi(BlockX[t] + 1200, BlockY[t] + 1200,
                                           -300,
                                           -1000,
                                           0, 160, 1000, 1000, 1, 120);
-                                    eyobi(ta[t] + 1200, tb[t] + 1200,
+                                    eyobi(BlockX[t] + 1200, BlockY[t] + 1200,
                                           240,
                                           -1400,
                                           0, 160, 1000, 1000, 1, 120);
-                                    eyobi(ta[t] + 1200, tb[t] + 1200,
+                                    eyobi(BlockX[t] + 1200, BlockY[t] + 1200,
                                           -240,
                                           -1400,
                                           0, 160, 1000, 1000, 1, 120);
@@ -741,7 +732,7 @@ void HandlePlayerBlocks()
                                 else if (ttype[t] == 400)
                                 {
                                     md = 0;
-                                    ta[t] = -8000000;
+                                    BlockX[t] = -8000000;
                                     PlaySound(Sounds[13]);
                                     for (tt = 0; tt < tmax; tt++)
                                     {
@@ -797,11 +788,11 @@ void HandlePlayerBlocks()
                             // 下 (Below)
                             if (t3 == xx[21] && mtype != 100 && ttype[t] != 117)
                             { // && xx[12]==0){
-                                if (ma + mnobia > xx[8] + xx[0] * 2 + 800 && ma < xx[8] + xx[1] - xx[0] * 2 - 800 && mb > xx[9] - xx[0] * 2 && mb < xx[9] + xx[1] - xx[0] * 2 && md <= 0)
+                                if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 + 800 && PlayerX < xx[8] + xx[1] - xx[0] * 2 - 800 && PlayerY > xx[9] - xx[0] * 2 && PlayerY < xx[9] + xx[1] - xx[0] * 2 && md <= 0)
                                 {
                                     xx[16] = 1;
                                     xx[17] = 1;
-                                    mb = xx[9] + xx[1] + xx[0];
+                                    PlayerY = xx[9] + xx[1] + xx[0];
                                     if (md < 0)
                                     {
                                         md = -md * 2 / 3;
@@ -810,22 +801,22 @@ void HandlePlayerBlocks()
                                     if (ttype[t] == 1 && PlayerGrounded == 0)
                                     {
                                         PlaySound(Sounds[3]);
-                                        eyobi(ta[t] + 1200, tb[t] + 1200,
+                                        eyobi(BlockX[t] + 1200, BlockY[t] + 1200,
                                               300,
                                               -1000,
                                               0,
                                               160, 1000, 1000, 1, 120);
-                                        eyobi(ta[t] + 1200, tb[t] + 1200,
+                                        eyobi(BlockX[t] + 1200, BlockY[t] + 1200,
                                               -300,
                                               -1000,
                                               0,
                                               160, 1000, 1000, 1, 120);
-                                        eyobi(ta[t] + 1200, tb[t] + 1200,
+                                        eyobi(BlockX[t] + 1200, BlockY[t] + 1200,
                                               240,
                                               -1400,
                                               0,
                                               160, 1000, 1000, 1, 120);
-                                        eyobi(ta[t] + 1200, tb[t] + 1200,
+                                        eyobi(BlockX[t] + 1200, BlockY[t] + 1200,
                                               -240,
                                               -1400,
                                               0,
@@ -836,9 +827,9 @@ void HandlePlayerBlocks()
                                     if (ttype[t] == 2 && PlayerGrounded == 0)
                                     {
                                         PlaySound(Sounds[4]);
-                                        eyobi(ta[t] +
+                                        eyobi(BlockX[t] +
                                                   10,
-                                              tb
+                                              BlockY
                                                   [t],
                                               0,
                                               -800,
@@ -850,15 +841,15 @@ void HandlePlayerBlocks()
                                     if (ttype[t] == 7)
                                     {
                                         PlaySound(Sounds[4]);
-                                        eyobi(ta[t] +
+                                        eyobi(BlockX[t] +
                                                   10,
-                                              tb
+                                              BlockY
                                                   [t],
                                               0,
                                               -800,
                                               0,
                                               40, 3000, 3000, 0, 16);
-                                        mb = xx[9] + xx[1] + xx[0];
+                                        PlayerY = xx[9] + xx[1] + xx[0];
                                         ttype[t] = 3;
                                         if (md < 0)
                                         {
@@ -868,8 +859,8 @@ void HandlePlayerBlocks()
                                     // トゲ (Spikes)
                                     if (ttype[t] == 10)
                                     {
-                                        mmsgtm = 30;
-                                        mmsgtype = 3;
+                                        PlayerMessageTimer = 30;
+                                        PlayerMessageType = 3;
                                         Health--;
                                     }
                                 }
@@ -881,22 +872,22 @@ void HandlePlayerBlocks()
                                 {
                                     if (!(ttype[t] == 114))
                                     { // && txtype[t]==1)){
-                                        if (ta[t] >= -20000)
+                                        if (BlockX[t] >= -20000)
                                         {
                                             // if (ma+mnobia>xx[8] && ma<xx[8]+xx[2] && mb+mnobib>xx[9]+xx[1]/2-xx[0] &&){
-                                            if (ma + mnobia > xx[8] && ma < xx[8] + xx[2] && mb + mnobib > xx[9] + xx[1] / 2 - xx[0] && mb < xx[9] + xx[2] && mc >= 0)
+                                            if (PlayerX + PlayerSizeX > xx[8] && PlayerX < xx[8] + xx[2] && PlayerY + PlayerSizeY > xx[9] + xx[1] / 2 - xx[0] && PlayerY < xx[9] + xx[2] && mc >= 0)
                                             {
-                                                ma = xx[8] - mnobia;
+                                                PlayerX = xx[8] - PlayerSizeX;
                                                 mc = 0;
                                                 xx[16] = 1;
                                                 // if (ttype[t]!=4){ma=xx[8]-mnobia;mc=0;xx[16]=1;}
                                                 // if (ttype[t]==4){ma=xx[8]-mnobia;mc=-mc*4/4;}
                                             }
-                                            if (ma + mnobia >
+                                            if (PlayerX + PlayerSizeX >
                                                     xx[8] + xx[2] &&
-                                                ma < xx[8] + xx[1] && mb + mnobib > xx[9] + xx[1] / 2 - xx[0] && mb < xx[9] + xx[2] && mc <= 0)
+                                                PlayerX < xx[8] + xx[1] && PlayerY + PlayerSizeY > xx[9] + xx[1] / 2 - xx[0] && PlayerY < xx[9] + xx[2] && mc <= 0)
                                             {
-                                                ma = xx[8] + xx[1];
+                                                PlayerX = xx[8] + xx[1];
                                                 mc = 0;
                                                 xx[16] = 1; // end();
                                                             // if (ttype[t]!=4){ma=xx[8]+xx[1];mc=0;xx[16]=1;}
@@ -915,28 +906,28 @@ void HandlePlayerBlocks()
                 if (ttype[t] == 800)
                 {
                     // if (xx[0]+xx[2]>=-xx[14] && xx[0]<=fxmax+xx[14] && xx[1]+xx[3]>=-10-9000 && xx[1]<=fymax+10000){
-                    if (mb >
+                    if (PlayerY >
                             xx[9] - xx[0] * 2 - 2000 &&
-                        mb <
+                        PlayerY <
                             xx[9] + xx[1] - xx[0] * 2 +
                                 2000 &&
-                        ma + mnobia > xx[8] - 400 && ma < xx[8] + xx[1])
+                        PlayerX + PlayerSizeX > xx[8] - 400 && PlayerX < xx[8] + xx[1])
                     {
-                        ta[t] = -800000;
+                        BlockX[t] = -800000;
                         PlaySound(Sounds[4]);
                     }
                 }
                 // 剣とってクリア (Get the sword and clear the stage.)
                 if (ttype[t] == 140)
                 {
-                    if (mb >
+                    if (PlayerY >
                             xx[9] - xx[0] * 2 - 2000 &&
-                        mb <
+                        PlayerY <
                             xx[9] + xx[1] - xx[0] * 2 +
                                 2000 &&
-                        ma + mnobia > xx[8] - 400 && ma < xx[8] + xx[1])
+                        PlayerX + PlayerSizeX > xx[8] - 400 && PlayerX < xx[8] + xx[1])
                     {
-                        ta[t] = -800000; // PlaySound(Sounds[4]);
+                        BlockX[t] = -800000; // PlaySound(Sounds[4]);
                         sracttype[20] = 1;
                         sron[20] = 1;
                         Mix_HaltMusic();
@@ -948,31 +939,31 @@ void HandlePlayerBlocks()
                 // 特殊的 (special)
                 if (ttype[t] == 100)
                 { // xx[9]+xx[1]+3000<mb && // && mb>xx[9]-xx[0]*2
-                    if (mb >
+                    if (PlayerY >
                             xx[9] - xx[0] * 2 - 2000 &&
-                        mb <
+                        PlayerY <
                             xx[9] + xx[1] - xx[0] * 2 +
                                 2000 &&
-                        ma + mnobia > xx[8] - 400 && ma < xx[8] + xx[1] && md <= 0)
+                        PlayerX + PlayerSizeX > xx[8] - 400 && PlayerX < xx[8] + xx[1] && md <= 0)
                     {
                         if (txtype[t] == 0)
-                            tb[t] = mb + fy - 1200 - xx[1];
+                            BlockY[t] = PlayerY + fy - 1200 - xx[1];
                     }
 
                     if (txtype[t] == 1)
                     {
                         if (xx[17] == 1)
                         {
-                            if (ma +
-                                        mnobia >
+                            if (PlayerX +
+                                        PlayerSizeX >
                                     xx[8] - 400 &&
-                                ma < xx[8] + xx[1] / 2 - 1500)
+                                PlayerX < xx[8] + xx[1] / 2 - 1500)
                             {
-                                ta[t] += 3000;
+                                BlockX[t] += 3000;
                             }
-                            else if (ma + mnobia >= xx[8] + xx[1] / 2 - 1500 && ma < xx[8] + xx[1])
+                            else if (PlayerX + PlayerSizeX >= xx[8] + xx[1] / 2 - 1500 && PlayerX < xx[8] + xx[1])
                             {
-                                ta[t] -= 3000;
+                                BlockX[t] -= 3000;
                             }
                         }
                     }
@@ -980,7 +971,7 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1 && txtype[t] == 0)
                     {
                         PlaySound(Sounds[4]);
-                        eyobi(ta[t] + 10, tb[t],
+                        eyobi(BlockX[t] + 10, BlockY[t],
                               0, -800, 0, 40, 3000, 3000, 0, 16);
                         ttype[t] = 3;
                     }
@@ -993,22 +984,22 @@ void HandlePlayerBlocks()
                     {
                         PlaySound(Sounds[8]);
                         ttype[t] = 3;
-                        abrocktm[aco] = 16;
+                        abrocktm[EnemyCount] = 16;
                         if (txtype[t] == 0)
-                            CreateEntity(ta[t], tb[t], 0, 0, 0, 0, 0);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 0, 0);
                         if (txtype[t] == 1)
-                            CreateEntity(ta[t], tb[t], 0, 0, 0, 4, 0);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 4, 0);
                         if (txtype[t] == 3)
-                            CreateEntity(ta[t], tb[t], 0, 0, 0, 101, 0);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 101, 0);
                         if (txtype[t] == 4)
                         {
-                            abrocktm[aco] = 20;
-                            CreateEntity(ta[t] -
+                            abrocktm[EnemyCount] = 20;
+                            CreateEntity(BlockX[t] -
                                              400,
-                                         tb[t] - 1600, 0, 0, 0, 6, 0);
+                                         BlockY[t] - 1600, 0, 0, 0, 6, 0);
                         }
                         if (txtype[t] == 10)
-                            CreateEntity(ta[t], tb[t], 0, 0, 0, 101, 0);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 101, 0);
                     }
                 } // 101
 
@@ -1019,13 +1010,13 @@ void HandlePlayerBlocks()
                     {
                         PlaySound(Sounds[8]);
                         ttype[t] = 3;
-                        abrocktm[aco] = 16;
+                        abrocktm[EnemyCount] = 16;
                         if (txtype[t] == 0)
-                            CreateEntity(ta[t], tb[t], 0, 0, 0, 100, 0);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 100, 0);
                         if (txtype[t] == 2)
-                            CreateEntity(ta[t], tb[t], 0, 0, 0, 100, 2);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 100, 2);
                         if (txtype[t] == 3)
-                            CreateEntity(ta[t], tb[t], 0, 0, 0, 102, 1);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 102, 1);
                     }
                 } // 102
 
@@ -1036,8 +1027,8 @@ void HandlePlayerBlocks()
                     {
                         PlaySound(Sounds[8]);
                         ttype[t] = 3;
-                        abrocktm[aco] = 16;
-                        CreateEntity(ta[t], tb[t], 0, 0, 0, 100, 1);
+                        abrocktm[EnemyCount] = 16;
+                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 100, 1);
                     }
                 } // 103
 
@@ -1048,8 +1039,8 @@ void HandlePlayerBlocks()
                     {
                         PlaySound(Sounds[8]);
                         ttype[t] = 3;
-                        abrocktm[aco] = 16;
-                        CreateEntity(ta[t], tb[t], 0, 0, 0, 110, 0);
+                        abrocktm[EnemyCount] = 16;
+                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 110, 0);
                     }
                 } // 104
 
@@ -1062,15 +1053,15 @@ void HandlePlayerBlocks()
                         thp[t] = 999;
                     }
                 } // 110
-                if (ttype[t] == 111 && ta[t] - fx >= 0)
+                if (ttype[t] == 111 && BlockX[t] - fx >= 0)
                 {
                     thp[t]++;
                     if (thp[t] >= 16)
                     {
                         thp[t] = 0;
                         PlaySound(Sounds[8]);
-                        abrocktm[aco] = 16;
-                        CreateEntity(ta[t], tb[t], 0, 0, 0, 102, 1);
+                        abrocktm[EnemyCount] = 16;
+                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 102, 1);
                     }
                 }
                 // コイン量産 (Coin mass production)
@@ -1083,7 +1074,7 @@ void HandlePlayerBlocks()
                         titem[t] = 0;
                     }
                 } // 110
-                if (ttype[t] == 113 && ta[t] - fx >= 0)
+                if (ttype[t] == 113 && BlockX[t] - fx >= 0)
                 {
                     if (titem[t] <= 19)
                         thp[t]++;
@@ -1092,7 +1083,7 @@ void HandlePlayerBlocks()
                         thp[t] = 0;
                         titem[t]++;
                         PlaySound(Sounds[4]);
-                        eyobi(ta[t] + 10, tb[t],
+                        eyobi(BlockX[t] + 10, BlockY[t],
                               0, -800, 0, 40, 3000, 3000, 0, 16);
                         // ttype[t]=3;
                     }
@@ -1106,15 +1097,15 @@ void HandlePlayerBlocks()
                         {
                             PlaySound(Sounds[8]);
                             ttype[t] = 3;
-                            abrocktm[aco] = 16;
-                            CreateEntity(ta[t], tb[t], 0, 0, 0, 102, 1);
+                            abrocktm[EnemyCount] = 16;
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 102, 1);
                         }
                         if (txtype[t] == 2)
                         {
                             PlaySound(Sounds[4]);
-                            eyobi(ta[t] +
+                            eyobi(BlockX[t] +
                                       10,
-                                  tb[t],
+                                  BlockY[t],
                                   0, -800, 0, 40, 3000, 3000, 0, 16);
                             ttype[t] = 115;
                             txtype[t] = 0;
@@ -1129,11 +1120,11 @@ void HandlePlayerBlocks()
                                 txtype[t] = 2;
                                 for (t = 0; t < amax; t++)
                                 {
-                                    if (atype[t] == 87 || atype[t] == 88)
+                                    if (EnemyType[t] == 87 || EnemyType[t] == 88)
                                     {
-                                        if (axtype[t] == 105)
+                                        if (EnemySubType[t] == 105)
                                         {
-                                            axtype[t] = 110;
+                                            EnemySubType[t] = 110;
                                         }
                                     }
                                 }
@@ -1141,9 +1132,9 @@ void HandlePlayerBlocks()
                             else
                             {
                                 PlaySound(Sounds[4]);
-                                eyobi(ta[t] +
+                                eyobi(BlockX[t] +
                                           10,
-                                      tb
+                                      BlockY
                                           [t],
                                       0,
                                       -800, 0, 40, 3000, 3000, 0, 16);
@@ -1167,7 +1158,7 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[8]);
                         // PlaySound(Sounds[13]);
                         ttype[t] = 3; // abrocktm[aco]=18;CreateEntity(ta[t],tb[t],0,0,0,104,1);
-                        BlockCreate(ta[t] / 100, (tb[t] / 100) - 29, 400);
+                        BlockCreate(BlockX[t] / 100, (BlockY[t] / 100) - 29, 400);
                     }
                 } // 116
 
@@ -1179,11 +1170,11 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[13]);
                         for (t = 0; t < amax; t++)
                         {
-                            if (atype[t] == 87 || atype[t] == 88)
+                            if (EnemyType[t] == 87 || EnemyType[t] == 88)
                             {
-                                if (axtype[t] == 101)
+                                if (EnemySubType[t] == 101)
                                 {
-                                    axtype[t] = 120;
+                                    EnemySubType[t] = 120;
                                 }
                             }
                         }
@@ -1212,15 +1203,15 @@ void HandlePlayerBlocks()
                         {
                             for (t = 0; t < amax; t++)
                             {
-                                if (atype[t] == 87 || atype[t] == 88)
+                                if (EnemyType[t] == 87 || EnemyType[t] == 88)
                                 {
-                                    if (axtype[t] == 105)
+                                    if (EnemySubType[t] == 105)
                                     {
-                                        axtype[t] = 110;
+                                        EnemySubType[t] = 110;
                                     }
                                 }
                             }
-                            bxtype[3] = 105;
+                            EnemyAppearSubType[3] = 105;
                         }
                     }
                 }
@@ -1253,17 +1244,17 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[3]);
-                        eyobi(ta[t] + 1200,
-                              tb[t] + 1200, 300,
+                        eyobi(BlockX[t] + 1200,
+                              BlockY[t] + 1200, 300,
                               -1000, 0, 160, 1000, 1000, 1, 120);
-                        eyobi(ta[t] + 1200,
-                              tb[t] + 1200,
+                        eyobi(BlockX[t] + 1200,
+                              BlockY[t] + 1200,
                               -300, -1000, 0, 160, 1000, 1000, 1, 120);
-                        eyobi(ta[t] + 1200,
-                              tb[t] + 1200, 240,
+                        eyobi(BlockX[t] + 1200,
+                              BlockY[t] + 1200, 240,
                               -1400, 0, 160, 1000, 1000, 1, 120);
-                        eyobi(ta[t] + 1200,
-                              tb[t] + 1200,
+                        eyobi(BlockX[t] + 1200,
+                              BlockY[t] + 1200,
                               -240, -1400, 0, 160, 1000, 1000, 1, 120);
                         BlockBreak(t);
                     }
@@ -1271,21 +1262,21 @@ void HandlePlayerBlocks()
             }
             else if (mtype == 1)
             {
-                if (ma + mnobia > xx[8] && ma < xx[8] + xx[1] && mb + mnobib > xx[9] && mb < xx[9] + xx[1])
+                if (PlayerX + PlayerSizeX > xx[8] && PlayerX < xx[8] + xx[1] && PlayerY + PlayerSizeY > xx[9] && PlayerY < xx[9] + xx[1])
                 {
 
                     PlaySound(Sounds[3]);
-                    eyobi(ta[t] + 1200,
-                          tb[t] + 1200, 300, -1000,
+                    eyobi(BlockX[t] + 1200,
+                          BlockY[t] + 1200, 300, -1000,
                           0, 160, 1000, 1000, 1, 120);
-                    eyobi(ta[t] + 1200,
-                          tb[t] + 1200, -300, -1000,
+                    eyobi(BlockX[t] + 1200,
+                          BlockY[t] + 1200, -300, -1000,
                           0, 160, 1000, 1000, 1, 120);
-                    eyobi(ta[t] + 1200,
-                          tb[t] + 1200, 240, -1400,
+                    eyobi(BlockX[t] + 1200,
+                          BlockY[t] + 1200, 240, -1400,
                           0, 160, 1000, 1000, 1, 120);
-                    eyobi(ta[t] + 1200,
-                          tb[t] + 1200, -240, -1400,
+                    eyobi(BlockX[t] + 1200,
+                          BlockY[t] + 1200, -240, -1400,
                           0, 160, 1000, 1000, 1, 120);
                     BlockBreak(t);
                 }
@@ -1302,13 +1293,13 @@ void HandlePlayerBlocks()
             // ヒント
             if (ttype[t] == 300)
             {
-                if (txtype[t] >= 500 && ta[t] >= -6000)
+                if (txtype[t] >= 500 && BlockX[t] >= -6000)
                 { // && ta[t]>=-6000){
                     if (txtype[t] <= 539)
                         txtype[t]++;
                     if (txtype[t] >= 540)
                     {
-                        ta[t] -= 500;
+                        BlockX[t] -= 500;
                     }
                 }
             } // 300
@@ -1336,9 +1327,9 @@ void HandlePlayerWalls()
                 // おちるブロック (Falling blocks)
                 if (stype[t] == 51)
                 {
-                    if (ma + mnobia >
+                    if (PlayerX + PlayerSizeX >
                             xx[8] + xx[0] + 3000 &&
-                        ma < xx[8] + sc[t] - xx[0] && mb + mnobib > xx[9] + 3000 && sgtype[t] == 0)
+                        PlayerX < xx[8] + sc[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] + 3000 && sgtype[t] == 0)
                     {
                         if (sxtype[t] == 0)
                         {
@@ -1346,9 +1337,9 @@ void HandlePlayerWalls()
                             sr[t] = 0;
                         }
                     }
-                    if (ma + mnobia >
+                    if (PlayerX + PlayerSizeX >
                             xx[8] + xx[0] + 1000 &&
-                        ma < xx[8] + sc[t] - xx[0] && mb + mnobib > xx[9] + 3000 && sgtype[t] == 0)
+                        PlayerX < xx[8] + sc[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] + 3000 && sgtype[t] == 0)
                     {
                         if ((sxtype[t] == 10) && sgtype[t] == 0)
                         {
@@ -1357,7 +1348,7 @@ void HandlePlayerWalls()
                         }
                     }
 
-                    if ((sxtype[t] == 1) && sb[27] >= 25000 && sa[27] > ma + mnobia && t != 27 && sgtype[t] == 0)
+                    if ((sxtype[t] == 1) && sb[27] >= 25000 && sa[27] > PlayerX + PlayerSizeX && t != 27 && sgtype[t] == 0)
                     {
                         sgtype[t] = 1;
                         sr[t] = 0;
@@ -1367,7 +1358,7 @@ void HandlePlayerWalls()
                         sgtype[t] = 1;
                         sr[t] = 0;
                     }
-                    if ((sxtype[t] == 3 && mb >= 30000 || sxtype[t] == 4 && mb >= 25000) && sgtype[t] == 0 && Health >= 1 && ma + mnobia > xx[8] + xx[0] + 3000 - 300 && ma < xx[8] + sc[t] - xx[0])
+                    if ((sxtype[t] == 3 && PlayerY >= 30000 || sxtype[t] == 4 && PlayerY >= 25000) && sgtype[t] == 0 && Health >= 1 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 3000 - 300 && PlayerX < xx[8] + sc[t] - xx[0])
                     {
                         sgtype[t] = 1;
                         sr[t] = 0;
@@ -1383,7 +1374,7 @@ void HandlePlayerWalls()
                             sr[t] = 1600;
                         }
                         sb[t] += sr[t];
-                        if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + sc[t] - xx[0] && mb + mnobib > xx[9] && mb < xx[9] + sd[t] + xx[0])
+                        if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + sc[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY < xx[9] + sd[t] + xx[0])
                         {
                             Health--;
                             xx[7] = 1;
@@ -1393,7 +1384,7 @@ void HandlePlayerWalls()
                 // おちるブロック2 (Falling Block 2)
                 if (stype[t] == 52)
                 {
-                    if (sgtype[t] == 0 && ma + mnobia > xx[8] + xx[0] + 2000 && ma < xx[8] + sc[t] - xx[0] - 2500 && mb + mnobib > xx[9] - 3000)
+                    if (sgtype[t] == 0 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 2000 && PlayerX < xx[8] + sc[t] - xx[0] - 2500 && PlayerY + PlayerSizeY > xx[9] - 3000)
                     {
                         sgtype[t] = 1;
                         sr[t] = 0;
@@ -1411,29 +1402,29 @@ void HandlePlayerWalls()
                 // 通常地面 (Normal Ground)
                 if (xx[7] == 0)
                 {
-                    if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + sc[t] - xx[0] && mb + mnobib > xx[9] && mb + mnobib < xx[9] + xx[1] && md >= -100)
+                    if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + sc[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY + PlayerSizeY < xx[9] + xx[1] && md >= -100)
                     {
-                        mb = sb[t] - fy - mnobib + 100;
+                        PlayerY = sb[t] - fy - PlayerSizeY + 100;
                         md = 0;
                         PlayerGrounded = 1;
                     }
-                    if (ma + mnobia > xx[8] - xx[0] && ma < xx[8] + xx[2] && mb + mnobib > xx[9] + xx[1] * 3 / 4 && mb < xx[9] + sd[t] - xx[2])
+                    if (PlayerX + PlayerSizeX > xx[8] - xx[0] && PlayerX < xx[8] + xx[2] && PlayerY + PlayerSizeY > xx[9] + xx[1] * 3 / 4 && PlayerY < xx[9] + sd[t] - xx[2])
                     {
-                        ma = xx[8] - xx[0] - mnobia;
+                        PlayerX = xx[8] - xx[0] - PlayerSizeX;
                         mc = 0;
                     }
-                    if (ma + mnobia > xx[8] + sc[t] - xx[0] && ma < xx[8] + sc[t] + xx[0] && mb + mnobib > xx[9] + xx[1] * 3 / 4 && mb < xx[9] + sd[t] - xx[2])
+                    if (PlayerX + PlayerSizeX > xx[8] + sc[t] - xx[0] && PlayerX < xx[8] + sc[t] + xx[0] && PlayerY + PlayerSizeY > xx[9] + xx[1] * 3 / 4 && PlayerY < xx[9] + sd[t] - xx[2])
                     {
-                        ma = xx[8] + sc[t] + xx[0];
+                        PlayerX = xx[8] + sc[t] + xx[0];
                         mc = 0;
                     }
-                    if (ma + mnobia >
+                    if (PlayerX + PlayerSizeX >
                             xx[8] + xx[0] * 2 &&
-                        ma <
+                        PlayerX <
                             xx[8] + sc[t] - xx[0] * 2 &&
-                        mb > xx[9] + sd[t] - xx[1] && mb < xx[9] + sd[t] + xx[0])
+                        PlayerY > xx[9] + sd[t] - xx[1] && PlayerY < xx[9] + sd[t] + xx[0])
                     {
-                        mb = xx[9] + sd[t] + xx[0];
+                        PlayerY = xx[9] + sd[t] + xx[0];
                         if (md < 0)
                         {
                             md = -md * 2 / 3;
@@ -1444,7 +1435,7 @@ void HandlePlayerWalls()
                 // 入る土管 (Entering a pipe)
                 if (stype[t] == 50)
                 {
-                    if (ma + mnobia > xx[8] + 2800 && ma < xx[8] + sc[t] - 3000 && mb + mnobib > xx[9] - 1000 && mb + mnobib < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && actaon[3] == 1 && mtype == 0)
+                    if (PlayerX + PlayerSizeX > xx[8] + 2800 && PlayerX < xx[8] + sc[t] - 3000 && PlayerY + PlayerSizeY > xx[9] - 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && actaon[3] == 1 && mtype == 0)
                     {
                         // 飛び出し
                         if (sxtype[t] == 0)
@@ -1491,7 +1482,7 @@ void HandlePlayerWalls()
                 // 入る土管(左から) (Pipes to enter (from left))
                 if (stype[t] == 40)
                 {
-                    if (ma + mnobia > xx[8] - 300 && ma < xx[8] + sc[t] - 1000 && mb > xx[9] + 1000 && mb + mnobib < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && actaon[4] == 1 && mtype == 0)
+                    if (PlayerX + PlayerSizeX > xx[8] - 300 && PlayerX < xx[8] + sc[t] - 1000 && PlayerY > xx[9] + 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && actaon[4] == 1 && mtype == 0)
                     { // end();
                         // 飛び出し
                         if (sxtype[t] == 0)
@@ -1524,7 +1515,7 @@ void HandlePlayerWalls()
             } // stype
             else
             {
-                if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + sc[t] - xx[0] && mb + mnobib > xx[9] && mb < xx[9] + sd[t] + xx[0])
+                if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + sc[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY < xx[9] + sd[t] + xx[0])
                 {
                     if (stype[t] == 100)
                     {
@@ -1552,7 +1543,7 @@ void HandlePlayerWalls()
                                              -3000, 0, 0, 0, 0, 0);
                             }
                         }
-                        if (sxtype[t] == 1 && mb >= 16000)
+                        if (sxtype[t] == 1 && PlayerY >= 16000)
                         {
                             CreateEntity(sa[t] +
                                              1500,
@@ -1648,8 +1639,8 @@ void HandlePlayerWalls()
                     {
                         if (sxtype[t] == 0)
                         {
-                            amsgtm[aco] = 10;
-                            amsgtype[aco] = 50;
+                            amsgtm[EnemyCount] = 10;
+                            amsgtype[EnemyCount] = 50;
                             CreateEntity(sa[t] +
                                              9000,
                                          sb[t] + 2000, 0, 0, 0, 79, 0);
@@ -1658,8 +1649,8 @@ void HandlePlayerWalls()
 
                         if (sxtype[t] == 1 && ttype[6] <= 6)
                         {
-                            amsgtm[aco] = 10;
-                            amsgtype[aco] = 50;
+                            amsgtm[EnemyCount] = 10;
+                            amsgtype[EnemyCount] = 50;
                             CreateEntity(sa[t] -
                                              12000,
                                          sb[t] + 2000, 0, 0, 0, 79, 0);
@@ -1693,19 +1684,19 @@ void HandlePlayerWalls()
 
                     if (stype[t] == 105 && PlayerGrounded == 0 && md >= 0)
                     {
-                        ta[1] -= 1000;
-                        ta[2] += 1000;
+                        BlockX[1] -= 1000;
+                        BlockX[2] += 1000;
                         sxtype[t]++;
                         if (sxtype[t] >= 3)
                             sa[t] = -8000000;
                     }
 
-                    if (stype[t] == 300 && mtype == 0 && mb < xx[9] + sd[t] + xx[0] - 3000 && Health >= 1)
+                    if (stype[t] == 300 && mtype == 0 && PlayerY < xx[9] + sd[t] + xx[0] - 3000 && Health >= 1)
                     {
                         Mix_HaltMusic();
                         mtype = 300;
                         mtm = 0;
-                        ma = sa[t] - fx - 2000;
+                        PlayerX = sa[t] - fx - 2000;
                         PlaySound(Sounds[11]);
                     }
                     // 中間ゲート (Intermediate gate)
@@ -1736,41 +1727,41 @@ void HandlePlayerMessage()
 {
     // プレイヤーのメッセージ (Player's message)
     setc0();
-    if (mmsgtm >= 1)
+    if (PlayerMessageTimer >= 1)
     {
-        mmsgtm--;
+        PlayerMessageTimer--;
         xs[0] = "";
 
-        if (mmsgtype == 1)
+        if (PlayerMessageType == 1)
             xs[0] = "お、おいしい!!";
-        if (mmsgtype == 2)
+        if (PlayerMessageType == 2)
             xs[0] = "毒は無いが……";
-        if (mmsgtype == 3)
+        if (PlayerMessageType == 3)
             xs[0] = "刺さった!!";
-        if (mmsgtype == 10)
+        if (PlayerMessageType == 10)
             xs[0] = "食べるべきではなかった!!";
-        if (mmsgtype == 11)
+        if (PlayerMessageType == 11)
             xs[0] = "俺は燃える男だ!!";
-        if (mmsgtype == 50)
+        if (PlayerMessageType == 50)
             xs[0] = "体が……焼ける……";
-        if (mmsgtype == 51)
+        if (PlayerMessageType == 51)
             xs[0] = "たーまやー!!";
-        if (mmsgtype == 52)
+        if (PlayerMessageType == 52)
             xs[0] = "見事にオワタ";
-        if (mmsgtype == 53)
+        if (PlayerMessageType == 53)
             xs[0] = "足が、足がぁ!!";
-        if (mmsgtype == 54)
+        if (PlayerMessageType == 54)
             xs[0] = "流石は摂氏800度!!";
-        if (mmsgtype == 55)
+        if (PlayerMessageType == 55)
             xs[0] = "溶岩と合体したい……";
 
         setc0();
-        str(xs[0], (ma + mnobia + 300) / 100 - 1, mb / 100 - 1);
-        str(xs[0], (ma + mnobia + 300) / 100 + 1, mb / 100 + 1);
+        str(xs[0], (PlayerX + PlayerSizeX + 300) / 100 - 1, PlayerY / 100 - 1);
+        str(xs[0], (PlayerX + PlayerSizeX + 300) / 100 + 1, PlayerY / 100 + 1);
         setc1();
-        str(xs[0], (ma + mnobia + 300) / 100, mb / 100);
+        str(xs[0], (PlayerX + PlayerSizeX + 300) / 100, PlayerY / 100);
 
-    } // mmsgtm
+    } // PlayerMessageTimer
 }
 
 void RenderPlayer()
@@ -1790,7 +1781,7 @@ void RenderPlayer()
             mact = 0;
         }
     }
-    if (mmuki == 0)
+    if (PlayerLookingDirection == 0)
         mirror = 1;
 
     if (mtype != 200 && mtype != 1)
@@ -1799,23 +1790,23 @@ void RenderPlayer()
         {
             // 読みこんだグラフィックを拡大描画 (Enlarged rendering of loaded graphics)
             if (mact == 0)
-                drawimage(Sliced_GFX[0][0], ma / 100, mb / 100);
+                drawimage(Sliced_GFX[0][0], PlayerX / 100, PlayerY / 100);
             if (mact == 1)
-                drawimage(Sliced_GFX[1][0], ma / 100, mb / 100);
+                drawimage(Sliced_GFX[1][0], PlayerX / 100, PlayerY / 100);
         }
         if (PlayerGrounded == 0)
         {
-            drawimage(Sliced_GFX[2][0], ma / 100, mb / 100);
+            drawimage(Sliced_GFX[2][0], PlayerX / 100, PlayerY / 100);
         }
     }
     // 巨大化 (Huge)
     else if (mtype == 1)
     {
-        drawimage(Sliced_GFX[41][0], ma / 100, mb / 100);
+        drawimage(Sliced_GFX[41][0], PlayerX / 100, PlayerY / 100);
     }
 
     else if (mtype == 200)
     {
-        drawimage(Sliced_GFX[3][0], ma / 100, mb / 100);
+        drawimage(Sliced_GFX[3][0], PlayerX / 100, PlayerY / 100);
     }
 }

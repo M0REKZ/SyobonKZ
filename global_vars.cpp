@@ -79,10 +79,10 @@ int t, tt, t1, t2, t3, t4;
 
 
 //初期化
-int zxon, zzxon;
+int zxon;//, zzxon; //+KZ: zzxon is unused
 
 //キーコンフィグ
-int key, keytm;
+int key;//, keytm; //+KZ: keytm is useless
 
 //三角関数
 double pai = 3.1415926535;
@@ -98,18 +98,20 @@ int sgtype[smax];
 
 //プレイヤー
 int mainmsgtype;
-int ma, mb, mnobia, mnobib, Health;
+int PlayerX, PlayerY, PlayerSizeX, PlayerSizeY, Health;
 int mc, md, macttype, atkon, atktm, mactsok, msstar, mactp, mact;
 int Lives = 3;
 
 int mtype, mxtype, mtm, mzz;
-int PlayerGrounded, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
+int PlayerGrounded, PlayerLookingDirection, mjumptm, mkeytm;
 EGroundType GroundType;
 int mmutekitm, mmutekion;
+//+KZ: these are never set, but are read?
 int mztm, mztype;
+
 int actaon[7];
 //メッセージ
-int mmsgtm, mmsgtype;
+int PlayerMessageTimer, PlayerMessageType;
 
 int mascrollmax = 21000;	//9000
 
@@ -118,7 +120,7 @@ int mascrollmax = 21000;	//9000
 
 //ブロック
 int tco;
-int ta[tmax], tb[tmax], tc[tmax], td[tmax], thp[tmax], ttype[tmax];
+int BlockX[tmax], BlockY[tmax], tc[tmax], td[tmax], thp[tmax], ttype[tmax];
 int titem[tmax], txtype[tmax];
 
 //メッセージブロック
@@ -133,19 +135,19 @@ int egtype[emax];
 
 
 //敵キャラ
-int aco;
-int aa[amax], ab[amax], anobia[amax], anobib[amax], ac[amax], ad[amax];
+int EnemyCount;
+int EnemyX[amax], EnemyY[amax], EnemySizeX[amax], EnemySizeY[amax], ac[amax], ad[amax];
 int ae[amax], af[amax], abrocktm[amax];
 int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
-int atype[amax], axtype[amax], amuki[amax], ahp[amax];
+int EnemyType[amax], EnemySubType[amax], amuki[amax], ahp[amax];
 int anotm[amax], anx[160], any[160];
 int atm[amax], a2tm[amax];
 int amsgtm[amax], amsgtype[amax];
 
 //敵出現
 int bco;
-int ba[bmax], bb[bmax], btm[bmax];
-int btype[bmax], bxtype[bmax], bz[bmax];
+int EnemyAppearX[bmax], EnemyAppearY[bmax], EnemyAppearTimer[bmax];
+int EnemyAppearType[bmax], EnemyAppearSubType[bmax], bz[bmax];
 
 
 //背景

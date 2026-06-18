@@ -8,10 +8,10 @@ void HandleEntities()
     // 敵キャラ (Enemy character)
     for (t = 0; t < amax; t++)
     {
-        xx[0] = aa[t] - fx;
-        xx[1] = ab[t] - fy;
-        xx[2] = anobia[t];
-        xx[3] = anobib[t];
+        xx[0] = EnemyX[t] - fx;
+        xx[1] = EnemyY[t] - fy;
+        xx[2] = EnemySizeX[t];
+        xx[3] = EnemySizeY[t];
         xx[14] = 12000 * 1;
         if (anotm[t] >= 0)
             anotm[t]--;
@@ -22,7 +22,7 @@ void HandleEntities()
 
             xx[10] = 0;
 
-            switch (atype[t])
+            switch (EnemyType[t])
             {
             case 0:
                 xx[10] = 100;
@@ -37,12 +37,12 @@ void HandleEntities()
             case 2:
                 xx[10] = 0;
                 xx[17] = 800;
-                if (axtype[t] >= 1)
+                if (EnemySubType[t] >= 1)
                     xx[10] = xx[17];
                 // if (axtype[t]==1)xx[10]=xx[17];
                 // if (axtype[t]==2)xx[10]=-xx[17];
                 // 他の敵を倒す (Defeat other enemies)
-                if (axtype[t] >= 1)
+                if (EnemySubType[t] >= 1)
                 {
                     for (tt = 0; tt < amax; tt++)
                     {
@@ -50,29 +50,29 @@ void HandleEntities()
                         xx[5] = -800;
                         xx[12] = 0;
                         xx[1] = 1600;
-                        xx[8] = aa[tt] - fx;
-                        xx[9] = ab[tt] - fy;
+                        xx[8] = EnemyX[tt] - fx;
+                        xx[9] = EnemyY[tt] - fy;
                         if (t != tt)
                         {
-                            if (aa[t] +
-                                        anobia[t] -
+                            if (EnemyX[t] +
+                                        EnemySizeX[t] -
                                         fx >
                                     xx[8] +
                                         xx[0] * 2 &&
-                                aa[t] -
+                                EnemyX[t] -
                                         fx <
                                     xx[8] +
-                                        anobia[tt] -
+                                        EnemySizeX[tt] -
                                         xx[0] * 2 &&
-                                ab[t] +
-                                        anobib[t] - fy >
+                                EnemyY[t] +
+                                        EnemySizeY[t] - fy >
                                     xx[9] + xx[5] &&
-                                ab[t] +
-                                        anobib[t] -
+                                EnemyY[t] +
+                                        EnemySizeY[t] -
                                         fy <
                                     xx[9] + xx[1] * 3 + xx[12] + 1500)
                             {
-                                aa[tt] = -800000;
+                                EnemyX[tt] = -800000;
                                 PlaySound(Sounds[6]);
                             }
                         }
@@ -84,12 +84,12 @@ void HandleEntities()
                 // あらまき
             case 3:
                 azimentype[t] = 0; // end();
-                if (axtype[t] == 0)
+                if (EnemySubType[t] == 0)
                 {
-                    ab[t] -= 800;
+                    EnemyY[t] -= 800;
                 }
-                if (axtype[t] == 1)
-                    ab[t] += 1200;
+                if (EnemySubType[t] == 1)
+                    EnemyY[t] += 1200;
 
                 // xx[10]=100;
                 break;
@@ -98,21 +98,21 @@ void HandleEntities()
             case 4:
                 xx[10] = 120;
                 xx[0] = 250;
-                xx[8] = aa[t] - fx;
-                xx[9] = ab[t] - fy;
+                xx[8] = EnemyX[t] - fx;
+                xx[9] = EnemyY[t] - fy;
                 if (atm[t] >= 0)
                     atm[t]--;
-                if (abs(ma + mnobia - xx[8] - xx[0] * 2) < 9000
+                if (abs(PlayerX + PlayerSizeX - xx[8] - xx[0] * 2) < 9000
                     /*&& abs(ma < //+KZ "warning: result of comparison of constant 3000 with expression of type 'bool' is always true"
                            xx[8] - anobia[t] +
                            xx[0] * 2) < 3000*/
                     && md <= -600 && atm[t] <= 0)
                 {
-                    if (axtype[t] == 1 && PlayerGrounded == 0 && axzimen[t] == 1)
+                    if (EnemySubType[t] == 1 && PlayerGrounded == 0 && axzimen[t] == 1)
                     {
                         ad[t] = -1600;
                         atm[t] = 40;
-                        ab[t] -= 1000;
+                        EnemyY[t] -= 1000;
                     }
                 } //
                 break;
@@ -128,7 +128,7 @@ void HandleEntities()
                 if (azimentype[t] == 30)
                 {
                     ad[t] = -1600;
-                    ab[t] += ad[t];
+                    EnemyY[t] += ad[t];
                 }
 
                 xx[10] = 120;
@@ -139,8 +139,8 @@ void HandleEntities()
                     {
                         if (atm[t] <= 19)
                         {
-                            ma = xx[0];
-                            mb = xx[1] - 3000;
+                            PlayerX = xx[0];
+                            PlayerY = xx[1] - 3000;
                             mtype = 0;
                         }
                         xx[10] = 0;
@@ -149,12 +149,12 @@ void HandleEntities()
                             mc = 700;
                             mkeytm = 24;
                             md = -1200;
-                            mb = xx[1] - 1000 - 3000;
+                            PlayerY = xx[1] - 1000 - 3000;
                             amuki[t] = 1;
-                            if (axtype[t] == 1)
+                            if (EnemySubType[t] == 1)
                             {
                                 mc = 840;
-                                axtype[t] = 0;
+                                EnemySubType[t] = 0;
                             }
                         }
                         if (atm[t] == 40)
@@ -165,20 +165,20 @@ void HandleEntities()
                     }
                 }
                 // ポール捨て (Discarding the pole)
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                 {
                     for (tt = 0; tt < smax; tt++)
                     {
                         if (stype[tt] == 300)
                         {
                             // sa[sco]=xx[21]*100;sb[sco]=xx[22]*100;sc[sco]=3000;sd[sco]=(12-t)*3000;stype[sco]=300;sco++;
-                            if (aa[t] -
+                            if (EnemyX[t] -
                                         fx >=
                                     -8000 &&
-                                aa[t] >=
+                                EnemyX[t] >=
                                     sa[tt] +
                                         2000 &&
-                                aa[t] <= sa[tt] + 3600 && axzimen[t] == 1)
+                                EnemyX[t] <= sa[tt] + 3600 && axzimen[t] == 1)
                             {
                                 sa[tt] = -800000;
                                 atm[t] = 100;
@@ -188,9 +188,9 @@ void HandleEntities()
 
                     if (atm[t] == 100)
                     {
-                        eyobi(aa[t] + 1200 -
+                        eyobi(EnemyX[t] + 1200 -
                                   1200,
-                              ab[t] + 3000 -
+                              EnemyY[t] + 3000 -
                                   10 * 3000 - 1500,
                               0, 0, 0, 0, 1000,
                               10 * 3000 - 1200, 4, 20);
@@ -208,9 +208,9 @@ void HandleEntities()
                     }
                     if (atm[t] == 120)
                     {
-                        eyobi(aa[t] + 1200 -
+                        eyobi(EnemyX[t] + 1200 -
                                   1200,
-                              ab[t] + 3000 -
+                              EnemyY[t] + 3000 -
                                   10 * 3000 - 1500,
                               600, -1200, 0,
                               160, 1000, 10 * 3000 - 1200, 4, 240);
@@ -235,22 +235,22 @@ void HandleEntities()
                     xx[5] = -800;
                     xx[12] = 0;
                     xx[1] = 1600;
-                    xx[8] = aa[tt] - fx;
-                    xx[9] = ab[tt] - fy;
-                    if (t != tt && atype[tt] >= 100)
+                    xx[8] = EnemyX[tt] - fx;
+                    xx[9] = EnemyY[tt] - fy;
+                    if (t != tt && EnemyType[tt] >= 100)
                     {
-                        if (aa[t] + anobia[t] -
+                        if (EnemyX[t] + EnemySizeX[t] -
                                     fx >
                                 xx[8] + xx[0] * 2 &&
-                            aa[t] - fx <
-                                xx[8] + anobia[tt] -
+                            EnemyX[t] - fx <
+                                xx[8] + EnemySizeX[tt] -
                                     xx[0] * 2 &&
-                            ab[t] + anobib[t] - fy > xx[9] + xx[5] && ab[t] + anobib[t] - fy < xx[9] + xx[1] * 3 + xx[12] + 1500)
+                            EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[5] && EnemyY[t] + EnemySizeY[t] - fy < xx[9] + xx[1] * 3 + xx[12] + 1500)
                         {
                             // aa[tt]=-800000;
                             amuki[tt] = 1;
-                            aa[tt] = aa[t] + 300;
-                            ab[tt] = ab[t] - 3000;
+                            EnemyX[tt] = EnemyX[t] + 300;
+                            EnemyY[tt] = EnemyY[t] - 3000;
                             abrocktm[tt] = 120; // aa[tt]=0;
                             atm[t] = 200;
                             amuki[t] = 1;
@@ -265,14 +265,14 @@ void HandleEntities()
                 azimentype[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
-                if (axtype[t] == 0)
+                if (EnemySubType[t] == 0)
                     xx[10] = xx[11];
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                     xx[10] = -xx[11];
-                if (axtype[t] == 2)
-                    ab[t] -= xx[11];
-                if (axtype[t] == 3)
-                    ab[t] += xx[11];
+                if (EnemySubType[t] == 2)
+                    EnemyY[t] -= xx[11];
+                if (EnemySubType[t] == 3)
+                    EnemyY[t] += xx[11];
                 break;
 
                 // スーパーブーン (Super Boom) //+KZ: xD??
@@ -297,7 +297,7 @@ void HandleEntities()
                     atm[t] = 1;
                 if (af[t] < -0)
                     atm[t] = 0;
-                ab[t] += ad[t];
+                EnemyY[t] += ad[t];
                 // atype[t]=151;
                 break;
                 // ノーマルブーン (Normal Boom)
@@ -308,15 +308,15 @@ void HandleEntities()
                 // ファイアー玉 (Fireball)
             case 9:
                 azimentype[t] = 5;
-                ab[t] += ad[t];
+                EnemyY[t] += ad[t];
                 ad[t] += 100;
-                if (ab[t] >= fymax + 1000)
+                if (EnemyY[t] >= fymax + 1000)
                 {
                     ad[t] = 900;
                 }
-                if (ab[t] >= fymax + 12000)
+                if (EnemyY[t] >= fymax + 12000)
                 {
-                    ab[t] = fymax;
+                    EnemyY[t] = fymax;
                     ad[t] = -2600;
                 }
                 break;
@@ -326,22 +326,22 @@ void HandleEntities()
                 azimentype[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
-                if (axtype[t] == 0)
+                if (EnemySubType[t] == 0)
                     xx[10] = xx[11];
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                     xx[10] = -xx[11];
                 break;
 
                 // モララー (Molalla)
             case 30:
                 atm[t] += 1;
-                if (axtype[t] == 0)
+                if (EnemySubType[t] == 0)
                 {
-                    if (atm[t] == 50 && mb >= 6000)
+                    if (atm[t] == 50 && PlayerY >= 6000)
                     {
                         ac[t] = 300;
                         ad[t] -= 1600;
-                        ab[t] -= 1000;
+                        EnemyY[t] -= 1000;
                     }
 
                     for (tt = 0; tt < amax; tt++)
@@ -350,30 +350,30 @@ void HandleEntities()
                         xx[5] = -800;
                         xx[12] = 0;
                         xx[1] = 1600;
-                        xx[8] = aa[tt] - fx;
-                        xx[9] = ab[tt] - fy;
-                        if (t != tt && atype[tt] == 102)
+                        xx[8] = EnemyX[tt] - fx;
+                        xx[9] = EnemyY[tt] - fy;
+                        if (t != tt && EnemyType[tt] == 102)
                         {
-                            if (aa[t] +
-                                        anobia[t] -
+                            if (EnemyX[t] +
+                                        EnemySizeX[t] -
                                         fx >
                                     xx[8] +
                                         xx[0] * 2 &&
-                                aa[t] -
+                                EnemyX[t] -
                                         fx <
                                     xx[8] +
-                                        anobia[tt] -
+                                        EnemySizeX[tt] -
                                         xx[0] * 2 &&
-                                ab[t] +
-                                        anobib[t] - fy >
+                                EnemyY[t] +
+                                        EnemySizeY[t] - fy >
                                     xx[9] + xx[5] &&
-                                ab[t] +
-                                        anobib[t] -
+                                EnemyY[t] +
+                                        EnemySizeY[t] -
                                         fy <
                                     xx[9] + xx[1] * 3 + xx[12] + 1500)
                             {
-                                aa[tt] = -800000;
-                                axtype[t] = 1;
+                                EnemyX[tt] = -800000;
+                                EnemySubType[t] = 1;
                                 ad[t] = -1600;
                                 amsgtm[t] = 30;
                                 amsgtype[t] = 25;
@@ -381,10 +381,10 @@ void HandleEntities()
                         }
                     }
                 }
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                 {
                     azimentype[t] = 0;
-                    ab[t] += ad[t];
+                    EnemyY[t] += ad[t];
                     ad[t] += 120;
                 }
                 break;
@@ -393,25 +393,25 @@ void HandleEntities()
             case 79:
                 azimentype[t] = 0;
                 xx[10] = 1600;
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                 {
                     xx[10] = 1200;
-                    ab[t] -= 200;
+                    EnemyY[t] -= 200;
                 }
-                if (axtype[t] == 2)
+                if (EnemySubType[t] == 2)
                 {
                     xx[10] = 1200;
-                    ab[t] += 200;
+                    EnemyY[t] += 200;
                 }
-                if (axtype[t] == 3)
+                if (EnemySubType[t] == 3)
                 {
                     xx[10] = 900;
-                    ab[t] -= 600;
+                    EnemyY[t] -= 600;
                 }
-                if (axtype[t] == 4)
+                if (EnemySubType[t] == 4)
                 {
                     xx[10] = 900;
-                    ab[t] += 600;
+                    EnemyY[t] += 600;
                 }
                 break;
 
@@ -436,42 +436,42 @@ void HandleEntities()
 
             case 85:
                 xx[23] = 400;
-                if (axtype[t] == 0)
+                if (EnemySubType[t] == 0)
                 {
-                    axtype[t] = 1;
+                    EnemySubType[t] = 1;
                     amuki[t] = 1;
                 }
-                if (mb >= 30000 && ma >= aa[t] - 3000 * 5 - fx && ma <= aa[t] - fx && axtype[t] == 1)
+                if (PlayerY >= 30000 && PlayerX >= EnemyX[t] - 3000 * 5 - fx && PlayerX <= EnemyX[t] - fx && EnemySubType[t] == 1)
                 {
-                    axtype[t] = 5;
+                    EnemySubType[t] = 5;
                     amuki[t] = 0;
                 }
-                if (mb >= 24000 && ma <= aa[t] + 3000 * 8 - fx && ma >= aa[t] - fx && axtype[t] == 1)
+                if (PlayerY >= 24000 && PlayerX <= EnemyX[t] + 3000 * 8 - fx && PlayerX >= EnemyX[t] - fx && EnemySubType[t] == 1)
                 {
-                    axtype[t] = 5;
+                    EnemySubType[t] = 5;
                     amuki[t] = 1;
                 }
-                if (axtype[t] == 5)
+                if (EnemySubType[t] == 5)
                     xx[10] = xx[23];
                 break;
 
             case 86:
                 azimentype[t] = 4;
                 xx[23] = 1000;
-                if (ma >= aa[t] - fx - mnobia - xx[26] && ma <= aa[t] - fx + anobia[t] + xx[26])
+                if (PlayerX >= EnemyX[t] - fx - PlayerSizeX - xx[26] && PlayerX <= EnemyX[t] - fx + EnemySizeX[t] + xx[26])
                 {
                     atm[t] = 1;
                 }
                 if (atm[t] == 1)
                 {
-                    ab[t] += 1200;
+                    EnemyY[t] += 1200;
                 }
                 break;
 
                 // ファイアバー (Fire Bar)
             case 87:
                 azimentype[t] = 0;
-                if (aa[t] % 10 != 1)
+                if (EnemyX[t] % 10 != 1)
                     atm[t] += 6;
                 else
                 {
@@ -483,7 +483,7 @@ void HandleEntities()
                 if (atm[t] < 0)
                     atm[t] += 360 * xx[25];
 
-                for (tt = 0; tt <= axtype[t] % 100; tt++)
+                for (tt = 0; tt <= EnemySubType[t] % 100; tt++)
                 {
                     xx[26] = 18;
                     xd[4] = tt * xx[26] * cos(atm[t] * pai / 180 / 2);
@@ -491,14 +491,14 @@ void HandleEntities()
 
                     xx[4] = 1800;
                     xx[5] = 800;
-                    xx[8] = aa[t] - fx + int(xd[4]) * 100 - xx[4] / 2;
-                    xx[9] = ab[t] - fy + int(xd[5]) * 100 - xx[4] / 2;
+                    xx[8] = EnemyX[t] - fx + int(xd[4]) * 100 - xx[4] / 2;
+                    xx[9] = EnemyY[t] - fy + int(xd[5]) * 100 - xx[4] / 2;
 
-                    if (ma + mnobia > xx[8] + xx[5] && ma < xx[8] + xx[4] - xx[5] && mb + mnobib > xx[9] + xx[5] && mb < xx[9] + xx[4] - xx[5])
+                    if (PlayerX + PlayerSizeX > xx[8] + xx[5] && PlayerX < xx[8] + xx[4] - xx[5] && PlayerY + PlayerSizeY > xx[9] + xx[5] && PlayerY < xx[9] + xx[4] - xx[5])
                     {
                         Health -= 1;
-                        mmsgtype = 51;
-                        mmsgtm = 30;
+                        PlayerMessageType = 51;
+                        PlayerMessageTimer = 30;
                     }
                 }
 
@@ -507,7 +507,7 @@ void HandleEntities()
                 //+KZ: Syobon Action 2 inverted Fire Bar
             case 88:
                 azimentype[t] = 0;
-                if (aa[t] % 10 != 1)
+                if (EnemyX[t] % 10 != 1)
                     atm[t] += 6;
                 else
                 {
@@ -519,7 +519,7 @@ void HandleEntities()
                 if (atm[t] < 0)
                     atm[t] += 360 * xx[25];
 
-                for (tt = 0; tt <= axtype[t] % 100; tt++)
+                for (tt = 0; tt <= EnemySubType[t] % 100; tt++)
                 {
                     xx[26] = 18;
                     xd[4] = -tt * xx[26] * cos(atm[t] * pai / 180 / 2);
@@ -527,14 +527,14 @@ void HandleEntities()
 
                     xx[4] = 1800;
                     xx[5] = 800;
-                    xx[8] = aa[t] - fx + int(xd[4]) * 100 - xx[4] / 2;
-                    xx[9] = ab[t] - fy + int(xd[5]) * 100 - xx[4] / 2;
+                    xx[8] = EnemyX[t] - fx + int(xd[4]) * 100 - xx[4] / 2;
+                    xx[9] = EnemyY[t] - fy + int(xd[5]) * 100 - xx[4] / 2;
 
-                    if (ma + mnobia > xx[8] + xx[5] && ma < xx[8] + xx[4] - xx[5] && mb + mnobib > xx[9] + xx[5] && mb < xx[9] + xx[4] - xx[5])
+                    if (PlayerX + PlayerSizeX > xx[8] + xx[5] && PlayerX < xx[8] + xx[4] - xx[5] && PlayerY + PlayerSizeY > xx[9] + xx[5] && PlayerY < xx[9] + xx[4] - xx[5])
                     {
                         Health -= 1;
-                        mmsgtype = 51;
-                        mmsgtm = 30;
+                        PlayerMessageType = 51;
+                        PlayerMessageTimer = 30;
                     }
                 }
 
@@ -551,7 +551,7 @@ void HandleEntities()
                 xx[10] = 100;
 
                 // ほかの敵を巨大化 (Enlarge other enemies)
-                if (axtype[t] == 2)
+                if (EnemySubType[t] == 2)
                 {
                     for (tt = 0; tt < amax; tt++)
                     {
@@ -559,38 +559,38 @@ void HandleEntities()
                         xx[5] = -800;
                         xx[12] = 0;
                         xx[1] = 1600;
-                        xx[8] = aa[tt] - fx;
-                        xx[9] = ab[tt] - fy;
+                        xx[8] = EnemyX[tt] - fx;
+                        xx[9] = EnemyY[tt] - fy;
                         if (t != tt)
                         {
-                            if (aa[t] +
-                                        anobia[t] -
+                            if (EnemyX[t] +
+                                        EnemySizeX[t] -
                                         fx >
                                     xx[8] +
                                         xx[0] * 2 &&
-                                aa[t] -
+                                EnemyX[t] -
                                         fx <
                                     xx[8] +
-                                        anobia[tt] -
+                                        EnemySizeX[tt] -
                                         xx[0] * 2 &&
-                                ab[t] +
-                                        anobib[t] - fy >
+                                EnemyY[t] +
+                                        EnemySizeY[t] - fy >
                                     xx[9] + xx[5] &&
-                                ab[t] +
-                                        anobib[t] -
+                                EnemyY[t] +
+                                        EnemySizeY[t] -
                                         fy <
                                     xx[9] + xx[1] * 3 + xx[12])
                             {
-                                if (atype[tt] == 0 || atype[tt] == 4)
+                                if (EnemyType[tt] == 0 || EnemyType[tt] == 4)
                                 {
-                                    atype[tt] = 90; // PlaySound(Sounds[6]);
-                                    anobia[tt] = 6400;
-                                    anobib[tt] = 6300;
-                                    axtype[tt] = 0;
-                                    aa[tt] -= 1050;
-                                    ab[tt] -= 1050;
+                                    EnemyType[tt] = 90; // PlaySound(Sounds[6]);
+                                    EnemySizeX[tt] = 6400;
+                                    EnemySizeY[tt] = 6300;
+                                    EnemySubType[tt] = 0;
+                                    EnemyX[tt] -= 1050;
+                                    EnemyY[tt] -= 1050;
                                     PlaySound(Sounds[9]);
-                                    aa[t] = -80000000;
+                                    EnemyX[t] = -80000000;
                                 }
                             }
                         }
@@ -603,7 +603,7 @@ void HandleEntities()
             case 102:
                 azimentype[t] = 1;
                 xx[10] = 100;
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                     xx[10] = 200;
                 break;
 
@@ -613,7 +613,7 @@ void HandleEntities()
                 xx[10] = 200;
                 if (axzimen[t] == 1)
                 {
-                    ab[t] -= 1200;
+                    EnemyY[t] -= 1200;
                     ad[t] = -1400;
                 }
                 break;
@@ -764,17 +764,17 @@ void HandleEntities()
                 ad[t] = xx[1];
             }
             // 行動 (Action)
-            aa[t] += aacta[t]; // ab[t]+=aactb[t];
+            EnemyX[t] += aacta[t]; // ab[t]+=aactb[t];
 
             if ((azimentype[t] >= 1 || azimentype[t] == -1) && abrocktm[t] <= 0)
             {
                 // if (atype[t]==4)end();
 
                 // 移動 (Move)
-                aa[t] += ac[t];
+                EnemyX[t] += ac[t];
                 if (azimentype[t] >= 1 && azimentype[t] <= 3)
                 {
-                    ab[t] += ad[t];
+                    EnemyY[t] += ad[t];
                     ad[t] += 120;
                 } // ad[t]+=180;
 
@@ -811,14 +811,14 @@ void HandleEntities()
                 abrocktm[t]--;
                 if (abrocktm[t] < 100)
                 {
-                    ab[t] -= 180;
+                    EnemyY[t] -= 180;
                 }
                 if (abrocktm[t] > 100)
                 {
                 }
                 if (abrocktm[t] == 100)
                 {
-                    ab[t] -= 800;
+                    EnemyY[t] -= 800;
                     ad[t] = -1200;
                     ac[t] = 700;
                     abrocktm[t] = 0;
@@ -832,107 +832,107 @@ void HandleEntities()
             xx[4] = 500;
             xx[5] = -800;
 
-            xx[8] = aa[t] - fx;
-            xx[9] = ab[t] - fy;
+            xx[8] = EnemyX[t] - fx;
+            xx[9] = EnemyY[t] - fy;
             xx[12] = 0;
             if (md >= 100)
                 xx[12] = md;
             xx[25] = 0;
 
-            if (ma + mnobia > xx[8] + xx[0] * 2 && ma < xx[8] + anobia[t] - xx[0] * 2 && mb + mnobib > xx[9] - xx[5] && mb + mnobib < xx[9] + xx[1] + xx[12] && (mmutekitm <= 0 || md >= 100) && abrocktm[t] <= 0)
+            if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 && PlayerX < xx[8] + EnemySizeX[t] - xx[0] * 2 && PlayerY + PlayerSizeY > xx[9] - xx[5] && PlayerY + PlayerSizeY < xx[9] + xx[1] + xx[12] && (mmutekitm <= 0 || md >= 100) && abrocktm[t] <= 0)
             {
-                if (atype[t] != 4 && atype[t] != 9 && atype[t] != 10 && (atype[t] <= 78 || atype[t] == 85) && PlayerGrounded != 1 && mtype != 200)
+                if (EnemyType[t] != 4 && EnemyType[t] != 9 && EnemyType[t] != 10 && (EnemyType[t] <= 78 || EnemyType[t] == 85) && PlayerGrounded != 1 && mtype != 200)
                 { // && atype[t]!=4 && atype[t]!=7){
 
-                    if (atype[t] == 0)
+                    if (EnemyType[t] == 0)
                     {
-                        if (axtype[t] == 0)
-                            aa[t] = -900000;
-                        if (axtype[t] == 1)
+                        if (EnemySubType[t] == 0)
+                            EnemyX[t] = -900000;
+                        if (EnemySubType[t] == 1)
                         {
                             PlaySound(Sounds[5]);
-                            mb = xx[9] - 900 - anobib[t];
+                            PlayerY = xx[9] - 900 - EnemySizeY[t];
                             md = -2100;
                             xx[25] = 1;
                             actaon[2] = 0;
                         }
                     }
 
-                    if (atype[t] == 1)
+                    if (EnemyType[t] == 1)
                     {
-                        atype[t] = 2;
-                        anobib[t] = 3000;
-                        axtype[t] = 0;
+                        EnemyType[t] = 2;
+                        EnemySizeY[t] = 3000;
+                        EnemySubType[t] = 0;
                     }
                     // こうら (Shell)
-                    else if (atype[t] == 2 && md >= 0)
+                    else if (EnemyType[t] == 2 && md >= 0)
                     {
-                        if (axtype[t] == 1 || axtype[t] == 2)
+                        if (EnemySubType[t] == 1 || EnemySubType[t] == 2)
                         {
-                            axtype[t] = 0;
+                            EnemySubType[t] = 0;
                         }
-                        else if (axtype[t] == 0)
+                        else if (EnemySubType[t] == 0)
                         {
-                            if (ma +
-                                        mnobia >
+                            if (PlayerX +
+                                        PlayerSizeX >
                                     xx[8] +
                                         xx[0] * 2 &&
-                                ma <
-                                    xx[8] + anobia[t] / 2 - xx[0] * 4)
+                                PlayerX <
+                                    xx[8] + EnemySizeX[t] / 2 - xx[0] * 4)
                             {
-                                axtype[t] = 1;
+                                EnemySubType[t] = 1;
                                 amuki[t] = 1;
                             }
                             else
                             {
-                                axtype[t] = 1;
+                                EnemySubType[t] = 1;
                                 amuki[t] = 0;
                             }
                         }
                     }
-                    if (atype[t] == 3)
+                    if (EnemyType[t] == 3)
                     {
                         xx[25] = 1;
                     }
 
-                    if (atype[t] == 6)
+                    if (EnemyType[t] == 6)
                     {
                         atm[t] = 10;
                         md = 0;
                         actaon[2] = 0;
                     }
 
-                    if (atype[t] == 7)
+                    if (EnemyType[t] == 7)
                     {
-                        aa[t] = -900000;
+                        EnemyX[t] = -900000;
                     }
 
-                    if (atype[t] == 8)
+                    if (EnemyType[t] == 8)
                     {
-                        atype[t] = 151;
+                        EnemyType[t] = 151;
                         ad[t] = 0;
                     }
                     // if (atype[t]==4){
                     // xx[25]=1;
                     // }
 
-                    if (atype[t] != 85)
+                    if (EnemyType[t] != 85)
                     {
                         if (xx[25] == 0)
                         {
                             PlaySound(Sounds[5]);
-                            mb = xx[9] - 1000 - anobib[t];
+                            PlayerY = xx[9] - 1000 - EnemySizeY[t];
                             md = -1000;
                         }
                     }
-                    if (atype[t] == 85)
+                    if (EnemyType[t] == 85)
                     {
                         if (xx[25] == 0)
                         {
                             PlaySound(Sounds[5]);
-                            mb = xx[9] - 4000;
+                            PlayerY = xx[9] - 4000;
                             md = -1000;
-                            axtype[t] = 5;
+                            EnemySubType[t] = 5;
                         }
                     }
 
@@ -951,35 +951,35 @@ void HandleEntities()
 
             // プレイヤーに触れた時 (When the player touches it)
             xx[16] = 0;
-            if (atype[t] == 4 || atype[t] == 9 || atype[t] == 10)
+            if (EnemyType[t] == 4 || EnemyType[t] == 9 || EnemyType[t] == 10)
                 xx[16] = -3000;
-            if (atype[t] == 82 || atype[t] == 83 || atype[t] == 84)
+            if (EnemyType[t] == 82 || EnemyType[t] == 83 || EnemyType[t] == 84)
                 xx[16] = -3200;
-            if (atype[t] == 85)
-                xx[16] = -anobib[t] + 6000;
-            if (ma + mnobia > xx[8] + xx[4] && ma < xx[8] + anobia[t] - xx[4] && mb < xx[9] + anobib[t] + xx[15] && mb + mnobib > xx[9] + anobib[t] - xx[0] + xx[16] && anotm[t] <= 0 && abrocktm[t] <= 0)
+            if (EnemyType[t] == 85)
+                xx[16] = -EnemySizeY[t] + 6000;
+            if (PlayerX + PlayerSizeX > xx[8] + xx[4] && PlayerX < xx[8] + EnemySizeX[t] - xx[4] && PlayerY < xx[9] + EnemySizeY[t] + xx[15] && PlayerY + PlayerSizeY > xx[9] + EnemySizeY[t] - xx[0] + xx[16] && anotm[t] <= 0 && abrocktm[t] <= 0)
             {
                 if (mmutekion == 1)
                 {
-                    aa[t] = -9000000;
+                    EnemyX[t] = -9000000;
                 }
-                if (mmutekitm <= 0 && (atype[t] <= 99 || atype[t] >= 200))
+                if (mmutekitm <= 0 && (EnemyType[t] <= 99 || EnemyType[t] >= 200))
                 {
                     if (mmutekion != 1 && mtype != 200)
                     {
                         // if (mmutekitm<=0)
 
                         // ダメージ (Damage)
-                        if ((atype[t] != 2 || axtype[t] != 0) && Health >= 1)
+                        if ((EnemyType[t] != 2 || EnemySubType[t] != 0) && Health >= 1)
                         {
-                            if (atype[t] != 6)
+                            if (EnemyType[t] != 6)
                             {
                                 Health -= 1;
                                 // mmutekitm=40;
                             }
                         }
 
-                        if (atype[t] == 6)
+                        if (EnemyType[t] == 6)
                         {
                             atm[t] = 10;
                         }
@@ -987,107 +987,107 @@ void HandleEntities()
                         if (Health == 0)
                         {
 
-                            if (atype[t] == 0 || atype[t] == 7)
+                            if (EnemyType[t] == 0 || EnemyType[t] == 7)
                             {
                                 amsgtm[t] = 60;
                                 amsgtype[t] = SyobonRand(7) + 1 + 1000 + (SyobonLevel - 1) * 10;
                             }
 
-                            if (atype[t] == 1)
+                            if (EnemyType[t] == 1)
                             {
                                 amsgtm[t] = 60;
                                 amsgtype[t] = SyobonRand(2) + 15;
                             }
 
-                            if (atype[t] == 2 && axtype[t] >= 1 && mmutekitm <= 0)
+                            if (EnemyType[t] == 2 && EnemySubType[t] >= 1 && mmutekitm <= 0)
                             {
                                 amsgtm[t] = 60;
                                 amsgtype[t] = 18;
                             }
 
-                            if (atype[t] == 3)
+                            if (EnemyType[t] == 3)
                             {
                                 amsgtm[t] = 60;
                                 amsgtype[t] = 20;
                             }
 
-                            if (atype[t] == 4)
+                            if (EnemyType[t] == 4)
                             {
                                 amsgtm[t] = 60;
                                 amsgtype[t] = SyobonRand(7) + 1 + 1000 + (SyobonLevel - 1) * 10;
                             }
 
-                            if (atype[t] == 5)
+                            if (EnemyType[t] == 5)
                             {
                                 amsgtm[t] = 60;
                                 amsgtype[t] = 21;
                             }
 
-                            if (atype[t] == 9 || atype[t] == 10)
+                            if (EnemyType[t] == 9 || EnemyType[t] == 10)
                             {
-                                mmsgtm = 30;
-                                mmsgtype = 54;
+                                PlayerMessageTimer = 30;
+                                PlayerMessageType = 54;
                             }
 
-                            if (atype[t] == 31)
+                            if (EnemyType[t] == 31)
                             {
                                 amsgtm[t] = 30;
                                 amsgtype[t] = 24;
                             }
 
-                            if (atype[t] == 80 || atype[t] == 81)
+                            if (EnemyType[t] == 80 || EnemyType[t] == 81)
                             {
                                 amsgtm[t] = 60;
                                 amsgtype[t] = 30;
                             }
 
-                            if (atype[t] == 82)
+                            if (EnemyType[t] == 82)
                             {
                                 amsgtm[t] = 20;
                                 amsgtype[t] = SyobonRand(1) + 31;
                                 xx[24] = 900;
-                                atype[t] = 83;
-                                aa[t] -= xx[24] + 100;
-                                ab[t] -= xx[24] - 100 * 0;
+                                EnemyType[t] = 83;
+                                EnemyX[t] -= xx[24] + 100;
+                                EnemyY[t] -= xx[24] - 100 * 0;
                             } // 82
 
-                            if (atype[t] == 84)
+                            if (EnemyType[t] == 84)
                             {
-                                mmsgtm = 30;
-                                mmsgtype = 50;
+                                PlayerMessageTimer = 30;
+                                PlayerMessageType = 50;
                             }
 
-                            if (atype[t] == 85)
+                            if (EnemyType[t] == 85)
                             {
                                 amsgtm[t] = 60;
                                 amsgtype[t] = SyobonRand(1) + 85;
                             }
                             // 雲
-                            if (atype[t] == 80)
+                            if (EnemyType[t] == 80)
                             {
-                                atype[t] = 81;
+                                EnemyType[t] = 81;
                             }
 
                         } // Health==0
 
                         // こうら (Shell)
-                        if (atype[t] == 2)
+                        if (EnemyType[t] == 2)
                         {
                             // if (axtype[t]==1 || axtype[t]==2){axtype[t]=0;}
-                            if (axtype[t] == 0)
+                            if (EnemySubType[t] == 0)
                             {
-                                if (ma + mnobia > xx[8] + xx[0] * 2 && ma < xx[8] + anobia[t] / 2 - xx[0] * 4)
+                                if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 && PlayerX < xx[8] + EnemySizeX[t] / 2 - xx[0] * 4)
                                 {
-                                    axtype[t] = 1;
+                                    EnemySubType[t] = 1;
                                     amuki[t] = 1;
-                                    aa[t] = ma + mnobia + fx + mc;
+                                    EnemyX[t] = PlayerX + PlayerSizeX + fx + mc;
                                     mmutekitm = 5;
                                 }
                                 else
                                 {
-                                    axtype[t] = 1;
+                                    EnemySubType[t] = 1;
                                     amuki[t] = 0;
-                                    aa[t] = ma - anobia[t] + fx - mc;
+                                    EnemyX[t] = PlayerX - EnemySizeX[t] + fx - mc;
                                     mmutekitm = 5;
                                 }
                             }
@@ -1100,97 +1100,97 @@ void HandleEntities()
                 }
                 // else if (mmutekitm>=0 && mmutekitm<=2){mmutekitm+=1;}
                 // アイテム (Item)
-                if (atype[t] >= 100 && atype[t] <= 199)
+                if (EnemyType[t] >= 100 && EnemyType[t] <= 199)
                 {
 
-                    if (atype[t] == 100 && axtype[t] == 0)
+                    if (EnemyType[t] == 100 && EnemySubType[t] == 0)
                     {
-                        mmsgtm = 30;
-                        mmsgtype = 1;
+                        PlayerMessageTimer = 30;
+                        PlayerMessageType = 1;
                         PlaySound(Sounds[9]);
                     }
-                    if (atype[t] == 100 && axtype[t] == 1)
+                    if (EnemyType[t] == 100 && EnemySubType[t] == 1)
                     {
-                        mmsgtm = 30;
-                        mmsgtype = 2;
+                        PlayerMessageTimer = 30;
+                        PlayerMessageType = 2;
                         PlaySound(Sounds[9]);
                     }
-                    if (atype[t] == 100 && axtype[t] == 2)
+                    if (EnemyType[t] == 100 && EnemySubType[t] == 2)
                     {
-                        mnobia = 5200;
-                        mnobib = 7300;
+                        PlayerSizeX = 5200;
+                        PlayerSizeY = 7300;
                         PlaySound(Sounds[9]);
-                        ma -= 1100;
-                        mb -= 4000;
+                        PlayerX -= 1100;
+                        PlayerY -= 4000;
                         mtype = 1;
                         Health = 50000000;
                     }
 
-                    if (atype[t] == 101)
+                    if (EnemyType[t] == 101)
                     {
                         Health -= 1;
-                        mmsgtm = 30;
-                        mmsgtype = 11;
+                        PlayerMessageTimer = 30;
+                        PlayerMessageType = 11;
                     }
-                    if (atype[t] == 102)
+                    if (EnemyType[t] == 102)
                     {
                         Health -= 1;
-                        mmsgtm = 30;
-                        mmsgtype = 10;
+                        PlayerMessageTimer = 30;
+                        PlayerMessageType = 10;
                     }
                     //?ボール (? Ball)
-                    if (atype[t] == 105)
+                    if (EnemyType[t] == 105)
                     {
-                        if (axtype[t] == 0)
+                        if (EnemySubType[t] == 0)
                         {
                             PlaySound(Sounds[4]);
                             sgtype[26] = 6;
                         }
-                        if (axtype[t] == 1)
+                        if (EnemySubType[t] == 1)
                         {
                             txtype[7] = 80;
                             PlaySound(Sounds[4]);
 
                             // CreateEntity(aa[t]-6*3000+1000,-3*3000,0,0,0,110,0);
-                            CreateEntity(aa[t] -
+                            CreateEntity(EnemyX[t] -
                                              8 * 3000 -
                                              1000,
                                          -4 * 3000, 0, 0, 0, 110, 0);
-                            CreateEntity(aa[t] -
+                            CreateEntity(EnemyX[t] -
                                              10 *
                                                  3000 +
                                              1000,
                                          -1 * 3000, 0, 0, 0, 110, 0);
 
-                            CreateEntity(aa[t] +
+                            CreateEntity(EnemyX[t] +
                                              4 * 3000 +
                                              1000,
                                          -2 * 3000, 0, 0, 0, 110, 0);
-                            CreateEntity(aa[t] +
+                            CreateEntity(EnemyX[t] +
                                              5 * 3000 -
                                              1000,
                                          -3 * 3000, 0, 0, 0, 110, 0);
-                            CreateEntity(aa[t] +
+                            CreateEntity(EnemyX[t] +
                                              6 * 3000 +
                                              1000,
                                          -4 * 3000, 0, 0, 0, 110, 0);
-                            CreateEntity(aa[t] +
+                            CreateEntity(EnemyX[t] +
                                              7 * 3000 -
                                              1000,
                                          -2 * 3000, 0, 0, 0, 110, 0);
-                            CreateEntity(aa[t] +
+                            CreateEntity(EnemyX[t] +
                                              8 * 3000 +
                                              1000,
                                          -2 * 3000 - 1000, 0, 0, 0, 110, 0);
-                            tb[0] += 3000 * 3;
+                            BlockY[0] += 3000 * 3;
                         }
                     } // 105
 
-                    if (atype[t] == 110)
+                    if (EnemyType[t] == 110)
                     {
                         Health -= 1;
-                        mmsgtm = 30;
-                        mmsgtype = 3;
+                        PlayerMessageTimer = 30;
+                        PlayerMessageType = 3;
                     }
 
                     /*
@@ -1211,14 +1211,14 @@ void HandleEntities()
                     if (atype[t]==133){msoubi=4;}
 
                     */
-                    aa[t] = -90000000;
+                    EnemyX[t] = -90000000;
                 }
 
             } //(ma
         }
         else
         {
-            aa[t] = -9000000;
+            EnemyX[t] = -9000000;
         }
 
     } // t
@@ -1229,12 +1229,12 @@ void PlaceEntities()
     // 敵キャラの配置 (Enemy character placement)
     for (t = 0; t < bmax; t++)
     {
-        if (ba[t] >= -80000)
+        if (EnemyAppearX[t] >= -80000)
         {
 
-            if (btm[t] >= 0)
+            if (EnemyAppearTimer[t] >= 0)
             {
-                btm[t] = btm[t] - 1;
+                EnemyAppearTimer[t] = EnemyAppearTimer[t] - 1;
             }
 
             for (tt = 0; tt <= 1; tt++)
@@ -1242,18 +1242,18 @@ void PlaceEntities()
                 int local_xx_0 = 0; // xx[0] = 0;
                 int local_xx_1 = 0; // xx[1] = 0;
 
-                if (bz[t] == 0 && btm[t] < 0 && ba[t] - fx >= fxmax + 2000 && ba[t] - fx < fxmax + 2000 + mc && tt == 0)
+                if (bz[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= fxmax + 2000 && EnemyAppearX[t] - fx < fxmax + 2000 + mc && tt == 0)
                 {
                     local_xx_0 = 1;
-                    amuki[aco] = 0;
+                    amuki[EnemyCount] = 0;
                 } // && mmuki==1
-                if (bz[t] == 0 && btm[t] < 0 && ba[t] - fx >= -400 - anx[btype[t]] + mc && ba[t] - fx < -400 - anx[btype[t]] && tt == 1)
+                if (bz[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= -400 - anx[EnemyAppearType[t]] + mc && EnemyAppearX[t] - fx < -400 - anx[EnemyAppearType[t]] && tt == 1)
                 {
                     local_xx_0 = 1;
                     local_xx_1 = 1;
-                    amuki[aco] = 1;
+                    amuki[EnemyCount] = 1;
                 } // && mmuki==0
-                if (bz[t] == 1 && ba[t] - fx >= 0 - anx[btype[t]] && ba[t] - fx <= fxmax + 4000 && bb[t] - fy >= -9000 && bb[t] - fy <= fymax + 4000 && btm[t] < 0)
+                if (bz[t] == 1 && EnemyAppearX[t] - fx >= 0 - anx[EnemyAppearType[t]] && EnemyAppearX[t] - fx <= fxmax + 4000 && EnemyAppearY[t] - fy >= -9000 && EnemyAppearY[t] - fy <= fymax + 4000 && EnemyAppearTimer[t] < 0)
                 {
                     local_xx_0 = 1;
                     bz[t] = 0;
@@ -1263,14 +1263,14 @@ void PlaceEntities()
 
                 if (local_xx_0 == 1)
                 { // 400
-                    btm[t] = 401;
+                    EnemyAppearTimer[t] = 401;
                     local_xx_0 = 0; // if (btype[t]>=20 && btype[t]<=23){btm[t]=90000;}
-                    if (btype[t] >= 10)
+                    if (EnemyAppearType[t] >= 10)
                     {
-                        btm[t] = 9999999;
+                        EnemyAppearTimer[t] = 9999999;
                     }
                     // 10
-                    CreateEntity(ba[t], bb[t], 0, 0, 0, btype[t], bxtype[t]);
+                    CreateEntity(EnemyAppearX[t], EnemyAppearY[t], 0, 0, 0, EnemyAppearType[t], EnemyAppearSubType[t]);
                 }
 
             } // tt
@@ -1391,13 +1391,13 @@ void HandleEnemiesMessages()
 
             if (amsgtype[t] != 31)
             {
-                xx[5] = (aa[t] + anobia[t] + 300 - fx) / 100;
-                xx[6] = (ab[t] - fy) / 100;
+                xx[5] = (EnemyX[t] + EnemySizeX[t] + 300 - fx) / 100;
+                xx[6] = (EnemyY[t] - fy) / 100;
             }
             else
             {
-                xx[5] = (aa[t] + anobia[t] + 300 - fx) / 100;
-                xx[6] = (ab[t] - fy - 800) / 100;
+                xx[5] = (EnemyX[t] + EnemySizeX[t] + 300 - fx) / 100;
+                xx[6] = (EnemyY[t] - fy - 800) / 100;
             }
 
             ChangeFontType(DX_FONTTYPE_EDGE);
@@ -1423,27 +1423,27 @@ void HandleEntitiesBlocks()
 
 			xx[8] = sa[tt] - fx;
 			xx[9] = sb[tt] - fy;
-			if (aa[t] + anobia[t] - fx > xx[8] - xx[0] && aa[t] - fx < xx[8] + xx[2] && ab[t] + anobib[t] - fy > xx[9] + xx[1] * 3 / 4 && ab[t] - fy < xx[9] + sd[tt] - xx[2])
+			if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] - xx[0] && EnemyX[t] - fx < xx[8] + xx[2] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] * 3 / 4 && EnemyY[t] - fy < xx[9] + sd[tt] - xx[2])
 			{
-				aa[t] = xx[8] - xx[0] - anobia[t] + fx;
+				EnemyX[t] = xx[8] - xx[0] - EnemySizeX[t] + fx;
 				amuki[t] = 0;
 			}
-			if (aa[t] + anobia[t] - fx > xx[8] + sc[tt] - xx[0] && aa[t] - fx < xx[8] + sc[tt] + xx[0] && ab[t] + anobib[t] - fy > xx[9] + xx[1] * 3 / 4 && ab[t] - fy < xx[9] + sd[tt] - xx[2])
+			if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + sc[tt] - xx[0] && EnemyX[t] - fx < xx[8] + sc[tt] + xx[0] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] * 3 / 4 && EnemyY[t] - fy < xx[9] + sd[tt] - xx[2])
 			{
-				aa[t] = xx[8] + sc[tt] + xx[0] + fx;
+				EnemyX[t] = xx[8] + sc[tt] + xx[0] + fx;
 				amuki[t] = 1;
 			}
 			// if (aa[t]+anobia[t]-fx>xx[8]+xx[0] && aa[t]-fx<xx[8]+sc[tt]-xx[0] && ab[t]+anobib[t]-fy>xx[9] && ab[t]+anobib[t]-fy<xx[9]+xx[1] && ad[t]>=-100){ab[t]=sb[tt]-fy-anobib[t]+100+fy;ad[t]=0;}//PlayerGrounded=1;}
-			if (aa[t] + anobia[t] - fx > xx[8] + xx[0] && aa[t] - fx < xx[8] + sc[tt] - xx[0] && ab[t] + anobib[t] - fy > xx[9] && ab[t] + anobib[t] - fy < xx[9] + sd[tt] - xx[1] && ad[t] >= -100)
+			if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + sc[tt] - xx[0] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] + EnemySizeY[t] - fy < xx[9] + sd[tt] - xx[1] && ad[t] >= -100)
 			{
-				ab[t] = sb[tt] - fy - anobib[t] + 100 + fy;
+				EnemyY[t] = sb[tt] - fy - EnemySizeY[t] + 100 + fy;
 				ad[t] = 0;
 				axzimen[t] = 1;
 			}
 
-			if (aa[t] + anobia[t] - fx > xx[8] + xx[0] && aa[t] - fx < xx[8] + sc[tt] - xx[0] && ab[t] - fy > xx[9] + sd[tt] - xx[1] && ab[t] - fy < xx[9] + sd[tt] + xx[0])
+			if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + sc[tt] - xx[0] && EnemyY[t] - fy > xx[9] + sd[tt] - xx[1] && EnemyY[t] - fy < xx[9] + sd[tt] + xx[0])
 			{
-				ab[t] = xx[9] + sd[tt] + xx[0] + fy;
+				EnemyY[t] = xx[9] + sd[tt] + xx[0] + fy;
 				if (ad[t] < 0)
 				{
 					ad[t] = -ad[t] * 2 / 3;
@@ -1458,11 +1458,11 @@ void HandleEntitiesBlocks()
 		xx[0] = 200;
 		xx[1] = 3000;
 		xx[2] = 1000;
-		xx[8] = ta[tt] - fx;
-		xx[9] = tb[tt] - fy;
-		if (ta[tt] - fx + xx[1] >= -12010 && ta[tt] - fx <= fxmax + 12000)
+		xx[8] = BlockX[tt] - fx;
+		xx[9] = BlockY[tt] - fy;
+		if (BlockX[tt] - fx + xx[1] >= -12010 && BlockX[tt] - fx <= fxmax + 12000)
 		{
-			if (atype[t] != 86 && atype[t] != 90 && ttype[tt] != 140)
+			if (EnemyType[t] != 86 && EnemyType[t] != 90 && ttype[tt] != 140)
 			{
 
 				// 上 (Above)
@@ -1472,9 +1472,9 @@ void HandleEntitiesBlocks()
 					if (!(ttype[tt] == 117))
 					{
 						// if (!(ttype[tt]==120 && txtype[t]==0)){
-						if (aa[t] + anobia[t] - fx > xx[8] + xx[0] && aa[t] - fx < xx[8] + xx[1] - xx[0] * 1 && ab[t] + anobib[t] - fy > xx[9] && ab[t] + anobib[t] - fy < xx[9] + xx[1] && ad[t] >= -100)
+						if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + xx[1] - xx[0] * 1 && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] + EnemySizeY[t] - fy < xx[9] + xx[1] && ad[t] >= -100)
 						{
-							ab[t] = xx[9] - anobib[t] + 100 + fy;
+							EnemyY[t] = xx[9] - EnemySizeY[t] + 100 + fy;
 							ad[t] = 0;
 							axzimen[t] = 1;
 							// ジャンプ台
@@ -1490,9 +1490,9 @@ void HandleEntitiesBlocks()
 				// 下 (Below)
 				if (ttype[tt] != 117)
 				{
-					if (aa[t] + anobia[t] - fx > xx[8] + xx[0] && aa[t] - fx < xx[8] + xx[1] - xx[0] * 1 && ab[t] - fy > xx[9] + xx[1] - xx[1] && ab[t] - fy < xx[9] + xx[1] + xx[0])
+					if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + xx[1] - xx[0] * 1 && EnemyY[t] - fy > xx[9] + xx[1] - xx[1] && EnemyY[t] - fy < xx[9] + xx[1] + xx[0])
 					{
-						ab[t] = xx[9] + xx[1] + xx[0] + fy;
+						EnemyY[t] = xx[9] + xx[1] + xx[0] + fy;
 						if (ad[t] < 0)
 						{
 							ad[t] = 0;
@@ -1504,67 +1504,67 @@ void HandleEntitiesBlocks()
 				}
 				// 左右 (Left and right)
 				xx[27] = 0;
-				if ((atype[t] >= 100 || (ttype[tt] != 7 || ttype[tt] == 7 && atype[t] == 2)) && ttype[tt] != 117)
+				if ((EnemyType[t] >= 100 || (ttype[tt] != 7 || ttype[tt] == 7 && EnemyType[t] == 2)) && ttype[tt] != 117)
 				{
-					if (aa[t] + anobia[t] - fx > xx[8] && aa[t] - fx < xx[8] + xx[2] && ab[t] + anobib[t] - fy > xx[9] + xx[1] / 2 - xx[0] && ab[t] - fy < xx[9] + xx[2])
+					if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[2] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] / 2 - xx[0] && EnemyY[t] - fy < xx[9] + xx[2])
 					{
-						aa[t] = xx[8] - anobia[t] + fx;
+						EnemyX[t] = xx[8] - EnemySizeX[t] + fx;
 						ac[t] = 0;
 						amuki[t] = 0;
 						xx[27] = 1;
 					}
-					if (aa[t] + anobia[t] - fx >
+					if (EnemyX[t] + EnemySizeX[t] - fx >
 							xx[8] + xx[1] - xx[0] * 2 &&
-						aa[t] - fx < xx[8] + xx[1] && ab[t] + anobib[t] - fy > xx[9] + xx[1] / 2 - xx[0] && ab[t] - fy < xx[9] + xx[2])
+						EnemyX[t] - fx < xx[8] + xx[1] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] / 2 - xx[0] && EnemyY[t] - fy < xx[9] + xx[2])
 					{
-						aa[t] = xx[8] + xx[1] + fx;
+						EnemyX[t] = xx[8] + xx[1] + fx;
 						ac[t] = 0;
 						amuki[t] = 1;
 						xx[27] = 1;
 					}
 					// こうらブレイク (Shell break)
-					if (xx[27] == 1 && (ttype[tt] == 7 || ttype[tt] == 1) && atype[t] == 2)
+					if (xx[27] == 1 && (ttype[tt] == 7 || ttype[tt] == 1) && EnemyType[t] == 2)
 					{
 						if (ttype[tt] == 7)
 						{
 							PlaySound(Sounds[4]);
 							ttype[tt] = 3;
-							eyobi(ta[tt] + 10,
-								  tb[tt], 0, -800,
+							eyobi(BlockX[tt] + 10,
+								  BlockY[tt], 0, -800,
 								  0, 40, 3000, 3000, 0, 16);
 						}
 						else if (ttype[tt] == 1)
 						{
 							PlaySound(Sounds[3]);
-							eyobi(ta[tt] + 1200,
-								  tb[tt] + 1200,
+							eyobi(BlockX[tt] + 1200,
+								  BlockY[tt] + 1200,
 								  300, -1000, 0, 160, 1000, 1000, 1, 120);
-							eyobi(ta[tt] + 1200,
-								  tb[tt] + 1200,
+							eyobi(BlockX[tt] + 1200,
+								  BlockY[tt] + 1200,
 								  -300, -1000, 0, 160, 1000, 1000, 1, 120);
-							eyobi(ta[tt] + 1200,
-								  tb[tt] + 1200,
+							eyobi(BlockX[tt] + 1200,
+								  BlockY[tt] + 1200,
 								  240, -1400, 0, 160, 1000, 1000, 1, 120);
-							eyobi(ta[tt] + 1200,
-								  tb[tt] + 1200,
+							eyobi(BlockX[tt] + 1200,
+								  BlockY[tt] + 1200,
 								  -240, -1400, 0, 160, 1000, 1000, 1, 120);
 							BlockBreak(tt);
 						}
 					}
 				}
 			}
-			if (atype[t] == 86 || atype[t] == 90)
+			if (EnemyType[t] == 86 || EnemyType[t] == 90)
 			{
-				if (aa[t] + anobia[t] - fx > xx[8] && aa[t] - fx < xx[8] + xx[1] && ab[t] + anobib[t] - fy > xx[9] && ab[t] - fy < xx[9] + xx[1])
+				if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[1] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] - fy < xx[9] + xx[1])
 				{
 					PlaySound(Sounds[3]);
-					eyobi(ta[tt] + 1200, tb[tt] + 1200, 300,
+					eyobi(BlockX[tt] + 1200, BlockY[tt] + 1200, 300,
 						  -1000, 0, 160, 1000, 1000, 1, 120);
-					eyobi(ta[tt] + 1200, tb[tt] + 1200,
+					eyobi(BlockX[tt] + 1200, BlockY[tt] + 1200,
 						  -300, -1000, 0, 160, 1000, 1000, 1, 120);
-					eyobi(ta[tt] + 1200, tb[tt] + 1200, 240,
+					eyobi(BlockX[tt] + 1200, BlockY[tt] + 1200, 240,
 						  -1400, 0, 160, 1000, 1000, 1, 120);
-					eyobi(ta[tt] + 1200, tb[tt] + 1200,
+					eyobi(BlockX[tt] + 1200, BlockY[tt] + 1200,
 						  -240, -1400, 0, 160, 1000, 1000, 1, 120);
 					BlockBreak(tt);
 				}
@@ -1573,9 +1573,9 @@ void HandleEntitiesBlocks()
 		// 剣とってクリア (Get the sword and clear the stage)
 		if (ttype[tt] == 140)
 		{
-			if (ab[t] - fy > xx[9] - xx[0] * 2 - 2000 && ab[t] - fy < xx[9] + xx[1] - xx[0] * 2 + 2000 && aa[t] + anobia[t] - fx > xx[8] - 400 && aa[t] - fx < xx[8] + xx[1])
+			if (EnemyY[t] - fy > xx[9] - xx[0] * 2 - 2000 && EnemyY[t] - fy < xx[9] + xx[1] - xx[0] * 2 + 2000 && EnemyX[t] + EnemySizeX[t] - fx > xx[8] - 400 && EnemyX[t] - fx < xx[8] + xx[1])
 			{
-				ta[tt] = -800000; // PlaySound(Sounds[4]);
+				BlockX[tt] = -800000; // PlaySound(Sounds[4]);
 				sracttype[20] = 1;
 				sron[20] = 1;
 			}
@@ -1590,10 +1590,10 @@ void RenderEnemies()
     for (t = 0; t < amax; t++)
     {
 
-        xx[0] = aa[t] - fx;
-        xx[1] = ab[t] - fy;
-        xx[2] = anobia[t] / 100;
-        xx[3] = anobib[t] / 100;
+        xx[0] = EnemyX[t] - fx;
+        xx[1] = EnemyY[t] - fy;
+        xx[2] = EnemySizeX[t] / 100;
+        xx[3] = EnemySizeY[t] / 100;
         xx[14] = 3000;
         xx[16] = 0;
         if (xx[0] + xx[2] * 100 >= -10 - xx[14] && xx[1] <= fxmax + xx[14] && xx[1] + xx[3] * 100 >= -10 && xx[3] <= fymax)
@@ -1602,32 +1602,32 @@ void RenderEnemies()
             {
                 mirror = 1;
             }
-            if (atype[t] == 3 && axtype[t] == 1)
+            if (EnemyType[t] == 3 && EnemySubType[t] == 1)
             {
                 DrawVertTurnGraph(xx[0] / 100 + 13,
-                                  xx[1] / 100 + 15, Sliced_GFX[atype[t]][3]);
+                                  xx[1] / 100 + 15, Sliced_GFX[EnemyType[t]][3]);
                 xx[16] = 1;
             }
-            if (atype[t] == 9 && ad[t] >= 1)
+            if (EnemyType[t] == 9 && ad[t] >= 1)
             {
                 DrawVertTurnGraph(xx[0] / 100 + 13,
-                                  xx[1] / 100 + 15, Sliced_GFX[atype[t]][3]);
+                                  xx[1] / 100 + 15, Sliced_GFX[EnemyType[t]][3]);
                 xx[16] = 1;
             }
-            if (atype[t] >= 100 && amuki[t] == 1)
+            if (EnemyType[t] >= 100 && amuki[t] == 1)
                 mirror = 0;
 
             // メイン (main)
-            if (atype[t] < 200 && xx[16] == 0 && atype[t] != 6 && atype[t] != 79 && atype[t] != 86 && atype[t] != 30)
+            if (EnemyType[t] < 200 && xx[16] == 0 && EnemyType[t] != 6 && EnemyType[t] != 79 && EnemyType[t] != 86 && EnemyType[t] != 30)
             {
-                if (!((atype[t] == 80 || atype[t] == 81) && axtype[t] == 1))
+                if (!((EnemyType[t] == 80 || EnemyType[t] == 81) && EnemySubType[t] == 1))
                 {
-                    drawimage(Sliced_GFX[atype[t]][3],
+                    drawimage(Sliced_GFX[EnemyType[t]][3],
                               xx[0] / 100, xx[1] / 100);
                 }
             }
             // デフラグさん (Defrag-san)
-            if (atype[t] == 6)
+            if (EnemyType[t] == 6)
             {
                 if (atm[t] >= 10 && atm[t] <= 19 || atm[t] >= 100 && atm[t] <= 119 || atm[t] >= 200)
                 {
@@ -1639,20 +1639,20 @@ void RenderEnemies()
                 }
             }
             // モララー (Molalla)
-            if (atype[t] == 30)
+            if (EnemyType[t] == 30)
             {
-                if (axtype[t] == 0)
+                if (EnemySubType[t] == 0)
                     drawimage(Sliced_GFX[30][3], xx[0] / 100, xx[1] / 100);
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                     drawimage(Sliced_GFX[155][3], xx[0] / 100, xx[1] / 100);
             }
             // ステルス雲 (Stealth cloud)
-            if ((atype[t] == 81) && axtype[t] == 1)
+            if ((EnemyType[t] == 81) && EnemySubType[t] == 1)
             {
                 drawimage(Sliced_GFX[130][3], xx[0] / 100, xx[1] / 100);
             }
 
-            if (atype[t] == 79)
+            if (EnemyType[t] == 79)
             {
                 setcolor(250, 250, 0);
                 fillrect(xx[0] / 100, xx[1] / 100, xx[2], xx[3]);
@@ -1660,10 +1660,10 @@ void RenderEnemies()
                 drawrect(xx[0] / 100, xx[1] / 100, xx[2], xx[3]);
             }
 
-            if (atype[t] == 82)
+            if (EnemyType[t] == 82)
             {
 
-                if (axtype[t] == 0)
+                if (EnemySubType[t] == 0)
                 {
                     xx[9] = 0;
                     if (stagecolor == 2)
@@ -1683,7 +1683,7 @@ void RenderEnemies()
                               xx[0] / 100, xx[1] / 100);
                 }
 
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                 {
                     xx[9] = 0;
                     if (stagecolor == 2)
@@ -1703,15 +1703,15 @@ void RenderEnemies()
                               xx[0] / 100, xx[1] / 100);
                 }
 
-                if (axtype[t] == 2)
+                if (EnemySubType[t] == 2)
                 {
                     drawimage(Sliced_GFX[1][5], xx[0] / 100, xx[1] / 100);
                 }
             }
-            if (atype[t] == 83)
+            if (EnemyType[t] == 83)
             {
 
-                if (axtype[t] == 0)
+                if (EnemySubType[t] == 0)
                 {
                     xx[9] = 0;
                     if (stagecolor == 2)
@@ -1731,7 +1731,7 @@ void RenderEnemies()
                               xx[0] / 100 + 10, xx[1] / 100 + 9);
                 }
 
-                if (axtype[t] == 1)
+                if (EnemySubType[t] == 1)
                 {
                     xx[9] = 0;
                     if (stagecolor == 2)
@@ -1752,7 +1752,7 @@ void RenderEnemies()
                 }
             }
             // 偽ポール (Fake Pole)
-            if (atype[t] == 85)
+            if (EnemyType[t] == 85)
             {
                 setc1();
                 fillrect((xx[0]) / 100 + 10, (xx[1]) / 100, 10, xx[3]);
@@ -1766,9 +1766,9 @@ void RenderEnemies()
             } // 85
 
             // ニャッスン
-            if (atype[t] == 86)
+            if (EnemyType[t] == 86)
             {
-                if (ma >= aa[t] - fx - mnobia - 4000 && ma <= aa[t] - fx + anobia[t] + 4000)
+                if (PlayerX >= EnemyX[t] - fx - PlayerSizeX - 4000 && PlayerX <= EnemyX[t] - fx + EnemySizeX[t] + 4000)
                 {
                     drawimage(Sliced_GFX[152][3], xx[0] / 100, xx[1] / 100);
                 }
@@ -1778,7 +1778,7 @@ void RenderEnemies()
                 }
             }
 
-            if (atype[t] == 200)
+            if (EnemyType[t] == 200)
                 drawimage(Sliced_GFX[0][3], xx[0] / 100, xx[1] / 100);
 
             mirror = 0;
@@ -1792,16 +1792,16 @@ void RenderEnemiesTwo()
     for (t = 0; t < amax; t++)
     {
 
-        xx[0] = aa[t] - fx;
-        xx[1] = ab[t] - fy;
+        xx[0] = EnemyX[t] - fx;
+        xx[1] = EnemyY[t] - fy;
         xx[14] = 12000;
         xx[16] = 0;
-        if (atype[t] == 87 || atype[t] == 88)
+        if (EnemyType[t] == 87 || EnemyType[t] == 88)
         {
             if (xx[0] + xx[2] * 100 >= -10 - xx[14] && xx[1] <= fxmax + xx[14] && xx[1] + xx[3] * 100 >= -10 && xx[3] <= fymax)
             {
 
-                for (tt = 0; tt <= axtype[t] % 100; tt++)
+                for (tt = 0; tt <= EnemySubType[t] % 100; tt++)
                 {
                     xx[26] = 18;
                     xd[4] = tt * xx[26] * cos(atm[t] * pai / 180 / 2);
@@ -1811,7 +1811,7 @@ void RenderEnemiesTwo()
                     setcolor(230, 120, 0);
                     xx[23] = 8;
                     //+KZ: this checks rotation direction, was added in Syobon Action 2
-                    if (atype[t] == 87)
+                    if (EnemyType[t] == 87)
                     {
                         fillarc(xx[0] / 100 +
                                     xx[24],
@@ -1947,9 +1947,9 @@ void HandleLifts()
             // 乗ったとき (When I got on)
             if (!(mztm >= 1 && mztype == 1 && actaon[3] == 1) && Health >= 1)
             {
-                if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + xx[12] - xx[0] && mb + mnobib > xx[9] && mb + mnobib < xx[9] + xx[1] && md >= -100)
+                if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY + PlayerSizeY < xx[9] + xx[1] && md >= -100)
                 {
-                    mb = xx[9] - mnobib + 100;
+                    PlayerY = xx[9] - PlayerSizeY + 100;
                     // if (sracttype[t]!=7)PlayerGrounded=1;
 
                     if (srtype[t] == 1)
@@ -1986,7 +1986,7 @@ void HandleLifts()
 
                     if (sracttype[t] == 1 && sron[t] == 1 || sracttype[t] == 3 || sracttype[t] == 5)
                     {
-                        mb += sre[t];
+                        PlayerY += sre[t];
                         // if (srmuki[t]==0)
                         // if (srf[t]<0)
                         // if (srmuki[t]==1)
@@ -1999,11 +1999,11 @@ void HandleLifts()
                         if (actaon[2] != 1)
                         {
                             md = -600;
-                            mb -= 810;
+                            PlayerY -= 810;
                         }
                         if (actaon[2] == 1)
                         {
-                            mb -= 400;
+                            PlayerY -= 400;
                             md = -1400;
                             mjumptm = 10;
                         }
@@ -2029,8 +2029,8 @@ void HandleLifts()
                         if (srmove[t] >= 100)
                         {
                             Health = 0;
-                            mmsgtype = 53;
-                            mmsgtm = 30;
+                            PlayerMessageType = 53;
+                            PlayerMessageTimer = 30;
                             srmove[t] = -5000;
                         }
                     }
@@ -2042,8 +2042,8 @@ void HandleLifts()
                         if (srmove[t] >= 100)
                         {
                             Health = 0;
-                            mmsgtype = 53;
-                            mmsgtm = 30;
+                            PlayerMessageType = 53;
+                            PlayerMessageTimer = 30;
                             srmove[t] = -5000;
                         }
                     }
@@ -2058,9 +2058,9 @@ void HandleLifts()
 
                 if (srsp[t] == 11)
                 {
-                    if (ma + mnobia >
+                    if (PlayerX + PlayerSizeX >
                             xx[8] + xx[0] - 2000 &&
-                        ma < xx[8] + xx[12] - xx[0])
+                        PlayerX < xx[8] + xx[12] - xx[0])
                     {
                         sron[t] = 1;
                     } // && mb+mnobib>xx[9]-1000 && mb+mnobib<xx[9]+xx[1]+2000)
@@ -2071,7 +2071,7 @@ void HandleLifts()
                     }
                 }
                 // トゲ(下) (Spikes (below))
-                if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + xx[12] - xx[0] && mb > xx[9] - xx[1] / 2 && mb < xx[9] + xx[1] / 2)
+                if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0] && PlayerY > xx[9] - xx[1] / 2 && PlayerY < xx[9] + xx[1] / 2)
                 {
                     if (srtype[t] == 2)
                     {
@@ -2079,7 +2079,7 @@ void HandleLifts()
                         {
                             md = -md;
                         }
-                        mb += 110;
+                        PlayerY += 110;
                         if (mmutekitm <= 0)
                             Health -= 1;
                         if (mmutekion != 1)
@@ -2089,7 +2089,7 @@ void HandleLifts()
                 // 落下 (Falling)
                 if (sracttype[t] == 6)
                 {
-                    if (ma + mnobia > xx[8] + xx[0] && ma < xx[8] + xx[12] - xx[0])
+                    if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0])
                     {
                         sron[t] = 1;
                     }
@@ -2125,9 +2125,9 @@ void HandleLifts()
             {
                 if (azimentype[tt] == 1)
                 {
-                    if (aa[tt] + anobia[tt] - fx > xx[8] + xx[0] && aa[tt] - fx < xx[8] + xx[12] - xx[0] && ab[tt] + anobib[tt] > xx[11] - 100 && ab[tt] + anobib[tt] < xx[11] + xx[1] + 500 && ad[tt] >= -100)
+                    if (EnemyX[tt] + EnemySizeX[tt] - fx > xx[8] + xx[0] && EnemyX[tt] - fx < xx[8] + xx[12] - xx[0] && EnemyY[tt] + EnemySizeY[tt] > xx[11] - 100 && EnemyY[tt] + EnemySizeY[tt] < xx[11] + xx[1] + 500 && ad[tt] >= -100)
                     {
-                        ab[tt] = xx[9] - anobib[tt] + 100;
+                        EnemyY[tt] = xx[9] - EnemySizeY[tt] + 100;
                         ad[tt] = 0;
                         axzimen[tt] = 1;
                     }
@@ -2220,19 +2220,20 @@ void RenderLifts()
 
 // 敵キャラ、アイテム作成 (Enemy character and item creation)
 void CreateEntity(
-    int xa,
-    int xb,
+    int PosX, //int xa
+    int PosY, //int xb
     int xc,
     int xd,
     int xnotm,
     int EntityType, // int xtype
-    int xxtype)
+    int EntitySubType // int xxtype
+)
 {
     int rz = 0;
     for (t1 = 0; t1 <= 1; t1++)
     {
         t1 = 2;
-        if (aa[aco] >= -9000 && aa[aco] <= 30000)
+        if (EnemyX[EnemyCount] >= -9000 && EnemyX[EnemyCount] <= 30000)
             t1 = 0;
         rz++;
 
@@ -2240,29 +2241,29 @@ void CreateEntity(
         {
             t1 = 3;
 
-            aa[aco] = xa;
-            ab[aco] = xb; // ag[aco]=0;ah[aco]=0;ai[aco]=bb[t];//ad[t]=0;aeon[t]=1;
-            ac[aco] = xc;
-            ad[aco] = xd;
-            if (xxtype > 100)
-                ac[aco] = xxtype;
+            EnemyX[EnemyCount] = PosX;
+            EnemyY[EnemyCount] = PosY; // ag[aco]=0;ah[aco]=0;ai[aco]=bb[t];//ad[t]=0;aeon[t]=1;
+            ac[EnemyCount] = xc;
+            ad[EnemyCount] = xd;
+            if (EntitySubType > 100)
+                ac[EnemyCount] = EntitySubType;
             // ae[aco]=0;af[aco]=0;
-            atype[aco] = EntityType;
-            if (xxtype >= 0 && xxtype <= 99100)
-                axtype[aco] = xxtype; // ahp[aco]=iz[bxtype[t]];aytm[aco]=0;
+            EnemyType[EnemyCount] = EntityType;
+            if (EntitySubType >= 0 && EntitySubType <= 99100)
+                EnemySubType[EnemyCount] = EntitySubType; // ahp[aco]=iz[bxtype[t]];aytm[aco]=0;
             // if (xxtype==1)end();
-            anotm[aco] = xnotm;
-            if (aa[aco] - fx <= ma + mnobia / 2)
-                amuki[aco] = 1;
-            if (aa[aco] - fx > ma + mnobia / 2)
-                amuki[aco] = 0;
-            if (abrocktm[aco] >= 1)
-                amuki[aco] = 1;
-            if (abrocktm[aco] == 20)
-                amuki[aco] = 0;
+            anotm[EnemyCount] = xnotm;
+            if (EnemyX[EnemyCount] - fx <= PlayerX + PlayerSizeX / 2)
+                amuki[EnemyCount] = 1;
+            if (EnemyX[EnemyCount] - fx > PlayerX + PlayerSizeX / 2)
+                amuki[EnemyCount] = 0;
+            if (abrocktm[EnemyCount] >= 1)
+                amuki[EnemyCount] = 1;
+            if (abrocktm[EnemyCount] == 20)
+                amuki[EnemyCount] = 0;
 
-            anobia[aco] = anx[atype[aco]];
-            anobib[aco] = any[atype[aco]];
+            EnemySizeX[EnemyCount] = anx[EnemyType[EnemyCount]];
+            EnemySizeY[EnemyCount] = any[EnemyType[EnemyCount]];
 
             // 大砲音 (Cannon sound)
             if (EntityType == 7 && CheckSoundMem(Sounds[10]) == 0)
@@ -2275,7 +2276,7 @@ void CreateEntity(
                 PlaySound(Sounds[18]);
             }
 
-            azimentype[aco] = 1;
+            azimentype[EnemyCount] = 1;
 
             // if (atype[aco]<=30 && atype[aco]!=4)atm[aco]=20;
 
@@ -2285,13 +2286,13 @@ void CreateEntity(
 
             if (EntityType == 87)
             {
-                atm[aco] = SyobonRand(179) + (-90);
+                atm[EnemyCount] = SyobonRand(179) + (-90);
             }
 
-            aco += 1;
-            if (aco >= amax - 1)
+            EnemyCount += 1;
+            if (EnemyCount >= amax - 1)
             {
-                aco = 0;
+                EnemyCount = 0;
             }
         } // t1
 

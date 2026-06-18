@@ -18,8 +18,8 @@ void stagecls()
 	// for (t=0;t<spmax;t++){spa[t]=-9000000;szyunni[t]=t;spb[t]=1;spc[t]=1;spd[t]=1;sptype[t]=0;spgtype[t]=0;}
 	for (t = 0; t < tmax; t++)
 	{
-		ta[t] = -9000000;
-		tb[t] = 1;
+		BlockX[t] = -9000000;
+		BlockY[t] = 1;
 		tc[t] = 1;
 		td[t] = 1;
 		titem[t] = 0;
@@ -46,13 +46,13 @@ void stagecls()
 	// for (t=0;t<imax;t++){ia[t]=-9000000;ib[t]=1;ic[t]=1;id[t]=1;}
 	for (t = 0; t < amax; t++)
 	{
-		aa[t] = -9000000;
-		ab[t] = 1;
+		EnemyX[t] = -9000000;
+		EnemyY[t] = 1;
 		ac[t] = 0;
 		ad[t] = 1;
 		azimentype[t] = 0;
-		atype[t] = 0;
-		axtype[t] = 0;
+		EnemyType[t] = 0;
+		EnemySubType[t] = 0;
 		ae[t] = 0;
 		af[t] = 0;
 		atm[t] = 0;
@@ -62,11 +62,11 @@ void stagecls()
 	}
 	for (t = 0; t < bmax; t++)
 	{
-		ba[t] = -9000000;
-		bb[t] = 1;
+		EnemyAppearX[t] = -9000000;
+		EnemyAppearY[t] = 1;
 		bz[t] = 1;
-		btm[t] = 0;
-		bxtype[t] = 0;
+		EnemyAppearTimer[t] = 0;
+		EnemyAppearSubType[t] = 0;
 	}
 	for (t = 0; t < emax; t++)
 	{
@@ -93,7 +93,7 @@ void stagecls()
 
 	sco = 0;
 	tco = 0;
-	aco = 0;
+	EnemyCount = 0;
 	bco = 0;
 	eco = 0;
 	nco = 0;
@@ -197,9 +197,9 @@ void stage()
 			// これなぜかバグの原因ｗ (For some reason, this is the cause of the bug lol)
 			if (xx[10] >= 50 && xx[10] <= 79)
 			{
-				ba[bco] = xx[21] * 100;
-				bb[bco] = xx[22] * 100;
-				btype[bco] = xx[23] - 50;
+				EnemyAppearX[bco] = xx[21] * 100;
+				EnemyAppearY[bco] = xx[22] * 100;
+				EnemyAppearType[bco] = xx[23] - 50;
 				bco++;
 				if (bco >= bmax)
 					bco = 0;
@@ -242,8 +242,8 @@ void stage()
 			{
 				fx = sa[t] - fxmax / 2;
 				fzx = fx;
-				ma = sa[t] - fx;
-				mb = sb[t] - fy;
+				PlayerX = sa[t] - fx;
+				PlayerY = sb[t] - fy;
 				tyuukan--;
 				xx[17]++;
 
@@ -635,16 +635,16 @@ void HandleSyobonActionOneLevels()
 
         bco = 0;
         t = bco;
-        ba[t] = 27 * 29 * 100;
-        bb[t] = (9 * 29 - 12) * 100;
-        btype[t] = 0;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 27 * 29 * 100;
+        EnemyAppearY[t] = (9 * 29 - 12) * 100;
+        EnemyAppearType[t] = 0;
+        EnemyAppearSubType[t] = 0;
         bco++;
         t = bco;
-        ba[t] = 103 * 29 * 100;
-        bb[t] = (5 * 29 - 12 + 10) * 100;
-        btype[t] = 80;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 103 * 29 * 100;
+        EnemyAppearY[t] = (5 * 29 - 12 + 10) * 100;
+        EnemyAppearType[t] = 80;
+        EnemyAppearSubType[t] = 0;
         bco++;
         // t=bco;ba[t]=13*29*100;bb[t]=(5*29-12)*100;btype[t]=81;bxtype[t]=0;bco++;
 
@@ -979,8 +979,8 @@ void HandleSyobonActionOneLevels()
         bgmchange(Music[2]);
 
         scrollx = 4080 * 100;
-        ma = 6000;
-        mb = 3000;
+        PlayerX = 6000;
+        PlayerY = 3000;
         stagecolor = 2;
 
         byte stagedatex[17][1001] = {
@@ -1478,25 +1478,25 @@ void HandleSyobonActionOneLevels()
 
         bco = 0;
         t = bco;
-        ba[t] = 18 * 29 * 100;
-        bb[t] = (10 * 29 - 12) * 100;
-        btype[t] = 82;
-        bxtype[t] = 1;
+        EnemyAppearX[t] = 18 * 29 * 100;
+        EnemyAppearY[t] = (10 * 29 - 12) * 100;
+        EnemyAppearType[t] = 82;
+        EnemyAppearSubType[t] = 1;
         bco++;
         // t=bco;ba[t]=52*29*100;bb[t]=(2*29-12)*100;btype[t]=82;bxtype[t]=1;bco++;
         t = bco;
-        ba[t] = 51 * 29 * 100 + 1000;
-        bb[t] = (2 * 29 - 12 + 10) * 100;
-        btype[t] = 80;
-        bxtype[t] = 1;
+        EnemyAppearX[t] = 51 * 29 * 100 + 1000;
+        EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100;
+        EnemyAppearType[t] = 80;
+        EnemyAppearSubType[t] = 1;
         bco++;
 
         // ？ボール
         t = bco;
-        ba[t] = 96 * 29 * 100 + 100;
-        bb[t] = (10 * 29 - 12) * 100;
-        btype[t] = 105;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 96 * 29 * 100 + 100;
+        EnemyAppearY[t] = (10 * 29 - 12) * 100;
+        EnemyAppearType[t] = 105;
+        EnemyAppearSubType[t] = 0;
         bco++;
 
         // リフト
@@ -1568,8 +1568,8 @@ void HandleSyobonActionOneLevels()
         // PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
         scrollx = 900 * 100;
-        ma = 7500;
-        mb = 3000 * 9;
+        PlayerX = 7500;
+        PlayerY = 3000 * 9;
 
         byte stagedatex[17][1001] = {
             {
@@ -2041,10 +2041,10 @@ void HandleSyobonActionOneLevels()
         // ポールもどき
         bco = 0;
         t = bco;
-        ba[t] = 19 * 29 * 100;
-        bb[t] = (2 * 29 - 12) * 100;
-        btype[t] = 85;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 19 * 29 * 100;
+        EnemyAppearY[t] = (2 * 29 - 12) * 100;
+        EnemyAppearType[t] = 85;
+        EnemyAppearSubType[t] = 0;
         bco++;
 
         for (tt = 0; tt <= 1000; tt++)
@@ -2560,16 +2560,16 @@ void HandleSyobonActionOneLevels()
 
         bco = 0;
         t = bco;
-        ba[t] = 101 * 29 * 100;
-        bb[t] = (5 * 29 - 12) * 100;
-        btype[t] = 4;
-        bxtype[t] = 1;
+        EnemyAppearX[t] = 101 * 29 * 100;
+        EnemyAppearY[t] = (5 * 29 - 12) * 100;
+        EnemyAppearType[t] = 4;
+        EnemyAppearSubType[t] = 1;
         bco++;
         t = bco;
-        ba[t] = 146 * 29 * 100;
-        bb[t] = (10 * 29 - 12) * 100;
-        btype[t] = 6;
-        bxtype[t] = 1;
+        EnemyAppearX[t] = 146 * 29 * 100;
+        EnemyAppearY[t] = (10 * 29 - 12) * 100;
+        EnemyAppearType[t] = 6;
+        EnemyAppearSubType[t] = 1;
         bco++;
 
         t = sco;
@@ -2620,25 +2620,25 @@ void HandleSyobonActionOneLevels()
 
         // ？ボール
         t = bco;
-        ba[t] = 10 * 29 * 100 + 100;
-        bb[t] = (11 * 29 - 12) * 100;
-        btype[t] = 105;
-        bxtype[t] = 1;
+        EnemyAppearX[t] = 10 * 29 * 100 + 100;
+        EnemyAppearY[t] = (11 * 29 - 12) * 100;
+        EnemyAppearType[t] = 105;
+        EnemyAppearSubType[t] = 1;
         bco++;
         // ブロックもどき
         t = bco;
-        ba[t] = 43 * 29 * 100;
-        bb[t] = (11 * 29 - 12) * 100;
-        btype[t] = 82;
-        bxtype[t] = 1;
+        EnemyAppearX[t] = 43 * 29 * 100;
+        EnemyAppearY[t] = (11 * 29 - 12) * 100;
+        EnemyAppearType[t] = 82;
+        EnemyAppearSubType[t] = 1;
         bco++;
         // t=bco;ba[t]=146*29*100;bb[t]=(12*29-12)*100;btype[t]=82;bxtype[t]=1;bco++;
         // うめぇ
         t = bco;
-        ba[t] = 1 * 29 * 100;
-        bb[t] = (2 * 29 - 12 + 10) * 100 - 1000;
-        btype[t] = 80;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 1 * 29 * 100;
+        EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100 - 1000;
+        EnemyAppearType[t] = 80;
+        EnemyAppearSubType[t] = 0;
         bco++;
 
         // リフト
@@ -2710,8 +2710,8 @@ void HandleSyobonActionOneLevels()
         if (stagepoint == 1)
         {
             stagepoint = 0;
-            ma = 4500;
-            mb = -3000;
+            PlayerX = 4500;
+            PlayerY = -3000;
             tyuukan = 0;
         }
 
@@ -2736,8 +2736,8 @@ void HandleSyobonActionOneLevels()
         // PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
         scrollx = 0 * 100;
-        ma = 6000;
-        mb = 6000;
+        PlayerX = 6000;
+        PlayerY = 6000;
         stagecolor = 2;
 
         byte stagedatex[17][1001] = {
@@ -3049,8 +3049,8 @@ void HandleSyobonActionOneLevels()
         bgmchange(Music[3]);
 
         scrollx = 0 * 100;
-        ma = 3000;
-        mb = 33000;
+        PlayerX = 3000;
+        PlayerY = 33000;
 
         stagepoint = 1;
 
@@ -3344,8 +3344,8 @@ void HandleSyobonActionOneLevels()
         // PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
         scrollx = 4400 * 100;
-        ma = 12000;
-        mb = 6000;
+        PlayerX = 12000;
+        PlayerY = 6000;
         stagecolor = 4;
 
         byte stagedatex[17][1001] = {//                                                                                                                                                                                     中間
@@ -3784,75 +3784,75 @@ void HandleSyobonActionOneLevels()
 
         bco = 0;
         t = bco;
-        ba[t] = 8 * 29 * 100 - 1400;
-        bb[t] = (2 * 29 - 12) * 100 + 500;
-        btype[t] = 86;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 8 * 29 * 100 - 1400;
+        EnemyAppearY[t] = (2 * 29 - 12) * 100 + 500;
+        EnemyAppearType[t] = 86;
+        EnemyAppearSubType[t] = 0;
         bco++;
         t = bco;
-        ba[t] = 42 * 29 * 100 - 1400;
-        bb[t] = (-2 * 29 - 12) * 100 + 500;
-        btype[t] = 86;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 42 * 29 * 100 - 1400;
+        EnemyAppearY[t] = (-2 * 29 - 12) * 100 + 500;
+        EnemyAppearType[t] = 86;
+        EnemyAppearSubType[t] = 0;
         bco++;
         t = bco;
-        ba[t] = 29 * 29 * 100 + 1500;
-        bb[t] = (7 * 29 - 12) * 100 + 1500;
-        btype[t] = 87;
-        bxtype[t] = 105;
+        EnemyAppearX[t] = 29 * 29 * 100 + 1500;
+        EnemyAppearY[t] = (7 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[t] = 87;
+        EnemyAppearSubType[t] = 105;
         bco++;
         t = bco;
-        ba[t] = 47 * 29 * 100 + 1500;
-        bb[t] = (9 * 29 - 12) * 100 + 1500;
-        btype[t] = 87;
-        bxtype[t] = 110;
+        EnemyAppearX[t] = 47 * 29 * 100 + 1500;
+        EnemyAppearY[t] = (9 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[t] = 87;
+        EnemyAppearSubType[t] = 110;
         bco++;
         t = bco;
-        ba[t] = 70 * 29 * 100 + 1500;
-        bb[t] = (9 * 29 - 12) * 100 + 1500;
-        btype[t] = 87;
-        bxtype[t] = 105;
+        EnemyAppearX[t] = 70 * 29 * 100 + 1500;
+        EnemyAppearY[t] = (9 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[t] = 87;
+        EnemyAppearSubType[t] = 105;
         bco++;
         t = bco;
-        ba[t] = 66 * 29 * 100 + 1501;
-        bb[t] = (4 * 29 - 12) * 100 + 1500;
-        btype[t] = 87;
-        bxtype[t] = 101;
+        EnemyAppearX[t] = 66 * 29 * 100 + 1501;
+        EnemyAppearY[t] = (4 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[t] = 87;
+        EnemyAppearSubType[t] = 101;
         bco++;
         t = bco;
-        ba[t] = 85 * 29 * 100 + 1501;
-        bb[t] = (4 * 29 - 12) * 100 + 1500;
-        btype[t] = 87;
-        bxtype[t] = 105;
+        EnemyAppearX[t] = 85 * 29 * 100 + 1501;
+        EnemyAppearY[t] = (4 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[t] = 87;
+        EnemyAppearSubType[t] = 105;
         bco++;
 
         // ステルスうめぇ
         t = bco;
-        ba[t] = 57 * 29 * 100;
-        bb[t] = (2 * 29 - 12 + 10) * 100 - 500;
-        btype[t] = 80;
-        bxtype[t] = 1;
+        EnemyAppearX[t] = 57 * 29 * 100;
+        EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100 - 500;
+        EnemyAppearType[t] = 80;
+        EnemyAppearSubType[t] = 1;
         bco++;
         // ブロックもどき
         t = bco;
-        ba[t] = 77 * 29 * 100;
-        bb[t] = (5 * 29 - 12) * 100;
-        btype[t] = 82;
-        bxtype[t] = 2;
+        EnemyAppearX[t] = 77 * 29 * 100;
+        EnemyAppearY[t] = (5 * 29 - 12) * 100;
+        EnemyAppearType[t] = 82;
+        EnemyAppearSubType[t] = 2;
         bco++;
         // ボス
         t = bco;
-        ba[t] = 130 * 29 * 100;
-        bb[t] = (8 * 29 - 12) * 100;
-        btype[t] = 30;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 130 * 29 * 100;
+        EnemyAppearY[t] = (8 * 29 - 12) * 100;
+        EnemyAppearType[t] = 30;
+        EnemyAppearSubType[t] = 0;
         bco++;
         // クックル
         t = bco;
-        ba[t] = 142 * 29 * 100;
-        bb[t] = (10 * 29 - 12) * 100;
-        btype[t] = 31;
-        bxtype[t] = 0;
+        EnemyAppearX[t] = 142 * 29 * 100;
+        EnemyAppearY[t] = (10 * 29 - 12) * 100;
+        EnemyAppearType[t] = 31;
+        EnemyAppearSubType[t] = 0;
         bco++;
 
         // マグマ
@@ -3963,8 +3963,8 @@ void HandleSyobonActionTwoLevels()
 {
     if (SyobonWorld == 2 && SyobonLevel == 1 && SyobonSection == 0)
     { // 2-1
-        ma = 5600;
-        mb = 32000;
+        PlayerX = 5600;
+        PlayerY = 32000;
         bgmchange(Music[1]);
         stagecolor = 1;
         scrollx = 2900 * (113 - 19);
@@ -4262,40 +4262,40 @@ void HandleSyobonActionTwoLevels()
         //
         bco = 0;
         //
-        ba[bco] = 6 * 29 * 100;
-        bb[bco] = (3 * 29 - 12) * 100;
-        btype[bco] = 80;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 6 * 29 * 100;
+        EnemyAppearY[bco] = (3 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 80;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 13 * 29 * 100;
-        bb[bco] = (6 * 29 - 12) * 100;
-        btype[bco] = 4;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 13 * 29 * 100;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 4;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 23 * 29 * 100;
-        bb[bco] = (7 * 29 - 12) * 100;
-        btype[bco] = 80;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 23 * 29 * 100;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 80;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 25 * 29 * 100;
-        bb[bco] = (7 * 29 - 12) * 100;
-        btype[bco] = 80;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 25 * 29 * 100;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 80;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 27 * 29 * 100;
-        bb[bco] = (7 * 29 - 12) * 100;
-        btype[bco] = 80;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 27 * 29 * 100;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 80;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 88 * 29 * 100;
-        bb[bco] = (12 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 88 * 29 * 100;
+        EnemyAppearY[bco] = (12 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -4378,8 +4378,8 @@ void HandleSyobonActionTwoLevels()
     { // 2-2(地下)
         bgmchange(Music[2]);
         stagecolor = 2;
-        ma = 7500;
-        mb = 9000;
+        PlayerX = 7500;
+        PlayerY = 9000;
         scrollx = 2900 * (137 - 19);
         //
         byte stagedatex[17][1001] = {
@@ -4661,70 +4661,70 @@ void HandleSyobonActionTwoLevels()
              0, 0, 0}};
         //
         bco = 0;
-        ba[bco] = 32 * 29 * 100 - 1400;
-        bb[bco] = (-2 * 29 - 12) * 100 + 500;
-        btype[bco] = 86;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 32 * 29 * 100 - 1400;
+        EnemyAppearY[bco] = (-2 * 29 - 12) * 100 + 500;
+        EnemyAppearType[bco] = 86;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = (31 * 29 - 12) * 100;
-        bb[bco] = (7 * 29 - 12) * 100;
-        btype[bco] = 7;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = (31 * 29 - 12) * 100;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 7;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 38 * 29 * 100 + 1500;
-        bb[bco] = (6 * 29 - 12) * 100 + 1500;
-        btype[bco] = 87;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 38 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 87;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
-        ba[bco] = 38 * 29 * 100 + 1500;
-        bb[bco] = (6 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 38 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
-        ba[bco] = 42 * 29 * 100 + 1500;
-        bb[bco] = (6 * 29 - 12) * 100 + 1500;
-        btype[bco] = 87;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 42 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 87;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
-        ba[bco] = 42 * 29 * 100 + 1500;
-        bb[bco] = (6 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 42 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
-        ba[bco] = 46 * 29 * 100 + 1500;
-        bb[bco] = (6 * 29 - 12) * 100 + 1500;
-        btype[bco] = 87;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 46 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 87;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
-        ba[bco] = 46 * 29 * 100 + 1500;
-        bb[bco] = (6 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 46 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
-        ba[bco] = 58 * 29 * 100;
-        bb[bco] = (7 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 58 * 29 * 100;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 66 * 29 * 100;
-        bb[bco] = (7 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 66 * 29 * 100;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 76 * 29 * 100 - 1400;
-        bb[bco] = (-2 * 29 - 12) * 100 + 500;
-        btype[bco] = 86;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 76 * 29 * 100 - 1400;
+        EnemyAppearY[bco] = (-2 * 29 - 12) * 100 + 500;
+        EnemyAppearType[bco] = 86;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
         sco = 0;
@@ -4854,8 +4854,8 @@ void HandleSyobonActionTwoLevels()
         bgmchange(Music[1]);
         stagecolor = 1;
         scrollx = 2900 * (36 - 19);
-        ma = 7500;
-        mb = 3000 * 9;
+        PlayerX = 7500;
+        PlayerY = 3000 * 9;
         //
         byte stagedatex[17][1001] = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -4924,76 +4924,76 @@ void HandleSyobonActionTwoLevels()
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
         //
         bco = 0;
-        ba[bco] = 9 * 29 * 100;
-        bb[bco] = (12 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 9 * 29 * 100;
+        EnemyAppearY[bco] = (12 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 10 * 29 * 100;
-        bb[bco] = (11 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 10 * 29 * 100;
+        EnemyAppearY[bco] = (11 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 11 * 29 * 100;
-        bb[bco] = (10 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 11 * 29 * 100;
+        EnemyAppearY[bco] = (10 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 12 * 29 * 100;
-        bb[bco] = (9 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 12 * 29 * 100;
+        EnemyAppearY[bco] = (9 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 13 * 29 * 100;
-        bb[bco] = (8 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 13 * 29 * 100;
+        EnemyAppearY[bco] = (8 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 14 * 29 * 100;
-        bb[bco] = (7 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 14 * 29 * 100;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 15 * 29 * 100;
-        bb[bco] = (6 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 15 * 29 * 100;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 16 * 29 * 100;
-        bb[bco] = (5 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 16 * 29 * 100;
+        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 17 * 29 * 100;
-        bb[bco] = (5 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 17 * 29 * 100;
+        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 18 * 29 * 100;
-        bb[bco] = (5 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 18 * 29 * 100;
+        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 19 * 29 * 100;
-        bb[bco] = (5 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 19 * 29 * 100;
+        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 20 * 29 * 100;
-        bb[bco] = (5 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 20 * 29 * 100;
+        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -5008,8 +5008,8 @@ void HandleSyobonActionTwoLevels()
     //
     if (SyobonWorld == 2 && SyobonLevel == 3 && SyobonSection == 0)
     { // 2-3
-        ma = 7500;
-        mb = 3000 * 8;
+        PlayerX = 7500;
+        PlayerY = 3000 * 8;
         bgmchange(Music[1]);
         stagecolor = 1;
         scrollx = 2900 * (126 - 19);
@@ -5308,10 +5308,10 @@ void HandleSyobonActionTwoLevels()
            bco += 1;
          */
         sco = 0;
-        ba[sco] = (102 * 29 - 12) * 100;
-        bb[sco] = (10 * 29 - 12) * 100;
-        btype[sco] = 50;
-        bxtype[sco] = 1;
+        EnemyAppearX[sco] = (102 * 29 - 12) * 100;
+        EnemyAppearY[sco] = (10 * 29 - 12) * 100;
+        EnemyAppearType[sco] = 50;
+        EnemyAppearSubType[sco] = 1;
         sco += 1;
         //
         srco = 0;
@@ -5374,13 +5374,13 @@ void HandleSyobonActionTwoLevels()
     { // 2-4(1番)
         if (SyobonSection == 0)
         {
-            ma = 7500;
-            mb = 3000 * 4;
+            PlayerX = 7500;
+            PlayerY = 3000 * 4;
         }
         else
         {
-            ma = 19500;
-            mb = 3000 * 11;
+            PlayerX = 19500;
+            PlayerY = 3000 * 11;
             SyobonSection = 0;
         }
         bgmchange(Music[4]);
@@ -5475,16 +5475,16 @@ void HandleSyobonActionTwoLevels()
         tco += 1;
         //
         bco = 0;
-        ba[bco] = 2 * 29 * 100 - 1400;
-        bb[bco] = (-2 * 29 - 12) * 100 + 500;
-        btype[bco] = 86;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 2 * 29 * 100 - 1400;
+        EnemyAppearY[bco] = (-2 * 29 - 12) * 100 + 500;
+        EnemyAppearType[bco] = 86;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 20 * 29 * 100 + 1500;
-        bb[bco] = (5 * 29 - 12) * 100 + 1500;
-        btype[bco] = 87;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 20 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (5 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 87;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
         sco = 0;
@@ -5524,8 +5524,8 @@ void HandleSyobonActionTwoLevels()
 
     if (SyobonWorld == 2 && SyobonLevel == 4 && SyobonSection == 1)
     { // 2-4(2番)
-        ma = 4500;
-        mb = 3000 * 11;
+        PlayerX = 4500;
+        PlayerY = 3000 * 11;
         bgmchange(Music[4]);
         stagecolor = 4;
         scrollx = 2900 * (21 - 19);
@@ -5613,8 +5613,8 @@ void HandleSyobonActionTwoLevels()
 
     if (SyobonWorld == 2 && SyobonLevel == 4 && SyobonSection == 2)
     { // 2-4(3番)
-        ma = 4500;
-        mb = 3000 * 11;
+        PlayerX = 4500;
+        PlayerY = 3000 * 11;
         bgmchange(Music[5]); // 6
         stagecolor = 4;
         scrollx = 2900 * (128 - 19);
@@ -5913,106 +5913,106 @@ void HandleSyobonActionTwoLevels()
         tco += 1;
         //
         bco = 0;
-        ba[bco] = 0 * 29 * 100 + 1500;
-        bb[bco] = (8 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 105;
+        EnemyAppearX[bco] = 0 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (8 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 105;
         bco += 1;
         //
-        ba[bco] = 2 * 29 * 100;
-        bb[bco] = (0 * 29 - 12) * 100;
-        btype[bco] = 80;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 2 * 29 * 100;
+        EnemyAppearY[bco] = (0 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 80;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 3 * 29 * 100 + 1500;
-        bb[bco] = (8 * 29 - 12) * 100 + 1500;
-        btype[bco] = 87;
-        bxtype[bco] = 105;
+        EnemyAppearX[bco] = 3 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (8 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 87;
+        EnemyAppearSubType[bco] = 105;
         bco += 1;
         //
-        ba[bco] = 6 * 29 * 100 + 1500;
-        bb[bco] = (8 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 6 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (8 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
-        ba[bco] = 9 * 29 * 100 + 1500;
-        bb[bco] = (8 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 107;
+        EnemyAppearX[bco] = 9 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (8 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 107;
         bco += 1;
         //
-        ba[bco] = 25 * 29 * 100 - 1400;
-        bb[bco] = (2 * 29 - 12) * 100 - 400;
-        btype[bco] = 86;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 25 * 29 * 100 - 1400;
+        EnemyAppearY[bco] = (2 * 29 - 12) * 100 - 400;
+        EnemyAppearType[bco] = 86;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 40 * 29 * 100;
-        bb[bco] = (8 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 40 * 29 * 100;
+        EnemyAppearY[bco] = (8 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 42 * 29 * 100;
-        bb[bco] = (8 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 42 * 29 * 100;
+        EnemyAppearY[bco] = (8 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 43 * 29 * 100 + 1500;
-        bb[bco] = (6 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 105;
+        EnemyAppearX[bco] = 43 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 105;
         bco += 1;
         //
-        ba[bco] = 47 * 29 * 100 + 1500;
-        bb[bco] = (6 * 29 - 12) * 100 + 1500;
-        btype[bco] = 87;
-        bxtype[bco] = 105;
+        EnemyAppearX[bco] = 47 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 87;
+        EnemyAppearSubType[bco] = 105;
         bco += 1;
         //
-        ba[bco] = 57 * 29 * 100;
-        bb[bco] = (7 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 57 * 29 * 100;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 77 * 29 * 100 - 1400;
-        bb[bco] = (2 * 29 - 12) * 100 - 400;
-        btype[bco] = 86;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 77 * 29 * 100 - 1400;
+        EnemyAppearY[bco] = (2 * 29 - 12) * 100 - 400;
+        EnemyAppearType[bco] = 86;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 83 * 29 * 100 - 1400;
-        bb[bco] = (2 * 29 - 12) * 100 - 400;
-        btype[bco] = 86;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 83 * 29 * 100 - 1400;
+        EnemyAppearY[bco] = (2 * 29 - 12) * 100 - 400;
+        EnemyAppearType[bco] = 86;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 88 * 29 * 100 + 1500;
-        bb[bco] = (9 * 29 - 12) * 100 + 1500;
-        btype[bco] = 87;
-        bxtype[bco] = 105;
+        EnemyAppearX[bco] = 88 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (9 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 87;
+        EnemyAppearSubType[bco] = 105;
         bco += 1;
         //
-        ba[bco] = 88 * 29 * 100 + 1500;
-        bb[bco] = (9 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 105;
+        EnemyAppearX[bco] = 88 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (9 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 105;
         bco += 1;
         //
-        ba[bco] = 90 * 29 * 100;
-        bb[bco] = (9 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 90 * 29 * 100;
+        EnemyAppearY[bco] = (9 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
-        ba[bco] = 107 * 29 * 100;
-        bb[bco] = (10 * 29 - 12) * 100;
-        btype[bco] = 30;
-        bxtype[bco] = 0;
+        EnemyAppearX[bco] = 107 * 29 * 100;
+        EnemyAppearY[bco] = (10 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 30;
+        EnemyAppearSubType[bco] = 0;
         bco += 1;
         //
         sco = 0;
@@ -6103,8 +6103,8 @@ void HandleSyobonActionTwoLevels()
 
     if (SyobonWorld == 3 && SyobonLevel == 1 && SyobonSection == 0)
     { // 3-1
-        ma = 5600;
-        mb = 32000;
+        PlayerX = 5600;
+        PlayerY = 32000;
         bgmchange(Music[6]);
         stagecolor = 5;
         scrollx = 2900 * (112 - 19);
@@ -6384,40 +6384,40 @@ void HandleSyobonActionTwoLevels()
         sco += 1;
         //
         bco = 0;
-        ba[bco] = 108 * 29 * 100;
-        bb[bco] = (6 * 29 - 12) * 100;
-        btype[bco] = 6;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 108 * 29 * 100;
+        EnemyAppearY[bco] = (6 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 6;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 33 * 29 * 100;
-        bb[bco] = (10 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 33 * 29 * 100;
+        EnemyAppearY[bco] = (10 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 36 * 29 * 100;
-        bb[bco] = (0 * 29 - 12) * 100;
-        btype[bco] = 80;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 36 * 29 * 100;
+        EnemyAppearY[bco] = (0 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 80;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
-        ba[bco] = 78 * 29 * 100 + 1500;
-        bb[bco] = (7 * 29 - 12) * 100 + 1500;
-        btype[bco] = 88;
-        bxtype[bco] = 105;
+        EnemyAppearX[bco] = 78 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 88;
+        EnemyAppearSubType[bco] = 105;
         bco += 1;
         //
-        ba[bco] = 80 * 29 * 100 + 1500;
-        bb[bco] = (7 * 29 - 12) * 100 + 1500;
-        btype[bco] = 87;
-        bxtype[bco] = 105;
+        EnemyAppearX[bco] = 80 * 29 * 100 + 1500;
+        EnemyAppearY[bco] = (7 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[bco] = 87;
+        EnemyAppearSubType[bco] = 105;
         bco += 1;
         //
-        ba[bco] = 85 * 29 * 100;
-        bb[bco] = (11 * 29 - 12) * 100;
-        btype[bco] = 82;
-        bxtype[bco] = 1;
+        EnemyAppearX[bco] = 85 * 29 * 100;
+        EnemyAppearY[bco] = (11 * 29 - 12) * 100;
+        EnemyAppearType[bco] = 82;
+        EnemyAppearSubType[bco] = 1;
         bco += 1;
         //
         srco = 0;

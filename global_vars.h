@@ -98,10 +98,10 @@ extern int t, tt, t1, t2, t3, t4;
 
 
 //初期化 (Initialization)
-extern int zxon, zzxon;
+extern int zxon;//, zzxon; //+KZ: zzxon is unused
 
 //キーコンフィグ (Key Configuration)
-extern int key, keytm;
+extern int key;//, keytm; //+KZ: keytm is useless
 
 //三角関数 (Trigonometric functions)
 extern double pai;
@@ -117,7 +117,14 @@ extern int sgtype[smax];
 
 //プレイヤー (Player)
 extern int mainmsgtype;
-extern int ma, mb, mnobia, mnobib;
+// @attention +KZ: int ma is now int PlayerX
+extern int PlayerX;
+// @attention +KZ: int mb is now int PlayerY
+extern int PlayerY;
+// @attention +KZ: int mnobia is now int PlayerSizeX
+extern int PlayerSizeX;
+// @attention +KZ: int mnobib is now int PlayerSizeY
+extern int PlayerSizeY;
 // Condition "Health <= 0 && Health >= -9" makes the player die
 // @attention +KZ: int mhp is now int Health
 extern int Health;
@@ -135,19 +142,38 @@ enum class EGroundType
 };
 // @attention +KZ: int mrzimen is now EGroundType GroundType
 extern EGroundType GroundType;
-extern int mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
+// @attention +KZ: int mmuki is now int PlayerLookingDirection
+extern int PlayerLookingDirection;
+
+//+KZ: following player variables were unused:
+//  * mmukitm
+//  * mcleartm
+//the following were used but also were useless:
+//  * mkasok
+
+extern int mjumptm, mkeytm;
 extern int mmutekitm, mmutekion;
+
+//+KZ: these are never set, but are read?
 extern int mztm, mztype;
+
 extern int actaon[7];
 //メッセージ (Message)
-extern int mmsgtm, mmsgtype;
+// @attention +KZ: int mmsgtm is now int PlayerMessageTimer
+extern int PlayerMessageTimer;
+// @attention +KZ: int mmsgtype is now int PlayerMessageType
+extern int PlayerMessageType;
 
 extern int mascrollmax;	//9000
 
 //ブロック (Block)
 #define tmax 641
 extern int tco;
-extern int ta[tmax], tb[tmax], tc[tmax], td[tmax], thp[tmax], ttype[tmax];
+// @attention +KZ: int ta[tmax] is now int BlockX[tmax]
+extern int BlockX[tmax];
+// @attention +KZ: int tb[tmax] is now int BlockY[tmax]
+extern int BlockY[tmax];
+extern int tc[tmax], td[tmax], thp[tmax], ttype[tmax];
 extern int titem[tmax], txtype[tmax];
 
 //メッセージブロック (Message Block)
@@ -162,20 +188,43 @@ extern int egtype[emax];
 
 //敵キャラ (Enemy character)
 #define amax 24
-extern int aco;
-extern int aa[amax], ab[amax], anobia[amax], anobib[amax], ac[amax], ad[amax];
+// @attention +KZ: int aco[amax] is now int EnemyCount[amax]
+extern int EnemyCount;
+// @attention +KZ: int aa[amax] is now int EnemyX[amax]
+extern int EnemyX[amax];
+// @attention +KZ: int ab[amax] is now int EnemyY[amax]
+extern int EnemyY[amax];
+// @attention +KZ: int anobia[amax] is now int EnemySizeX[amax]
+extern int EnemySizeX[amax];
+// @attention +KZ: int anobib[amax] is now int EnemySizeY[amax]
+extern int EnemySizeY[amax];
+extern int ac[amax], ad[amax];
 extern int ae[amax], af[amax], abrocktm[amax];
 extern int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
-extern int atype[amax], axtype[amax], amuki[amax], ahp[amax];
+// @attention +KZ: int atype[amax] is now int EnemyType[amax]
+extern int EnemyType[amax];
+// @attention +KZ: int axtype[amax] is now int EnemySubType[amax]
+extern int EnemySubType[amax];
+extern int amuki[amax], ahp[amax];
 extern int anotm[amax], anx[160], any[160];
 extern int atm[amax], a2tm[amax];
 extern int amsgtm[amax], amsgtype[amax];
 
 //敵出現 (Enemy Appearance)
 #define bmax 81
+//+KZ: does "bco" count appearing enemies?
 extern int bco;
-extern int ba[bmax], bb[bmax], btm[bmax];
-extern int btype[bmax], bxtype[bmax], bz[bmax];
+// @attention +KZ: int ba[bmax] is now int EnemyAppearX[bmax]
+extern int EnemyAppearX[bmax];
+// @attention +KZ: int bb[bmax] is now int EnemyAppearY[bmax]
+extern int EnemyAppearY[bmax];
+// @attention +KZ: int btm[bmax] is now int EnemyAppearTimer[bmax]
+extern int EnemyAppearTimer[bmax];
+// @attention +KZ: int btype[bmax] is now int EnemyAppearType[bmax]
+extern int EnemyAppearType[bmax];
+// @attention +KZ: int bxtype[bmax] is now int EnemyAppearSubType[bmax]
+extern int EnemyAppearSubType[bmax];
+extern int bz[bmax];
 
 
 //背景 (Background)

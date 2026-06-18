@@ -4,9 +4,12 @@
 
 //敵キャラ (Enemy character)
 // @attention +KZ: void ayobi() is now void CreateEntity()
+// @attention +KZ: int xa is now int PosX
+// @attention +KZ: int xb is now int PosY
 // @attention +KZ: int xtype is now int EntityType
-void CreateEntity(int xa, int xb, int xc, int xd, int xnotm, int EntityType,
-	   int xxtype);
+// @attention +KZ: int xxtype is now int EntitySubType
+void CreateEntity(int PosX, int PosY, int xc, int xd, int xnotm, int EntityType,
+	   int EntitySubType);
 
 // @attention +KZ: void tekizimen() is now void HandleTiles()
 void HandleEntitiesBlocks();

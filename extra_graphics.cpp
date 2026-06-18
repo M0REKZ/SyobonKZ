@@ -3,6 +3,32 @@
 #include "main.h"
 #include "extra_graphics.h"
 
+void HandleExtraGraphics()
+{
+    // グラ
+    for (t = 0; t < emax; t++)
+    {
+        xx[0] = ea[t] - fx;
+        xx[1] = eb[t] - fy;
+        xx[2] = enobia[t] / 100;
+        xx[3] = enobib[t] / 100;
+        if (etm[t] >= 0)
+            etm[t]--;
+        if (xx[0] + xx[2] * 100 >= -10 && xx[1] <= fxmax && xx[1] + xx[3] * 100 >= -10 - 8000 && xx[3] <= fymax && etm[t] >= 0)
+        {
+            ea[t] += ec[t];
+            eb[t] += ed[t];
+            ec[t] += ee[t];
+            ed[t] += ef[t];
+        }
+        else
+        {
+            ea[t] = -9000000;
+        }
+
+    } // emax
+}
+
 void RenderExtraGraphics()
 {
     // グラ //+KZ: Seems this is about non-entitty graphics
