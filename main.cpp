@@ -50,11 +50,11 @@ void rpaint()
 	if (stagecolor == 5)
 	{
 		setcolor(160, 180, 250);
-		GroundType = EGroundType::SLIP;
+		PlayerGroundType = EGroundType::SLIP;
 	}
 	else
 	{
-		GroundType = EGroundType::NORMAL;
+		PlayerGroundType = EGroundType::NORMAL;
 	}
 
 	//: Clear screen
@@ -257,12 +257,12 @@ void Mainprogram()
 			PlayerY = 32000;
 			PlayerLookingDirection = 1;
 			Health = 1;
-			mc = 0;
-			md = 0;
+			PlayerVelX = 0;
+			PlayerVelY = 0;
 			PlayerSizeX = 3000;
 			PlayerSizeY = 3600;
 
-			mtype = 0;
+			PlayerState = 0;
 
 			fx = 0;
 			fy = 0;
@@ -285,12 +285,12 @@ void Mainprogram()
 					{
 						BlockX[t] = (SyobonRand(500) - 1) * 29 * 100;
 						BlockY[t] = SyobonRand(14) * 100 * 29 - 1200;
-						ttype[t] = SyobonRand(142);
-						if (ttype[t] >= 9 && ttype[t] <= 99)
+						BlockType[t] = SyobonRand(142);
+						if (BlockType[t] >= 9 && BlockType[t] <= 99)
 						{
-							ttype[t] = SyobonRand(8);
+							BlockType[t] = SyobonRand(8);
 						}
-						txtype[t] = SyobonRand(4);
+						BlockSubType[t] = SyobonRand(4);
 					}
 				}
 				for (t = 0; t < bmax; t++)
@@ -306,16 +306,16 @@ void Mainprogram()
 					}
 				}
 
-				srco = 0;
-				t = srco;
-				sra[t] = PlayerX + fx;
-				srb[t] = (13 * 29 - 12) * 100;
-				src[t] = 30 * 100;
+				LiftCount = 0;
+				t = LiftCount;
+				LiftX[t] = PlayerX + fx;
+				LiftY[t] = (13 * 29 - 12) * 100;
+				LiftSizeX[t] = 30 * 100;
 				srtype[t] = 0;
 				sracttype[t] = 0;
-				sre[t] = 0;
+				LiftVelY[t] = 0;
 				srsp[t] = 0;
-				srco++;
+				LiftCount++;
 
 				if (SyobonRand(4) == 0)
 					stagecolor = SyobonRand(5);
@@ -686,13 +686,13 @@ void bgmchange(Mix_Music *x)
 void BlockCreate(int x, int y, int type)
 {
 
-	BlockX[tco] = x * 100;
-	BlockY[tco] = y * 100;
-	ttype[tco] = type;
+	BlockX[BlockCount] = x * 100;
+	BlockY[BlockCount] = y * 100;
+	BlockType[BlockCount] = type;
 
-	tco++;
-	if (tco >= tmax)
-		tco = 0;
+	BlockCount++;
+	if (BlockCount >= tmax)
+		BlockCount = 0;
 } // BlockCreate
 
 // ブロック破壊 (Block destruction)
@@ -851,25 +851,3 @@ void setfont(int x, int y)
 	SetFontSize(x);
 	SetFontThickness(y);
 }
-
-// グラ作成 (Graphic creation)
-void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
-		   int xnobib, int xgtype, int xtm)
-{
-
-	ea[eco] = xa;
-	eb[eco] = xb;
-	ec[eco] = xc;
-	ed[eco] = xd;
-	ee[eco] = xe;
-	ef[eco] = xf;
-	egtype[eco] = xgtype;
-	etm[eco] = xtm;
-	enobia[eco] = xnobia;
-	enobib[eco] = xnobib;
-
-	eco++;
-	if (eco >= emax)
-		eco = 0;
-
-} // eyobi

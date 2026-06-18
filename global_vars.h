@@ -109,9 +109,25 @@ extern double pai;
 
 //地面 (Ground)
 #define smax 31
-extern int sx, sco;
-extern int sa[smax], sb[smax], sc[smax], sd[smax], stype[smax], sxtype[smax], sr[smax];
-extern int sgtype[smax];
+//extern int sx; //+KZ: unused
+// @attention +KZ: int sco is now GroundCount
+extern int GroundCount;
+// @attention +KZ: int sa[smax] is now GroundX[smax]
+extern int GroundX[smax];
+// @attention +KZ: int sb[smax] is now GroundY[smax]
+extern int GroundY[smax];
+// @attention +KZ: int sc[smax] is now GroundSizeX[smax]
+extern int GroundSizeX[smax];
+// @attention +KZ: int sd[smax] is now GroundSizeY[smax]
+extern int GroundSizeY[smax];
+// @attention +KZ: int stype[smax] is now GroundType[smax]
+extern int GroundType[smax];
+// @attention +KZ: int sxtype[smax] is now GroundSubType[smax]
+extern int GroundSubType[smax];
+// @attention +KZ: int sr[smax] is now GroundVelY[smax]
+extern int GroundVelY[smax];
+// @attention +KZ: int sgtype[smax] is now GroundAI[smax]
+extern int GroundAI[smax];
 
 
 
@@ -128,11 +144,27 @@ extern int PlayerSizeY;
 // Condition "Health <= 0 && Health >= -9" makes the player die
 // @attention +KZ: int mhp is now int Health
 extern int Health;
-extern int mc, md, macttype, atkon, atktm, mactsok, msstar, mactp, mact;
+// @attention +KZ: int mc is now int PlayerVelX
+extern int PlayerVelX;
+// @attention +KZ: int md is now int PlayerVelY
+extern int PlayerVelY;
+//extern int macttype, atkon; //+KZ unused
+extern int atktm; //+KZ: never set, but still read?
+//extern int mactsok, msstar;//+KZ unused
+// @attention +KZ: int mactp is now int PlayerWalkAnimTimer
+extern int PlayerWalkAnimTimer;
+// @attention +KZ: int mact is now int PlayerWalkAnim
+extern int PlayerWalkAnim;
 // @attention +KZ: int nokori is now int Lives;
 extern int Lives;
 
-extern int mtype, mxtype, mtm, mzz;
+// @attention +KZ: int mactp is now int PlayerState
+extern int PlayerState;
+// @attention +KZ: int mactp is now int PlayerSubState
+extern int PlayerSubState;
+// @attention +KZ: int mactp is now int PlayerAITimer
+extern int PlayerAITimer;
+extern int mzz;
 // @attention +KZ: int mzimen is now int PlayerGrounded
 extern int PlayerGrounded;
 enum class EGroundType
@@ -141,7 +173,7 @@ enum class EGroundType
     SLIP = 1,
 };
 // @attention +KZ: int mrzimen is now EGroundType GroundType
-extern EGroundType GroundType;
+extern EGroundType PlayerGroundType;
 // @attention +KZ: int mmuki is now int PlayerLookingDirection
 extern int PlayerLookingDirection;
 
@@ -168,23 +200,49 @@ extern int mascrollmax;	//9000
 
 //ブロック (Block)
 #define tmax 641
-extern int tco;
+// @attention +KZ: int tco is now int BlockCount
+extern int BlockCount;
 // @attention +KZ: int ta[tmax] is now int BlockX[tmax]
 extern int BlockX[tmax];
 // @attention +KZ: int tb[tmax] is now int BlockY[tmax]
 extern int BlockY[tmax];
-extern int tc[tmax], td[tmax], thp[tmax], ttype[tmax];
-extern int titem[tmax], txtype[tmax];
+//extern int tc[tmax], td[tmax]; //+KZ: unused
+extern int thp[tmax];
+// @attention +KZ: int ttype[tmax] is now int BlockType[tmax]
+extern int BlockType[tmax];
+//+KZ: titem[tmax] is specific for Block 112/113 (Coin mass production)
+// @attention +KZ: int titem[tmax] is now int BlockItemCount[tmax]
+extern int BlockItemCount[tmax];
+// @attention +KZ: int txtype[tmax] is now int BlockSubType[tmax]
+extern int BlockSubType[tmax];
 
 //メッセージブロック (Message Block)
 extern int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
 
-//効果を持たないグラ (Grass with no effect)
+//効果を持たないグラ (Grass with no effect) //+KZ: or Graphics with no effect? Google translate...
 #define emax 201
-extern int eco;
-extern int ea[emax], eb[emax], enobia[emax], enobib[emax], ec[emax], ed[emax];
-extern int ee[emax], ef[emax], etm[emax];
-extern int egtype[emax];
+// @attention +KZ: int eco is now int ExtraGraphicCount
+extern int ExtraGraphicCount;
+// @attention +KZ: int ea[emax] is now int ExtraGraphicX[emax]
+extern int ExtraGraphicX[emax];
+// @attention +KZ: int eb[emax] is now int ExtraGraphicY[emax]
+extern int ExtraGraphicY[emax];
+// @attention +KZ: int enobia[emax] is now int ExtraGraphicSizeX[emax]
+extern int ExtraGraphicSizeX[emax];
+// @attention +KZ: int enobib[emax] is now int ExtraGraphicSizeY[emax]
+extern int ExtraGraphicSizeY[emax];
+// @attention +KZ: int ec[emax] is now int ExtraGraphicVelX[emax]
+extern int ExtraGraphicVelX[emax];
+// @attention +KZ: int ed[emax] is now int ExtraGraphicVelY[emax]
+extern int ExtraGraphicVelY[emax];
+// @attention +KZ: int ee[emax] is now int ExtraGraphicFrictionX[emax] (maybe should be a different name)
+extern int ExtraGraphicFrictionX[emax];
+// @attention +KZ: int ef[emax] is now int ExtraGraphicFrictionY[emax] (maybe should be a different name)
+extern int ExtraGraphicFrictionY[emax];
+// @attention +KZ: int etm[emax] is now int ExtraGraphicTimer[emax]
+extern int ExtraGraphicTimer[emax];
+// @attention +KZ: int egtype[emax] is now int ExtraGraphicType[emax]
+extern int ExtraGraphicType[emax];
 
 //敵キャラ (Enemy character)
 #define amax 24
@@ -198,22 +256,39 @@ extern int EnemyY[amax];
 extern int EnemySizeX[amax];
 // @attention +KZ: int anobib[amax] is now int EnemySizeY[amax]
 extern int EnemySizeY[amax];
-extern int ac[amax], ad[amax];
-extern int ae[amax], af[amax], abrocktm[amax];
+// @attention +KZ: int ac[amax] is now int EnemyVelX[amax]
+extern int EnemyVelX[amax];
+// @attention +KZ: int ad[amax] is now int EnemyVelY[amax]
+extern int EnemyVelY[amax];
+//extern int ae[amax]; //+KZ: unused, always set to 0
+extern int af[amax]; //+KZ: for what is this one?
+// @attention +KZ: int abrocktm[amax] is now int EnemyBlockAppearTimer[amax]
+extern int EnemyBlockAppearTimer[amax];
 extern int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
 // @attention +KZ: int atype[amax] is now int EnemyType[amax]
 extern int EnemyType[amax];
 // @attention +KZ: int axtype[amax] is now int EnemySubType[amax]
 extern int EnemySubType[amax];
-extern int amuki[amax], ahp[amax];
-extern int anotm[amax], anx[160], any[160];
-extern int atm[amax], a2tm[amax];
-extern int amsgtm[amax], amsgtype[amax];
+// @attention +KZ: int amuki[amax] is now int EnemyLookingDirection[amax]
+extern int EnemyLookingDirection[amax];
+//extern int ahp[amax]; //+KZ: unused
+extern int anotm[amax]; //+KZ: it is a timer but not sure for what exactly
+// @attention +KZ: int anx[160] is now int EnemyDefaultSizeX[160]
+extern int EnemyDefaultSizeX[160];
+// @attention +KZ: int any[160] is now int EnemyDefaultSizeY[160]
+extern int EnemyDefaultSizeY[160];
+// @attention +KZ: int atm[amax] is now int EnemyAITimer[amax]
+extern int EnemyAITimer[amax];
+//extern int a2tm[amax]; //+KZ: unused
+// @attention +KZ: int amsgtm[amax] is now int EnemyMessageTimer[amax]
+extern int EnemyMessageTimer[amax];
+// @attention +KZ: int amsgtype[amax] is now int EnemyMessageType[amax]
+extern int EnemyMessageType[amax];
 
 //敵出現 (Enemy Appearance)
 #define bmax 81
-//+KZ: does "bco" count appearing enemies?
-extern int bco;
+// @attention +KZ: int bco is now int EnemyAppearCount[bmax]
+extern int EnemyAppearCount;
 // @attention +KZ: int ba[bmax] is now int EnemyAppearX[bmax]
 extern int EnemyAppearX[bmax];
 // @attention +KZ: int bb[bmax] is now int EnemyAppearY[bmax]
@@ -224,24 +299,47 @@ extern int EnemyAppearTimer[bmax];
 extern int EnemyAppearType[bmax];
 // @attention +KZ: int bxtype[bmax] is now int EnemyAppearSubType[bmax]
 extern int EnemyAppearSubType[bmax];
-extern int bz[bmax];
+extern int bz[bmax]; //+KZ: seems like a init indicator
 
 
 //背景 (Background)
 #define nmax 41
-extern int nxxmax, nco;
-extern int na[nmax], nb[nmax], nc[nmax], nd[nmax], ntype[nmax];
+//extern int nxxmax; //+KZ: unused
+// @attention +KZ: int nco[nmax] is now int BackgroundCount
+extern int BackgroundCount;
+// @attention +KZ: int na[nmax] is now int BackgroundX[nmax]
+extern int BackgroundX[nmax];
+// @attention +KZ: int nb[nmax] is now int BackgroundY[nmax]
+extern int BackgroundY[nmax];
+//extern int nc[nmax], nd[nmax]; //+KZ: unused
+// @attention +KZ: int ntype[nmax] is now int BackgroundType[nmax]
+extern int BackgroundType[nmax];
 // @attention +KZ int ne[nmax] renamed to BackgroundWidth[nmax]
+extern int BackgroundWidth[nmax];
 // @attention +KZ int nf[nmax] renamed to BackgroundHeight[nmax]
-extern int BackgroundWidth[nmax], BackgroundHeight[nmax];
-extern int ng[nmax], nx[nmax];
+extern int BackgroundHeight[nmax];
+//extern int ng[nmax], nx[nmax]; //+KZ: unused
 
 
 //リフト (Lift)
 #define srmax 21
-extern int srco;
-extern int sra[srmax], srb[srmax], src[srmax], srd[srmax], sre[srmax], srf[srmax];
-extern int srtype[srmax], srgtype[srmax], sracttype[srmax], srsp[srmax];
+// @attention +KZ int srco renamed to LiftCount
+extern int LiftCount;
+// @attention +KZ int sra[srmax] renamed to LiftX[srmax]
+extern int LiftX[srmax];
+// @attention +KZ int srb[srmax] renamed to LiftY[srmax]
+extern int LiftY[srmax];
+// @attention +KZ int src[srmax] renamed to LiftSizeX[srmax]
+extern int LiftSizeX[srmax];
+//extern int srd[srmax]; //+KZ: useless
+// @attention +KZ int sre[srmax] renamed to LiftVelY[srmax]
+extern int LiftVelY[srmax];
+// @attention +KZ int srf[srmax] renamed to LiftFrictionY[srmax]
+extern int LiftFrictionY[srmax];
+extern int srtype[srmax];
+//extern int srgtype[srmax]; //+KZ: unused
+extern int sracttype[srmax];
+extern int srsp[srmax];
 extern int srmuki[srmax], sron[srmax], sree[srmax];
 extern int srsok[srmax], srmovep[srmax], srmove[srmax];
 
@@ -265,10 +363,10 @@ extern int fxmax, fymax;
 
 
 
-//ステージ
+//ステージ (Stage)
 extern byte stagedate[17][2001];
 
-//画面黒
+//画面黒 (Black screen)
 extern int blacktm, blackx;
 
 

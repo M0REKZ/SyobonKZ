@@ -89,22 +89,22 @@ double pai = 3.1415926535;
 
 
 //地面
-int sx, sco;
-int sa[smax], sb[smax], sc[smax], sd[smax], stype[smax], sxtype[smax],
-    sr[smax];
-int sgtype[smax];
+int GroundCount;
+int GroundX[smax], GroundY[smax], GroundSizeX[smax], GroundSizeY[smax], GroundType[smax], GroundSubType[smax],
+    GroundVelY[smax];
+int GroundAI[smax];
 
 
 
 //プレイヤー
 int mainmsgtype;
 int PlayerX, PlayerY, PlayerSizeX, PlayerSizeY, Health;
-int mc, md, macttype, atkon, atktm, mactsok, msstar, mactp, mact;
+int PlayerVelX, PlayerVelY, atktm, PlayerWalkAnimTimer, PlayerWalkAnim;
 int Lives = 3;
 
-int mtype, mxtype, mtm, mzz;
+int PlayerState, PlayerSubState, PlayerAITimer, mzz;
 int PlayerGrounded, PlayerLookingDirection, mjumptm, mkeytm;
-EGroundType GroundType;
+EGroundType PlayerGroundType;
 int mmutekitm, mmutekion;
 //+KZ: these are never set, but are read?
 int mztm, mztype;
@@ -119,47 +119,47 @@ int mascrollmax = 21000;	//9000
 
 
 //ブロック
-int tco;
-int BlockX[tmax], BlockY[tmax], tc[tmax], td[tmax], thp[tmax], ttype[tmax];
-int titem[tmax], txtype[tmax];
+int BlockCount;
+int BlockX[tmax], BlockY[tmax], thp[tmax], BlockType[tmax];
+int BlockItemCount[tmax], BlockSubType[tmax];
 
 //メッセージブロック
 int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
 
 //効果を持たないグラ
-int eco;
-int ea[emax], eb[emax], enobia[emax], enobib[emax], ec[emax], ed[emax];
-int ee[emax], ef[emax], etm[emax];
-int egtype[emax];
+int ExtraGraphicCount;
+int ExtraGraphicX[emax], ExtraGraphicY[emax], ExtraGraphicSizeX[emax], ExtraGraphicSizeY[emax], ExtraGraphicVelX[emax], ExtraGraphicVelY[emax];
+int ExtraGraphicFrictionX[emax], ExtraGraphicFrictionY[emax], ExtraGraphicTimer[emax];
+int ExtraGraphicType[emax];
 
 
 
 //敵キャラ
 int EnemyCount;
-int EnemyX[amax], EnemyY[amax], EnemySizeX[amax], EnemySizeY[amax], ac[amax], ad[amax];
-int ae[amax], af[amax], abrocktm[amax];
+int EnemyX[amax], EnemyY[amax], EnemySizeX[amax], EnemySizeY[amax], EnemyVelX[amax], EnemyVelY[amax];
+int af[amax], EnemyBlockAppearTimer[amax];
 int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
-int EnemyType[amax], EnemySubType[amax], amuki[amax], ahp[amax];
-int anotm[amax], anx[160], any[160];
-int atm[amax], a2tm[amax];
-int amsgtm[amax], amsgtype[amax];
+int EnemyType[amax], EnemySubType[amax], EnemyLookingDirection[amax];
+int anotm[amax], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
+int EnemyAITimer[amax];
+int EnemyMessageTimer[amax], EnemyMessageType[amax];
 
 //敵出現
-int bco;
+int EnemyAppearCount;
 int EnemyAppearX[bmax], EnemyAppearY[bmax], EnemyAppearTimer[bmax];
 int EnemyAppearType[bmax], EnemyAppearSubType[bmax], bz[bmax];
 
 
 //背景
-int nxxmax, nco;
-int na[nmax], nb[nmax], nc[nmax], nd[nmax], ntype[nmax];
-int BackgroundWidth[nmax], BackgroundHeight[nmax], ng[nmax], nx[nmax];
+int BackgroundCount;
+int BackgroundX[nmax], BackgroundY[nmax], BackgroundType[nmax];
+int BackgroundWidth[nmax], BackgroundHeight[nmax];
 
 
 //リフト
-int srco;
-int sra[srmax], srb[srmax], src[srmax], srd[srmax], sre[srmax], srf[srmax];
-int srtype[srmax], srgtype[srmax], sracttype[srmax], srsp[srmax];
+int LiftCount;
+int LiftX[srmax], LiftY[srmax], LiftSizeX[srmax], LiftVelY[srmax], LiftFrictionY[srmax];
+int srtype[srmax], sracttype[srmax], srsp[srmax];
 int srmuki[srmax], sron[srmax], sree[srmax];
 int srsok[srmax], srmovep[srmax], srmove[srmax];
 

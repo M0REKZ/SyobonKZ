@@ -7,32 +7,29 @@ void stagecls()
 {
 	for (t = 0; t < smax; t++)
 	{
-		sa[t] = -9000000;
-		sb[t] = 1;
-		sc[t] = 1;
-		sd[t] = 1;
-		sgtype[t] = 0;
-		stype[t] = 0;
-		sxtype[t] = 0;
+		GroundX[t] = -9000000;
+		GroundY[t] = 1;
+		GroundSizeX[t] = 1;
+		GroundSizeY[t] = 1;
+		GroundAI[t] = 0;
+		GroundType[t] = 0;
+		GroundSubType[t] = 0;
 	}
 	// for (t=0;t<spmax;t++){spa[t]=-9000000;szyunni[t]=t;spb[t]=1;spc[t]=1;spd[t]=1;sptype[t]=0;spgtype[t]=0;}
 	for (t = 0; t < tmax; t++)
 	{
 		BlockX[t] = -9000000;
 		BlockY[t] = 1;
-		tc[t] = 1;
-		td[t] = 1;
-		titem[t] = 0;
-		txtype[t] = 0;
+		BlockItemCount[t] = 0;
+		BlockSubType[t] = 0;
 	}
 	for (t = 0; t < srmax; t++)
 	{
-		sra[t] = -9000000;
-		srb[t] = 1;
-		src[t] = 1;
-		srd[t] = 1;
-		sre[t] = 0;
-		srf[t] = 0;
+		LiftX[t] = -9000000;
+		LiftY[t] = 1;
+		LiftSizeX[t] = 1;
+		LiftVelY[t] = 0;
+		LiftFrictionY[t] = 0;
 		srmuki[t] = 0;
 		sron[t] = 0;
 		sree[t] = 0;
@@ -48,17 +45,15 @@ void stagecls()
 	{
 		EnemyX[t] = -9000000;
 		EnemyY[t] = 1;
-		ac[t] = 0;
-		ad[t] = 1;
+		EnemyVelX[t] = 0;
+		EnemyVelY[t] = 1;
 		azimentype[t] = 0;
 		EnemyType[t] = 0;
 		EnemySubType[t] = 0;
-		ae[t] = 0;
 		af[t] = 0;
-		atm[t] = 0;
-		a2tm[t] = 0;
-		abrocktm[t] = 0;
-		amsgtm[t] = 0;
+		EnemyAITimer[t] = 0;
+		EnemyBlockAppearTimer[t] = 0;
+		EnemyMessageTimer[t] = 0;
 	}
 	for (t = 0; t < bmax; t++)
 	{
@@ -70,33 +65,30 @@ void stagecls()
 	}
 	for (t = 0; t < emax; t++)
 	{
-		ea[t] = -9000000;
-		eb[t] = 1;
-		ec[t] = 1;
-		ed[t] = 1;
-		egtype[t] = 0;
+		ExtraGraphicX[t] = -9000000;
+		ExtraGraphicY[t] = 1;
+		ExtraGraphicVelX[t] = 1;
+		ExtraGraphicVelY[t] = 1;
+		ExtraGraphicType[t] = 0;
 	}
 	for (t = 0; t < nmax; t++)
 	{
-		na[t] = -9000000;
-		nb[t] = 1;
-		nc[t] = 1;
-		nd[t] = 1;
+		BackgroundX[t] = -9000000;
+		BackgroundY[t] = 1;
 		BackgroundWidth[t] = 1;
 		BackgroundHeight[t] = 1;
-		ng[t] = 0;
-		ntype[t] = 0;
+		BackgroundType[t] = 0;
 	}
 	// for (t=0;t<cmax;t++){ca[t]=-9000000;cb[t]=1;contm[t]=0;ctype[t]=0;ce[t]=0;cf[t]=0;}
 	// for (t=0;t<vmax;t++){va[t]=-9000000;vtype[t]=0;vb[t]=0;vc[t]=1;vd[t]=1;}
 	// for (t=0;t<gmax;t++){ga[t]=-9000000;gx[t]=0;gstring[t]="";}
 
-	sco = 0;
-	tco = 0;
+	GroundCount = 0;
+	BlockCount = 0;
 	EnemyCount = 0;
-	bco = 0;
-	eco = 0;
-	nco = 0;
+	EnemyAppearCount = 0;
+	ExtraGraphicCount = 0;
+	BackgroundCount = 0;
 	// haikeitouroku();
 } // stagecls()
 
@@ -130,89 +122,89 @@ void stage()
 			}
 			if (xx[10] >= 20 && xx[10] <= 29)
 			{
-				sra[srco] = xx[21] * 100;
-				srb[srco] = xx[22] * 100;
-				src[srco] = 3000;
-				srtype[srco] = 0;
-				srco++;
-				if (srco >= srmax)
-					srco = 0;
+				LiftX[LiftCount] = xx[21] * 100;
+				LiftY[LiftCount] = xx[22] * 100;
+				LiftSizeX[LiftCount] = 3000;
+				srtype[LiftCount] = 0;
+				LiftCount++;
+				if (LiftCount >= srmax)
+					LiftCount = 0;
 			}
 			if (xx[10] == 30)
 			{
-				sa[sco] = xx[21] * 100;
-				sb[sco] = xx[22] * 100;
-				sc[sco] = 3000;
-				sd[sco] = 6000;
-				stype[sco] = 500;
-				sco++;
-				if (sco >= smax)
-					sco = 0;
+				GroundX[GroundCount] = xx[21] * 100;
+				GroundY[GroundCount] = xx[22] * 100;
+				GroundSizeX[GroundCount] = 3000;
+				GroundSizeY[GroundCount] = 6000;
+				GroundType[GroundCount] = 500;
+				GroundCount++;
+				if (GroundCount >= smax)
+					GroundCount = 0;
 			}
 			if (xx[10] == 40)
 			{
-				sa[sco] = xx[21] * 100;
-				sb[sco] = xx[22] * 100;
-				sc[sco] = 6000;
-				sd[sco] = 3000;
-				stype[sco] = 1;
-				sco++;
-				if (sco >= smax)
-					sco = 0;
+				GroundX[GroundCount] = xx[21] * 100;
+				GroundY[GroundCount] = xx[22] * 100;
+				GroundSizeX[GroundCount] = 6000;
+				GroundSizeY[GroundCount] = 3000;
+				GroundType[GroundCount] = 1;
+				GroundCount++;
+				if (GroundCount >= smax)
+					GroundCount = 0;
 			}
 			if (xx[10] == 41)
 			{
-				sa[sco] = xx[21] * 100 + 500;
-				sb[sco] = xx[22] * 100;
-				sc[sco] = 5000;
-				sd[sco] = 3000;
-				stype[sco] = 2;
-				sco++;
-				if (sco >= smax)
-					sco = 0;
+				GroundX[GroundCount] = xx[21] * 100 + 500;
+				GroundY[GroundCount] = xx[22] * 100;
+				GroundSizeX[GroundCount] = 5000;
+				GroundSizeY[GroundCount] = 3000;
+				GroundType[GroundCount] = 2;
+				GroundCount++;
+				if (GroundCount >= smax)
+					GroundCount = 0;
 			}
 
 			if (xx[10] == 43)
 			{
-				sa[sco] = xx[21] * 100;
-				sb[sco] = xx[22] * 100 + 500;
-				sc[sco] = 2900;
-				sd[sco] = 5300;
-				stype[sco] = 1;
-				sco++;
-				if (sco >= smax)
-					sco = 0;
+				GroundX[GroundCount] = xx[21] * 100;
+				GroundY[GroundCount] = xx[22] * 100 + 500;
+				GroundSizeX[GroundCount] = 2900;
+				GroundSizeY[GroundCount] = 5300;
+				GroundType[GroundCount] = 1;
+				GroundCount++;
+				if (GroundCount >= smax)
+					GroundCount = 0;
 			}
 			if (xx[10] == 44)
 			{
-				sa[sco] = xx[21] * 100;
-				sb[sco] = xx[22] * 100 + 700;
-				sc[sco] = 3900;
-				sd[sco] = 5000;
-				stype[sco] = 5;
-				sco++;
-				if (sco >= smax)
-					sco = 0;
+				GroundX[GroundCount] = xx[21] * 100;
+				GroundY[GroundCount] = xx[22] * 100 + 700;
+				GroundSizeX[GroundCount] = 3900;
+				GroundSizeY[GroundCount] = 5000;
+				GroundType[GroundCount] = 5;
+				GroundCount++;
+				if (GroundCount >= smax)
+					GroundCount = 0;
 			}
 			// これなぜかバグの原因ｗ (For some reason, this is the cause of the bug lol)
 			if (xx[10] >= 50 && xx[10] <= 79)
 			{
-				EnemyAppearX[bco] = xx[21] * 100;
-				EnemyAppearY[bco] = xx[22] * 100;
-				EnemyAppearType[bco] = xx[23] - 50;
-				bco++;
-				if (bco >= bmax)
-					bco = 0;
+				EnemyAppearX[EnemyAppearCount] = xx[21] * 100;
+				EnemyAppearY[EnemyAppearCount] = xx[22] * 100;
+				EnemyAppearType[EnemyAppearCount] = xx[23] - 50;
+				EnemyAppearCount++;
+				if (EnemyAppearCount >= bmax)
+					EnemyAppearCount = 0;
 			}
 
 			if (xx[10] >= 80 && xx[10] <= 89)
 			{
-				na[nco] = xx[21] * 100;
-				nb[nco] = xx[22] * 100;
-				ntype[nco] = xx[23] - 80;
-				nco++;
-				if (nco >= nmax)
-					nco = 0;
+				BackgroundX[BackgroundCount] = xx[21] * 100;
+				BackgroundY[BackgroundCount] = xx[22] * 100;
+				BackgroundType[BackgroundCount] = xx[23] - 80;
+				BackgroundCount++;
+				if (BackgroundCount >= nmax)
+					BackgroundCount = 0;
 			}
 			// コイン (Coin)
 			if (xx[10] == 9)
@@ -221,14 +213,14 @@ void stage()
 			}
 			if (xx[10] == 99)
 			{
-				sa[sco] = xx[21] * 100;
-				sb[sco] = xx[22] * 100;
-				sc[sco] = 3000;
-				sd[sco] = (12 - t) * 3000;
-				stype[sco] = 300;
-				sco++;
-				if (sco >= smax)
-					sco = 0;
+				GroundX[GroundCount] = xx[21] * 100;
+				GroundY[GroundCount] = xx[22] * 100;
+				GroundSizeX[GroundCount] = 3000;
+				GroundSizeY[GroundCount] = (12 - t) * 3000;
+				GroundType[GroundCount] = 300;
+				GroundCount++;
+				if (GroundCount >= smax)
+					GroundCount = 0;
 			}
 		}
 	}
@@ -238,16 +230,16 @@ void stage()
 		xx[17] = 0;
 		for (t = 0; t < smax; t++)
 		{
-			if (stype[t] == 500 && tyuukan >= 1)
+			if (GroundType[t] == 500 && tyuukan >= 1)
 			{
-				fx = sa[t] - fxmax / 2;
+				fx = GroundX[t] - fxmax / 2;
 				fzx = fx;
-				PlayerX = sa[t] - fx;
-				PlayerY = sb[t] - fy;
+				PlayerX = GroundX[t] - fx;
+				PlayerY = GroundY[t] - fy;
 				tyuukan--;
 				xx[17]++;
 
-				sa[t] = -80000000;
+				GroundX[t] = -80000000;
 			}
 		}
 		tyuukan += xx[17];
@@ -564,88 +556,88 @@ void HandleSyobonActionOneLevels()
 
         // 追加情報
         BlockCreate(8 * 29, 9 * 29 - 12, 100);
-        txtype[tco] = 2;
+        BlockSubType[BlockCount] = 2;
         BlockCreate(13 * 29, 9 * 29 - 12, 102);
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(14 * 29, 5 * 29 - 12, 101);
         BlockCreate(35 * 29, 8 * 29 - 12, 110);
         BlockCreate(47 * 29, 9 * 29 - 12, 103);
         BlockCreate(59 * 29, 9 * 29 - 12, 112);
         BlockCreate(67 * 29, 9 * 29 - 12, 104);
 
-        sco = 0;
-        t = sco;
-        sa[t] = 20 * 29 * 100 + 500;
-        sb[t] = -6000;
-        sc[t] = 5000;
-        sd[t] = 70000;
-        stype[t] = 100;
-        sco++;
-        t = sco;
-        sa[t] = 54 * 29 * 100 - 500;
-        sb[t] = -6000;
-        sc[t] = 7000;
-        sd[t] = 70000;
-        stype[t] = 101;
-        sco++;
-        t = sco;
-        sa[t] = 112 * 29 * 100 + 1000;
-        sb[t] = -6000;
-        sc[t] = 3000;
-        sd[t] = 70000;
-        stype[t] = 102;
-        sco++;
-        t = sco;
-        sa[t] = 117 * 29 * 100;
-        sb[t] = (2 * 29 - 12) * 100 - 1500;
-        sc[t] = 15000;
-        sd[t] = 3000;
-        stype[t] = 103;
-        sco++;
-        t = sco;
-        sa[t] = 125 * 29 * 100;
-        sb[t] = -6000;
-        sc[t] = 9000;
-        sd[t] = 70000;
-        stype[t] = 101;
-        sco++;
+        GroundCount = 0;
+        t = GroundCount;
+        GroundX[t] = 20 * 29 * 100 + 500;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 5000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 100;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 54 * 29 * 100 - 500;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 7000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 101;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 112 * 29 * 100 + 1000;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 3000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 102;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 117 * 29 * 100;
+        GroundY[t] = (2 * 29 - 12) * 100 - 1500;
+        GroundSizeX[t] = 15000;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 103;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 125 * 29 * 100;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 9000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 101;
+        GroundCount++;
         // t=sco;sa[t]=77*29*100;sb[t]=(6*29-12)*100-1500;sc[t]=12000;sd[t]=3000;stype[t]=103;sco++;
         t = 28;
-        sa[t] = 29 * 29 * 100 + 500;
-        sb[t] = (9 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 12000 - 200;
-        stype[t] = 50;
-        sco++;
-        t = sco;
-        sa[t] = 49 * 29 * 100;
-        sb[t] = (5 * 29 - 12) * 100;
-        sc[t] = 9000 - 1;
-        sd[t] = 3000;
-        stype[t] = 51;
-        sgtype[t] = 0;
-        sco++;
-        t = sco;
-        sa[t] = 72 * 29 * 100;
-        sb[t] = (13 * 29 - 12) * 100;
-        sc[t] = 3000 * 5 - 1;
-        sd[t] = 3000;
-        stype[t] = 52;
-        sco++;
+        GroundX[t] = 29 * 29 * 100 + 500;
+        GroundY[t] = (9 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 12000 - 200;
+        GroundType[t] = 50;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 49 * 29 * 100;
+        GroundY[t] = (5 * 29 - 12) * 100;
+        GroundSizeX[t] = 9000 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 51;
+        GroundAI[t] = 0;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 72 * 29 * 100;
+        GroundY[t] = (13 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000 * 5 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 52;
+        GroundCount++;
 
-        bco = 0;
-        t = bco;
+        EnemyAppearCount = 0;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 27 * 29 * 100;
         EnemyAppearY[t] = (9 * 29 - 12) * 100;
         EnemyAppearType[t] = 0;
         EnemyAppearSubType[t] = 0;
-        bco++;
-        t = bco;
+        EnemyAppearCount++;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 103 * 29 * 100;
         EnemyAppearY[t] = (5 * 29 - 12 + 10) * 100;
         EnemyAppearType[t] = 80;
         EnemyAppearSubType[t] = 0;
-        bco++;
+        EnemyAppearCount++;
         // t=bco;ba[t]=13*29*100;bb[t]=(5*29-12)*100;btype[t]=81;bxtype[t]=0;bco++;
 
         for (tt = 0; tt <= 1000; tt++)
@@ -921,9 +913,9 @@ void HandleSyobonActionOneLevels()
              0, 0,
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-        tco = 0;
+        BlockCount = 0;
         // ヒント1
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(4 * 29, 9 * 29 - 12, 300);
         // BlockCreate(7*29,9*29-12,300);
 
@@ -931,31 +923,31 @@ void HandleSyobonActionOneLevels()
         BlockCreate(13 * 29, 8 * 29 - 12, 114);
 
         // t=28;
-        sco = 0;
-        t = sco;
-        sa[t] = 14 * 29 * 100 + 500;
-        sb[t] = (9 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 12000 - 200;
-        stype[t] = 50;
-        sxtype[t] = 1;
-        sco++;
-        t = sco;
-        sa[t] = 12 * 29 * 100;
-        sb[t] = (11 * 29 - 12) * 100;
-        sc[t] = 3000;
-        sd[t] = 6000 - 200;
-        stype[t] = 40;
-        sxtype[t] = 0;
-        sco++;
-        t = sco;
-        sa[t] = 14 * 29 * 100 + 1000;
-        sb[t] = -6000;
-        sc[t] = 5000;
-        sd[t] = 70000;
-        stype[t] = 100;
-        sxtype[t] = 1;
-        sco++;
+        GroundCount = 0;
+        t = GroundCount;
+        GroundX[t] = 14 * 29 * 100 + 500;
+        GroundY[t] = (9 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 12000 - 200;
+        GroundType[t] = 50;
+        GroundSubType[t] = 1;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 12 * 29 * 100;
+        GroundY[t] = (11 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000;
+        GroundSizeY[t] = 6000 - 200;
+        GroundType[t] = 40;
+        GroundSubType[t] = 0;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 14 * 29 * 100 + 1000;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 5000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 100;
+        GroundSubType[t] = 1;
+        GroundCount++;
 
         // ブロックもどき
         // t=bco;ba[t]=7*29*100;bb[t]=(9*29-12)*100;btype[t]=82;bxtype[t]=0;bco++;
@@ -1312,12 +1304,12 @@ void HandleSyobonActionOneLevels()
         };
         //{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
-        tco = 0;
-        txtype[tco] = 2;
+        BlockCount = 0;
+        BlockSubType[BlockCount] = 2;
         BlockCreate(7 * 29, 9 * 29 - 12, 102);
         BlockCreate(10 * 29, 9 * 29 - 12, 101);
 
-        txtype[tco] = 2;
+        BlockSubType[BlockCount] = 2;
         BlockCreate(49 * 29, 9 * 29 - 12, 114);
 
         for (t = 0; t >= -7; t--)
@@ -1325,214 +1317,214 @@ void HandleSyobonActionOneLevels()
             BlockCreate(53 * 29, t * 29 - 12, 1);
         }
 
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(80 * 29, 5 * 29 - 12, 104);
-        txtype[tco] = 2;
+        BlockSubType[BlockCount] = 2;
         BlockCreate(78 * 29, 5 * 29 - 12, 102);
 
         // txtype[tco]=1;BlockCreate(11*29,9*29-12,114);//毒1
 
-        sco = 0;
-        t = sco;
-        sa[t] = 2 * 29 * 100;
-        sb[t] = (13 * 29 - 12) * 100;
-        sc[t] = 3000 * 1 - 1;
-        sd[t] = 3000;
-        stype[t] = 52;
-        sco++;
+        GroundCount = 0;
+        t = GroundCount;
+        GroundX[t] = 2 * 29 * 100;
+        GroundY[t] = (13 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000 * 1 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 52;
+        GroundCount++;
         // t=sco;sa[t]=19*29*100;sb[t]=(13*29-12)*100;sc[t]=3000*1-1;sd[t]=3000;stype[t]=52;sco++;
-        t = sco;
-        sa[t] = 24 * 29 * 100;
-        sb[t] = (13 * 29 - 12) * 100;
-        sc[t] = 3000 * 1 - 1;
-        sd[t] = 3000;
-        stype[t] = 52;
-        sco++;
-        t = sco;
-        sa[t] = 43 * 29 * 100 + 500;
-        sb[t] = -6000;
-        sc[t] = 3000;
-        sd[t] = 70000;
-        stype[t] = 102;
-        sxtype[t] = 1;
-        sco++;
-        t = sco;
-        sa[t] = 53 * 29 * 100 + 500;
-        sb[t] = -6000;
-        sc[t] = 3000;
-        sd[t] = 70000;
-        stype[t] = 102;
-        sxtype[t] = 2;
-        sco++;
-        t = sco;
-        sa[t] = 129 * 29 * 100;
-        sb[t] = (7 * 29 - 12) * 100;
-        sc[t] = 3000;
-        sd[t] = 6000 - 200;
-        stype[t] = 40;
-        sxtype[t] = 2;
-        sco++;
-        t = sco;
-        sa[t] = 154 * 29 * 100;
-        sb[t] = 3000;
-        sc[t] = 9000;
-        sd[t] = 3000;
-        stype[t] = 102;
-        sxtype[t] = 7;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 24 * 29 * 100;
+        GroundY[t] = (13 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000 * 1 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 52;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 43 * 29 * 100 + 500;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 3000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 102;
+        GroundSubType[t] = 1;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 53 * 29 * 100 + 500;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 3000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 102;
+        GroundSubType[t] = 2;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 129 * 29 * 100;
+        GroundY[t] = (7 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000;
+        GroundSizeY[t] = 6000 - 200;
+        GroundType[t] = 40;
+        GroundSubType[t] = 2;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 154 * 29 * 100;
+        GroundY[t] = 3000;
+        GroundSizeX[t] = 9000;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 102;
+        GroundSubType[t] = 7;
+        GroundCount++;
 
         // ブロックもどき
 
         t = 27;
-        sa[t] = 69 * 29 * 100;
-        sb[t] = (1 * 29 - 12) * 100;
-        sc[t] = 9000 * 2 - 1;
-        sd[t] = 3000;
-        stype[t] = 51;
-        sxtype[t] = 0;
-        sgtype[t] = 0;
-        sco++;
+        GroundX[t] = 69 * 29 * 100;
+        GroundY[t] = (1 * 29 - 12) * 100;
+        GroundSizeX[t] = 9000 * 2 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 51;
+        GroundSubType[t] = 0;
+        GroundAI[t] = 0;
+        GroundCount++;
         t = 28;
-        sa[t] = 66 * 29 * 100;
-        sb[t] = (1 * 29 - 12) * 100;
-        sc[t] = 9000 - 1;
-        sd[t] = 3000;
-        stype[t] = 51;
-        sxtype[t] = 1;
-        sgtype[t] = 0;
-        sco++;
+        GroundX[t] = 66 * 29 * 100;
+        GroundY[t] = (1 * 29 - 12) * 100;
+        GroundSizeX[t] = 9000 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 51;
+        GroundSubType[t] = 1;
+        GroundAI[t] = 0;
+        GroundCount++;
         t = 29;
-        sa[t] = 66 * 29 * 100;
-        sb[t] = (-2 * 29 - 12) * 100;
-        sc[t] = 9000 * 3 - 1;
-        sd[t] = 3000;
-        stype[t] = 51;
-        sxtype[t] = 2;
-        sgtype[t] = 0;
-        sco++;
+        GroundX[t] = 66 * 29 * 100;
+        GroundY[t] = (-2 * 29 - 12) * 100;
+        GroundSizeX[t] = 9000 * 3 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 51;
+        GroundSubType[t] = 2;
+        GroundAI[t] = 0;
+        GroundCount++;
 
         // 26 ファイアー土管
         t = 26;
-        sa[t] = 103 * 29 * 100 - 1500;
-        sb[t] = (9 * 29 - 12) * 100 - 2000;
-        sc[t] = 3000;
-        sd[t] = 3000;
-        stype[t] = 180;
-        sxtype[t] = 0;
-        sr[t] = 0;
-        sgtype[t] = 48;
-        sco++;
-        t = sco;
-        sa[t] = 102 * 29 * 100;
-        sb[t] = (9 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 12000 - 200;
-        stype[t] = 50;
-        sxtype[t] = 2;
-        sco++;
-        t = sco;
-        sa[t] = 123 * 29 * 100;
-        sb[t] = (9 * 29 - 12) * 100;
-        sc[t] = 3000 * 5 - 1;
-        sd[t] = 3000 * 5;
-        stype[t] = 52;
-        sxtype[t] = 1;
-        sco++;
+        GroundX[t] = 103 * 29 * 100 - 1500;
+        GroundY[t] = (9 * 29 - 12) * 100 - 2000;
+        GroundSizeX[t] = 3000;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 180;
+        GroundSubType[t] = 0;
+        GroundVelY[t] = 0;
+        GroundAI[t] = 48;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 102 * 29 * 100;
+        GroundY[t] = (9 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 12000 - 200;
+        GroundType[t] = 50;
+        GroundSubType[t] = 2;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 123 * 29 * 100;
+        GroundY[t] = (9 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000 * 5 - 1;
+        GroundSizeY[t] = 3000 * 5;
+        GroundType[t] = 52;
+        GroundSubType[t] = 1;
+        GroundCount++;
 
-        t = sco;
-        sa[t] = 131 * 29 * 100;
-        sb[t] = (1 * 29 - 12) * 100;
-        sc[t] = 4700;
-        sd[t] = 3000 * 8 - 700;
-        stype[t] = 1;
-        sxtype[t] = 0;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 131 * 29 * 100;
+        GroundY[t] = (1 * 29 - 12) * 100;
+        GroundSizeX[t] = 4700;
+        GroundSizeY[t] = 3000 * 8 - 700;
+        GroundType[t] = 1;
+        GroundSubType[t] = 0;
+        GroundCount++;
 
         // t=sco;sa[t]=44*29*100;sb[t]=-6000;sc[t]=9000;sd[t]=70000;stype[t]=102;sco++;
 
         // オワタゾーン
-        t = sco;
-        sa[t] = 143 * 29 * 100;
-        sb[t] = (9 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 12000 - 200;
-        stype[t] = 50;
-        sxtype[t] = 5;
-        sco++;
-        t = sco;
-        sa[t] = 148 * 29 * 100;
-        sb[t] = (9 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 12000 - 200;
-        stype[t] = 50;
-        sxtype[t] = 5;
-        sco++;
-        t = sco;
-        sa[t] = 153 * 29 * 100;
-        sb[t] = (9 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 12000 - 200;
-        stype[t] = 50;
-        sxtype[t] = 5;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 143 * 29 * 100;
+        GroundY[t] = (9 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 12000 - 200;
+        GroundType[t] = 50;
+        GroundSubType[t] = 5;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 148 * 29 * 100;
+        GroundY[t] = (9 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 12000 - 200;
+        GroundType[t] = 50;
+        GroundSubType[t] = 5;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 153 * 29 * 100;
+        GroundY[t] = (9 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 12000 - 200;
+        GroundType[t] = 50;
+        GroundSubType[t] = 5;
+        GroundCount++;
 
-        bco = 0;
-        t = bco;
+        EnemyAppearCount = 0;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 18 * 29 * 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
         EnemyAppearType[t] = 82;
         EnemyAppearSubType[t] = 1;
-        bco++;
+        EnemyAppearCount++;
         // t=bco;ba[t]=52*29*100;bb[t]=(2*29-12)*100;btype[t]=82;bxtype[t]=1;bco++;
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 51 * 29 * 100 + 1000;
         EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100;
         EnemyAppearType[t] = 80;
         EnemyAppearSubType[t] = 1;
-        bco++;
+        EnemyAppearCount++;
 
         // ？ボール
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 96 * 29 * 100 + 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
         EnemyAppearType[t] = 105;
         EnemyAppearSubType[t] = 0;
-        bco++;
+        EnemyAppearCount++;
 
         // リフト
-        srco = 0;
-        t = srco;
-        sra[t] = 111 * 29 * 100;
-        srb[t] = (8 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftCount = 0;
+        t = LiftCount;
+        LiftX[t] = 111 * 29 * 100;
+        LiftY[t] = (8 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 0;
         sracttype[t] = 5;
-        sre[t] = -300;
-        srco++;
-        t = srco;
-        sra[t] = 111 * 29 * 100;
-        srb[t] = (0 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftVelY[t] = -300;
+        LiftCount++;
+        t = LiftCount;
+        LiftX[t] = 111 * 29 * 100;
+        LiftY[t] = (0 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 0;
         sracttype[t] = 5;
-        sre[t] = -300;
-        srco++;
+        LiftVelY[t] = -300;
+        LiftCount++;
         t = 10;
-        sra[t] = 116 * 29 * 100;
-        srb[t] = (4 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftX[t] = 116 * 29 * 100;
+        LiftY[t] = (4 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 1;
         sracttype[t] = 5;
-        sre[t] = 300;
-        srco++;
+        LiftVelY[t] = 300;
+        LiftCount++;
         t = 11;
-        sra[t] = 116 * 29 * 100;
-        srb[t] = (12 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftX[t] = 116 * 29 * 100;
+        LiftY[t] = (12 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 1;
         sracttype[t] = 5;
-        sre[t] = 300;
-        srco++;
+        LiftVelY[t] = 300;
+        LiftCount++;
 
         // ヒント1
         // BlockCreate(4*29,9*29-12,300);
@@ -2021,31 +2013,31 @@ void HandleSyobonActionOneLevels()
         t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
         */
 
-        t = sco;
-        sa[t] = 5 * 29 * 100 + 500;
-        sb[t] = -6000;
-        sc[t] = 3000;
-        sd[t] = 70000;
-        stype[t] = 102;
-        sxtype[t] = 8;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 5 * 29 * 100 + 500;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 3000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 102;
+        GroundSubType[t] = 8;
+        GroundCount++;
         // 空飛ぶ土管
         t = 28;
-        sa[t] = 44 * 29 * 100 + 500;
-        sb[t] = (10 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 9000 - 200;
-        stype[t] = 50;
-        sco++;
+        GroundX[t] = 44 * 29 * 100 + 500;
+        GroundY[t] = (10 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 9000 - 200;
+        GroundType[t] = 50;
+        GroundCount++;
 
         // ポールもどき
-        bco = 0;
-        t = bco;
+        EnemyAppearCount = 0;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 19 * 29 * 100;
         EnemyAppearY[t] = (2 * 29 - 12) * 100;
         EnemyAppearType[t] = 85;
         EnemyAppearSubType[t] = 0;
-        bco++;
+        EnemyAppearCount++;
 
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -2518,7 +2510,7 @@ void HandleSyobonActionOneLevels()
                                       0, 0,
                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-        tco = 0;
+        BlockCount = 0;
         BlockCreate(22 * 29, 3 * 29 - 12, 1);
         // 毒1
         BlockCreate(54 * 29, 9 * 29 - 12, 116);
@@ -2526,186 +2518,186 @@ void HandleSyobonActionOneLevels()
         BlockCreate(18 * 29, 14 * 29 - 12, 117);
         BlockCreate(19 * 29, 14 * 29 - 12, 117);
         BlockCreate(20 * 29, 14 * 29 - 12, 117);
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(61 * 29, 9 * 29 - 12, 101); // 5
         BlockCreate(74 * 29, 9 * 29 - 12, 7);   // 6
 
         // ヒント2
-        txtype[tco] = 2;
+        BlockSubType[BlockCount] = 2;
         BlockCreate(28 * 29, 9 * 29 - 12, 300); // 7
         // ファイア
-        txtype[tco] = 3;
+        BlockSubType[BlockCount] = 3;
         BlockCreate(7 * 29, 9 * 29 - 12, 101);
         // ヒント3
-        txtype[tco] = 4;
+        BlockSubType[BlockCount] = 4;
         BlockCreate(70 * 29, 8 * 29 - 12, 300); // 9
 
         // もろいぶろっく×３
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(58 * 29, 13 * 29 - 12, 115);
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(59 * 29, 13 * 29 - 12, 115);
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(60 * 29, 13 * 29 - 12, 115);
 
         // ヒントブレイク
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(111 * 29, 6 * 29 - 12, 301);
         // ジャンプ
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(114 * 29, 9 * 29 - 12, 120);
 
         // ファイア
         // BlockCreate(7*29,9*29-12,101);
 
-        bco = 0;
-        t = bco;
+        EnemyAppearCount = 0;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 101 * 29 * 100;
         EnemyAppearY[t] = (5 * 29 - 12) * 100;
         EnemyAppearType[t] = 4;
         EnemyAppearSubType[t] = 1;
-        bco++;
-        t = bco;
+        EnemyAppearCount++;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 146 * 29 * 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
         EnemyAppearType[t] = 6;
         EnemyAppearSubType[t] = 1;
-        bco++;
+        EnemyAppearCount++;
 
-        t = sco;
-        sa[t] = 9 * 29 * 100;
-        sb[t] = (13 * 29 - 12) * 100;
-        sc[t] = 9000 - 1;
-        sd[t] = 3000;
-        stype[t] = 52;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 9 * 29 * 100;
+        GroundY[t] = (13 * 29 - 12) * 100;
+        GroundSizeX[t] = 9000 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 52;
+        GroundCount++;
         // t=sco;sa[t]=58*29*100;sb[t]=(13*29-12)*100;sc[t]=9000-1;sd[t]=3000;stype[t]=52;sco++;
 
         // 土管
-        t = sco;
-        sa[t] = 65 * 29 * 100 + 500;
-        sb[t] = (10 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 9000 - 200;
-        stype[t] = 50;
-        sxtype[t] = 1;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 65 * 29 * 100 + 500;
+        GroundY[t] = (10 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 9000 - 200;
+        GroundType[t] = 50;
+        GroundSubType[t] = 1;
+        GroundCount++;
         // t=28;sa[t]=65*29*100;sb[t]=(10*29-12)*100;sc[t]=6000;sd[t]=9000-200;stype[t]=50;sco++;
 
         // トラップ
-        t = sco;
-        sa[t] = 74 * 29 * 100;
-        sb[t] = (8 * 29 - 12) * 100 - 1500;
-        sc[t] = 6000;
-        sd[t] = 3000;
-        stype[t] = 103;
-        sxtype[t] = 1;
-        sco++;
-        t = sco;
-        sa[t] = 96 * 29 * 100 - 3000;
-        sb[t] = -6000;
-        sc[t] = 9000;
-        sd[t] = 70000;
-        stype[t] = 102;
-        sxtype[t] = 10;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 74 * 29 * 100;
+        GroundY[t] = (8 * 29 - 12) * 100 - 1500;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 103;
+        GroundSubType[t] = 1;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 96 * 29 * 100 - 3000;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 9000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 102;
+        GroundSubType[t] = 10;
+        GroundCount++;
         // ポール砲
-        t = sco;
-        sa[t] = 131 * 29 * 100 - 1500;
-        sb[t] = (1 * 29 - 12) * 100 - 3000;
-        sc[t] = 15000;
-        sd[t] = 14000;
-        stype[t] = 104;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 131 * 29 * 100 - 1500;
+        GroundY[t] = (1 * 29 - 12) * 100 - 3000;
+        GroundSizeX[t] = 15000;
+        GroundSizeY[t] = 14000;
+        GroundType[t] = 104;
+        GroundCount++;
 
         // ？ボール
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 10 * 29 * 100 + 100;
         EnemyAppearY[t] = (11 * 29 - 12) * 100;
         EnemyAppearType[t] = 105;
         EnemyAppearSubType[t] = 1;
-        bco++;
+        EnemyAppearCount++;
         // ブロックもどき
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 43 * 29 * 100;
         EnemyAppearY[t] = (11 * 29 - 12) * 100;
         EnemyAppearType[t] = 82;
         EnemyAppearSubType[t] = 1;
-        bco++;
+        EnemyAppearCount++;
         // t=bco;ba[t]=146*29*100;bb[t]=(12*29-12)*100;btype[t]=82;bxtype[t]=1;bco++;
         // うめぇ
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 1 * 29 * 100;
         EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100 - 1000;
         EnemyAppearType[t] = 80;
         EnemyAppearSubType[t] = 0;
-        bco++;
+        EnemyAppearCount++;
 
         // リフト
-        srco = 0;
-        t = srco;
-        sra[t] = 33 * 29 * 100;
-        srb[t] = (3 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftCount = 0;
+        t = LiftCount;
+        LiftX[t] = 33 * 29 * 100;
+        LiftY[t] = (3 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 0;
         sracttype[t] = 0;
-        sre[t] = 0;
+        LiftVelY[t] = 0;
         srsp[t] = 1;
-        srco++;
-        t = srco;
-        sra[t] = 39 * 29 * 100 - 2000;
-        srb[t] = (6 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftCount++;
+        t = LiftCount;
+        LiftX[t] = 39 * 29 * 100 - 2000;
+        LiftY[t] = (6 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 0;
         sracttype[t] = 1;
-        sre[t] = 0;
-        srco++;
-        t = srco;
-        sra[t] = 45 * 29 * 100 + 1500;
-        srb[t] = (10 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftVelY[t] = 0;
+        LiftCount++;
+        t = LiftCount;
+        LiftX[t] = 45 * 29 * 100 + 1500;
+        LiftY[t] = (10 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 0;
         sracttype[t] = 0;
-        sre[t] = 0;
+        LiftVelY[t] = 0;
         srsp[t] = 2;
-        srco++;
+        LiftCount++;
 
-        t = srco;
-        sra[t] = 95 * 29 * 100;
-        srb[t] = (7 * 29 - 12) * 100;
-        src[t] = 180 * 100;
+        t = LiftCount;
+        LiftX[t] = 95 * 29 * 100;
+        LiftY[t] = (7 * 29 - 12) * 100;
+        LiftSizeX[t] = 180 * 100;
         srtype[t] = 0;
         sracttype[t] = 0;
-        sre[t] = 0;
+        LiftVelY[t] = 0;
         srsp[t] = 10;
-        srco++;
-        t = srco;
-        sra[t] = 104 * 29 * 100;
-        srb[t] = (9 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftCount++;
+        t = LiftCount;
+        LiftX[t] = 104 * 29 * 100;
+        LiftY[t] = (9 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 0;
         sracttype[t] = 0;
-        sre[t] = 0;
+        LiftVelY[t] = 0;
         srsp[t] = 12;
-        srco++;
-        t = srco;
-        sra[t] = 117 * 29 * 100;
-        srb[t] = (3 * 29 - 12) * 100;
-        src[t] = 90 * 100;
+        LiftCount++;
+        t = LiftCount;
+        LiftX[t] = 117 * 29 * 100;
+        LiftY[t] = (3 * 29 - 12) * 100;
+        LiftSizeX[t] = 90 * 100;
         srtype[t] = 0;
         sracttype[t] = 1;
-        sre[t] = 0;
+        LiftVelY[t] = 0;
         srsp[t] = 15;
-        srco++;
-        t = srco;
-        sra[t] = 124 * 29 * 100;
-        srb[t] = (5 * 29 - 12) * 100;
-        src[t] = 210 * 100;
+        LiftCount++;
+        t = LiftCount;
+        LiftX[t] = 124 * 29 * 100;
+        LiftY[t] = (5 * 29 - 12) * 100;
+        LiftSizeX[t] = 210 * 100;
         srtype[t] = 0;
         sracttype[t] = 0;
-        sre[t] = 0;
+        LiftVelY[t] = 0;
         srsp[t] = 10;
-        srco++;
+        LiftCount++;
 
         if (stagepoint == 1)
         {
@@ -3025,7 +3017,7 @@ void HandleSyobonActionOneLevels()
              0, 0,
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-        tco = 0;
+        BlockCount = 0;
         // BlockCreate(15*29,12*29-12,111);
 
         SyobonSection = 0;
@@ -3302,22 +3294,22 @@ void HandleSyobonActionOneLevels()
              0, 0,
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-        sco = 0;
-        t = sco;
-        sa[t] = 14 * 29 * 100 - 5;
-        sb[t] = (11 * 29 - 12) * 100;
-        sc[t] = 6000;
-        sd[t] = 15000 - 200;
-        stype[t] = 50;
-        sxtype[t] = 1;
-        sco++;
+        GroundCount = 0;
+        t = GroundCount;
+        GroundX[t] = 14 * 29 * 100 - 5;
+        GroundY[t] = (11 * 29 - 12) * 100;
+        GroundSizeX[t] = 6000;
+        GroundSizeY[t] = 15000 - 200;
+        GroundType[t] = 50;
+        GroundSubType[t] = 1;
+        GroundCount++;
         // t=sco;sa[t]=12*29*100;sb[t]=(11*29-12)*100;sc[t]=3000;sd[t]=6000-200;stype[t]=40;sxtype[t]=0;sco++;
         // t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
 
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(12 * 29, 4 * 29 - 12, 112);
         // ヒント3
-        txtype[tco] = 3;
+        BlockSubType[BlockCount] = 3;
         BlockCreate(12 * 29, 8 * 29 - 12, 300);
         // txtype[tco]=0;BlockCreate(13*29,4*29-12,110);
 
@@ -3702,183 +3694,183 @@ void HandleSyobonActionOneLevels()
                                       0, 0,
                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-        sco = 0; // sco=140;
-        t = sco;
-        sa[t] = 35 * 29 * 100 - 1500 + 750;
-        sb[t] = (8 * 29 - 12) * 100 - 1500;
-        sc[t] = 1500;
-        sd[t] = 3000;
-        stype[t] = 105;
-        sco++;
-        t = sco;
-        sa[t] = 67 * 29 * 100;
-        sb[t] = (4 * 29 - 12) * 100;
-        sc[t] = 9000 - 1;
-        sd[t] = 3000 * 1 - 1;
-        stype[t] = 51;
-        sxtype[t] = 3;
-        sgtype[t] = 0;
-        sco++;
-        t = sco;
-        sa[t] = 73 * 29 * 100;
-        sb[t] = (13 * 29 - 12) * 100;
-        sc[t] = 3000 * 1 - 1;
-        sd[t] = 3000;
-        stype[t] = 52;
-        sco++;
+        GroundCount = 0; // sco=140;
+        t = GroundCount;
+        GroundX[t] = 35 * 29 * 100 - 1500 + 750;
+        GroundY[t] = (8 * 29 - 12) * 100 - 1500;
+        GroundSizeX[t] = 1500;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 105;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 67 * 29 * 100;
+        GroundY[t] = (4 * 29 - 12) * 100;
+        GroundSizeX[t] = 9000 - 1;
+        GroundSizeY[t] = 3000 * 1 - 1;
+        GroundType[t] = 51;
+        GroundSubType[t] = 3;
+        GroundAI[t] = 0;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 73 * 29 * 100;
+        GroundY[t] = (13 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000 * 1 - 1;
+        GroundSizeY[t] = 3000;
+        GroundType[t] = 52;
+        GroundCount++;
         // t=sco;sa[t]=79*29*100;sb[t]=(13*29-12)*100;sc[t]=30*3*100-1;sd[t]=6000-200;stype[t]=51;sxtype[t]=4;sco++;
         // t=sco;sa[t]=83*29*100;sb[t]=(-2*29-12)*100;sc[t]=30*5*100-1;sd[t]=3000-200;stype[t]=51;sxtype[t]=4;sco++;
-        t = sco;
-        sa[t] = 123 * 29 * 100;
-        sb[t] = (1 * 29 - 12) * 100;
-        sc[t] = 30 * 6 * 100 - 1 + 0;
-        sd[t] = 3000 - 200;
-        stype[t] = 51;
-        sxtype[t] = 10;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 123 * 29 * 100;
+        GroundY[t] = (1 * 29 - 12) * 100;
+        GroundSizeX[t] = 30 * 6 * 100 - 1 + 0;
+        GroundSizeY[t] = 3000 - 200;
+        GroundType[t] = 51;
+        GroundSubType[t] = 10;
+        GroundCount++;
         // スクロール消し
-        t = sco;
-        sa[t] = 124 * 29 * 100 + 3000;
-        sb[t] = (2 * 29 - 12) * 100;
-        sc[t] = 3000 * 1 - 1;
-        sd[t] = 300000;
-        stype[t] = 102;
-        sxtype[t] = 20;
-        sco++;
-        t = sco;
-        sa[t] = 148 * 29 * 100 + 1000;
-        sb[t] = (-12 * 29 - 12) * 100;
-        sc[t] = 3000 * 1 - 1;
-        sd[t] = 300000;
-        stype[t] = 102;
-        sxtype[t] = 30;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 124 * 29 * 100 + 3000;
+        GroundY[t] = (2 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000 * 1 - 1;
+        GroundSizeY[t] = 300000;
+        GroundType[t] = 102;
+        GroundSubType[t] = 20;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 148 * 29 * 100 + 1000;
+        GroundY[t] = (-12 * 29 - 12) * 100;
+        GroundSizeX[t] = 3000 * 1 - 1;
+        GroundSizeY[t] = 300000;
+        GroundType[t] = 102;
+        GroundSubType[t] = 30;
+        GroundCount++;
 
         // 3連星
-        t = sco;
-        sa[t] = 100 * 29 * 100 + 1000;
-        sb[t] = -6000;
-        sc[t] = 3000;
-        sd[t] = 70000;
-        stype[t] = 102;
-        sxtype[t] = 12;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 100 * 29 * 100 + 1000;
+        GroundY[t] = -6000;
+        GroundSizeX[t] = 3000;
+        GroundSizeY[t] = 70000;
+        GroundType[t] = 102;
+        GroundSubType[t] = 12;
+        GroundCount++;
 
         // 地面1
-        t = sco;
-        sa[t] = 0 * 29 * 100 - 0;
-        sb[t] = 9 * 29 * 100 + 1700;
-        sc[t] = 3000 * 7 - 1;
-        sd[t] = 3000 * 5 - 1;
-        stype[t] = 200;
-        sxtype[t] = 0;
-        sco++;
-        t = sco;
-        sa[t] = 11 * 29 * 100;
-        sb[t] = -1 * 29 * 100 + 1700;
-        sc[t] = 3000 * 8 - 1;
-        sd[t] = 3000 * 4 - 1;
-        stype[t] = 200;
-        sxtype[t] = 0;
-        sco++;
+        t = GroundCount;
+        GroundX[t] = 0 * 29 * 100 - 0;
+        GroundY[t] = 9 * 29 * 100 + 1700;
+        GroundSizeX[t] = 3000 * 7 - 1;
+        GroundSizeY[t] = 3000 * 5 - 1;
+        GroundType[t] = 200;
+        GroundSubType[t] = 0;
+        GroundCount++;
+        t = GroundCount;
+        GroundX[t] = 11 * 29 * 100;
+        GroundY[t] = -1 * 29 * 100 + 1700;
+        GroundSizeX[t] = 3000 * 8 - 1;
+        GroundSizeY[t] = 3000 * 4 - 1;
+        GroundType[t] = 200;
+        GroundSubType[t] = 0;
+        GroundCount++;
 
-        bco = 0;
-        t = bco;
+        EnemyAppearCount = 0;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 8 * 29 * 100 - 1400;
         EnemyAppearY[t] = (2 * 29 - 12) * 100 + 500;
         EnemyAppearType[t] = 86;
         EnemyAppearSubType[t] = 0;
-        bco++;
-        t = bco;
+        EnemyAppearCount++;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 42 * 29 * 100 - 1400;
         EnemyAppearY[t] = (-2 * 29 - 12) * 100 + 500;
         EnemyAppearType[t] = 86;
         EnemyAppearSubType[t] = 0;
-        bco++;
-        t = bco;
+        EnemyAppearCount++;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 29 * 29 * 100 + 1500;
         EnemyAppearY[t] = (7 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = 87;
         EnemyAppearSubType[t] = 105;
-        bco++;
-        t = bco;
+        EnemyAppearCount++;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 47 * 29 * 100 + 1500;
         EnemyAppearY[t] = (9 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = 87;
         EnemyAppearSubType[t] = 110;
-        bco++;
-        t = bco;
+        EnemyAppearCount++;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 70 * 29 * 100 + 1500;
         EnemyAppearY[t] = (9 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = 87;
         EnemyAppearSubType[t] = 105;
-        bco++;
-        t = bco;
+        EnemyAppearCount++;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 66 * 29 * 100 + 1501;
         EnemyAppearY[t] = (4 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = 87;
         EnemyAppearSubType[t] = 101;
-        bco++;
-        t = bco;
+        EnemyAppearCount++;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 85 * 29 * 100 + 1501;
         EnemyAppearY[t] = (4 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = 87;
         EnemyAppearSubType[t] = 105;
-        bco++;
+        EnemyAppearCount++;
 
         // ステルスうめぇ
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 57 * 29 * 100;
         EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100 - 500;
         EnemyAppearType[t] = 80;
         EnemyAppearSubType[t] = 1;
-        bco++;
+        EnemyAppearCount++;
         // ブロックもどき
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 77 * 29 * 100;
         EnemyAppearY[t] = (5 * 29 - 12) * 100;
         EnemyAppearType[t] = 82;
         EnemyAppearSubType[t] = 2;
-        bco++;
+        EnemyAppearCount++;
         // ボス
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 130 * 29 * 100;
         EnemyAppearY[t] = (8 * 29 - 12) * 100;
         EnemyAppearType[t] = 30;
         EnemyAppearSubType[t] = 0;
-        bco++;
+        EnemyAppearCount++;
         // クックル
-        t = bco;
+        t = EnemyAppearCount;
         EnemyAppearX[t] = 142 * 29 * 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
         EnemyAppearType[t] = 31;
         EnemyAppearSubType[t] = 0;
-        bco++;
+        EnemyAppearCount++;
 
         // マグマ
-        nco = 0;
-        na[nco] = 7 * 29 * 100 - 300;
-        nb[nco] = 14 * 29 * 100 - 1200;
-        ntype[nco] = 6;
-        nco++;
-        if (nco >= nmax)
-            nco = 0;
-        na[nco] = 41 * 29 * 100 - 300;
-        nb[nco] = 14 * 29 * 100 - 1200;
-        ntype[nco] = 6;
-        nco++;
-        if (nco >= nmax)
-            nco = 0;
-        na[nco] = 149 * 29 * 100 - 1100;
-        nb[nco] = 10 * 29 * 100 - 600;
-        ntype[nco] = 100;
-        nco++;
-        if (nco >= nmax)
-            nco = 0;
+        BackgroundCount = 0;
+        BackgroundX[BackgroundCount] = 7 * 29 * 100 - 300;
+        BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
+        BackgroundType[BackgroundCount] = 6;
+        BackgroundCount++;
+        if (BackgroundCount >= nmax)
+            BackgroundCount = 0;
+        BackgroundX[BackgroundCount] = 41 * 29 * 100 - 300;
+        BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
+        BackgroundType[BackgroundCount] = 6;
+        BackgroundCount++;
+        if (BackgroundCount >= nmax)
+            BackgroundCount = 0;
+        BackgroundX[BackgroundCount] = 149 * 29 * 100 - 1100;
+        BackgroundY[BackgroundCount] = 10 * 29 * 100 - 600;
+        BackgroundType[BackgroundCount] = 100;
+        BackgroundCount++;
+        if (BackgroundCount >= nmax)
+            BackgroundCount = 0;
 
-        tco = 0;
+        BlockCount = 0;
         // ON-OFFブロック
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(29 * 29, 3 * 29 - 12, 130);
         // 1-2
         BlockCreate(34 * 29, 9 * 29 - 12, 5);
@@ -3887,35 +3879,35 @@ void HandleSyobonActionOneLevels()
         BlockCreate(55 * 29 + 15, 6 * 29 - 12, 7);
         // BlockCreate(62*29,9*29-12,2);
         // 隠しON-OFF
-        txtype[tco] = 10;
+        BlockSubType[BlockCount] = 10;
         BlockCreate(50 * 29, 9 * 29 - 12, 114);
         // ヒント3
-        txtype[tco] = 5;
+        BlockSubType[BlockCount] = 5;
         BlockCreate(1 * 29, 5 * 29 - 12, 300);
         // ファイア
-        txtype[tco] = 3;
+        BlockSubType[BlockCount] = 3;
         BlockCreate(86 * 29, 9 * 29 - 12, 101);
         // キノコなし　普通
         // txtype[tco]=2;BlockCreate(81*29,1*29-12,5);
         // 音符
-        txtype[tco] = 2;
+        BlockSubType[BlockCount] = 2;
         BlockCreate(86 * 29, 6 * 29 - 12, 117);
 
         // もろいぶろっく×３
         for (t = 0; t <= 2; t++)
         {
-            txtype[tco] = 3;
+            BlockSubType[BlockCount] = 3;
             BlockCreate((79 + t) * 29, 13 * 29 - 12, 115);
         }
 
         // ジャンプ
-        txtype[tco] = 3;
+        BlockSubType[BlockCount] = 3;
         BlockCreate(105 * 29, 11 * 29 - 12, 120);
         // 毒1
-        txtype[tco] = 3;
+        BlockSubType[BlockCount] = 3;
         BlockCreate(109 * 29, 7 * 29 - 12, 102);
         // デフラグ
-        txtype[tco] = 4;
+        BlockSubType[BlockCount] = 4;
         BlockCreate(111 * 29, 7 * 29 - 12, 101);
         // 剣
         BlockCreate(132 * 29, 8 * 29 - 12 - 3, 140);
@@ -3926,24 +3918,24 @@ void HandleSyobonActionOneLevels()
         BlockCreate(66 * 29, 4 * 29 - 12, 124);
 
         // リフト
-        srco = 0;
-        t = srco;
-        sra[t] = 93 * 29 * 100;
-        srb[t] = (10 * 29 - 12) * 100;
-        src[t] = 60 * 100;
+        LiftCount = 0;
+        t = LiftCount;
+        LiftX[t] = 93 * 29 * 100;
+        LiftY[t] = (10 * 29 - 12) * 100;
+        LiftSizeX[t] = 60 * 100;
         srtype[t] = 0;
         sracttype[t] = 1;
-        sre[t] = 0;
-        srco++;
+        LiftVelY[t] = 0;
+        LiftCount++;
         t = 20;
-        sra[t] = 119 * 29 * 100 + 300;
-        srb[t] = (10 * 29 - 12) * 100;
-        src[t] = 12 * 30 * 100 + 1000;
+        LiftX[t] = 119 * 29 * 100 + 300;
+        LiftY[t] = (10 * 29 - 12) * 100;
+        LiftSizeX[t] = 12 * 30 * 100 + 1000;
         srtype[t] = 0;
         sracttype[t] = 0;
         srsp[t] = 21;
-        sre[t] = 0;
-        srco++;
+        LiftVelY[t] = 0;
+        LiftCount++;
 
         SyobonSection = 0;
 
@@ -4199,104 +4191,104 @@ void HandleSyobonActionTwoLevels()
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
              0, 0, 0}};
         // 追加情報
-        tco = 0;
+        BlockCount = 0;
         //
-        txtype[tco] = 6;
+        BlockSubType[BlockCount] = 6;
         BlockCreate(1 * 29, 9 * 29 - 12, 300);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(40 * 29, 9 * 29 - 12, 110);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 7;
+        BlockSubType[BlockCount] = 7;
         BlockCreate(79 * 29, 7 * 29 - 12, 300);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 2;
+        BlockSubType[BlockCount] = 2;
         BlockCreate(83 * 29, 7 * 29 - 12, 102);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(83 * 29, 2 * 29 - 12, 114);
-        tco += 1;
+        BlockCount += 1;
         //
         for (int i = -1; i > -7; i -= 1)
         {
             BlockCreate(85 * 29, i * 29 - 12, 4);
-            tco += 1;
+            BlockCount += 1;
         }
         //
-        sco = 0;
-        sa[sco] = 30 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 12000 - 1;
-        sd[sco] = 3000;
-        stype[sco] = 52;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundCount = 0;
+        GroundX[GroundCount] = 30 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 12000 - 1;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 51 * 29 * 100;
-        sb[sco] = (4 * 29 - 12) * 100;
-        sc[sco] = 9000 - 1;
-        sd[sco] = 3000;
-        stype[sco] = 51;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 51 * 29 * 100;
+        GroundY[GroundCount] = (4 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 9000 - 1;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 51;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 84 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 9000 - 1;
-        sd[sco] = 3000;
-        stype[sco] = 52;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 84 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 9000 - 1;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 105 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 15000 - 1;
-        sd[sco] = 3000;
-        stype[sco] = 52;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 105 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 15000 - 1;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        bco = 0;
+        EnemyAppearCount = 0;
         //
-        EnemyAppearX[bco] = 6 * 29 * 100;
-        EnemyAppearY[bco] = (3 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 80;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 6 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (3 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 80;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 13 * 29 * 100;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 4;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 13 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 4;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 23 * 29 * 100;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 80;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 23 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 80;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 25 * 29 * 100;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 80;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 25 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 80;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 27 * 29 * 100;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 80;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 27 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 80;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 88 * 29 * 100;
-        EnemyAppearY[bco] = (12 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 88 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (12 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -4332,35 +4324,35 @@ void HandleSyobonActionTwoLevels()
             {6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
         //
-        sa[sco] = 14 * 29 * 100 + 200;
-        sb[sco] = -6000;
-        sc[sco] = 5000;
-        sd[sco] = 70000;
-        stype[sco] = 100;
-        sco += 1;
+        GroundX[GroundCount] = 14 * 29 * 100 + 200;
+        GroundY[GroundCount] = -6000;
+        GroundSizeX[GroundCount] = 5000;
+        GroundSizeY[GroundCount] = 70000;
+        GroundType[GroundCount] = 100;
+        GroundCount += 1;
         //
-        sa[sco] = 12 * 29 * 100 + 1200;
-        sb[sco] = -6000;
-        sc[sco] = 7000;
-        sd[sco] = 70000;
-        stype[sco] = 101;
-        sco += 1;
+        GroundX[GroundCount] = 12 * 29 * 100 + 1200;
+        GroundY[GroundCount] = -6000;
+        GroundSizeX[GroundCount] = 7000;
+        GroundSizeY[GroundCount] = 70000;
+        GroundType[GroundCount] = 101;
+        GroundCount += 1;
         //
-        sa[sco] = 12 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 6000 - 1;
-        sd[sco] = 3000;
-        stype[sco] = 52;
-        sgtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 12 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 6000 - 1;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 52;
+        GroundAI[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 14 * 29 * 100;
-        sb[sco] = (9 * 29 - 12) * 100;
-        sc[sco] = 6000;
-        sd[sco] = 12000 - 200;
-        stype[sco] = 50;
-        sxtype[sco] = 1;
-        sco += 1;
+        GroundX[GroundCount] = 14 * 29 * 100;
+        GroundY[GroundCount] = (9 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 6000;
+        GroundSizeY[GroundCount] = 12000 - 200;
+        GroundType[GroundCount] = 50;
+        GroundSubType[GroundCount] = 1;
+        GroundCount += 1;
         //
         BlockCreate(6 * 29, 9 * 29 - 12, 110);
         //
@@ -4660,183 +4652,183 @@ void HandleSyobonActionTwoLevels()
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
              0, 0, 0}};
         //
-        bco = 0;
-        EnemyAppearX[bco] = 32 * 29 * 100 - 1400;
-        EnemyAppearY[bco] = (-2 * 29 - 12) * 100 + 500;
-        EnemyAppearType[bco] = 86;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearCount = 0;
+        EnemyAppearX[EnemyAppearCount] = 32 * 29 * 100 - 1400;
+        EnemyAppearY[EnemyAppearCount] = (-2 * 29 - 12) * 100 + 500;
+        EnemyAppearType[EnemyAppearCount] = 86;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = (31 * 29 - 12) * 100;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 7;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = (31 * 29 - 12) * 100;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 7;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 38 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 87;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 38 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 87;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 38 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 38 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 42 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 87;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 42 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 87;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 42 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 42 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 46 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 87;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 46 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 87;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 46 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 46 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 58 * 29 * 100;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 58 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 66 * 29 * 100;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 66 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 76 * 29 * 100 - 1400;
-        EnemyAppearY[bco] = (-2 * 29 - 12) * 100 + 500;
-        EnemyAppearType[bco] = 86;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 76 * 29 * 100 - 1400;
+        EnemyAppearY[EnemyAppearCount] = (-2 * 29 - 12) * 100 + 500;
+        EnemyAppearType[EnemyAppearCount] = 86;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        sco = 0;
-        sa[sco] = 2 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 300000 - 6001;
-        sd[sco] = 3000;
-        stype[sco] = 52;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundCount = 0;
+        GroundX[GroundCount] = 2 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 300000 - 6001;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 3 * 29 * 100;
-        sb[sco] = (7 * 29 - 12) * 100;
-        sc[sco] = 3000;
-        sd[sco] = 3000;
-        stype[sco] = 105;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 3 * 29 * 100;
+        GroundY[GroundCount] = (7 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 3000;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 105;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 107 * 29 * 100;
-        sb[sco] = (9 * 29 - 12) * 100;
-        sc[sco] = 9000 - 1;
-        sd[sco] = 24000;
-        stype[sco] = 52;
-        sxtype[sco] = 1;
-        sco += 1;
+        GroundX[GroundCount] = 107 * 29 * 100;
+        GroundY[GroundCount] = (9 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 9000 - 1;
+        GroundSizeY[GroundCount] = 24000;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 1;
+        GroundCount += 1;
         //
-        sa[sco] = 111 * 29 * 100;
-        sb[sco] = (7 * 29 - 12) * 100;
-        sc[sco] = 3000;
-        sd[sco] = 6000 - 200;
-        stype[sco] = 40;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 111 * 29 * 100;
+        GroundY[GroundCount] = (7 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 3000;
+        GroundSizeY[GroundCount] = 6000 - 200;
+        GroundType[GroundCount] = 40;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 113 * 29 * 100 + 1100;
-        sb[sco] = (0 * 29 - 12) * 100;
-        sc[sco] = 4700;
-        sd[sco] = 27000 - 1000;
-        stype[sco] = 0;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 113 * 29 * 100 + 1100;
+        GroundY[GroundCount] = (0 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 4700;
+        GroundSizeY[GroundCount] = 27000 - 1000;
+        GroundType[GroundCount] = 0;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 128 * 29 * 100;
-        sb[sco] = (9 * 29 - 12) * 100;
-        sc[sco] = 9000 - 1;
-        sd[sco] = 24000;
-        stype[sco] = 52;
-        sxtype[sco] = 1;
-        sco += 1;
+        GroundX[GroundCount] = 128 * 29 * 100;
+        GroundY[GroundCount] = (9 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 9000 - 1;
+        GroundSizeY[GroundCount] = 24000;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 1;
+        GroundCount += 1;
         //
-        sa[sco] = 131 * 29 * 100;
-        sb[sco] = (9 * 29 - 12) * 100;
-        sc[sco] = 3000;
-        sd[sco] = 6000 - 200;
-        stype[sco] = 40;
-        sxtype[sco] = 2;
-        sco += 1;
+        GroundX[GroundCount] = 131 * 29 * 100;
+        GroundY[GroundCount] = (9 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 3000;
+        GroundSizeY[GroundCount] = 6000 - 200;
+        GroundType[GroundCount] = 40;
+        GroundSubType[GroundCount] = 2;
+        GroundCount += 1;
         //
-        sa[sco] = 133 * 29 * 100 + 1100;
-        sb[sco] = (0 * 29 - 12) * 100;
-        sc[sco] = 4700;
-        sd[sco] = 32000;
-        stype[sco] = 0;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 133 * 29 * 100 + 1100;
+        GroundY[GroundCount] = (0 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 4700;
+        GroundSizeY[GroundCount] = 32000;
+        GroundType[GroundCount] = 0;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        tco = 0;
-        txtype[tco] = 0;
+        BlockCount = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(0 * 29, 0 * 29 - 12, 4);
-        tco = 1;
-        txtype[tco] = 0;
+        BlockCount = 1;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(2 * 29, 9 * 29 - 12, 4);
-        tco = 2;
-        txtype[tco] = 0;
+        BlockCount = 2;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(3 * 29, 9 * 29 - 12, 4);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(5 * 29, 9 * 29 - 12, 115);
-        tco += 1;
-        txtype[tco] = 1;
+        BlockCount += 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(6 * 29, 9 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(5 * 29, 10 * 29 - 12, 115);
-        tco += 1;
-        txtype[tco] = 1;
+        BlockCount += 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(6 * 29, 10 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(5 * 29, 11 * 29 - 12, 115);
-        tco += 1;
-        txtype[tco] = 1;
+        BlockCount += 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(6 * 29, 11 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(5 * 29, 12 * 29 - 12, 115);
-        tco += 1;
-        txtype[tco] = 1;
+        BlockCount += 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(6 * 29, 12 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(70 * 29, 7 * 29 - 12, 115);
-        tco += 1;
-        txtype[tco] = 1;
+        BlockCount += 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(71 * 29, 7 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -4923,78 +4915,78 @@ void HandleSyobonActionTwoLevels()
              0, 0,
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
         //
-        bco = 0;
-        EnemyAppearX[bco] = 9 * 29 * 100;
-        EnemyAppearY[bco] = (12 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearCount = 0;
+        EnemyAppearX[EnemyAppearCount] = 9 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (12 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 10 * 29 * 100;
-        EnemyAppearY[bco] = (11 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 10 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (11 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 11 * 29 * 100;
-        EnemyAppearY[bco] = (10 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 11 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (10 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 12 * 29 * 100;
-        EnemyAppearY[bco] = (9 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 12 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (9 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 13 * 29 * 100;
-        EnemyAppearY[bco] = (8 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 13 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 14 * 29 * 100;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 14 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 15 * 29 * 100;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 15 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 16 * 29 * 100;
-        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 16 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 17 * 29 * 100;
-        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 17 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 18 * 29 * 100;
-        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 18 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 19 * 29 * 100;
-        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 19 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 20 * 29 * 100;
-        EnemyAppearY[bco] = (5 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 20 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -5272,33 +5264,33 @@ void HandleSyobonActionTwoLevels()
              0, 0,
              0, 0, 0, 0, 0, 0, 0, 0, 0}};
         //
-        tco = 0;
-        txtype[tco] = 0;
+        BlockCount = 0;
+        BlockSubType[BlockCount] = 0;
         for (int i = -1; i > -7; i -= 1)
         {
             BlockCreate(55 * 29, i * 29 - 12, 4);
-            tco += 1;
+            BlockCount += 1;
         }
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(64 * 29, 12 * 29 - 12, 120);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(66 * 29, 3 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(67 * 29, 3 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(68 * 29, 3 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 8;
+        BlockSubType[BlockCount] = 8;
         BlockCreate(60 * 29, 6 * 29 - 12, 300);
-        tco += 1;
+        BlockCount += 1;
         /*
            bco = 1;
            ba[bco]=(54*29-12)*100;
@@ -5307,58 +5299,58 @@ void HandleSyobonActionTwoLevels()
            bxtype[bco]=0;
            bco += 1;
          */
-        sco = 0;
-        EnemyAppearX[sco] = (102 * 29 - 12) * 100;
-        EnemyAppearY[sco] = (10 * 29 - 12) * 100;
-        EnemyAppearType[sco] = 50;
-        EnemyAppearSubType[sco] = 1;
-        sco += 1;
+        GroundCount = 0;
+        EnemyAppearX[GroundCount] = (102 * 29 - 12) * 100;
+        EnemyAppearY[GroundCount] = (10 * 29 - 12) * 100;
+        EnemyAppearType[GroundCount] = 50;
+        EnemyAppearSubType[GroundCount] = 1;
+        GroundCount += 1;
         //
-        srco = 0;
-        sra[srco] = 1 * 29 * 100;
-        srb[srco] = (10 * 29 - 12) * 100;
-        src[srco] = 5 * 3000;
-        srtype[srco] = 0;
-        sracttype[srco] = 1;
-        sre[srco] = 0;
-        srsp[srco] = 10;
-        srco++;
+        LiftCount = 0;
+        LiftX[LiftCount] = 1 * 29 * 100;
+        LiftY[LiftCount] = (10 * 29 - 12) * 100;
+        LiftSizeX[LiftCount] = 5 * 3000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 1;
+        LiftVelY[LiftCount] = 0;
+        srsp[LiftCount] = 10;
+        LiftCount++;
         //
-        sra[srco] = 18 * 29 * 100;
-        srb[srco] = (4 * 29 - 12) * 100;
-        src[srco] = 3 * 3000;
-        srtype[srco] = 0;
-        sracttype[srco] = 0;
-        sre[srco] = 0;
-        srsp[srco] = 10;
-        srco++;
+        LiftX[LiftCount] = 18 * 29 * 100;
+        LiftY[LiftCount] = (4 * 29 - 12) * 100;
+        LiftSizeX[LiftCount] = 3 * 3000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        srsp[LiftCount] = 10;
+        LiftCount++;
         //
-        sra[srco] = 35 * 29 * 100;
-        srb[srco] = (4 * 29 - 12) * 100;
-        src[srco] = 5 * 3000;
-        srtype[srco] = 0;
-        sracttype[srco] = 0;
-        sre[srco] = 0;
-        srsp[srco] = 10;
-        srco++;
+        LiftX[LiftCount] = 35 * 29 * 100;
+        LiftY[LiftCount] = (4 * 29 - 12) * 100;
+        LiftSizeX[LiftCount] = 5 * 3000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        srsp[LiftCount] = 10;
+        LiftCount++;
         //
-        sra[srco] = 35 * 29 * 100;
-        srb[srco] = (8 * 29 - 12) * 100;
-        src[srco] = 5 * 3000;
-        srtype[srco] = 0;
-        sracttype[srco] = 0;
-        sre[srco] = 0;
-        srsp[srco] = 10;
-        srco++;
+        LiftX[LiftCount] = 35 * 29 * 100;
+        LiftY[LiftCount] = (8 * 29 - 12) * 100;
+        LiftSizeX[LiftCount] = 5 * 3000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        srsp[LiftCount] = 10;
+        LiftCount++;
         //
-        sra[srco] = 94 * 29 * 100;
-        srb[srco] = (6 * 29 - 12) * 100;
-        src[srco] = 3 * 3000;
-        srtype[srco] = 0;
-        sracttype[srco] = 0;
-        sre[srco] = 0;
-        srsp[srco] = 1;
-        srco++;
+        LiftX[LiftCount] = 94 * 29 * 100;
+        LiftY[LiftCount] = (6 * 29 - 12) * 100;
+        LiftSizeX[LiftCount] = 3 * 3000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        srsp[LiftCount] = 1;
+        LiftCount++;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -5453,64 +5445,64 @@ void HandleSyobonActionTwoLevels()
              0, 0,
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 0}};
         //
-        tco = 0;
-        txtype[tco] = 0;
+        BlockCount = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(0 * 29, -1 * 29 - 12, 5);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(4 * 29, -1 * 29 - 12, 5);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(1 * 29, 14 * 29 - 12, 5);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(6 * 29, 14 * 29 - 12, 5);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(7 * 29, 14 * 29 - 12, 5);
-        tco += 1;
+        BlockCount += 1;
         //
-        bco = 0;
-        EnemyAppearX[bco] = 2 * 29 * 100 - 1400;
-        EnemyAppearY[bco] = (-2 * 29 - 12) * 100 + 500;
-        EnemyAppearType[bco] = 86;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearCount = 0;
+        EnemyAppearX[EnemyAppearCount] = 2 * 29 * 100 - 1400;
+        EnemyAppearY[EnemyAppearCount] = (-2 * 29 - 12) * 100 + 500;
+        EnemyAppearType[EnemyAppearCount] = 86;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 20 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (5 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 87;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 20 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 87;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        sco = 0;
-        sa[sco] = 17 * 29 * 100;
-        sb[sco] = (9 * 29 - 12) * 100;
-        sc[sco] = 21000 - 1;
-        sd[sco] = 3000 - 1;
-        stype[sco] = 52;
-        sxtype[sco] = 2;
-        sco += 1;
+        GroundCount = 0;
+        GroundX[GroundCount] = 17 * 29 * 100;
+        GroundY[GroundCount] = (9 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 21000 - 1;
+        GroundSizeY[GroundCount] = 3000 - 1;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 2;
+        GroundCount += 1;
         //
-        sa[sco] = 27 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 6000;
-        sd[sco] = 6000;
-        stype[sco] = 50;
-        sxtype[sco] = 6;
-        sco += 1;
+        GroundX[GroundCount] = 27 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 6000;
+        GroundSizeY[GroundCount] = 6000;
+        GroundType[GroundCount] = 50;
+        GroundSubType[GroundCount] = 6;
+        GroundCount += 1;
         //
-        sa[sco] = 34 * 29 * 100;
-        sb[sco] = (5 * 29 - 12) * 100;
-        sc[sco] = 6000;
-        sd[sco] = 30000;
-        stype[sco] = 50;
-        sxtype[sco] = 1;
-        sco += 1;
+        GroundX[GroundCount] = 34 * 29 * 100;
+        GroundY[GroundCount] = (5 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 6000;
+        GroundSizeY[GroundCount] = 30000;
+        GroundType[GroundCount] = 50;
+        GroundSubType[GroundCount] = 1;
+        GroundCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -5555,51 +5547,51 @@ void HandleSyobonActionTwoLevels()
              86},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
         //
-        tco = 0;
-        txtype[tco] = 1;
+        BlockCount = 0;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(12 * 29, 13 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(13 * 29, 13 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(14 * 29, 13 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        sco = 0;
-        sa[sco] = 6 * 29 * 100;
-        sb[sco] = (6 * 29 - 12) * 100;
-        sc[sco] = 18000 - 1;
-        sd[sco] = 6000 - 1;
-        stype[sco] = 52;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundCount = 0;
+        GroundX[GroundCount] = 6 * 29 * 100;
+        GroundY[GroundCount] = (6 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 18000 - 1;
+        GroundSizeY[GroundCount] = 6000 - 1;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 12 * 29 * 100;
-        sb[sco] = (8 * 29 - 12) * 100;
-        sc[sco] = 9000 - 1;
-        sd[sco] = 3000 - 1;
-        stype[sco] = 52;
-        sxtype[sco] = 2;
-        sco += 1;
+        GroundX[GroundCount] = 12 * 29 * 100;
+        GroundY[GroundCount] = (8 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 9000 - 1;
+        GroundSizeY[GroundCount] = 3000 - 1;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 2;
+        GroundCount += 1;
         //
-        sa[sco] = 15 * 29 * 100;
-        sb[sco] = (11 * 29 - 12) * 100;
-        sc[sco] = 3000;
-        sd[sco] = 6000;
-        stype[sco] = 40;
-        sxtype[sco] = 2;
-        sco += 1;
+        GroundX[GroundCount] = 15 * 29 * 100;
+        GroundY[GroundCount] = (11 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 3000;
+        GroundSizeY[GroundCount] = 6000;
+        GroundType[GroundCount] = 40;
+        GroundSubType[GroundCount] = 2;
+        GroundCount += 1;
         //
-        sa[sco] = 17 * 29 * 100 + 1100;
-        sb[sco] = (0 * 29 - 12) * 100;
-        sc[sco] = 4700;
-        sd[sco] = 38000;
-        stype[sco] = 0;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 17 * 29 * 100 + 1100;
+        GroundY[GroundCount] = (0 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 4700;
+        GroundSizeY[GroundCount] = 38000;
+        GroundType[GroundCount] = 0;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -5879,217 +5871,217 @@ void HandleSyobonActionTwoLevels()
              0, 0,
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
         //
-        tco = 0;
-        txtype[tco] = 0;
+        BlockCount = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(1 * 29, 14 * 29 - 12, 5);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(2 * 29, 14 * 29 - 12, 5);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 9;
+        BlockSubType[BlockCount] = 9;
         BlockCreate(3 * 29, 4 * 29 - 12, 300);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(32 * 29, 9 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(76 * 29, 14 * 29 - 12, 5);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(108 * 29, 11 * 29 - 12, 141);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(109 * 29, 10 * 29 - 12 - 3, 140);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 0;
+        BlockSubType[BlockCount] = 0;
         BlockCreate(121 * 29, 10 * 29 - 12, 142);
-        tco += 1;
+        BlockCount += 1;
         //
-        bco = 0;
-        EnemyAppearX[bco] = 0 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (8 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 105;
-        bco += 1;
+        EnemyAppearCount = 0;
+        EnemyAppearX[EnemyAppearCount] = 0 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 2 * 29 * 100;
-        EnemyAppearY[bco] = (0 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 80;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 2 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (0 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 80;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 3 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (8 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 87;
-        EnemyAppearSubType[bco] = 105;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 3 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 87;
+        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 6 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (8 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 6 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 9 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (8 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 107;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 9 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 25 * 29 * 100 - 1400;
-        EnemyAppearY[bco] = (2 * 29 - 12) * 100 - 400;
-        EnemyAppearType[bco] = 86;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 25 * 29 * 100 - 1400;
+        EnemyAppearY[EnemyAppearCount] = (2 * 29 - 12) * 100 - 400;
+        EnemyAppearType[EnemyAppearCount] = 86;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 40 * 29 * 100;
-        EnemyAppearY[bco] = (8 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 40 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 42 * 29 * 100;
-        EnemyAppearY[bco] = (8 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 42 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 43 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 105;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 43 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 47 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 87;
-        EnemyAppearSubType[bco] = 105;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 47 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 87;
+        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 57 * 29 * 100;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 57 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 77 * 29 * 100 - 1400;
-        EnemyAppearY[bco] = (2 * 29 - 12) * 100 - 400;
-        EnemyAppearType[bco] = 86;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 77 * 29 * 100 - 1400;
+        EnemyAppearY[EnemyAppearCount] = (2 * 29 - 12) * 100 - 400;
+        EnemyAppearType[EnemyAppearCount] = 86;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 83 * 29 * 100 - 1400;
-        EnemyAppearY[bco] = (2 * 29 - 12) * 100 - 400;
-        EnemyAppearType[bco] = 86;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 83 * 29 * 100 - 1400;
+        EnemyAppearY[EnemyAppearCount] = (2 * 29 - 12) * 100 - 400;
+        EnemyAppearType[EnemyAppearCount] = 86;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 88 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (9 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 87;
-        EnemyAppearSubType[bco] = 105;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 88 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (9 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 87;
+        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 88 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (9 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 105;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 88 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (9 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 90 * 29 * 100;
-        EnemyAppearY[bco] = (9 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 90 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (9 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 107 * 29 * 100;
-        EnemyAppearY[bco] = (10 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 30;
-        EnemyAppearSubType[bco] = 0;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 107 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (10 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 30;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount += 1;
         //
-        sco = 0;
-        sa[sco] = 13 * 29 * 100;
-        sb[sco] = (8 * 29 - 12) * 100;
-        sc[sco] = 33000 - 1;
-        sd[sco] = 3000 - 1;
-        stype[sco] = 52;
-        sxtype[sco] = 2;
-        sco += 1;
+        GroundCount = 0;
+        GroundX[GroundCount] = 13 * 29 * 100;
+        GroundY[GroundCount] = (8 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 33000 - 1;
+        GroundSizeY[GroundCount] = 3000 - 1;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 2;
+        GroundCount += 1;
         //
-        sa[sco] = 13 * 29 * 100;
-        sb[sco] = (0 * 29 - 12) * 100;
-        sc[sco] = 33000 - 1;
-        sd[sco] = 3000 - 1;
-        stype[sco] = 51;
-        sxtype[sco] = 3;
-        sco += 1;
+        GroundX[GroundCount] = 13 * 29 * 100;
+        GroundY[GroundCount] = (0 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 33000 - 1;
+        GroundSizeY[GroundCount] = 3000 - 1;
+        GroundType[GroundCount] = 51;
+        GroundSubType[GroundCount] = 3;
+        GroundCount += 1;
         //
-        sa[sco] = 10 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 6000;
-        sd[sco] = 6000;
-        stype[sco] = 50;
-        sxtype[sco] = 6;
-        sco += 1;
+        GroundX[GroundCount] = 10 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 6000;
+        GroundSizeY[GroundCount] = 6000;
+        GroundType[GroundCount] = 50;
+        GroundSubType[GroundCount] = 6;
+        GroundCount += 1;
         //
-        sa[sco] = 46 * 29 * 100;
-        sb[sco] = (12 * 29 - 12) * 100;
-        sc[sco] = 9000 - 1;
-        sd[sco] = 3000 - 1;
-        stype[sco] = 52;
-        sxtype[sco] = 2;
-        sco += 1;
+        GroundX[GroundCount] = 46 * 29 * 100;
+        GroundY[GroundCount] = (12 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 9000 - 1;
+        GroundSizeY[GroundCount] = 3000 - 1;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 2;
+        GroundCount += 1;
         //
-        sa[sco] = 58 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 6000;
-        sd[sco] = 6000;
-        stype[sco] = 50;
-        sxtype[sco] = 6;
-        sco += 1;
+        GroundX[GroundCount] = 58 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 6000;
+        GroundSizeY[GroundCount] = 6000;
+        GroundType[GroundCount] = 50;
+        GroundSubType[GroundCount] = 6;
+        GroundCount += 1;
         //
-        sa[sco] = 101 * 29 * 100 - 1500;
-        sb[sco] = (10 * 29 - 12) * 100 - 3000;
-        sc[sco] = 12000;
-        sd[sco] = 12000;
-        stype[sco] = 104;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 101 * 29 * 100 - 1500;
+        GroundY[GroundCount] = (10 * 29 - 12) * 100 - 3000;
+        GroundSizeX[GroundCount] = 12000;
+        GroundSizeY[GroundCount] = 12000;
+        GroundType[GroundCount] = 104;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 102 * 29 * 100 + 3000;
-        sb[sco] = (2 * 29 - 12) * 100;
-        sc[sco] = 3000 - 1;
-        sd[sco] = 300000;
-        stype[sco] = 102;
-        sxtype[sco] = 20;
-        sco += 1;
+        GroundX[GroundCount] = 102 * 29 * 100 + 3000;
+        GroundY[GroundCount] = (2 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 3000 - 1;
+        GroundSizeY[GroundCount] = 300000;
+        GroundType[GroundCount] = 102;
+        GroundSubType[GroundCount] = 20;
+        GroundCount += 1;
         //
-        srco = 0;
-        sra[srco] = 74 * 29 * 100 - 1500;
-        srb[srco] = (7 * 29 - 12) * 100;
-        src[srco] = 2 * 3000;
-        srtype[srco] = 0;
-        sracttype[srco] = 1;
-        sre[srco] = 0;
-        srsp[srco] = 0;
-        srco = 20;
+        LiftCount = 0;
+        LiftX[LiftCount] = 74 * 29 * 100 - 1500;
+        LiftY[LiftCount] = (7 * 29 - 12) * 100;
+        LiftSizeX[LiftCount] = 2 * 3000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 1;
+        LiftVelY[LiftCount] = 0;
+        srsp[LiftCount] = 0;
+        LiftCount = 20;
         //
-        sra[srco] = 97 * 29 * 100;
-        srb[srco] = (12 * 29 - 12) * 100;
-        src[srco] = 12 * 3000;
-        srtype[srco] = 0;
-        sracttype[srco] = 0;
-        sre[srco] = 0;
-        srsp[srco] = 21;
-        srco += 1;
+        LiftX[LiftCount] = 97 * 29 * 100;
+        LiftY[LiftCount] = (12 * 29 - 12) * 100;
+        LiftSizeX[LiftCount] = 12 * 3000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        srsp[LiftCount] = 21;
+        LiftCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -6352,83 +6344,83 @@ void HandleSyobonActionTwoLevels()
              0, 0, 0,
              0, 0}};
         // 追加情報
-        tco = 0;
+        BlockCount = 0;
         //
-        txtype[tco] = 10;
+        BlockSubType[BlockCount] = 10;
         BlockCreate(2 * 29, 9 * 29 - 12, 300);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(63 * 29, 13 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        txtype[tco] = 1;
+        BlockSubType[BlockCount] = 1;
         BlockCreate(64 * 29, 13 * 29 - 12, 115);
-        tco += 1;
+        BlockCount += 1;
         //
-        sco = 0;
-        sa[sco] = 13 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 9000 - 1;
-        sd[sco] = 3000;
-        stype[sco] = 52;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundCount = 0;
+        GroundX[GroundCount] = 13 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 9000 - 1;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        sa[sco] = 84 * 29 * 100;
-        sb[sco] = (13 * 29 - 12) * 100;
-        sc[sco] = 9000 - 1;
-        sd[sco] = 3000;
-        stype[sco] = 52;
-        sxtype[sco] = 0;
-        sco += 1;
+        GroundX[GroundCount] = 84 * 29 * 100;
+        GroundY[GroundCount] = (13 * 29 - 12) * 100;
+        GroundSizeX[GroundCount] = 9000 - 1;
+        GroundSizeY[GroundCount] = 3000;
+        GroundType[GroundCount] = 52;
+        GroundSubType[GroundCount] = 0;
+        GroundCount += 1;
         //
-        bco = 0;
-        EnemyAppearX[bco] = 108 * 29 * 100;
-        EnemyAppearY[bco] = (6 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 6;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearCount = 0;
+        EnemyAppearX[EnemyAppearCount] = 108 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 6;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 33 * 29 * 100;
-        EnemyAppearY[bco] = (10 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 33 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (10 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 36 * 29 * 100;
-        EnemyAppearY[bco] = (0 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 80;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 36 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (0 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 80;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 78 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 88;
-        EnemyAppearSubType[bco] = 105;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 78 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 88;
+        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 80 * 29 * 100 + 1500;
-        EnemyAppearY[bco] = (7 * 29 - 12) * 100 + 1500;
-        EnemyAppearType[bco] = 87;
-        EnemyAppearSubType[bco] = 105;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 80 * 29 * 100 + 1500;
+        EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100 + 1500;
+        EnemyAppearType[EnemyAppearCount] = 87;
+        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearCount += 1;
         //
-        EnemyAppearX[bco] = 85 * 29 * 100;
-        EnemyAppearY[bco] = (11 * 29 - 12) * 100;
-        EnemyAppearType[bco] = 82;
-        EnemyAppearSubType[bco] = 1;
-        bco += 1;
+        EnemyAppearX[EnemyAppearCount] = 85 * 29 * 100;
+        EnemyAppearY[EnemyAppearCount] = (11 * 29 - 12) * 100;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount += 1;
         //
-        srco = 0;
-        sra[srco] = 41 * 29 * 100;
-        srb[srco] = (3 * 29 - 12) * 100;
-        src[srco] = 3 * 3000;
-        srtype[srco] = 0;
-        sracttype[srco] = 0;
-        sre[srco] = 0;
-        srsp[srco] = 3;
-        srco = 0;
+        LiftCount = 0;
+        LiftX[LiftCount] = 41 * 29 * 100;
+        LiftY[LiftCount] = (3 * 29 - 12) * 100;
+        LiftSizeX[LiftCount] = 3 * 3000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        srsp[LiftCount] = 3;
+        LiftCount = 0;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -6740,15 +6732,15 @@ void HandleSyobonActionThreeLevels()
         memset(stagedatex21[15], 0, sizeof(stagedatex21[15]));
 
 
-        txtype[tco] = 4; //nブロック[nブロックco].xtype = 4;
+        BlockSubType[BlockCount] = 4; //nブロック[nブロックco].xtype = 4;
         BlockCreate(348, 249, 102);
-        int t_9 = sco;
-        sa[t_9] = 8700; //n地面[t_9].a = 8700;
-        sb[t_9] = 36500; //n地面[t_9].b = 36500;
-        sc[t_9] = 11999; //n地面[t_9].c = 11999;
-        sd[t_9] = 3000; //n地面[t_9].d = 3000;
-        stype[t_9] = 52; //n地面[t_9].type = 52;
-        sco++; //n地面co++;
+        int t_9 = GroundCount;
+        GroundX[t_9] = 8700; //n地面[t_9].a = 8700;
+        GroundY[t_9] = 36500; //n地面[t_9].b = 36500;
+        GroundSizeX[t_9] = 11999; //n地面[t_9].c = 11999;
+        GroundSizeY[t_9] = 3000; //n地面[t_9].d = 3000;
+        GroundType[t_9] = 52; //n地面[t_9].type = 52;
+        GroundCount++; //n地面co++;
         for (int num34 = 0; num34 <= 1000; num34++)
         {
             for (int num35 = 0; num35 <= 16; num35++)

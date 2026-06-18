@@ -172,22 +172,22 @@ void loadg(void)
     {
         if (Sliced_GFX[t][x1])
         {
-            anx[t] = Sliced_GFX[t][x1]->w;
-            any[t] = Sliced_GFX[t][x1]->h;
+            EnemyDefaultSizeX[t] = Sliced_GFX[t][x1]->w;
+            EnemyDefaultSizeY[t] = Sliced_GFX[t][x1]->h;
             // GetGraphSize(Sliced_GFX[t][x1] ,&anx[t] ,&any[t]);
-            anx[t] *= 100;
-            any[t] *= 100;
+            EnemyDefaultSizeX[t] *= 100;
+            EnemyDefaultSizeY[t] *= 100;
         }
         else
         {
-            anx[t] = 0;
-            any[t] = 0;
+            EnemyDefaultSizeX[t] = 0;
+            EnemyDefaultSizeY[t] = 0;
         }
     }
-    anx[79] = 120 * 100;
-    any[79] = 15 * 100;
-    anx[85] = 25 * 100;
-    any[85] = 30 * 10 * 100;
+    EnemyDefaultSizeX[79] = 120 * 100;
+    EnemyDefaultSizeY[79] = 15 * 100;
+    EnemyDefaultSizeX[85] = 25 * 100;
+    EnemyDefaultSizeY[85] = 30 * 10 * 100;
 
     // 背景サイズ収得 (Background size acquisition)
     x1 = 4;

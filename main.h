@@ -71,8 +71,4 @@ void ttmsg();
 void txmsg(std::string x, int a);
 void setfont(int x, int y);
 
-//効果を持たないグラ (Grass with no effect)
-void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
-	   int xnobib, int xgtype, int xtm);
-
 #endif
