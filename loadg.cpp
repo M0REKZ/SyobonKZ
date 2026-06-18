@@ -260,7 +260,31 @@ void parseArgs(int argc, char *argv[])
         return;
     for (int i = 0; i < argc; i++)
     {
-        if (!strcasecmp(argv[i], "-nosound"))
+        //+KZ: why only 1 dash? added a 2 dashes version, keep old for back-compat
+        if (
+            !strcasecmp(argv[i], "-nosound") ||
+            !memcmp(argv[i], "--nosound", sizeof("--nosound"))
+        )
+        {
             sound = false;
+        }
+
+        //+KZ: --help
+        //also yeah im just using printf
+        if(
+            !memcmp(argv[i], "--help", sizeof("--help")) ||
+            !memcmp(argv[i], "-h", sizeof("-h"))
+        )
+        {
+            printf("SyobonKZ -- Syobon Action +KZ Edition\n");
+            printf("\n");
+            printf("Usage: SyobonAction [--option]\n");
+            printf("\n");
+            printf("Options:\n");
+            printf("    -h, --help               Shows this screen\n");
+            printf("    -nosound, --nosound      Muted game\n");
+
+            HelpFlagHandled = true;
+        }
     }
 }

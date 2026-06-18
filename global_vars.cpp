@@ -201,7 +201,7 @@ long stimeZ;
 
 //+KZ
 ESyobonActionGame currentGame = SYOBON_ACTION_1;
-
+bool HelpFlagHandled = false;
 
 //Syobon Action 3
 bool SA3_Level1MushroomTriggered = false;

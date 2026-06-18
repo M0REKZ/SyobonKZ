@@ -385,6 +385,9 @@ extern long stimeZ;
 
 //+KZ
 #define PLUSKZ_EDITION_TEXT "+KZ Edition"
+
+extern bool HelpFlagHandled; // --help cli flag
+
 enum ESyobonActionGame
 {
     SYOBON_ACTION_1 = 0,

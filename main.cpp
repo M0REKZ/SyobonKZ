@@ -14,6 +14,11 @@
 int main(int argc, char *argv[])
 {
 	parseArgs(argc, argv);
+
+	//+KZ: --help
+	if(HelpFlagHandled)
+		return 0;
+	
 	if (DxLib_Init() == -1)
 		return 1;
 
