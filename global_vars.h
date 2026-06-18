@@ -388,8 +388,8 @@ extern long stimeZ;
 enum ESyobonActionGame
 {
     SYOBON_ACTION_1 = 0,
-    SYOBON_ACTION_2 = 1,
-    SYOBON_ACTION_3 = 2, // Extremely incomplete, dont allow to choose
+    SYOBON_ACTION_2,
+    SYOBON_ACTION_3, // Extremely incomplete, dont allow to choose
 };
 extern ESyobonActionGame currentGame;
 extern bool SA3_Level1MushroomTriggered;
