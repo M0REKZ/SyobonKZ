@@ -21,7 +21,7 @@ Supported platforms:
 * [x] Windows
 * [x] Linux
 * [x] macOS
-* [x] Web Browsers (with Emscripten)
+* [x] [Web Browsers (with Emscripten)](https://m0rekz.github.io/SyobonKZ/)
 
 About the license
 -----
