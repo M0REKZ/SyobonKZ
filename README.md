@@ -1,4 +1,4 @@
-SyobonKZ
+[![SyobonKZ](https://m0rekz.github.io/SyobonKZ/logo.png)](https://m0rekz.github.io/SyobonKZ/)
 ==================
 ###### Original games developers: 
 * ###### Chiku (ちく) for Syobon Action
