@@ -6,6 +6,8 @@
 // @attention +KZ: void ayobi() is now void CreateEntity()
 // @attention +KZ: int xa is now int PosX
 // @attention +KZ: int xb is now int PosY
+// @attention +KZ: int xc is now int VelX
+// @attention +KZ: int xd is now int VelY
 // @attention +KZ: int xtype is now int EntityType
 // @attention +KZ: int xxtype is now int EntitySubType
 void CreateEntity(int PosX, int PosY, int xc, int xd, int xnotm, int EntityType,

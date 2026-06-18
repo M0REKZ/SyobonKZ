@@ -1478,7 +1478,7 @@ void HandleEntitiesBlocks()
 							EnemyY[t] = xx[9] - EnemySizeY[t] + 100 + fy;
 							EnemyVelY[t] = 0;
 							axzimen[t] = 1;
-							// ジャンプ台
+							// ジャンプ台 (Ski jump)
 							if (BlockType[tt] == 120)
 							{
 								EnemyVelY[t] = -1600;
@@ -2223,8 +2223,8 @@ void RenderLifts()
 void CreateEntity(
     int PosX, //int xa
     int PosY, //int xb
-    int xc,
-    int xd,
+    int VelX, //int xc
+    int VelY, //int xd
     int xnotm,
     int EntityType, // int xtype
     int EntitySubType // int xxtype
@@ -2244,8 +2244,8 @@ void CreateEntity(
 
             EnemyX[EnemyCount] = PosX;
             EnemyY[EnemyCount] = PosY; // ag[aco]=0;ah[aco]=0;ai[aco]=bb[t];//ad[t]=0;aeon[t]=1;
-            EnemyVelX[EnemyCount] = xc;
-            EnemyVelY[EnemyCount] = xd;
+            EnemyVelX[EnemyCount] = VelX;
+            EnemyVelY[EnemyCount] = VelY;
             if (EntitySubType > 100)
                 EnemyVelX[EnemyCount] = EntitySubType;
             // ae[aco]=0;af[aco]=0;

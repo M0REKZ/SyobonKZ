@@ -149,27 +149,27 @@ void RenderBackground()
 void CreateExtraGraphic(
     int PosX, //int xa
     int PosY, //int xb
-    int xc,
-    int xd,
-    int xe,
-    int xf,
-    int xnobia,
-	int xnobib,
-    int xgtype,
-    int xtm
+    int VelX, //int xc
+    int VelY, //int xd
+    int FrictionX, //int xe
+    int FrictionY, //int xf
+    int SizeX, //int xnobia
+	int SizeY, //int xnobib
+    int Type, //int xgtype
+    int Timer //int xtm
 )
 {
 
 	ExtraGraphicX[ExtraGraphicCount] = PosX;
 	ExtraGraphicY[ExtraGraphicCount] = PosY;
-	ExtraGraphicVelX[ExtraGraphicCount] = xc;
-	ExtraGraphicVelY[ExtraGraphicCount] = xd;
-	ExtraGraphicFrictionX[ExtraGraphicCount] = xe;
-	ExtraGraphicFrictionY[ExtraGraphicCount] = xf;
-	ExtraGraphicType[ExtraGraphicCount] = xgtype;
-	ExtraGraphicTimer[ExtraGraphicCount] = xtm;
-	ExtraGraphicSizeX[ExtraGraphicCount] = xnobia;
-	ExtraGraphicSizeY[ExtraGraphicCount] = xnobib;
+	ExtraGraphicVelX[ExtraGraphicCount] = VelX;
+	ExtraGraphicVelY[ExtraGraphicCount] = VelY;
+	ExtraGraphicFrictionX[ExtraGraphicCount] = FrictionX;
+	ExtraGraphicFrictionY[ExtraGraphicCount] = FrictionY;
+	ExtraGraphicType[ExtraGraphicCount] = Type;
+	ExtraGraphicTimer[ExtraGraphicCount] = Timer;
+	ExtraGraphicSizeX[ExtraGraphicCount] = SizeX;
+	ExtraGraphicSizeY[ExtraGraphicCount] = SizeY;
 
 	ExtraGraphicCount++;
 	if (ExtraGraphicCount >= emax)
