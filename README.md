@@ -77,69 +77,45 @@ Command Line Arguments
 ----------------------
 `-nosound` - Disables sound
 
-Dependencies
+Building
 ------------
 This project requires libraries that are old and may not be directly available in your package manager.
 
-* pkg-config (for lib searching)
+* CMake
 * SDL 1.2 (or sdl12-compat with SDL2)
 * SDL_image 1.2
 * SDL_mixer 1.2
 * SDL_ttf 1.2
 * SDL_gfx (dont confuse with SDL***2***_gfx)
 
+For convenience, the SDL 1.2 extensions are included as submodules in this repository, you can include them when cloning by doing:
+```
+git clone --recursive https://github.com/M0REKZ/SyobonKZ.git
+```
+
+After doing that you can do the following to build the game:
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
+If you want to use the SDL 1.2 extension libraries that are installed in your system add this option to CMake:
+```
+cmake -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
+```
+
 Gamepad Notes
 -------------
 Your gamepad or joystick may not work by default with Open Syobon Action. Check joyconfig.h for more information.
 
-Unimplemented
+TODO:
 -------------
 * Font thickness (Not really important)
-* Port to other operating systems (iOS, Android, etc.)
+* Port to other operating systems (iOS, Android, etc.) M0REKZ/SyobonKZ#3
+* Port more classic Syobon Action versions M0REKZ/SyobonKZ#4
 
 Release Changelog
 -----------------
-**SyobonKZ V1 (in development)**
-* Added some "+KZ Edition" text
-* Fixed missing Syobon Action 2 assets
-* Fix non-transparent sprites
-* Make window resizable
-* Use CMake build system
-* Emscripten (web browser) support
-* Fix C++ warnings
-* Fix a out of bounds memory access
-* Fix including SDL libraries by using pkg-config
-* Fix other random bugs...
-
-**Open Syobon Action RC 3 (Karen／明美 fork)**
-* Fixed audio on Windows 7 and above
-
-**Open Syobon Action RC 2**
-* First Windows release!
-* Dvorak keyboard support
-* Error messages more detailed and directed to stdout
-* Compiled code optimized for speed
-* Better initialization and de-initialization code, so you can be confident
- that all resources are freed.
-* Optional sound: The game will no longer crash if there is no audio device
- available, and all sound can be disabled with the -nosound parameter
-* Minor bugfixes here and there
-
-**Open Syobon Action RC 1**
-* Fixed incorrect "box" rendering (used to draw green pipes)
-* Fixed random crashing at certain parts (thanks to mekuso for the bug report)
-* Volumes now appropriately altered
-* Gamepad support added
-* Now uses original indexed PNGs, with original filenames (capital PNG)
-* Minor tweaks and optimizations
-
-**Open Syobon Action v0.9:**
-* Fixed incorrect character rendering, uses font very similar to the original game
- (sazanami-gothic.ttf rather than msgothic.ttf)
-* Changed encoding of the original readme and source code to UTF-8, so they can
- be viewed correctly with most software
-* Changed DOS newlines to Unix newlines in source and readme
-* Source code has been cleaned up with "indent", removed a few obsolete comments
-
-**Open Syobon Action v0.8:**
-* First release
+See [CHANGELOG.md](CHANGELOG.md)
