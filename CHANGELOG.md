@@ -2,6 +2,7 @@ Release Changelog
 -----------------
 
 **SyobonKZ V1 (in development)**
+* Format, separate, rename and do more improvements to the code for readability
 * Added some "+KZ Edition" text
 * Fixed missing Syobon Action 2 assets
 * Fix non-transparent sprites
