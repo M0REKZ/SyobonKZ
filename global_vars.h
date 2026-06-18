@@ -387,6 +387,7 @@ extern long stimeZ;
 #define PLUSKZ_EDITION_TEXT "+KZ Edition"
 
 extern bool HelpFlagHandled; // --help cli flag
+extern bool StartFullScreenFlag;
 
 enum ESyobonActionGame
 {

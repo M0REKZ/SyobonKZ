@@ -283,8 +283,17 @@ void parseArgs(int argc, char *argv[])
             printf("Options:\n");
             printf("    -h, --help               Shows this screen\n");
             printf("    -nosound, --nosound      Muted game\n");
+            printf("    --fullscreen             Start in full screen\n");
 
             HelpFlagHandled = true;
+        }
+
+        //Fullscreen
+        if(
+            !memcmp(argv[i], "--fullscreen", sizeof("--fullscreen"))
+        )
+        {
+            StartFullScreenFlag = true;
         }
     }
 }

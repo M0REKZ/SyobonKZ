@@ -2,6 +2,7 @@
 #include "DxLib.h"
 
 #include "crossplatform.h"
+#include "global_vars.h"
 
 #define SYOBON_COLOR_KEY(img) SDL_MapRGB(img, 9 * 16 + 9, 255, 255)
 
@@ -24,7 +25,7 @@ int DxLib_Init()
     if (!(screen =
               SDL_SetVideoMode(480 /*(int)fmax/100 */,
                                420 /*(int)fymax/100 */, 32,
-                               SDL_SWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE)))
+                               SDL_SWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE | (StartFullScreenFlag ? SDL_FULLSCREEN : 0))))
     {
         SDL_Quit();
         return -1;
