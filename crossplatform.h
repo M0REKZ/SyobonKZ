@@ -29,6 +29,9 @@
     void Empscripten_SetColorKey(SDL_Surface *pSurface, Uint32 Color);
     #define SDL_SetColorKey(surface, flags, color) Empscripten_SetColorKey(surface, color)
 
+    //+KZ: we must put WaitKey in a different place
+    #define SYOBON_WAIT_KEY_MSGBOX_FIX
+
 #else //Everything else
 
     #define wait(i) SDL_Delay(i)

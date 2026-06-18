@@ -382,7 +382,6 @@ extern std::string xs[31];
 //タイマー測定 (Timer measurement)
 //Open Syobon Action: Do with this what we did with fma
 extern long stimeZ;
-#define stime stimeZ
 
 //+KZ
 #define PLUSKZ_EDITION_TEXT "+KZ Edition"

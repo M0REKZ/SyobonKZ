@@ -19,7 +19,7 @@ void rpaint();
 //サブクラス
 //(ウエイト系
 //+KZ: wait() moved to crossplatform.h
-void wait2(long stime, long etime, int FLAME_TIME);
+void wait2(long starttime, long endtime, int FLAME_TIME);
 // @attention +KZ: int rand() is now int SyobonRand()
 int SyobonRand(int Rand);
 #define end() exit(0)

@@ -105,17 +105,19 @@ void rpaint()
 				tmsgy = 0;
 				tmsgtype = 3;
 				tmsgtm = 15 + 1;
+				#ifdef SYOBON_WAIT_KEY_MSGBOX_FIX
 				WaitKey();
+				#endif
 			}
 
 			else if (tmsgtype == 3)
 			{
 				xx[0] = 1200;
 				tmsgy += xx[0];
-				/*
-				if (tmsgtm == 15) //+KZ: WaitKey() works better above
+				#ifndef SYOBON_WAIT_KEY_MSGBOX_FIX
+				if (tmsgtm == 15) //+KZ: WaitKey() works better above for emscripten
 					WaitKey();
-				*/
+				#endif
 				if (tmsgtm == 1)
 				{
 					tmsgtm = 0;
@@ -236,7 +238,7 @@ void rpaint()
 void Mainprogram()
 {
 
-	stime = long(GetNowCount());
+	stimeZ = long(GetNowCount());
 
 	if (ending == 1)
 		SyobonState = ESyobonState::CREDITS;
@@ -470,17 +472,17 @@ void Mainprogram()
 		xx[0] = 60;
 	}
 	//+KZ: on emscripten FPS is done differently and this line is useless, check MainloopEmscripten()
-	wait2(stime, long(GetNowCount()), 1000 / xx[0]);
+	wait2(stimeZ, long(GetNowCount()), 1000 / xx[0]);
 
 	// wait(20);
 
 } // Mainprogram()
 
 // タイマー測定 (Timer measurement)
-void wait2(long stime, long etime, int FLAME_TIME)
+void wait2(long starttime, long endtime, int FLAME_TIME)
 {
-	if (etime - stime < FLAME_TIME)
-		wait(FLAME_TIME - (etime - stime));
+	if (endtime - starttime < FLAME_TIME)
+		wait(FLAME_TIME - (endtime - starttime));
 }
 
 // 乱数作成 (Random number generation)
