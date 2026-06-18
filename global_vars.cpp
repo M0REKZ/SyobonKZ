@@ -172,7 +172,7 @@ int fx = 0, fy = 0, fzx, fzy, scrollx, scrolly;
 //全体のポイント
 
 //: "fma" already exists, so call it something else and add a define
-int fmaZ = 0, fmb = 0;
+//int fmaZ = 0, fmb = 0;
 
 //強制スクロール
 int kscroll = 0;

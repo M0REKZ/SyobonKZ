@@ -124,20 +124,20 @@ void RenderBackground()
             // 51
             if (BackgroundType[t] == 100)
             {
-                DrawFormatString(xx[0] / 100 + fmaZ,
-                                 xx[1] / 100 + fmb,
+                DrawFormatString(xx[0] / 100,
+                                 xx[1] / 100,
                                  GetColor(255, 255, 255), "51");
             }
 
             if (BackgroundType[t] == 101)
-                DrawFormatString(xx[0] / 100 + fmaZ,
-                                 xx[1] / 100 + fmb,
+                DrawFormatString(xx[0] / 100,
+                                 xx[1] / 100,
                                  GetColor(255, 255,
                                           255),
                                  "ゲームクリアー");
             if (BackgroundType[t] == 102)
-                DrawFormatString(xx[0] / 100 + fmaZ,
-                                 xx[1] / 100 + fmb,
+                DrawFormatString(xx[0] / 100,
+                                 xx[1] / 100,
                                  GetColor(255, 255,
                                           255),
                                  "プレイしてくれてありがとー");

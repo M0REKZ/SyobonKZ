@@ -122,63 +122,63 @@ void RenderWalls()
             if (GroundType[t] == 0)
             {
                 setcolor(40, 200, 40);
-                fillrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb,
+                fillrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100,
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
-                drawrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb,
+                drawrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100,
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
             }
             // 土管
             if (GroundType[t] == 1)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb,
+                fillrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100,
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
                 setc0();
-                drawrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb,
+                drawrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100,
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
             }
             // 土管(下)
             if (GroundType[t] == 2)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb + 1,
+                fillrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100 + 1,
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
                 setc0();
-                drawline((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb,
-                         (GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb + GroundSizeY[t] / 100);
-                drawline((GroundX[t] - fx) / 100 + fmaZ +
+                drawline((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100,
+                         (GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
+                drawline((GroundX[t] - fx) / 100 +
                              GroundSizeX[t] / 100,
-                         (GroundY[t] - fy) / 100 + fmb,
-                         (GroundX[t] - fx) / 100 + fmaZ +
+                         (GroundY[t] - fy) / 100,
+                         (GroundX[t] - fx) / 100 +
                              GroundSizeX[t] / 100,
-                         (GroundY[t] - fy) / 100 + fmb + GroundSizeY[t] / 100);
+                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
             }
             // 土管(横)
             if (GroundType[t] == 5)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb + 1,
+                fillrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100 + 1,
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
                 setc0();
-                drawline((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb,
-                         (GroundX[t] - fx) / 100 + fmaZ +
+                drawline((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100,
+                         (GroundX[t] - fx) / 100 +
                              GroundSizeX[t] / 100,
-                         (GroundY[t] - fy) / 100 + fmb);
-                drawline((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb +
+                         (GroundY[t] - fy) / 100);
+                drawline((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100 +
                              GroundSizeY[t] / 100,
-                         (GroundX[t] - fx) / 100 + fmaZ +
+                         (GroundX[t] - fx) / 100 +
                              GroundSizeX[t] / 100,
-                         (GroundY[t] - fy) / 100 + fmb + GroundSizeY[t] / 100);
+                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
             }
             // 落ちてくるブロック (Falling blocks)
             if (GroundType[t] == 51)
@@ -189,9 +189,8 @@ void RenderWalls()
                     {
                         drawimage(Sliced_GFX[1][1],
                                   (GroundX[t] -
-                                   fx) / 100 +
-                                      fmaZ + 29 * t3,
-                                  (GroundY[t] - fy) / 100 + fmb);
+                                   fx) / 100 + 29 * t3,
+                                  (GroundY[t] - fy) / 100);
                     }
                 }
                 if (GroundSubType[t] == 1 || GroundSubType[t] == 2)
@@ -200,9 +199,8 @@ void RenderWalls()
                     {
                         drawimage(Sliced_GFX[31][1],
                                   (GroundX[t] -
-                                   fx) / 100 +
-                                      fmaZ + 29 * t3,
-                                  (GroundY[t] - fy) / 100 + fmb);
+                                   fx) / 100 + 29 * t3,
+                                  (GroundY[t] - fy) / 100);
                     }
                 }
                 if (GroundSubType[t] == 3 || GroundSubType[t] == 4)
@@ -215,12 +213,11 @@ void RenderWalls()
                                                 [1],
                                       (GroundX[t] -
                                        fx) /
-                                              100 +
-                                          fmaZ + 29 * t3,
+                                              100 + 29 * t3,
                                       (GroundY[t] -
                                        fy) /
                                               100 +
-                                          29 * t2 + fmb);
+                                          29 * t2);
                         }
                     }
                 }
@@ -231,9 +228,8 @@ void RenderWalls()
                     {
                         drawimage(Sliced_GFX[65][1],
                                   (GroundX[t] -
-                                   fx) / 100 +
-                                      fmaZ + 29 * t3,
-                                  (GroundY[t] - fy) / 100 + fmb);
+                                   fx) / 100 + 29 * t3,
+                                  (GroundY[t] - fy) / 100);
                     }
                 }
 
@@ -262,21 +258,18 @@ void RenderWalls()
                     {
                         drawimage(Sliced_GFX[5 + xx[29]][1],
                                   (GroundX[t] -
-                                   fx) / 100 +
-                                      fmaZ + 29 * t3,
-                                  (GroundY[t] - fy) / 100 + fmb);
+                                   fx) / 100 + 29 * t3,
+                                  (GroundY[t] - fy) / 100);
                         if (stagecolor != 4)
                         {
                             drawimage(Sliced_GFX[6 + xx[29]]
                                                 [1],
                                       (GroundX[t] -
                                        fx) /
-                                              100 +
-                                          fmaZ + 29 * t3,
+                                              100 + 29 * t3,
                                       (GroundY[t] -
                                        fy) /
-                                              100 +
-                                          fmb + 29);
+                                              100 + 29);
                         }
                         else
                         {
@@ -284,12 +277,10 @@ void RenderWalls()
                                                 [1],
                                       (GroundX[t] -
                                        fx) /
-                                              100 +
-                                          fmaZ + 29 * t3,
+                                              100 + 29 * t3,
                                       (GroundY[t] -
                                        fy) /
-                                              100 +
-                                          fmb + 29);
+                                              100 + 29);
                         }
                     }
                     if (GroundSubType[t] == 1)
@@ -300,12 +291,10 @@ void RenderWalls()
                                                 [1],
                                       (GroundX[t] -
                                        fx) /
-                                              100 +
-                                          fmaZ + 29 * t3,
+                                              100 + 29 * t3,
                                       (GroundY[t] -
                                        fy) /
-                                              100 +
-                                          fmb + 29 * t2);
+                                              100 + 29 * t2);
                         }
                     }
 
@@ -317,12 +306,10 @@ void RenderWalls()
                                                 [1],
                                       (GroundX[t] -
                                        fx) /
-                                              100 +
-                                          fmaZ + 29 * t3,
+                                              100 + 29 * t3,
                                       (GroundY[t] -
                                        fy) /
-                                              100 +
-                                          fmb + 29 * t2);
+                                              100 + 29 * t2);
                         }
                     }
                 }
@@ -336,10 +323,8 @@ void RenderWalls()
                         setc0();
                     if (stagecolor == 2 || stagecolor == 4)
                         setc1();
-                    drawrect((GroundX[t] - fx) / 100 +
-                                 fmaZ,
-                             (GroundY[t] - fy) / 100 +
-                                 fmb,
+                    drawrect((GroundX[t] - fx) / 100,
+                             (GroundY[t] - fy) / 100,
                              GroundSizeX[t] / 100, GroundSizeY[t] / 100);
                 }
             }
@@ -381,39 +366,39 @@ void RenderOverwritePipe()
             if (GroundType[t] == 40)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb + 1,
+                fillrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100 + 1,
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
                 setc0();
-                drawrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb + 1,
+                drawrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100 + 1,
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
             }
             // とぶ土管
             if (GroundType[t] == 50)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100 + fmaZ + 5,
-                         (GroundY[t] - fy) / 100 + fmb + 30,
+                fillrect((GroundX[t] - fx) / 100 + 5,
+                         (GroundY[t] - fy) / 100 + 30,
                          50, GroundSizeY[t] / 100 - 30);
                 setc0();
-                drawline((GroundX[t] - fx) / 100 + 5 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb + 30,
-                         (GroundX[t] - fx) / 100 + fmaZ + 5,
-                         (GroundY[t] - fy) / 100 + fmb + GroundSizeY[t] / 100);
-                drawline((GroundX[t] - fx) / 100 + 5 + fmaZ +
+                drawline((GroundX[t] - fx) / 100 + 5,
+                         (GroundY[t] - fy) / 100 + 30,
+                         (GroundX[t] - fx) / 100 + 5,
+                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
+                drawline((GroundX[t] - fx) / 100 + 5 +
                              50,
-                         (GroundY[t] - fy) / 100 + fmb + 30,
-                         (GroundX[t] - fx) / 100 + fmaZ + 50 +
+                         (GroundY[t] - fy) / 100 + 30,
+                         (GroundX[t] - fx) / 100 + 50 +
                              5,
-                         (GroundY[t] - fy) / 100 + fmb + GroundSizeY[t] / 100);
+                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
 
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb + 1, 60, 30);
+                fillrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100 + 1, 60, 30);
                 setc0();
-                drawrect((GroundX[t] - fx) / 100 + fmaZ,
-                         (GroundY[t] - fy) / 100 + fmb + 1, 60, 30);
+                drawrect((GroundX[t] - fx) / 100,
+                         (GroundY[t] - fy) / 100 + 1, 60, 30);
             }
             // 地面(ブロック)
             if (GroundType[t] == 200)
@@ -424,9 +409,8 @@ void RenderOverwritePipe()
                     {
                         drawimage(Sliced_GFX[65][1],
                                   (GroundX[t] -
-                                   fx) / 100 +
-                                      fmaZ + 29 * t3,
-                                  (GroundY[t] - fy) / 100 + 29 * t2 + fmb);
+                                   fx) / 100 + 29 * t3,
+                                  (GroundY[t] - fy) / 100 + 29 * t2);
                     }
                 }
             }

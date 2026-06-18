@@ -353,8 +353,9 @@ extern int fx, fy, fzx, fzy, scrollx, scrolly;
 
 //Open Syobon Action: "fma" already exists, so call it something else and add a define
 //+KZ: done
-extern int fmaZ;
-extern int fmb;
+//+KZ later: the values are always 0 and never modified, so they are useless
+//extern int fmaZ;
+//extern int fmb;
 
 //強制スクロール (Force Scroll)
 extern int kscroll;
