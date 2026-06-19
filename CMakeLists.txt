@@ -49,6 +49,22 @@ if(SYOBONKZ_USE_SDL3)
     find_package(SDL3_mixer REQUIRED)
     find_package(SDL3_ttf REQUIRED)
 
+    # we save SDL3::Headers in SDL3_INCLUDE_DIR to pass it into SDL3_gfx
+    get_target_property(SDL3_INCLUDE_DIR SDL3::Headers INTERFACE_INCLUDE_DIRECTORIES)
+
+    # need to use SDL3_gfx
+    ExternalProject_Add(SDL3_gfx
+        SOURCE_DIR ${PROJECT_SOURCE_DIR}/lib/SDL3_gfx
+        PREFIX ${CMAKE_INSTALL_PREFIX}
+        CMAKE_ARGS
+            -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
+            -DSDL3_INCLUDE_DIR=${SDL3_INCLUDE_DIR}
+            -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+        BUILD_COMMAND ${CMAKE_COMMAND} --build .
+        INSTALL_COMMAND ${CMAKE_COMMAND} --install .
+    )
+
+
 elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
 
     # search SDL 1.2 in the system
@@ -147,6 +163,7 @@ if(SYOBONKZ_USE_SDL3)
         SDL3_image::Headers
         SDL3_mixer::Headers
         SDL3_ttf::Headers
+        ${CMAKE_BINARY_DIR}/include/
     )
 
     target_link_libraries(${EXECUTABLE_NAME} PRIVATE
@@ -154,6 +171,7 @@ if(SYOBONKZ_USE_SDL3)
         SDL3_image::SDL3_image
         SDL3_mixer::SDL3_mixer
         SDL3_ttf::SDL3_ttf
+        ${CMAKE_BINARY_DIR}/lib/libSDL3_gfx${CMAKE_SHARED_LIBRARY_SUFFIX}
     )
 elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
 

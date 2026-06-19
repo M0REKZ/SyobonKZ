@@ -13,3 +13,6 @@
 	path = lib/SDL_image
 	url = https://github.com/libsdl-org/SDL_image.git
 	branch = SDL-1.2
+[submodule "lib/SDL3_gfx"]
+	path = lib/SDL3_gfx
+	url = https://github.com/sabdul-khabir/SDL3_gfx.git

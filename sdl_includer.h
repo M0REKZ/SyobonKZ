@@ -5,9 +5,12 @@
 	#include <SDL3_image/SDL_image.h>
 	#include <SDL3_mixer/SDL_mixer.h>
 	#include <SDL3_ttf/SDL_ttf.h>
+    #include <SDL3_gfx/SDL3_rotozoom.h>
+    #include <SDL3_gfx/SDL3_gfxPrimitives.h>
 
     extern SDL_Window * pWindow;
     extern MIX_Track * pBGMTrack;
+    extern SDL_Renderer * pRenderer;
     extern MIX_Mixer * pMixer;
 
     #define SyobonKZSDLInit(flags) (SDL_Init(flags) == false ? -1 : 0)
@@ -27,7 +30,9 @@
         pBGMTrack = MIX_CreateTrack(pMixer);    \
         if(MIX_SetTrackAudio(pBGMTrack, chunk))    \
         {   \
-            MIX_PlayTrack(pBGMTrack, 0);    \
+            SDL_PropertiesID props = SDL_CreateProperties();    \
+            SDL_SetNumberProperty(props, MIX_PROP_PLAY_LOOPS_NUMBER, loops);   \
+            MIX_PlayTrack(pBGMTrack, props);    \
         }   \
     }
     #define SyobonKZHaltChannel(channel) /*not implemented*/
@@ -42,11 +47,11 @@
     #define SyobonKZAudioQuit() MIX_Quit()
 
     #define SyobonKZFillRect(surface, rect, color) SDL_FillSurfaceRect(surface, rect, color)
-    #define SyobonKZFilledEllipseColor(surface, x, y, rx, ry, color) /*not implemented*/
-    #define SyobonKZEllipseColor(surface, x, y, rx, ry, color) /*not implemented*/
-    #define SyobonKZBoxColor(surface, x, y, w, h, color) {SDL_Rect temp = {x,y,w,h}; SyobonKZFillRect(surface, &temp, color);}
-    #define SyobonKZRectangleColor(surface, x, y, w, h, color) /*not implemented*/
-    #define SyobonKZLineColor(surface, x, y, x2, y2, color) /*not implemented*/
+    #define SyobonKZFilledEllipseColor(surface, x, y, rx, ry, color) filledEllipseColor(pRenderer, x, y, rx, ry, color);
+    #define SyobonKZEllipseColor(surface, x, y, rx, ry, color) ellipseColor(pRenderer, x, y, rx, ry, color);
+    #define SyobonKZBoxColor(surface, x, y, x2, y2, color) boxColor(pRenderer, x, y, x2, y2, color);
+    #define SyobonKZRectangleColor(surface, x, y, x2, y2, color) rectangleColor(pRenderer, x, y, x2, y2, color);
+    #define SyobonKZLineColor(surface, x, y, x2, y2, color) lineColor(pRenderer, x, y, x2, y2, color);
     #define SyobonKZPixelColor(surface, x, y, color) SDL_WriteSurfacePixel(surface, x, y, (color >> 8 * 3) & 0xFF, (color >> 8 * 2) & 0xFF, (color >> 8) & 0xFF, color & 0xFF)
 
     #define SyobonKZLoadImage(image) SDL_LoadSurface(image)
@@ -91,7 +96,7 @@
     #define SYOBON_COLOR_KEY(img) SDL_MapRGB(SDL_GetPixelFormatDetails(img), nullptr, 9 * 16 + 9, 255, 255)
 
     //DxLib.h
-    #define GetColor(r, g, b) SDL_MapSurfaceRGB(screen, r, g, b)
+    #define GetColor(r, g, b) SDL_MapSurfaceRGBA(screen, r, g, b, 0xff)
     #define SyobonKZScreenFlip(screensurface) {  \
         SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);    \
         SDL_Rect srcrect, destrect;  \
@@ -156,8 +161,8 @@
     #define SyobonKZFillRect(surface, rect, color) SDL_FillRect(surface, rect, color)
     #define SyobonKZFilledEllipseColor(surface, x, y, rx, ry, color) filledEllipseColor(surface, x, y, rx, ry, color)
     #define SyobonKZEllipseColor(surface, x, y, rx, ry, color) ellipseColor(surface, x, y, rx, ry, color)
-    #define SyobonKZBoxColor(surface, x, y, w, h, color) boxColor(surface, x, y, w, h, color)
-    #define SyobonKZRectangleColor(surface, x, y, w, h, color) rectangleColor(surface, x, y, w, h, color)
+    #define SyobonKZBoxColor(surface, x, y, x2, y2, color) boxColor(surface, x, y, x2, y2, color)
+    #define SyobonKZRectangleColor(surface, x, y, x2, y2, color) rectangleColor(surface, x, y, x2, y2, color)
     #define SyobonKZLineColor(surface, x, y, x2, y2, color) lineColor(surface, x, y, x2, y2, color) 
     #define SyobonKZPixelColor(screen, x, y, color) pixelColor(screen, x, y, color)
 

@@ -5,6 +5,7 @@
 #ifdef SYOBONKZ_USE_SDL3
 
     SDL_Window * pWindow = nullptr;
+    SDL_Renderer * pRenderer = nullptr;
     MIX_Track * pBGMTrack = nullptr;
     MIX_Mixer * pMixer = nullptr;
 
@@ -66,6 +67,8 @@ SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
 
         SDL_Surface * pWindowSurface = SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGBA8888);
 
+        //SDL3_gfx needs a renderer to draw on
+        pRenderer = SDL_CreateSoftwareRenderer(pWindowSurface);
         return pWindowSurface;
     #endif
 }

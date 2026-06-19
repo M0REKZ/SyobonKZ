@@ -544,12 +544,6 @@ void setcolor(int red, int green, int blue)
 // 色かえ(黒)(白) (Color change (black) (white))
 // +KZ: using macros for setc0() and setc1() now
 
-// 点 (Point)
-void drawpixel(int a, int b)
-{
-	SyobonKZPixelColor(screen, a, b, gfxcolor);
-}
-
 // 線 (Line)
 void drawline(int a, int b, int c, int d)
 {

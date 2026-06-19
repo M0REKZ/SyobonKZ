@@ -29,7 +29,7 @@ void setfont(int a);
 void setcolor(int red, int green, int blue);
 #define setc0() setcolor(0, 0, 0)
 #define setc1() setcolor(255, 255, 255)
-void drawpixel(int a, int b);
+//void drawpixel(int a, int b); //+KZ: unused
 void drawline(int a, int b, int c, int d);
 void drawrect(int a, int b, int c, int d);
 void fillrect(int a, int b, int c, int d);
