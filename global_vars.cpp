@@ -61,8 +61,8 @@ SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 
 int mirror;
 
-Mix_Music *Music[7]; //+KZ increased for Syobon Action 2 music
-Mix_Chunk *Sounds[19];
+SyobonKZMusic *Music[7]; //+KZ increased for Syobon Action 2 music
+SyobonKZChunk *Sounds[19];
 
 
 

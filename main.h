@@ -48,8 +48,8 @@ void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f);
 //void setno(); //+KZ: function does not exist
 
 // @attention +KZ: void ot() is now void PlaySound()
-void PlaySound(Mix_Chunk * x);
-void bgmchange(Mix_Music * x);
+void PlaySound(SyobonKZChunk * x);
+void bgmchange(SyobonKZMusic * x);
 
 //文字 (Letter)
 //+KZ: Draws a std::string using DrawString()

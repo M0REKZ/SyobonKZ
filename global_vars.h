@@ -1,6 +1,3 @@
-#include <SDL_stdinc.h>
-#include <SDL_video.h>
-#include <SDL_mixer.h>
 #include <string>
 #include "DxLib.h"
 
@@ -84,9 +81,9 @@ extern int mirror;
 
 //+KZ increased it for Syobon Action 2 music
 // @attention +KZ: Mix_Music *otom is now Mix_Music *Music
-extern Mix_Music *Music[7];
+extern SyobonKZMusic *Music[7];
 // @attention +KZ: Mix_Chunk *oto is now Mix_Chunk *Sounds
-extern Mix_Chunk *Sounds[19];
+extern SyobonKZChunk *Sounds[19];
 
 //1-ステージ (1-Stage)
 //10-ステージ前 (10-Before Stage)
