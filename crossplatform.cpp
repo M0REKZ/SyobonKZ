@@ -39,7 +39,7 @@ void Empscripten_SetColorKey(SDL_Surface *pSurface, Uint32 Color)
 
     // Pixels are weird in emscripten for some reason and does not match exact value
     //(or it is just me being bad at Emscripten SDL)
-    int Tolerance = 1;
+    int Tolerance = 2;
 
     size_t max = pSurface->w * pSurface->h;
     for (int i = 0; i < max; ++i)
