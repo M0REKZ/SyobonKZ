@@ -1,0 +1,68 @@
+plugins {
+     id 'com.android.application'
+}
+
+def buildWithCMake = true;
+
+android {
+    buildFeatures {
+        prefab true
+    }
+    namespace = "org.libsdl.app"
+    compileSdkVersion 35
+    ndkVersion = "28.2.13676358"
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 35
+        versionCode 1
+        versionName "1.0"
+        externalNativeBuild {
+            ndkBuild {
+                arguments "APP_PLATFORM=android-21"
+                // abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+                abiFilters 'arm64-v8a'
+            }
+            cmake {
+                arguments "-DSYOBONKZ_USE_SDL3=ON", "-DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF", "-DANDROID_PLATFORM=android-21", "-DANDROID_STL=c++_static"
+                // abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+                abiFilters 'arm64-v8a'
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    applicationVariants.all { variant ->
+        tasks["merge${variant.name.capitalize()}Assets"]
+            .dependsOn("externalNativeBuild${variant.name.capitalize()}")
+    }
+    if (!project.hasProperty('EXCLUDE_NATIVE_LIBS')) {
+        sourceSets.main {
+            jniLibs.srcDir 'libs'
+            assets.srcDirs = ['../../res', '../../SE', '../../BGM']
+        }
+        externalNativeBuild {
+            if (buildWithCMake) {
+                cmake {
+                    path '../../CMakeLists.txt'
+                }
+            } else {
+                ndkBuild {
+                    path 'jni/Android.mk'
+                }
+            }
+        }
+
+    }
+    lint {
+        abortOnError = false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/SDL3_image-3.4.4.aar', 'libs/SDL3_mixer-3.2.4.aar', 'libs/SDL3_ttf-3.2.2.aar')
+}

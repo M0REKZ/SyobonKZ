@@ -3,7 +3,11 @@ cmake_minimum_required(VERSION 3.20)
 project(SyobonKZ)
 
 # Set the name of the executable
-set(EXECUTABLE_NAME SyobonAction)
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
+    set(EXECUTABLE_NAME main)
+else()
+    set(EXECUTABLE_NAME SyobonAction)
+endif()
 
 # options
 option(SYOBONKZ_BUILD_SDL1_EXTENSIONS "Build SDL_image, SDL_mixer, SDL_gfx and SDL_ttf (requires submodules being cloned)" ON)
@@ -53,16 +57,7 @@ if(SYOBONKZ_USE_SDL3)
     get_target_property(SDL3_INCLUDE_DIR SDL3::Headers INTERFACE_INCLUDE_DIRECTORIES)
 
     # need to use SDL3_gfx
-    ExternalProject_Add(SDL3_gfx
-        SOURCE_DIR ${PROJECT_SOURCE_DIR}/lib/SDL3_gfx
-        PREFIX ${CMAKE_INSTALL_PREFIX}
-        CMAKE_ARGS
-            -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
-            -DSDL3_INCLUDE_DIR=${SDL3_INCLUDE_DIR}
-            -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-        BUILD_COMMAND ${CMAKE_COMMAND} --build .
-        INSTALL_COMMAND ${CMAKE_COMMAND} --install .
-    )
+    add_subdirectory(${PROJECT_SOURCE_DIR}/lib/SDL3_gfx)
 
 
 elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
@@ -117,7 +112,7 @@ else()
     endif()
 endif()
 
-add_executable(${EXECUTABLE_NAME}
+set(SOURCE_FILES_SYOBON
     main.h
     main.cpp
     loadg.cpp
@@ -149,6 +144,12 @@ add_executable(${EXECUTABLE_NAME}
     sdl_includer.cpp
 )
 
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
+    add_library(${EXECUTABLE_NAME} SHARED ${SOURCE_FILES_SYOBON})
+else()
+    add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES_SYOBON})
+endif()
+
 #html
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
     target_link_options(${EXECUTABLE_NAME} PRIVATE
@@ -168,7 +169,9 @@ if(SYOBONKZ_USE_SDL3)
         SDL3_image::Headers
         SDL3_mixer::Headers
         SDL3_ttf::Headers
+        SDL3_gfx::Headers
         ${CMAKE_BINARY_DIR}/include/
+        lib/
     )
 
     target_link_libraries(${EXECUTABLE_NAME} PRIVATE
@@ -176,7 +179,7 @@ if(SYOBONKZ_USE_SDL3)
         SDL3_image::SDL3_image
         SDL3_mixer::SDL3_mixer
         SDL3_ttf::SDL3_ttf
-        ${CMAKE_BINARY_DIR}/lib/libSDL3_gfx${CMAKE_SHARED_LIBRARY_SUFFIX}
+        SDL3_gfx_Shared
     )
 elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
 
