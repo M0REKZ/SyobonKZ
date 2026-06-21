@@ -213,7 +213,7 @@
     #define SYOBON_COLOR_KEY(img) SDL_MapRGB(img, 9 * 16 + 9, 255, 255)
 
     //Fix gfxcolor from main.cpp
-    #define GetGFXColor(r, g, b) (r << 8 * 3 | g << 8 * 2 | b << 8 | 0xFF)
+    #define GetGFXColor(r, g, b) ((Uint32)(r) << 24 | (Uint32)(g) << 16 | (Uint32)(b) << 8 | (Uint32)0xFF)
 
     //DxLib.h
     #define GetColor(r, g, b) SDL_MapRGB(screen->format, r, g, b)
