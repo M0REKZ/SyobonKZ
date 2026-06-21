@@ -13,6 +13,11 @@
     {
         SDL_Surface * zoomed = SDL_CreateSurface(image->w, image->h, SDL_PIXELFORMAT_RGBA8888);
 
+        if(!zoomed)
+        {
+            fprintf(stderr, "Error: unable to zoom surface %p: %s\n", image, SDL_GetError());
+        }
+
         SDL_Rect srcrect;
         srcrect.x = srcrect.y = 0;
         srcrect.w = image->w;
@@ -63,13 +68,26 @@ SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
             newflags = SDL_WINDOW_FULLSCREEN;
 
         pWindow = SDL_CreateWindow("", width, height, newflags);
-        //pRenderer = SDL_GetRenderer(pWindow);
+        
+        if(!pWindow)
+            return nullptr;
+
         SDL_Surface *pRealWindowSurface = SDL_GetWindowSurface(pWindow);
+
+        if(!pRealWindowSurface)
+            return nullptr;
 
         SDL_Surface * pWindowSurface = SDL_CreateSurface(width, height, pRealWindowSurface->format);
 
+        if(!pWindowSurface)
+            return nullptr;
+
         //SDL3_gfx needs a renderer to draw on
         pRenderer = SDL_CreateSoftwareRenderer(pWindowSurface);
+
+        if(!pRenderer)
+            return nullptr;
+
         return pWindowSurface;
     #endif
 }
