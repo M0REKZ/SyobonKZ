@@ -64,8 +64,9 @@ SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
 
         pWindow = SDL_CreateWindow("", width, height, newflags);
         //pRenderer = SDL_GetRenderer(pWindow);
+        SDL_Surface *pRealWindowSurface = SDL_GetWindowSurface(pWindow);
 
-        SDL_Surface * pWindowSurface = SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGBA8888);
+        SDL_Surface * pWindowSurface = SDL_CreateSurface(width, height, pRealWindowSurface->format);
 
         //SDL3_gfx needs a renderer to draw on
         pRenderer = SDL_CreateSoftwareRenderer(pWindowSurface);
