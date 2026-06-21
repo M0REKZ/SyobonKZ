@@ -156,6 +156,11 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
     )
 endif()
 
+#load libraries from lib folder
+set_target_properties(${EXECUTABLE_NAME} PROPERTIES
+    BUILD_RPATH "@loader_path/lib"
+)
+
 if(SYOBONKZ_USE_SDL3)
 
     target_include_directories(${EXECUTABLE_NAME} PRIVATE

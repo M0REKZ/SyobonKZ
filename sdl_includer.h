@@ -67,8 +67,8 @@
     SDL_Surface * SyobonKZZoomSurface(SDL_Surface * image, double zoomx, double zoomy, int smooth);
     #define SyobonKZSetColorKey(image, key) SDL_SetSurfaceColorKey(image, true, key)
 
-    #define SyobonKZCreateSurface(flags, width, height, BitsPerPixel, Rmask, Bmask, Gmask, Amask) \
-    SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGBA8888)
+    #define SyobonKZCreateSurface(flags, width, height, pixelformat) \
+    SDL_CreateSurface(width, height, pixelformat)
 
     #define SyobonKZSetWindowTitle(title, iconname) SDL_SetWindowTitle(pWindow, title)
 
@@ -96,7 +96,7 @@
     #define SYOBON_COLOR_KEY(img) SDL_MapRGB(SDL_GetPixelFormatDetails(img), nullptr, 9 * 16 + 9, 255, 255)
 
     //DxLib.h
-    #define GetColor(r, g, b) SDL_MapSurfaceRGBA(screen, r, g, b, 0xff)
+    #define GetColor(r, g, b) SDL_MapSurfaceRGB(screen, r, g, b)
     #define SyobonKZScreenFlip(screensurface) {  \
         SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);    \
         SDL_Rect srcrect, destrect;  \
@@ -178,8 +178,8 @@
     #define SyobonKZZoomSurface(image, zoomx, zoomy, smooth) zoomSurface(image, zoomx, zoomy, smooth)
     #define SyobonKZSetColorKey(image, key) SDL_SetColorKey(image, SDL_SRCCOLORKEY, key)
 
-    #define SyobonKZCreateSurface(flags, width, height, BitsPerPixel, Rmask, Bmask, Gmask, Amask) \
-    SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, BitsPerPixel, Rmask, Bmask, Gmask, Amask)
+    #define SyobonKZCreateSurface(flags, width, height, pixelformat) \
+    SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, pixelformat->BitsPerPixel, pixelformat->Rmask, pixelformat->Bmask, pixelformat->Gmask, pixelformat->Amask)
     
     #define SyobonKZSetWindowTitle(title, iconname) SDL_WM_SetCaption(title, iconname)
 
