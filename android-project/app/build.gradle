@@ -8,7 +8,7 @@ android {
     buildFeatures {
         prefab true
     }
-    namespace = "org.libsdl.app"
+    namespace = "io.github.m0rekz.syobonkz"
     compileSdkVersion 35
     ndkVersion = "28.2.13676358"
     defaultConfig {
@@ -31,6 +31,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("debug")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -42,7 +43,7 @@ android {
     if (!project.hasProperty('EXCLUDE_NATIVE_LIBS')) {
         sourceSets.main {
             jniLibs.srcDir 'libs'
-            assets.srcDirs = ['../../res', '../../SE', '../../BGM']
+            assets.srcDirs = ['../../data']
         }
         externalNativeBuild {
             if (buildWithCMake) {
@@ -64,5 +65,5 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('libs/SDL3_image-3.4.4.aar', 'libs/SDL3_mixer-3.2.4.aar', 'libs/SDL3_ttf-3.2.2.aar')
+    implementation files('libs/SDL3-3.4.10.aar', 'libs/SDL3_image-3.4.4.aar', 'libs/SDL3_mixer-3.2.4.aar', 'libs/SDL3_ttf-3.2.2.aar')
 }
