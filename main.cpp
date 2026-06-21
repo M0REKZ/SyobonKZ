@@ -235,7 +235,7 @@ void rpaint()
 		setcolor(0, 0, 0);
 		str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
 	}
-	ScreenFlip();
+	SyobonKZScreenFlip(screen);
 
 } // rpaint()
 
@@ -502,21 +502,21 @@ void deinit()
 	setc0();
 	FillScreen();
 	DrawString(200, 200, "EXITING...", GetColor(255, 255, 255));
-	SDL_Flip(screen);
+	SyobonKZScreenFlip(screen);
 
 	// SURFACES
 	for (t = 0; t < 51; t++)
-		SDL_FreeSurface(Main_GFX[t]);
+		SyobonKZFreeImage(Main_GFX[t]);
 	for (int i = 0; i < 161; i++)
 		for (int j = 0; j < 8; j++)
-			SDL_FreeSurface(Sliced_GFX[i][j]);
+			SyobonKZFreeImage(Sliced_GFX[i][j]);
 	//--
 
 	// SOUNDS
 	for (int i = 1; i < 6; i++)
-		Mix_FreeMusic(Music[i]);
+		SyobonKZFreeMusic(Music[i]);
 	for (int i = 1; i < 19; i++)
-		Mix_FreeChunk(Sounds[i]);
+		SyobonKZFreeChunk(Sounds[i]);
 	//--
 
 	// Font
@@ -524,12 +524,12 @@ void deinit()
 		TTF_CloseFont(font[i]);
 
 	// Joystick
-	SDL_JoystickClose(joystick);
+	SyobonKZJoystickClose(joystick);
 
 	// Close libraries
-	IMG_Quit();
+	SyobonKZImageQuit();
 	TTF_Quit();
-	Mix_Quit();
+	SyobonKZAudioQuit();
 	SDL_Quit();
 }
 // 画像関係 (Image related)
@@ -538,51 +538,45 @@ void deinit()
 void setcolor(int red, int green, int blue)
 {
 	color = GetColor(red, green, blue);
-	gfxcolor = red << 8 * 3 | green << 8 * 2 | blue << 8 | 0xFF;
+	gfxcolor = GetGFXColor(red, green, blue);
 }
 
 // 色かえ(黒)(白) (Color change (black) (white))
 // +KZ: using macros for setc0() and setc1() now
 
-// 点 (Point)
-void drawpixel(int a, int b)
-{
-	pixelColor(screen, a, b, gfxcolor);
-}
-
 // 線 (Line)
 void drawline(int a, int b, int c, int d)
 {
-	lineColor(screen, a, b, c, d, gfxcolor);
+	SyobonKZLineColor(screen, a, b, c, d, gfxcolor);
 }
 
 // 四角形(塗り無し) (Rectangle (unfilled))
 void drawrect(int a, int b, int c, int d)
 {
-	rectangleColor(screen, a, b, a + c - 1, b + d - 1, gfxcolor);
+	SyobonKZRectangleColor(screen, a, b, a + c - 1, b + d - 1, gfxcolor);
 }
 
 // 四角形(塗り有り) (Rectangle (with fill))
 void fillrect(int a, int b, int c, int d)
 {
-	boxColor(screen, a, b, a + c - 1, b + d - 1, gfxcolor);
+	SyobonKZBoxColor(screen, a, b, a + c - 1, b + d - 1, gfxcolor);
 }
 
 // 円(塗り無し) (Circle (unfilled))
 void drawarc(int a, int b, int c, int d)
 {
-	ellipseColor(screen, a, b, c, d, gfxcolor);
+	SyobonKZEllipseColor(screen, a, b, c, d, gfxcolor);
 }
 
 // 円(塗り有り) (Circle (filled))
 void fillarc(int a, int b, int c, int d)
 {
-	filledEllipseColor(screen, a, b, c, d, gfxcolor);
+	SyobonKZFilledEllipseColor(screen, a, b, c, d, gfxcolor);
 }
 
 void FillScreen()
 {
-	SDL_FillRect(screen, 0, color);
+	SyobonKZFillRect(screen, 0, color);
 }
 
 // 画像の読み込み (Image loading)
@@ -605,7 +599,7 @@ void drawimage(SDL_Surface *mx, int a, int b, int c, int d, int e, int f)
 		DrawGraph(a, b, m, TRUE);
 	if (mirror == 1)
 		DrawTurnGraph(a, b, m, TRUE);
-	SDL_FreeSurface(m);
+	SyobonKZFreeImage(m);
 }
 
 /*
@@ -667,7 +661,7 @@ void setfont(int a)
 }
 
 // 音楽再生 (Music playback)
-void PlaySound(Mix_Chunk *x)
+void PlaySound(SyobonKZChunk *x)
 {
 	PlaySoundMem(x, DX_PLAYTYPE_BACK);
 }
@@ -675,17 +669,17 @@ void PlaySound(Mix_Chunk *x)
 //+KZ: stacecls, stage and stagep moved to levels.cpp
 
 // BGM変更 (Change background music)
-void bgmchange(Mix_Music *x)
+void bgmchange(SyobonKZMusic *x)
 {
-	Mix_HaltMusic();
+	SyobonKZHaltMusic();
 	// Music[0]=0;
 	Music[0] = x;
-	Mix_PlayMusic(Music[0], -1);
-	;
+	SyobonKZPlayMusic(Music[0], -1);
+
 	if (x == Music[2])
-		Mix_VolumeMusic(MIX_MAX_VOLUME * 40 / 100);
+		SyobonKZVolumeMusic(SYOBONKZ_MAX_VOLUME * 40 / 100);
 	else
-		Mix_VolumeMusic(MIX_MAX_VOLUME * 50 / 100);
+		SyobonKZVolumeMusic(SYOBONKZ_MAX_VOLUME * 50 / 100);
 } // bgmchange()
 
 // ブロック出現 (Block appears)

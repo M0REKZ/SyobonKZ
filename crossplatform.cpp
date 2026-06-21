@@ -96,10 +96,11 @@ void MainLoop()
 byte WaitKey()
 {
     SDL_Event event;
-    while (true) {
-	while (SDL_PollEvent(&event))
-	    if (event.type == SDL_KEYDOWN)
-		return event.key.keysym.sym;
+    while (true)
+    {
+        while (SDL_PollEvent(&event))
+            if (event.type == SYOBONKZ_EVENT_KEYDOWN)
+                return SYOBONKZ_KEY_EVENT_SDL_ALIAS;
     }
 }
 

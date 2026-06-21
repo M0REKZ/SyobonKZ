@@ -7,6 +7,19 @@ set(EXECUTABLE_NAME SyobonAction)
 
 # options
 option(SYOBONKZ_BUILD_SDL1_EXTENSIONS "Build SDL_image, SDL_mixer, SDL_gfx and SDL_ttf (requires submodules being cloned)" ON)
+option(SYOBONKZ_USE_SDL3 "Use SDL3, SDL3_image, SDL3_mixer and SDL3_ttf instead of SDL 1.2 counterparts" OFF)
+
+# SDL3 error checking
+if(SYOBONKZ_USE_SDL3)
+    add_compile_definitions(SYOBONKZ_USE_SDL3=1)
+    if(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
+        message( FATAL_ERROR "SYOBONKZ_BUILD_SDL1_EXTENSIONS can not be set with SYOBONKZ_USE_SDL3")
+    endif()
+
+    if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+        message( FATAL_ERROR "SYOBONKZ_USE_SDL3 is unsupported with Emscripten")
+    endif()
+endif()
 
 # html
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
@@ -29,7 +42,30 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 # prevent installing to system directories. 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE INTERNAL "")
 
-if(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
+if(SYOBONKZ_USE_SDL3)
+
+    find_package(SDL3 REQUIRED)
+    find_package(SDL3_image REQUIRED)
+    find_package(SDL3_mixer REQUIRED)
+    find_package(SDL3_ttf REQUIRED)
+
+    # we save SDL3::Headers in SDL3_INCLUDE_DIR to pass it into SDL3_gfx
+    get_target_property(SDL3_INCLUDE_DIR SDL3::Headers INTERFACE_INCLUDE_DIRECTORIES)
+
+    # need to use SDL3_gfx
+    ExternalProject_Add(SDL3_gfx
+        SOURCE_DIR ${PROJECT_SOURCE_DIR}/lib/SDL3_gfx
+        PREFIX ${CMAKE_INSTALL_PREFIX}
+        CMAKE_ARGS
+            -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
+            -DSDL3_INCLUDE_DIR=${SDL3_INCLUDE_DIR}
+            -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+        BUILD_COMMAND ${CMAKE_COMMAND} --build .
+        INSTALL_COMMAND ${CMAKE_COMMAND} --install .
+    )
+
+
+elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
 
     # search SDL 1.2 in the system
     # this allows choosing to use:
@@ -107,6 +143,10 @@ add_executable(${EXECUTABLE_NAME}
     # a thing filled with macros and preprocessor checks
     crossplatform.h
     crossplatform.cpp
+
+    # for different sdl versions
+    sdl_includer.h
+    sdl_includer.cpp
 )
 
 #html
@@ -116,7 +156,29 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
     )
 endif()
 
-if(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
+#load libraries from lib folder
+set_target_properties(${EXECUTABLE_NAME} PROPERTIES
+    BUILD_RPATH "@loader_path/lib"
+)
+
+if(SYOBONKZ_USE_SDL3)
+
+    target_include_directories(${EXECUTABLE_NAME} PRIVATE
+        SDL3::Headers
+        SDL3_image::Headers
+        SDL3_mixer::Headers
+        SDL3_ttf::Headers
+        ${CMAKE_BINARY_DIR}/include/
+    )
+
+    target_link_libraries(${EXECUTABLE_NAME} PRIVATE
+        SDL3::SDL3
+        SDL3_image::SDL3_image
+        SDL3_mixer::SDL3_mixer
+        SDL3_ttf::SDL3_ttf
+        ${CMAKE_BINARY_DIR}/lib/libSDL3_gfx${CMAKE_SHARED_LIBRARY_SUFFIX}
+    )
+elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
 
     target_include_directories(${EXECUTABLE_NAME} PRIVATE
         ${SDL_INCLUDE_DIRS}

@@ -4,11 +4,36 @@
 #include "crossplatform.h"
 #include "global_vars.h"
 
-#define SYOBON_COLOR_KEY(img) SDL_MapRGB(img, 9 * 16 + 9, 255, 255)
-
 SDL_Joystick *joystick;
 
-bool keysHeld[SDLK_LAST];
+//bool keysHeld[512]; //+KZ: This breaks with SDL3, using sKeysHeld instead
+struct sKeysHeld
+{
+    //keys in the header
+    bool KEY_ESCAPE = false;
+    bool KEY_LEFT = false;
+    bool KEY_RIGHT = false;
+    bool KEY_DOWN = false;
+    bool KEY_UP = false;
+    bool KEY_F1 = false;
+    bool KEY_O = false;
+    bool KEY_Z = false;
+    bool KEY_RETURN = false;
+    bool KEY_SPACE = false;
+    bool KEY_1 = false;
+    bool KEY_2 = false;
+    bool KEY_3 = false;
+    bool KEY_4 = false;
+    bool KEY_5 = false;
+    bool KEY_6 = false;
+    bool KEY_7 = false;
+    bool KEY_8 = false;
+    bool KEY_9 = false;
+    bool KEY_0 = false;
+
+    //other keys
+    bool KEY_SEMICOLON = false;
+} keysHeld;
 bool sound = true;
 void deinit();
 int DxLib_Init()
@@ -16,50 +41,50 @@ int DxLib_Init()
     atexit(deinit);
     setlocale(LC_CTYPE, "ja_JP.UTF-8");
 
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+    if (SyobonKZSDLInit(SYOBONKZ_SDL_INIT_EVERYTHING) < 0)
     {
         fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
         return -1;
     }
 
     if (!(screen =
-              SDL_SetVideoMode(480 /*(int)fmax/100 */,
+              SyobonKZCreateWindow(480 /*(int)fmax/100 */,
                                420 /*(int)fymax/100 */, 32,
-                               SDL_SWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE | (StartFullScreenFlag ? SDL_FULLSCREEN : 0))))
+                               SYOBONKZ_SDL_SWSURFACE | SYOBONKZ_SDL_DOUBLEBUF | SYOBONKZ_SDL_RESIZABLE | (StartFullScreenFlag ? SYOBONKZ_SDL_FULLSCREEN : 0))))
     {
         SDL_Quit();
         return -1;
     }
 
-    SDL_WM_SetCaption("Syobon Action - +KZ Edition!",
+    SyobonKZSetWindowTitle("Syobon Action - +KZ Edition!",
                       NULL);
-    SDL_ShowCursor(SDL_DISABLE);
+    SyobonKZShowCursor(SYOBONKZ_SDL_DISABLE);
 
-    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
+    if (SyobonKZImageInit(SYOBONKZ_IMAGE_INIT_PNG) != SYOBONKZ_IMAGE_INIT_PNG)
     {
-        fprintf(stderr, "Unable to init SDL_img: %s\n", IMG_GetError());
+        fprintf(stderr, "Unable to init SDL_img: %s\n", SyobonKZGetSDLImgError());
         return -1;
     }
 
     // Initialize font
-    if (TTF_Init() == -1)
+    if (SyobonKZTTFInit() == -1)
     {
-        fprintf(stderr, "Unable to init SDL_ttf: %s\n", TTF_GetError());
+        fprintf(stderr, "Unable to init SDL_ttf: %s\n", SyobonKZGetSDLTTFError());
         return -1;
     }
 
     // Audio Rate, Audio Format, Audio Channels, Audio Buffers
 #define AUDIO_CHANNELS 2
-    if (sound && Mix_OpenAudio(22050, AUDIO_S16SYS, AUDIO_CHANNELS, 1024))
+    if (sound && SyobonKZOpenAudio(22050, SYOBONKZ_AUDIO_FORMAT, AUDIO_CHANNELS, 1024))
     {
-        fprintf(stderr, "Unable to init SDL_mixer: %s\n", Mix_GetError());
+        fprintf(stderr, "Unable to init SDL_mixer: %s\n", SyobonKZGetSDLMixError());
         sound = false;
     }
     // Try to get a joystick
-    joystick = SDL_JoystickOpen(0);
+    joystick = SyobonKZJoystickOpen(0);
 
-    for (int i = 0; i < SDLK_LAST; i++)
-        keysHeld[i] = false;
+    SDL_memset(&keysHeld, 0, sizeof(keysHeld));
+
     for (int i = 0; i < FONT_MAX; i++)
         font[i] = NULL;
     srand(time(NULL));
@@ -83,7 +108,7 @@ void SetFontSize(byte size)
         font[size] = TTF_OpenFont("res/sazanami-gothic.ttf", size);
         if (font[size] == NULL)
         {
-            printf("Unable to load font: %s\n", TTF_GetError());
+            printf("Unable to load font: %s\n", SyobonKZGetSDLTTFError());
             exit(1);
         }
     }
@@ -98,11 +123,11 @@ void ChangeFontType(byte type)
 void DrawString(int a, int b, const char *x, Uint32 c)
 {
     SDL_Color color = {(Uint8)(c >> 16), (Uint8)(c >> 8), (Uint8)(c)};
-    SDL_Surface *rendered = TTF_RenderUTF8_Solid(font[fontsize], x, color);
+    SDL_Surface *rendered = SyobonKZRenderUTF8Text(font[fontsize], x, color);
     if (fontType == DX_FONTTYPE_EDGE)
     {
         SDL_Color blk = {0, 0, 0};
-        SDL_Surface *shadow = TTF_RenderUTF8_Solid(font[fontsize], x, blk);
+        SDL_Surface *shadow = SyobonKZRenderUTF8Text(font[fontsize], x, blk);
         DrawGraphZ(a - 1, b - 1, shadow);
         DrawGraphZ(a, b - 1, shadow);
         DrawGraphZ(a + 1, b - 1, shadow);
@@ -111,10 +136,10 @@ void DrawString(int a, int b, const char *x, Uint32 c)
         DrawGraphZ(a - 1, b + 1, shadow);
         DrawGraphZ(a, b + 1, shadow);
         DrawGraphZ(a + 1, b + 1, shadow);
-        SDL_FreeSurface(shadow);
+        SyobonKZFreeImage(shadow);
     }
     DrawGraphZ(a, b, rendered);
-    SDL_FreeSurface(rendered);
+    SyobonKZFreeImage(rendered);
 }
 
 void DrawFormatString(int a, int b, Uint32 color, const char *str, ...)
@@ -131,10 +156,152 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...)
 
 // void DrawFormatString(int a, int b, int c
 
-// Key Aliases
-#define KEY_INPUT_ESCAPE SDLK_ESCAPE
-
 bool ex = false;
+
+void SetKeyState(Uint32 key, bool state)
+{
+    switch (key)
+    {
+    case KEY_INPUT_0:
+        keysHeld.KEY_0 = state;
+        break;
+    case KEY_INPUT_1:
+        keysHeld.KEY_1 = state;
+        break;
+    case KEY_INPUT_2:
+        keysHeld.KEY_2 = state;
+        break;
+    case KEY_INPUT_3:
+        keysHeld.KEY_3 = state;
+        break;
+    case KEY_INPUT_4:
+        keysHeld.KEY_4 = state;
+        break;
+    case KEY_INPUT_5:
+        keysHeld.KEY_5 = state;
+        break;
+    case KEY_INPUT_6:
+        keysHeld.KEY_6 = state;
+        break;
+    case KEY_INPUT_7:
+        keysHeld.KEY_7 = state;
+        break;
+    case KEY_INPUT_8:
+        keysHeld.KEY_8 = state;
+        break;
+    case KEY_INPUT_9:
+        keysHeld.KEY_9 = state;
+        break;
+    case KEY_INPUT_SPACE:
+        keysHeld.KEY_SPACE = state;
+        break;
+    case KEY_INPUT_RETURN:
+        keysHeld.KEY_RETURN = state;
+        break;
+    case KEY_INPUT_Z:
+        keysHeld.KEY_Z = state;
+        break;
+    case KEY_INPUT_O:
+        keysHeld.KEY_O = state;
+        break;
+    case KEY_INPUT_F1:
+        keysHeld.KEY_F1 = state;
+        break;
+    case KEY_INPUT_UP:
+        keysHeld.KEY_UP = state;
+        break;
+    case KEY_INPUT_DOWN:
+        keysHeld.KEY_DOWN = state;
+        break;
+    case KEY_INPUT_RIGHT:
+        keysHeld.KEY_RIGHT = state;
+        break;
+    case KEY_INPUT_LEFT:
+        keysHeld.KEY_LEFT = state;
+        break;
+    case KEY_INPUT_ESCAPE:
+        keysHeld.KEY_ESCAPE = state;
+        break;
+    case SDLK_SEMICOLON:
+        keysHeld.KEY_SEMICOLON = state;
+        break;
+    default:
+        break;
+    }
+}
+
+bool GetKeyState(Uint32 key)
+{
+    switch (key)
+    {
+    case KEY_INPUT_0:
+        return keysHeld.KEY_0;
+        break;
+    case KEY_INPUT_1:
+        return keysHeld.KEY_1;
+        break;
+    case KEY_INPUT_2:
+        return keysHeld.KEY_2;
+        break;
+    case KEY_INPUT_3:
+        return keysHeld.KEY_3;
+        break;
+    case KEY_INPUT_4:
+        return keysHeld.KEY_4;
+        break;
+    case KEY_INPUT_5:
+        return keysHeld.KEY_5;
+        break;
+    case KEY_INPUT_6:
+        return keysHeld.KEY_6;
+        break;
+    case KEY_INPUT_7:
+        return keysHeld.KEY_7;
+        break;
+    case KEY_INPUT_8:
+        return keysHeld.KEY_8;
+        break;
+    case KEY_INPUT_9:
+        return keysHeld.KEY_9;
+        break;
+    case KEY_INPUT_SPACE:
+        return keysHeld.KEY_SPACE;
+        break;
+    case KEY_INPUT_RETURN:
+        return keysHeld.KEY_RETURN;
+        break;
+    case KEY_INPUT_Z:
+        return keysHeld.KEY_Z;
+        break;
+    case KEY_INPUT_O:
+        return keysHeld.KEY_O;
+        break;
+    case KEY_INPUT_F1:
+        return keysHeld.KEY_F1;
+        break;
+    case KEY_INPUT_UP:
+        return keysHeld.KEY_UP;
+        break;
+    case KEY_INPUT_DOWN:
+        return keysHeld.KEY_DOWN;
+        break;
+    case KEY_INPUT_RIGHT:
+        return keysHeld.KEY_RIGHT;
+        break;
+    case KEY_INPUT_LEFT:
+        return keysHeld.KEY_LEFT;
+        break;
+    case KEY_INPUT_ESCAPE:
+        return keysHeld.KEY_ESCAPE;
+        break;
+    case SDLK_SEMICOLON:
+        return keysHeld.KEY_SEMICOLON;
+        break;
+    default:
+        return false;
+        break;
+    }
+}
 
 void UpdateKeys()
 {
@@ -143,42 +310,42 @@ void UpdateKeys()
     {
         switch (event.type)
         {
-        case SDL_KEYDOWN:
-            keysHeld[event.key.keysym.sym] = true;
+        case SYOBONKZ_EVENT_KEYDOWN:
+            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS, true);
             break;
-        case SDL_KEYUP:
-            keysHeld[event.key.keysym.sym] = false;
+        case SYOBONKZ_EVENT_KEYUP:
+            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS, false);
             break;
-        case SDL_JOYAXISMOTION:
+        case SYOBONKZ_EVENT_JOYAXISMOTION:
             if (event.jaxis.which == 0)
             {
                 if (event.jaxis.axis == JOYSTICK_XAXIS)
                 {
                     if (event.jaxis.value < 0)
-                        keysHeld[SDLK_LEFT] = true;
+                        SetKeyState(SDLK_LEFT, true);
                     else if (event.jaxis.value > 0)
-                        keysHeld[SDLK_RIGHT] = true;
+                        SetKeyState(SDLK_RIGHT, true);
                     else
                     {
-                        keysHeld[SDLK_LEFT] = false;
-                        keysHeld[SDLK_RIGHT] = false;
+                        SetKeyState(SDLK_LEFT, false);
+                        SetKeyState(SDLK_RIGHT, false);
                     }
                 }
                 else if (event.jaxis.axis == JOYSTICK_YAXIS)
                 {
                     if (event.jaxis.value < 0)
-                        keysHeld[SDLK_UP] = true;
+                        SetKeyState(SDLK_UP, true);
                     else if (event.jaxis.value > 0)
-                        keysHeld[SDLK_DOWN] = true;
+                        SetKeyState(SDLK_DOWN, true);
                     else
                     {
-                        keysHeld[SDLK_UP] = false;
-                        keysHeld[SDLK_DOWN] = false;
+                        SetKeyState(SDLK_UP, false);
+                        SetKeyState(SDLK_DOWN, false);
                     }
                 }
             }
             break;
-        case SDL_QUIT:
+        case SYOBONKZ_EVENT_QUIT:
             ex = true;
             break;
         }
@@ -192,15 +359,10 @@ byte ProcessMessage()
 
 byte CheckHitKey(int key)
 {
-    if (key == SDLK_z && keysHeld[SDLK_SEMICOLON])
+    if (key == KEY_INPUT_Z && GetKeyState(SDLK_SEMICOLON))
         return true;
-    return keysHeld[key];
+    return GetKeyState(key);
 }
-
-/*Uint32 GetColor(byte r, byte g, byte b)
-{
-    return r << 8 * 3 | g << 8 * 2 | b << 8 | 0xFF;
-}*/
 
 void DrawGraphZ(int a, int b, SDL_Surface *mx)
 {
@@ -226,11 +388,11 @@ void DrawTurnGraphZ(int a, int b, SDL_Surface *mx)
         offset.x = a;
         offset.y = b;
 
-        SDL_Surface *flipped = zoomSurface(mx, -1, 1, 0);
-        SDL_SetColorKey(flipped, SDL_SRCCOLORKEY,
+        SDL_Surface *flipped = SyobonKZZoomSurface(mx, -1, 1, 0);
+        SyobonKZSetColorKey(flipped,
                         SYOBON_COLOR_KEY(flipped->format));
         SDL_BlitSurface(flipped, &srcrect, screen, &offset);
-        SDL_FreeSurface(flipped);
+        SyobonKZFreeImage(flipped);
     }
 }
 
@@ -247,11 +409,11 @@ void DrawVertTurnGraph(int a, int b, SDL_Surface *mx)
         offset.x = a - mx->w / 2;
         offset.y = b - mx->h / 2;
 
-        SDL_Surface *flipped = zoomSurface(mx, -1, -1, 0);
-        SDL_SetColorKey(flipped, SDL_SRCCOLORKEY,
+        SDL_Surface *flipped = SyobonKZZoomSurface(mx, -1, -1, 0);
+        SyobonKZSetColorKey(flipped,
                         SYOBON_COLOR_KEY(flipped->format));
         SDL_BlitSurface(flipped, &srcrect, screen, &offset);
-        SDL_FreeSurface(flipped);
+        SyobonKZFreeImage(flipped);
     }
 }
 
@@ -259,10 +421,8 @@ SDL_Surface *DerivationGraph(int srcx, int srcy, int width, int height,
                              SDL_Surface *src)
 {
     SDL_Surface *img =
-        SDL_CreateRGBSurface(SDL_SWSURFACE, width, height,
-                             screen->format->BitsPerPixel,
-                             src->format->Rmask, src->format->Bmask,
-                             src->format->Gmask, src->format->Amask);
+        SyobonKZCreateSurface(SDL_SWSURFACE, width, height,
+                             screen->format);
 
     SDL_Rect offset;
     offset.x = srcx;
@@ -271,7 +431,7 @@ SDL_Surface *DerivationGraph(int srcx, int srcy, int width, int height,
     offset.h = height;
 
     SDL_BlitSurface(src, &offset, img, NULL);
-    SDL_SetColorKey(img, SDL_SRCCOLORKEY,
+    SyobonKZSetColorKey(img,
                     SYOBON_COLOR_KEY(img->format));
     return img;
 }
@@ -285,32 +445,7 @@ SDL_Surface *LoadGraph(const char *filename, bool fix)
     {
         if (fix)
         {
-            static SDL_PixelFormat fmt;
-            static char setfmt = 0;
-            if (!setfmt)
-            {
-                fmt = *(image->format);
-                setfmt = 1;
-            }
-            SDL_PixelFormat newfmt = *(image->format);
-
-            if (newfmt.BytesPerPixel != 1)
-            {
-                printf("WARNING: %s pixel format is not the one required, trying to fix...\n", filename);
-
-                SDL_Surface *newimage = SDL_ConvertSurface(image, &fmt, SDL_SWSURFACE | SDL_SRCALPHA | SDL_SRCCOLORKEY);
-                if (newimage)
-                {
-                    printf("Successfully converted\n");
-                    SDL_FreeSurface(image);
-                    image = newimage;
-                    newimage = nullptr;
-                }
-                else
-                {
-                    printf("Conversion failed: %s\n", SDL_GetError());
-                }
-            }
+            image = SyobonKZFixImage(image, filename);
         }
 
         if (image)
@@ -318,36 +453,36 @@ SDL_Surface *LoadGraph(const char *filename, bool fix)
             return image;
         }
     }
-    fprintf(stderr, "Error: Unable to load %s: %s\n", filename, IMG_GetError());
+    fprintf(stderr, "Error: Unable to load %s: %s\n", filename, SyobonKZGetSDLImgError());
     exit(1);
 }
 
-void PlaySoundMem(Mix_Chunk *s, int l)
+void PlaySoundMem(SyobonKZChunk *s, int l)
 {
     if (sound)
-        Mix_PlayChannel(-1, s, l);
+        SyobonKZPlayChunk(-1, s, l);
 }
 
-Mix_Chunk *LoadSoundMem(const char *f)
+SyobonKZChunk *LoadSoundMem(const char *f)
 {
     if (!sound)
         return NULL;
 
-    Mix_Chunk *s = Mix_LoadWAV(f);
+    SyobonKZChunk *s = SyobonKZLoadChunk(f);
     if (s)
         return s;
-    fprintf(stderr, "Error: Unable to load sound %s: %s\n", f, Mix_GetError());
+    fprintf(stderr, "Error: Unable to load sound %s: %s\n", f, SyobonKZGetSDLMixError());
     return NULL;
 }
 
-Mix_Music *LoadMusicMem(const char *f)
+SyobonKZMusic *LoadMusicMem(const char *f)
 {
     if (!sound)
         return NULL;
 
-    Mix_Music *m = Mix_LoadMUS(f);
+    SyobonKZMusic *m = SyobonKZLoadMusic(f);
     if (m)
         return m;
-    fprintf(stderr, "Error: Unable to load music %s: %s\n", f, Mix_GetError());
+    fprintf(stderr, "Error: Unable to load music %s: %s\n", f, SyobonKZGetSDLMixError());
     return NULL;
 }

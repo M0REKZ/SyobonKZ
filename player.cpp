@@ -141,8 +141,8 @@ void HandlePlayer()
         Health = -20;
         PlayerState = 200;
         PlayerAITimer = 0;
-        Mix_HaltChannel(-1);
-        Mix_HaltMusic();
+        SyobonKZHaltChannel(-1);
+        SyobonKZHaltMusic();
         PlaySound(Sounds[12]);
         StopSoundMem(Sounds[16]);
     } // Health
@@ -185,8 +185,8 @@ void HandlePlayer()
         {
             blackx = 1;
             blacktm = 20;
-            SyobonSection += 5;
-            Mix_HaltMusic();
+            SyobonSection += 85;
+            SyobonKZHaltMusic();
             PlayerAITimer = 0;
             PlayerState = 0;
             mkeytm = -1;
@@ -330,7 +330,7 @@ void HandlePlayer()
                     PlayerSubState = 0;
                     blackx = 1;
                     blacktm = 20;
-                    Mix_HaltMusic();
+                    SyobonKZHaltMusic();
                 }
             }
         } // 00
@@ -619,7 +619,7 @@ void HandlePlayerInput()
 
     if (mkeytm <= 0)
     {
-        if (CheckHitKey(KEY_INPUT_Z) == 1 || CheckHitKey(KEY_INPUT_UP) == 1 || SDL_JoystickGetButton(joystick, JOYSTICK_JUMP))
+        if (CheckHitKey(KEY_INPUT_Z) == 1 || CheckHitKey(KEY_INPUT_UP) == 1 || SyobonKZJoystickGetButton(joystick, JOYSTICK_JUMP))
         {
             if (actaon[1] == 10)
             {
@@ -630,7 +630,7 @@ void HandlePlayerInput()
         }
     }
 
-    if (CheckHitKey(KEY_INPUT_Z) == 1 || CheckHitKey(KEY_INPUT_UP) == 1 || SDL_JoystickGetButton(joystick, JOYSTICK_JUMP))
+    if (CheckHitKey(KEY_INPUT_Z) == 1 || CheckHitKey(KEY_INPUT_UP) == 1 || SyobonKZJoystickGetButton(joystick, JOYSTICK_JUMP))
     {
         if (mjumptm == 8 && PlayerVelY >= -900)
         {
@@ -742,7 +742,7 @@ void HandlePlayerBlocks()
                                             BlockType[tt] = 800;
                                         }
                                     }
-                                    Mix_HaltMusic();
+                                    SyobonKZHaltMusic();
                                 }
                                 // 音符+ (Musical note+)
                                 else if (BlockType[t] == 117)
@@ -931,7 +931,7 @@ void HandlePlayerBlocks()
                         BlockX[t] = -800000; // PlaySound(Sounds[4]);
                         sracttype[20] = 1;
                         sron[20] = 1;
-                        Mix_HaltMusic();
+                        SyobonKZHaltMusic();
                         PlayerState = 301;
                         PlayerAITimer = 0;
                         PlaySound(Sounds[16]);
@@ -1624,7 +1624,7 @@ void HandlePlayerWalls()
                         {
                             GroundX[t] = -80000000;
                             PlayerVelY = 0;
-                            Mix_HaltMusic();
+                            SyobonKZHaltMusic();
                             PlayerState = 302;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[16]);
@@ -1694,7 +1694,7 @@ void HandlePlayerWalls()
 
                     if (GroundType[t] == 300 && PlayerState == 0 && PlayerY < xx[9] + GroundSizeY[t] + xx[0] - 3000 && Health >= 1)
                     {
-                        Mix_HaltMusic();
+                        SyobonKZHaltMusic();
                         PlayerState = 300;
                         PlayerAITimer = 0;
                         PlayerX = GroundX[t] - fx - 2000;
