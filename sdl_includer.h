@@ -97,7 +97,7 @@
         | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD | SDL_INIT_SENSOR)
 
     #define SyobonKZTTFInit() (TTF_Init() == false ? -1 : 0)
-    #define SyobonKZRenderUTF8Text(font, text, color) TTF_RenderText_Solid(font, text, strlen(text), color)
+    #define SyobonKZRenderUTF8Text(font, text, color) TTF_RenderText_Blended(font, text, strlen(text), color)
 
     #define SYOBON_COLOR_KEY(img) SDL_MapRGB(SDL_GetPixelFormatDetails(img), nullptr, 9 * 16 + 9, 255, 255)
 
@@ -132,6 +132,7 @@
             destrect.y = (pWindowSurface->h - destH) / 2;   \
             SDL_FillSurfaceRect(pWindowSurface, NULL, 0);  /* Clear trash pixels */\
             SDL_BlitSurfaceScaled(screensurface, &srcrect, pWindowSurface, &destrect, SDL_SCALEMODE_PIXELART);    \
+            DrawTouchControls();    \
             SDL_UpdateWindowSurface(pWindow);   \
         }   \
     }

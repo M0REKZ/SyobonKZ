@@ -34,6 +34,14 @@
 
 #else //Everything else
 
+    #ifdef __ANDROID__
+        bool HandleAppEvents(void *userdata, SDL_Event *event);
+        void DrawTouchControls();
+        void HandleTouchInput(SDL_Event * event);
+    #endif
+
+    void UpdateKeys();
+
     #define wait(i) SDL_Delay(i)
 
     void MainLoop();

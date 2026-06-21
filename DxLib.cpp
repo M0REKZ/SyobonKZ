@@ -156,7 +156,7 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...)
 
 // void DrawFormatString(int a, int b, int c
 
-bool ex = false;
+bool DxLibExit = false;
 
 void SetKeyState(Uint32 key, bool state)
 {
@@ -303,58 +303,9 @@ bool GetKeyState(Uint32 key)
     }
 }
 
-void UpdateKeys()
-{
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
-    {
-        switch (event.type)
-        {
-        case SYOBONKZ_EVENT_KEYDOWN:
-            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS, true);
-            break;
-        case SYOBONKZ_EVENT_KEYUP:
-            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS, false);
-            break;
-        case SYOBONKZ_EVENT_JOYAXISMOTION:
-            if (event.jaxis.which == 0)
-            {
-                if (event.jaxis.axis == JOYSTICK_XAXIS)
-                {
-                    if (event.jaxis.value < 0)
-                        SetKeyState(SDLK_LEFT, true);
-                    else if (event.jaxis.value > 0)
-                        SetKeyState(SDLK_RIGHT, true);
-                    else
-                    {
-                        SetKeyState(SDLK_LEFT, false);
-                        SetKeyState(SDLK_RIGHT, false);
-                    }
-                }
-                else if (event.jaxis.axis == JOYSTICK_YAXIS)
-                {
-                    if (event.jaxis.value < 0)
-                        SetKeyState(SDLK_UP, true);
-                    else if (event.jaxis.value > 0)
-                        SetKeyState(SDLK_DOWN, true);
-                    else
-                    {
-                        SetKeyState(SDLK_UP, false);
-                        SetKeyState(SDLK_DOWN, false);
-                    }
-                }
-            }
-            break;
-        case SYOBONKZ_EVENT_QUIT:
-            ex = true;
-            break;
-        }
-    }
-}
-
 byte ProcessMessage()
 {
-    return ex;
+    return DxLibExit;
 }
 
 byte CheckHitKey(int key)

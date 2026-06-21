@@ -51,7 +51,6 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...);
 
 extern SDL_Joystick* joystick;
 
-void UpdateKeys();
 byte ProcessMessage();
 byte CheckHitKey(int key);
 byte WaitKey();
@@ -72,5 +71,10 @@ SDL_Surface *DerivationGraph(int srcx, int srcy, int width, int height,
 
 //Noticably different than the original
 SDL_Surface *LoadGraph(const char *filename, bool fix = true);
+
+void SetKeyState(Uint32 key, bool state);
+bool GetKeyState(Uint32 key);
+
+extern bool DxLibExit;
 
 #endif
