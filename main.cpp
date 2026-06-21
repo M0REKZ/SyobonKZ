@@ -538,7 +538,7 @@ void deinit()
 void setcolor(int red, int green, int blue)
 {
 	color = GetColor(red, green, blue);
-	gfxcolor = red << 8 * 3 | green << 8 * 2 | blue << 8 | 0xFF;
+	gfxcolor = GetGFXColor(red, green, blue);
 }
 
 // 色かえ(黒)(白) (Color change (black) (white))

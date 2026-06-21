@@ -46,12 +46,14 @@
     bool SyobonKZOpenAudio(int frequency, Uint16 format, int nchannels, int chunksize);
     #define SyobonKZAudioQuit() MIX_Quit()
 
+    //SDL3_gfx counterparts use a Renderer instead of a Surface, they need SDL_RenderPresent
     #define SyobonKZFillRect(surface, rect, color) SDL_FillSurfaceRect(surface, rect, color)
-    #define SyobonKZFilledEllipseColor(surface, x, y, rx, ry, color) filledEllipseColor(pRenderer, x, y, rx, ry, color);
-    #define SyobonKZEllipseColor(surface, x, y, rx, ry, color) ellipseColor(pRenderer, x, y, rx, ry, color);
-    #define SyobonKZBoxColor(surface, x, y, x2, y2, color) boxColor(pRenderer, x, y, x2, y2, color);
-    #define SyobonKZRectangleColor(surface, x, y, x2, y2, color) rectangleColor(pRenderer, x, y, x2, y2, color);
-    #define SyobonKZLineColor(surface, x, y, x2, y2, color) lineColor(pRenderer, x, y, x2, y2, color);
+    #define SyobonKZFilledEllipseColor(surface, x, y, rx, ry, color) {filledEllipseColor(pRenderer, x, y, rx, ry, color);SDL_RenderPresent(pRenderer);}
+    #define SyobonKZEllipseColor(surface, x, y, rx, ry, color) {ellipseColor(pRenderer, x, y, rx, ry, color);SDL_RenderPresent(pRenderer);}
+    #define SyobonKZBoxColor(surface, x, y, x2, y2, color) {boxColor(pRenderer, x, y, x2, y2, color);SDL_RenderPresent(pRenderer);}
+    //+1 to fit level 3 platforms
+    #define SyobonKZRectangleColor(surface, x, y, x2, y2, color) {rectangleColor(pRenderer, x, y, x2+1, y2+1, color);SDL_RenderPresent(pRenderer);}
+    #define SyobonKZLineColor(surface, x, y, x2, y2, color) {lineColor(pRenderer, x, y, x2, y2, color);SDL_RenderPresent(pRenderer);}
     #define SyobonKZPixelColor(surface, x, y, color) SDL_WriteSurfacePixel(surface, x, y, (color >> 8 * 3) & 0xFF, (color >> 8 * 2) & 0xFF, (color >> 8) & 0xFF, color & 0xFF)
 
     #define SyobonKZLoadImage(image) SDL_LoadSurface(image)
@@ -94,6 +96,11 @@
     #define SyobonKZRenderUTF8Text(font, text, color) TTF_RenderText_Solid(font, text, strlen(text), color)
 
     #define SYOBON_COLOR_KEY(img) SDL_MapRGB(SDL_GetPixelFormatDetails(img), nullptr, 9 * 16 + 9, 255, 255)
+
+    //Fix gfxcolor from main.cpp
+    //SDL_MapSurfaceRGBA(screen, r, g, b, 0xff) works in normal sdl3 but seems broken in sdl3_gfx
+    //maybe SDL3_gfx functions should be replaced with their RGBA counterparts instead of single color argument
+    #define GetGFXColor(r, g, b) ((Uint32)(0xFF) << 24 | (Uint32)(b) << 16 | (Uint32)(g) << 8 | (Uint32)(r) << 0)
 
     //DxLib.h
     #define GetColor(r, g, b) SDL_MapSurfaceRGB(screen, r, g, b)
@@ -204,6 +211,9 @@
     #define SyobonKZRenderUTF8Text(font, text, color) TTF_RenderUTF8_Solid(font, text, color)
 
     #define SYOBON_COLOR_KEY(img) SDL_MapRGB(img, 9 * 16 + 9, 255, 255)
+
+    //Fix gfxcolor from main.cpp
+    #define GetGFXColor(r, g, b) (r << 8 * 3 | g << 8 * 2 | b << 8 | 0xFF)
 
     //DxLib.h
     #define GetColor(r, g, b) SDL_MapRGB(screen->format, r, g, b)
