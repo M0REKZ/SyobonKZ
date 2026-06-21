@@ -1,0 +1,43 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+        
+      - name: Prepare Linux
+        run: |
+          sudo apt-get update -y
+          sudo apt install build-essential git
+          sudo apt-get install libsdl1.2-compat-dev
+
+      - name: Build SyobonKZ
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          make
+
+      - name: Prepare artifact
+        run: |
+          cd build
+          mkdir SyobonKZ-Linux
+          mv ./SyobonAction ./SyobonKZ-Linux/
+          mv ./res ./SyobonKZ-Linux/
+          mv ./BGM ./SyobonKZ-Linux/
+          mv ./SE ./SyobonKZ-Linux/
+          mv ./lib ./SyobonKZ-Linux/
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SyobonKZ-ubuntu-22.04
+          path: build/SyobonKZ-Linux
+
