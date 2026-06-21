@@ -106,10 +106,22 @@
     #define GetColor(r, g, b) SDL_MapSurfaceRGB(screen, r, g, b)
     #define SyobonKZScreenFlip(screensurface) {  \
         SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);    \
-        SDL_Rect srcrect, destrect;  \
+        SDL_Rect srcrect, destrect;     \
         srcrect.x = 0; srcrect.y = 0; srcrect.w = 480; srcrect.h = 420; \
-        destrect.x = 0; destrect.y = 0; destrect.w = pWindowSurface->w; destrect.h = pWindowSurface->h; \
-        SDL_BlitSurface(screensurface, &srcrect, pWindowSurface, &destrect);    \
+    \
+        float scaleX = (float)pWindowSurface->w / srcrect.w; \
+        float scaleY = (float)pWindowSurface->h / srcrect.h; \
+        float scale  = (scaleX < scaleY) ? scaleX : scaleY; \
+    \
+        int destW = (int)(srcrect.w * scale);    \
+        int destH = (int)(srcrect.h * scale);    \
+    \
+        destrect.w = destW; \
+        destrect.h = destH; \
+        destrect.x = (pWindowSurface->w - destW) / 2;   \
+        destrect.y = (pWindowSurface->h - destH) / 2;   \
+        SDL_FillSurfaceRect(pWindowSurface, NULL, 0);  /* Clear trash pixels */\
+        SDL_BlitSurfaceScaled(screensurface, &srcrect, pWindowSurface, &destrect, SDL_SCALEMODE_PIXELART);    \
         SDL_UpdateWindowSurface(pWindow);   \
     }
 
