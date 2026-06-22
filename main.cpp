@@ -8,6 +8,8 @@
 #include "blocks.h"
 #include "extra_graphics.h"
 
+std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
+
 // プログラムは WinMain から始まります
 // Changed to ansi c++ main()
 // +KZ: Changed to SDL_main :p
@@ -33,11 +35,23 @@ extern "C" int SDL_main(int argc, char *argv[])
 	loadg();
 
 	// フォント
+	SetFontSize(20); //this will make font size 20 load into memory
 	SetFontSize(16);
 	// SetFontThickness(4) ;
 
 	// ループ
 	// for (maint=0;maint<=2;maint++){
+
+	//+KZ: Create a loading screen
+	SyobonKZFillRect(screen, nullptr, 0);
+	DrawString(200, 200, "Loading...", GetColor(255, 255, 255));
+	SyobonKZScreenFlip(screen);
+
+	//+KZ: init things that are too CPU consuming
+	CreateEntityMessageCache();
+	CreatePlayerMessageCache();
+	CreateGlobalTextCache();
+
 	MainLoop(); //+KZ
 
 	// ＤＸライブラリ使用の終了処理
@@ -147,12 +161,9 @@ void rpaint()
 			setfont(20, 4);
 			if (mainmsgtype == 1)
 			{
-				DrawFormatString(126, 100,
-								 GetColor(255, 255, 255),
-								 "WELCOME TO OWATA ZONE");
+				DrawGraphZ(126, 100, apGlobalTexts["WELCOME TO OWATA ZONE"]);
 				for (t2 = 0; t2 <= 2; t2++)
-					DrawFormatString(88 + t2 * 143, 210,
-									 GetColor(255, 255, 255), "1");
+					DrawGraphZ(88 + t2 * 143, 210, apGlobalTexts["1"]);
 			}
 			setfont(20, 5);
 		} // mainmsgtype>=1
@@ -177,29 +188,26 @@ void rpaint()
 	{
 
 		setcolor(255, 255, 255);
-		str("制作・プレイに関わった方々",
-			240 - 13 * 20 / 2, xx[12] / 100);
-		str("ステージ１　プレイ", 240 - 9 * 20 / 2, xx[13] / 100);
-		str("先輩　Ｘ～Ｚ", 240 - 6 * 20 / 2, xx[14] / 100);
-		str("ステージ２　プレイ", 240 - 9 * 20 / 2, xx[15] / 100);
-		str("友人　willowlet ", 240 - 8 * 20 / 2, xx[16] / 100);
-		str("ステージ３　プレイ", 240 - 9 * 20 / 2, xx[17] / 100);
-		str("友人　willowlet ", 240 - 8 * 20 / 2, xx[18] / 100);
-		str("ステージ４　プレイ", 240 - 9 * 20 / 2, xx[19] / 100);
-		str("友人２　ann ", 240 - 6 * 20 / 2, xx[20] / 100);
-		str("ご協力", 240 - 3 * 20 / 2, xx[21] / 100);
-		str("Ｔ先輩", 240 - 3 * 20 / 2, xx[22] / 100);
-		str("Ｓ先輩", 240 - 3 * 20 / 2, xx[23] / 100);
-		str("動画技術提供", 240 - 6 * 20 / 2, xx[24] / 100);
-		str("Ｋ先輩", 240 - 3 * 20 / 2, xx[25] / 100);
-		str("動画キャプチャ・編集・エンコード",
-			240 - 16 * 20 / 2, xx[26] / 100);
-		str("willowlet ", 240 - 5 * 20 / 2, xx[27] / 100);
-		str("プログラム・描画・ネタ・動画編集",
-			240 - 16 * 20 / 2, xx[28] / 100);
-		str("ちく", 240 - 2 * 20 / 2, xx[29] / 100);
+		DrawGraphZ(240 - 13 * 20 / 2, xx[12] / 100, apGlobalTexts["制作・プレイに関わった方々"]);
+		DrawGraphZ(240 - 9 * 20 / 2, xx[13] / 100, apGlobalTexts["ステージ１　プレイ"]);
+		DrawGraphZ(240 - 6 * 20 / 2, xx[14] / 100, apGlobalTexts["先輩　Ｘ～Ｚ"]);
+		DrawGraphZ(240 - 9 * 20 / 2, xx[15] / 100, apGlobalTexts["ステージ２　プレイ"]);
+		DrawGraphZ(240 - 8 * 20 / 2, xx[16] / 100, apGlobalTexts["友人　willowlet "]);
+		DrawGraphZ(240 - 9 * 20 / 2, xx[17] / 100, apGlobalTexts["ステージ３　プレイ"]);
+		DrawGraphZ(240 - 8 * 20 / 2, xx[18] / 100, apGlobalTexts["友人　willowlet "]);
+		DrawGraphZ(240 - 9 * 20 / 2, xx[19] / 100, apGlobalTexts["ステージ４　プレイ"]);
+		DrawGraphZ(240 - 6 * 20 / 2, xx[20] / 100, apGlobalTexts["友人２　ann "]);
+		DrawGraphZ(240 - 3 * 20 / 2, xx[21] / 100, apGlobalTexts["ご協力"]);
+		DrawGraphZ(240 - 3 * 20 / 2, xx[22] / 100, apGlobalTexts["Ｔ先輩"]);
+		DrawGraphZ(240 - 3 * 20 / 2, xx[23] / 100, apGlobalTexts["Ｓ先輩"]);
+		DrawGraphZ(240 - 6 * 20 / 2, xx[24] / 100, apGlobalTexts["動画技術提供"]);
+		DrawGraphZ(240 - 3 * 20 / 2, xx[25] / 100, apGlobalTexts["Ｋ先輩"]);
+		DrawGraphZ(240 - 16 * 20 / 2, xx[26] / 100, apGlobalTexts["動画キャプチャ・編集・エンコード"]);
+		DrawGraphZ(240 - 5 * 20 / 2, xx[27] / 100, apGlobalTexts["willowlet "]);
+		DrawGraphZ(240 - 16 * 20 / 2, xx[28] / 100, apGlobalTexts["プログラム・描画・ネタ・動画編集"]);
+		DrawGraphZ(240 - 2 * 20 / 2, xx[29] / 100, apGlobalTexts["ちく"]);
 
-		str("プレイしていただき　ありがとうございました〜", 240 - 22 * 20 / 2, xx[30] / 100);
+		DrawGraphZ(240 - 22 * 20 / 2, xx[30] / 100, apGlobalTexts["プレイしていただき　ありがとうございました〜"]);
 	}
 	// Showing lives
 	if (SyobonState == ESyobonState::LIVES_SPLASH)
@@ -713,6 +721,8 @@ void BlockBreak(int t)
 // メッセージ (Message)
 void ttmsg()
 {
+	#define txmsg(string, line) DrawGraphZ(66, 46 + line * 24, apGlobalTexts[string]);
+
 	xx[1] = 6000 / 100;
 	xx[2] = 4000 / 100;
 	if (tmsgtype == 1 || tmsgtype == 2)
@@ -746,7 +756,7 @@ void ttmsg()
 		if (tmsg == 1)
 		{
 			setc1();
-			txmsg("", 0);
+			//txmsg("", 0);
 			txmsg("ステージ 1 より", 0);
 			txmsg("特殊的なものが増えたので", 1);
 			txmsg("気をつけてくれよ〜", 2);
@@ -774,7 +784,7 @@ void ttmsg()
 
 		if (tmsg == 5)
 		{
-			txmsg("", 0);
+			//txmsg("", 0);
 			txmsg(" 前回よりも難易度を下げましたので", 1);
 			txmsg(" 気楽にプレイしてください    ", 3);
 			txmsg("                       ちく より", 6);
@@ -782,7 +792,7 @@ void ttmsg()
 
 		if (tmsg == 6)
 		{
-			txmsg("", 0);
+			//txmsg("", 0);
 			txmsg(" そこにいる敵のそばによると、      ", 1);
 			txmsg(" 自分と一緒にジャンプしてくれます。",
 				  2);
@@ -791,7 +801,7 @@ void ttmsg()
 
 		if (tmsg == 7)
 		{
-			txmsg("", 0);
+			//txmsg("", 0);
 			txmsg(" あの敵は連れて来れましたか?、     ", 1);
 			txmsg(" 連れて来れなかった貴方は、        ", 2);
 			txmsg(" そこの落とし穴から Let's dive!    ", 3);
@@ -815,8 +825,8 @@ void ttmsg()
 		{
 			txmsg(" 床が凍ってるから、すっごい滑るよ。",
 				  1);
-			txmsg(" ", 2);
-			txmsg(" 　                      ", 3);
+			//txmsg(" ", 2);
+			//txmsg(" 　                      ", 3);
 		}
 
 		if (tmsg == 100)
@@ -842,20 +852,89 @@ void ttmsg()
 			drawrect(xx[1], xx[2] + tmsgy / 100, 360, xx[5]);
 		}
 	}
+	#undef txmsg
 
 } // ttmsg
-
-void txmsg(std::string x, int a)
-{
-	int xx = 6;
-
-	str(x, 60 + xx, 40 + xx + a * 24);
-
-} // txmsg
 
 // フォント変更 (Change font)
 void setfont(int x, int y)
 {
 	SetFontSize(x);
 	SetFontThickness(y);
+}
+
+void CreateGlobalTextCache()
+{
+	#define CACHE_GLOBAL_TEXT(text, c, sz, type) apGlobalTexts[text] = StringToSurface(text, c, sz, type)
+
+	//Warp zone
+	CACHE_GLOBAL_TEXT("WELCOME TO OWATA ZONE", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("1", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	// Credits
+    CACHE_GLOBAL_TEXT("制作・プレイに関わった方々", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("ステージ１　プレイ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("先輩　Ｘ～Ｚ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("ステージ２　プレイ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("友人　willowlet ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("ステージ３　プレイ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("ステージ４　プレイ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("友人２　ann ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("ご協力", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("Ｔ先輩", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("Ｓ先輩", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("動画技術提供", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("Ｋ先輩", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("動画キャプチャ・編集・エンコード", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("willowlet ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("プログラム・描画・ネタ・動画編集", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("ちく", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    CACHE_GLOBAL_TEXT("プレイしていただき　ありがとうございました〜", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	// Text boxes
+	CACHE_GLOBAL_TEXT("テスト　hoge", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT("ステージ 1 より", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("特殊的なものが増えたので", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("気をつけてくれよ〜", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("後、アイテムの一部を利用するかも…", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("                       ちく より", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT("            ？が必要です ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("                         m9(^Д^)", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT("   別にコインに意味ないけどね ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("                      (・ω・ )ﾉｼ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT("この先に隠しブロックがあります ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("注意してください !!", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT(" 前回よりも難易度を下げましたので", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT(" 気楽にプレイしてください    ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT(" そこにいる敵のそばによると、      ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT(" 自分と一緒にジャンプしてくれます。", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("   可愛いですね。                  ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT(" あの敵は連れて来れましたか?、     ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT(" 連れて来れなかった貴方は、        ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT(" そこの落とし穴から Let's dive!    ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT("そんな容易に", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("ヒントに頼るもんじゃないぜ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("ほら、さっさと次行きな!!", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT(" 正真正銘のファイナルステージ。    ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT(" クリアすれば遂にエンディング!!    ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT(" その土管から戻ってもいいんだぜ?   ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT(" 床が凍ってるから、すっごい滑るよ。", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	CACHE_GLOBAL_TEXT("え？私ですか？ ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("いやぁ、ただの通りすがりの", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("ヒントブロックですよ〜", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("決して怪しいブロックじゃないですよ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	CACHE_GLOBAL_TEXT("                          (…チッ)", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+
+	#undef CACHE_GLOBAL_TEXT
 }

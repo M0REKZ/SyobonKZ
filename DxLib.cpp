@@ -120,6 +120,57 @@ void ChangeFontType(byte type)
     fontType = type;
 }
 
+SDL_Surface *StringToSurface(const char *pstring, Uint32 color, byte font_size, byte font_type)
+{
+    SDL_Color temp_color = {(Uint8)(color >> 16), (Uint8)(color >> 8), (Uint8)(color)};
+    SDL_Surface *rendered = SyobonKZRenderUTF8Text(font[font_size], pstring, temp_color);
+    if (font_type == DX_FONTTYPE_EDGE)
+    {
+        //final surface
+        SDL_Surface *newrendered;
+        newrendered = SyobonKZCreateSurface(SDL_SWSURFACE, rendered->w + 2, rendered->h + 2, screen->format);
+        SyobonKZSetColorKey(newrendered, SYOBON_COLOR_KEY(newrendered->format));
+        SyobonKZFillRect(newrendered, NULL, SYOBON_COLOR_KEY(newrendered->format));
+
+        if(newrendered)
+        {
+            //copy shadow
+            SDL_Color blk = {0, 0, 0};
+            SDL_Surface *shadow = SyobonKZRenderUTF8Text(font[font_size], pstring, blk);
+            if(shadow)
+            {
+                SDL_Rect src_rect = {0,0,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_Rect dst_rect;
+                dst_rect = {-1,-1,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(shadow, &src_rect, newrendered, &dst_rect);
+                dst_rect = {0,-1,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(shadow, &src_rect, newrendered, &dst_rect);
+                dst_rect = {1,-1,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(shadow, &src_rect, newrendered, &dst_rect);
+                dst_rect = {-1,0,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(shadow, &src_rect, newrendered, &dst_rect);
+                dst_rect = {1,0,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(shadow, &src_rect, newrendered, &dst_rect);
+                dst_rect = {-1,1,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(shadow, &src_rect, newrendered, &dst_rect);
+                dst_rect = {0,1,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(shadow, &src_rect, newrendered, &dst_rect);
+                dst_rect = {1,1,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(shadow, &src_rect, newrendered, &dst_rect);
+
+                //finally copy inside text
+                dst_rect = {0,0,(Uint16)rendered->w,(Uint16)rendered->h};
+                SDL_BlitSurface(rendered, &src_rect, newrendered, &dst_rect);
+
+                SyobonKZFreeImage(shadow);
+            }
+            SyobonKZFreeImage(rendered);
+            rendered = newrendered;
+        }
+    }
+    return rendered;
+}
+
 void DrawString(int a, int b, const char *x, Uint32 c)
 {
     SDL_Color color = {(Uint8)(c >> 16), (Uint8)(c >> 8), (Uint8)(c)};

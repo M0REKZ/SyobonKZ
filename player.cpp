@@ -1,8 +1,31 @@
+#include <unordered_map>
 #include "global_vars.h"
 #include "main.h"
 #include "player.h"
 #include "entities.h"
 #include "extra_graphics.h"
+
+std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
+
+void CreatePlayerMessageCache()
+{
+    Uint32 temp_color = GetColor(255, 255, 255);
+    #define PLAYER_MESSAGE(text) apPlayerMessages[text] = StringToSurface(text, temp_color, 16, DX_FONTTYPE_EDGE)
+
+    PLAYER_MESSAGE("お、おいしい!!");
+    PLAYER_MESSAGE("毒は無いが……");
+    PLAYER_MESSAGE("刺さった!!");
+    PLAYER_MESSAGE("食べるべきではなかった!!");
+    PLAYER_MESSAGE("俺は燃える男だ!!");
+    PLAYER_MESSAGE("体が……焼ける……");
+    PLAYER_MESSAGE("たーまやー!!");
+    PLAYER_MESSAGE("見事にオワタ");
+    PLAYER_MESSAGE("足が、足がぁ!!");
+    PLAYER_MESSAGE("流石は摂氏800度!!");
+    PLAYER_MESSAGE("溶岩と合体したい……");
+
+    #undef PLAYER_MESSAGE
+}
 
 void HandlePlayer()
 {
@@ -1756,11 +1779,13 @@ void HandlePlayerMessage()
         if (PlayerMessageType == 55)
             xs[0] = "溶岩と合体したい……";
 
-        setc0();
+        /*setc0();
         str(xs[0], (PlayerX + PlayerSizeX + 300) / 100 - 1, PlayerY / 100 - 1);
         str(xs[0], (PlayerX + PlayerSizeX + 300) / 100 + 1, PlayerY / 100 + 1);
         setc1();
-        str(xs[0], (PlayerX + PlayerSizeX + 300) / 100, PlayerY / 100);
+        str(xs[0], (PlayerX + PlayerSizeX + 300) / 100, PlayerY / 100);*/
+        setc1();
+        DrawGraphZ((PlayerX + PlayerSizeX + 300) / 100, PlayerY / 100, apPlayerMessages[xs[0].c_str()]);
 
     } // PlayerMessageTimer
 }

@@ -1,6 +1,8 @@
 #ifndef SYOBON_MAIN_H
 #define SYOBON_MAIN_H
 
+#include <unordered_map>
+
 #include "DxLib.h"
 #include "crossplatform.h"
 
@@ -68,7 +70,10 @@ void BlockBreak(int t);
 
 //メッセージブロック (Message Block)
 void ttmsg();
-void txmsg(std::string x, int a);
 void setfont(int x, int y);
+
+//+KZ
+extern std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
+void CreateGlobalTextCache();
 
 #endif

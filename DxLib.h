@@ -46,6 +46,7 @@ extern TTF_Font *font[FONT_MAX];
 #define DX_FONTTYPE_EDGE 1
 void SetFontSize(byte size);
 void ChangeFontType(byte type);
+SDL_Surface *StringToSurface(const char * pstring, Uint32 color, byte font_size, byte font_type); //+KZ
 void DrawString(int a, int b, const char *x, Uint32 c);
 void DrawFormatString(int a, int b, Uint32 color, const char *str, ...);
 

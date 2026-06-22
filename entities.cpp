@@ -1,8 +1,72 @@
+#include <unordered_map>
 #include "global_vars.h"
 #include "main.h"
 #include "entities.h"
 #include "blocks.h"
 #include "extra_graphics.h"
+
+std::unordered_map<std::string, SDL_Surface *> apEnemyMessages;
+
+void CreateEntityMessageCache()
+{
+    Uint32 temp_color = GetColor(255, 255, 255);
+
+    #define ENEMY_MESSAGE(text) apEnemyMessages[text] = StringToSurface(text, temp_color, 16, DX_FONTTYPE_EDGE)
+
+    ENEMY_MESSAGE("ヤッフー!!");
+    ENEMY_MESSAGE("え?俺勝っちゃったの?");
+    ENEMY_MESSAGE("貴様の死に場所はここだ!");
+    ENEMY_MESSAGE("二度と会う事もないだろう");
+    ENEMY_MESSAGE("俺、最強!!");
+    ENEMY_MESSAGE("一昨日来やがれ!!");
+    ENEMY_MESSAGE("漢に後退の二文字は無い!!");
+    ENEMY_MESSAGE("ハッハァ!!");
+
+    //ENEMY_MESSAGE("ヤッフー!!"];
+    //ENEMY_MESSAGE("え?俺勝っちゃったの?"];
+    //ENEMY_MESSAGE("貴様の死に場所はここだ!"];
+    ENEMY_MESSAGE("身の程知らずが……");
+    ENEMY_MESSAGE("油断が死を招く");
+    ENEMY_MESSAGE("おめでたい奴だ");
+    ENEMY_MESSAGE("屑が!!");
+    ENEMY_MESSAGE("無謀な……");
+
+    //ENEMY_MESSAGE("ヤッフー!!"];
+    //ENEMY_MESSAGE("え?俺勝っちゃったの?"];
+    ENEMY_MESSAGE("二度と会う事もないだろう");
+    //ENEMY_MESSAGE("身の程知らずが……"];
+    ENEMY_MESSAGE("僕は……負けない!!");
+    ENEMY_MESSAGE("貴様に見切れる筋は無い");
+    ENEMY_MESSAGE("今死ね、すぐ死ね、骨まで砕けろ!!");
+    ENEMY_MESSAGE("任務完了!!");
+
+    //ENEMY_MESSAGE("ヤッフー!!"];
+    //ENEMY_MESSAGE("え?俺勝っちゃったの?"];
+    //ENEMY_MESSAGE("貴様の死に場所はここだ!"];
+    //ENEMY_MESSAGE("身の程知らずが……"];
+    //ENEMY_MESSAGE("油断が死を招く"];
+    //ENEMY_MESSAGE("おめでたい奴だ"];
+    //ENEMY_MESSAGE("屑が!!"];
+    //ENEMY_MESSAGE("無謀な……"];
+
+    ENEMY_MESSAGE("鉄壁!!よって、無敵!!");
+    ENEMY_MESSAGE("丸腰で勝てるとでも?");
+    ENEMY_MESSAGE("パリイ!!");
+    ENEMY_MESSAGE("自業自得だ");
+    ENEMY_MESSAGE("Zzz");
+    ENEMY_MESSAGE("ク、クマー");
+    ENEMY_MESSAGE("?");
+    ENEMY_MESSAGE("食べるべきではなかった!!");
+    ENEMY_MESSAGE("うめぇ!!");
+    ENEMY_MESSAGE("ブロックを侮ったな?");
+    ENEMY_MESSAGE("シャキーン");
+
+    ENEMY_MESSAGE("波動砲!!");
+    ENEMY_MESSAGE("裏切られたとでも思ったか?");
+    ENEMY_MESSAGE("ポールアターック!!");
+
+    #undef ENEMY_MESSAGE
+}
 
 void HandleEntities()
 {
@@ -1401,10 +1465,11 @@ void HandleEnemiesMessages()
                 xx[6] = (EnemyY[t] - fy - 800) / 100;
             }
 
-            ChangeFontType(DX_FONTTYPE_EDGE);
+            /*ChangeFontType(DX_FONTTYPE_EDGE);
             setc1();
             str(xs[0], xx[5], xx[6]);
-            ChangeFontType(DX_FONTTYPE_NORMAL);
+            ChangeFontType(DX_FONTTYPE_NORMAL);*/
+            DrawGraphZ(xx[5], xx[6], apEnemyMessages[xs[0]]);
 
         } // amsgtm
     } // amax

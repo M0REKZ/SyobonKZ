@@ -20,6 +20,7 @@ void HandleEntitiesBlocks();
 void HandleEntities();
 void PlaceEntities();
 void HandleEnemiesMessages();
+void CreateEntityMessageCache();
 
 void RenderEnemies();
 void RenderEnemiesTwo();
