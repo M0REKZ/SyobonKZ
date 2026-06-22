@@ -279,7 +279,7 @@ void HandleSyobonActionOneLevels()
     // 1-1
     if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
     {
-
+        bgmchange(Music[1]);
         // new byte stagedate[16][801]={
 
         //                                                                                                                                                                                     中間
