@@ -147,7 +147,7 @@ void Emscripten_WaitKey()
         //Left
         LeftButton = {ButtonsStartX, ButtonsStartY, ButtonsSizeY + ButtonsSizeY/2, ButtonsSizeY};
         RightButton = {LeftButton.x + LeftButton.w + 6, ButtonsStartY, ButtonsSizeY + ButtonsSizeY/2, ButtonsSizeY};
-        DownButton = {LeftButton.x + (LeftButton.w + 6) / 2, ButtonsStartY + ButtonsSizeY, ButtonsSizeY + ButtonsSizeY/2 + 3, ButtonsSizeY};
+        DownButton = {LeftButton.x + (LeftButton.w + 6) / 2, ButtonsStartY + ButtonsSizeY + 6, ButtonsSizeY + ButtonsSizeY/2 + 3, ButtonsSizeY};
 
         //Right
         JumpButton = {pWindowSurface->w - (int)(ButtonsSizeY * 1.5f + ButtonsStartX), ButtonsStartY, (int)(ButtonsSizeY * 1.5f), (int)(ButtonsSizeY * 1.5f)};
@@ -194,11 +194,50 @@ void Emscripten_WaitKey()
     {
         SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);
 
-        Uint32 white = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        SDL_FillSurfaceRect(pWindowSurface, &LeftButton, white);
-        SDL_FillSurfaceRect(pWindowSurface, &RightButton, white);
-        SDL_FillSurfaceRect(pWindowSurface, &DownButton, white);
-        SDL_FillSurfaceRect(pWindowSurface, &JumpButton, white);
+        Uint32 buttoncolor;
+        if(GetKeyState(KEY_INPUT_LEFT))
+            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
+        else
+            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pWindowSurface, &LeftButton, buttoncolor);
+        if(GetKeyState(KEY_INPUT_RIGHT))
+            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
+        else
+            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pWindowSurface, &RightButton, buttoncolor);
+        if(GetKeyState(KEY_INPUT_DOWN))
+            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
+        else
+            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pWindowSurface, &DownButton, buttoncolor);
+        if(GetKeyState(KEY_INPUT_Z))
+            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
+        else
+            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pWindowSurface, &JumpButton, buttoncolor);
+        buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 0, 0, 0, 100);
+
+        //MOAHAHAHAHAHAA
+        #define SyobonKZEvilRectangleColor(surface, rect, color) \
+        {   \
+            SDL_Rect tempthing = rect;  \
+            tempthing.w = 1;    \
+            SDL_FillSurfaceRect(surface, &tempthing, color);    \
+            tempthing.x += rect.w - 1;  \
+            SDL_FillSurfaceRect(surface, &tempthing, color);    \
+            tempthing.x = rect.x;   \
+            tempthing.w = rect.w;   \
+            \
+            tempthing.h = 1;    \
+            SDL_FillSurfaceRect(surface, &tempthing, color);    \
+            tempthing.y += rect.h - 1;  \
+            SDL_FillSurfaceRect(surface, &tempthing, color);    \
+        }
+
+        SyobonKZEvilRectangleColor(pWindowSurface, LeftButton, buttoncolor);
+        SyobonKZEvilRectangleColor(pWindowSurface, RightButton, buttoncolor);
+        SyobonKZEvilRectangleColor(pWindowSurface, DownButton, buttoncolor);
+        SyobonKZEvilRectangleColor(pWindowSurface, JumpButton, buttoncolor);
     }
 
     #endif
