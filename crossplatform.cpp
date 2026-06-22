@@ -273,6 +273,8 @@ byte WaitKey()
     }
 }
 
+#endif
+
 void UpdateKeys()
 {
     SDL_Event event;
@@ -321,5 +323,3 @@ void UpdateKeys()
         }
     }
 }
-
-#endif

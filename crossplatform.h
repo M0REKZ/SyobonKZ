@@ -40,11 +40,11 @@
         void HandleTouchInput(SDL_Event * event);
     #endif
 
-    void UpdateKeys();
-
     #define wait(i) SDL_Delay(i)
 
     void MainLoop();
 #endif
+
+void UpdateKeys();
 
 #endif
