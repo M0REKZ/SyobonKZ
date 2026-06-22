@@ -108,6 +108,12 @@
 
     //DxLib.h
     #define GetColor(r, g, b) SDL_MapSurfaceRGB(screen, r, g, b)
+    //evil macro to only draw touch controls in android
+    #ifdef __ANDROID__
+        #define __SYOBONKZ_MACRO_CALL_DRAW_TOUCH_CONTROLS() DrawTouchControls();
+    #else
+        #define __SYOBONKZ_MACRO_CALL_DRAW_TOUCH_CONTROLS()
+    #endif
     #define SyobonKZScreenFlip(screensurface) {  \
         SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);    \
         if(!pWindowSurface) \
@@ -132,7 +138,7 @@
             destrect.y = (pWindowSurface->h - destH) / 2;   \
             SDL_FillSurfaceRect(pWindowSurface, NULL, 0);  /* Clear trash pixels */\
             SDL_BlitSurfaceScaled(screensurface, &srcrect, pWindowSurface, &destrect, SDL_SCALEMODE_PIXELART);    \
-            DrawTouchControls();    \
+            __SYOBONKZ_MACRO_CALL_DRAW_TOUCH_CONTROLS()    \
             SDL_UpdateWindowSurface(pWindow);   \
         }   \
     }

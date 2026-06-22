@@ -14,7 +14,11 @@ std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
 // Changed to ansi c++ main()
 // +KZ: Changed to SDL_main :p
 
+#ifdef __ANDROID__
 extern "C" int SDL_main(int argc, char *argv[])
+#else
+int main(int argc, char *argv[])
+#endif
 {
 	#ifdef __ANDROID__
 		SDL_SetEventFilter(HandleAppEvents, NULL);
