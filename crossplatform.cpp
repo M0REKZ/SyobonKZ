@@ -225,7 +225,11 @@ byte WaitKey()
     while (true)
     {
         while (SDL_PollEvent(&event))
-            if (event.type == SYOBONKZ_EVENT_KEYDOWN)
+            if (event.type == SYOBONKZ_EVENT_KEYDOWN
+            #ifdef __ANDROID__
+            || event.type == SDL_EVENT_FINGER_DOWN
+            #endif
+            )
                 return SYOBONKZ_KEY_EVENT_SDL_ALIAS;
     }
 }
