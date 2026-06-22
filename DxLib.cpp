@@ -129,14 +129,15 @@ SDL_Surface *StringToSurface(const char *pstring, Uint32 color, byte font_size, 
         //final surface
         SDL_Surface *newrendered;
         newrendered = SyobonKZCreateSurface(SDL_SWSURFACE, rendered->w + 2, rendered->h + 2, screen->format);
-        SyobonKZSetColorKey(newrendered, SYOBON_COLOR_KEY(newrendered->format));
-        SyobonKZFillRect(newrendered, NULL, SYOBON_COLOR_KEY(newrendered->format));
-
+        newrendered = SyobonKZFixImage(newrendered, pstring);
+        SyobonKZFillRect(newrendered, NULL, 0);
         if(newrendered)
         {
             //copy shadow
-            SDL_Color blk = {0, 0, 0};
+            SDL_Color blk = {30, 30, 30}; //forever TODO: 0,0,0 invisible?
             SDL_Surface *shadow = SyobonKZRenderUTF8Text(font[font_size], pstring, blk);
+            shadow = SyobonKZFixImage(shadow, pstring);
+            printf("SHADOW %p %s\n",shadow, pstring);
             if(shadow)
             {
                 SDL_Rect src_rect = {0,0,(Uint16)rendered->w,(Uint16)rendered->h};
@@ -168,6 +169,7 @@ SDL_Surface *StringToSurface(const char *pstring, Uint32 color, byte font_size, 
             rendered = newrendered;
         }
     }
+    rendered = SyobonKZFixImage(rendered, pstring);
     return rendered;
 }
 
@@ -461,8 +463,37 @@ SDL_Surface *LoadGraph(const char *filename, bool fix)
 
 void PlaySoundMem(SyobonKZChunk *s, int l)
 {
+    static unsigned char NextChannel = 0;
+    static void * LastSoundInChannel[8] = {
+        nullptr, nullptr, nullptr, nullptr,
+        nullptr, nullptr, nullptr, nullptr
+    };
+    constexpr char MAXCHANNELS = (char)(SYOBONKZ_MIX_CHANNELS * 0.75f);
     if (sound)
-        SyobonKZPlayChunk(-1, s, l);
+    {
+        int start_check = -1;
+        bool found = false;
+        while(NextChannel != start_check && !found)
+        {
+            if(LastSoundInChannel[NextChannel] == s ||
+                !SyobonKZIsChannelPlaying(NextChannel))
+            {      
+                SyobonKZHaltChannel(NextChannel);
+                SyobonKZPlayChunk(NextChannel, s, l);
+                LastSoundInChannel[NextChannel] = s;
+                found = true;
+            }
+
+            if(start_check == -1)
+                start_check = NextChannel;
+
+            NextChannel++;
+            if(NextChannel >= MAXCHANNELS)
+            {
+                NextChannel = 0;
+            }
+        }
+    }
 }
 
 SyobonKZChunk *LoadSoundMem(const char *f)

@@ -12,6 +12,7 @@
     extern MIX_Track * pBGMTrack;
     extern SDL_Renderer * pRenderer;
     extern MIX_Mixer * pMixer;
+    extern MIX_Track * apSETracks[8]; /* in SDL 1.2 MIX_CHANNELS is 8 */
 
     #define SyobonKZSDLInit(flags) (SDL_Init(flags) == false ? -1 : 0)
 
@@ -24,7 +25,17 @@
     #define SyobonKZGetSDLMixError() SDL_GetError()
 
     #define SyobonKZPlayChunk(channel, chunk, loops) {  \
-        MIX_PlayAudio(pMixer, chunk);   \
+        apSETracks[channel] = MIX_CreateTrack(pMixer);    \
+        if(apSETracks[channel] && MIX_SetTrackAudio(apSETracks[channel], chunk))    \
+        {   \
+            SDL_PropertiesID props = SDL_CreateProperties();    \
+            SDL_SetNumberProperty(props, MIX_PROP_PLAY_LOOPS_NUMBER, loops);   \
+            MIX_PlayTrack(apSETracks[channel], props);    \
+        }   \
+        else if(!apSETracks[channel]) \
+        {   \
+            fprintf(stderr, "Error: unable to play sound: %s\n", SDL_GetError());  \
+        }   \
     }
     #define SyobonKZPlayMusic(chunk, loops) {  \
         pBGMTrack = MIX_CreateTrack(pMixer);    \
@@ -39,7 +50,24 @@
             fprintf(stderr, "Error: unable to play music: %s\n", SDL_GetError());  \
         }   \
     }
-    #define SyobonKZHaltChannel(channel) /*not implemented*/
+    #define SyobonKZIsChannelPlaying(channel) MIX_TrackPlaying(apSETracks[channel])
+    #define SyobonKZHaltChannel(channel) {  \
+        if(channel < 0) /* in SDL 1.2 "-1" halts all channels */\
+        {   \
+            MIX_StopTrack(apSETracks[0], 0);   \
+            MIX_StopTrack(apSETracks[1], 0);   \
+            MIX_StopTrack(apSETracks[2], 0);   \
+            MIX_StopTrack(apSETracks[3], 0);   \
+            MIX_StopTrack(apSETracks[4], 0);   \
+            MIX_StopTrack(apSETracks[5], 0);   \
+            MIX_StopTrack(apSETracks[6], 0);   \
+            MIX_StopTrack(apSETracks[7], 0);   \
+        }   \
+        else    \
+        {   \
+            MIX_StopTrack(apSETracks[channel], 0);   \
+        }   \
+    }
     #define SyobonKZHaltMusic() MIX_StopTrack(pBGMTrack, 0)
     #define SyobonKZVolumeMusic(volume) MIX_SetTrackGain(pBGMTrack, (volume) / 128)
     #define SYOBONKZ_MAX_VOLUME (float)128 // MIX_MAX_VOLUME is 128
@@ -49,6 +77,8 @@
 
     bool SyobonKZOpenAudio(int frequency, Uint16 format, int nchannels, int chunksize);
     #define SyobonKZAudioQuit() MIX_Quit()
+
+    #define SYOBONKZ_MIX_CHANNELS 8 /* in SDL 1.2 MIX_CHANNELS is 8 */
 
     //SDL3_gfx counterparts use a Renderer instead of a Surface, they need SDL_RenderPresent
     #define SyobonKZFillRect(surface, rect, color) SDL_FillSurfaceRect(surface, rect, color)
@@ -184,6 +214,7 @@
 
     #define SyobonKZPlayChunk(channel, chunk, loops) Mix_PlayChannel(channel, chunk, loops)
     #define SyobonKZPlayMusic(music, loops) Mix_PlayMusic(music, loops)
+    #define SyobonKZIsChannelPlaying(channel) Mix_Playing(channel)
     #define SyobonKZHaltChannel(channel) Mix_HaltChannel(channel)
     #define SyobonKZHaltMusic() Mix_HaltMusic()
     #define SyobonKZVolumeMusic(volume) Mix_VolumeMusic(volume)
@@ -194,6 +225,8 @@
 
     #define SyobonKZOpenAudio(frequency, format, nchannels, chunksize) Mix_OpenAudio(frequency, format, nchannels, chunksize)
     #define SyobonKZAudioQuit() Mix_Quit()
+
+    #define SYOBONKZ_MIX_CHANNELS MIX_CHANNELS
 
     #define SyobonKZFillRect(surface, rect, color) SDL_FillRect(surface, rect, color)
     #define SyobonKZFilledEllipseColor(surface, x, y, rx, ry, color) filledEllipseColor(surface, x, y, rx, ry, color)

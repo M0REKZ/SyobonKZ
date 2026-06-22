@@ -8,6 +8,10 @@
     SDL_Renderer * pRenderer = nullptr;
     MIX_Track * pBGMTrack = nullptr;
     MIX_Mixer * pMixer = nullptr;
+    MIX_Track * apSETracks[8] = { /* in SDL 1.2 MIX_CHANNELS is 8 */
+        nullptr, nullptr, nullptr, nullptr,
+        nullptr, nullptr, nullptr, nullptr
+    };
 
     SDL_Surface *SyobonKZZoomSurface(SDL_Surface *image, double zoomx, double zoomy, int smooth)
     {
