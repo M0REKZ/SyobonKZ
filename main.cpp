@@ -296,7 +296,7 @@ void Mainprogram()
 			stageonoff = 0;
 
 			// チーターマン　入れ (Cheetahmen)
-			bgmchange(Music[1]);
+			//bgmchange(Music[1]);
 
 			stagecls();
 
