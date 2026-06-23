@@ -152,8 +152,7 @@ endif()
 
 if(MINGW OR ${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     # we should not need to include standard libraries as .dll/.so
-    target_link_libraries(${EXECUTABLE_NAME} -static-libgcc)
-    target_link_libraries(${EXECUTABLE_NAME} -static-libstdc++)
+    target_link_options(${EXECUTABLE_NAME} -static-libgcc -static-libstdc++)
 endif()
 
 #html
