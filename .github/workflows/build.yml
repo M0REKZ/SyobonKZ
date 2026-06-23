@@ -66,13 +66,17 @@ jobs:
             mingw-w64-i686-make
             mingw-w64-i686-sdl12-compat
             mingw-w64-i686-SDL2
+            mingw-w64-i686-SDL_image
+            mingw-w64-i686-SDL_mixer
+            mingw-w64-i686-SDL_ttf
+            mingw-w64-i686-SDL_gfx
 
       - name: Build SyobonKZ
         shell: msys2 {0}
         run: |
           mkdir -p build
           cd build
-          cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..
+          cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
           mingw32-make
 
       - name: Prepare artifact
