@@ -1,6 +1,6 @@
-#define __SYOBONKZ_SDL_INCLUDER_CPP
+#include <cstdio>
+
 #include "sdl_includer.h"
-#undef __SYOBONKZ_SDL_INCLUDER_CPP
 
 #ifdef SYOBONKZ_USE_SDL3
 
