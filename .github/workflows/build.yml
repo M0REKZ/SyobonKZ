@@ -65,6 +65,7 @@ jobs:
             mingw-w64-i686-cmake
             mingw-w64-i686-make
             mingw-w64-i686-sdl12-compat
+            mingw-w64-i686-SDL2
 
       - name: Build SyobonKZ
         run: |
