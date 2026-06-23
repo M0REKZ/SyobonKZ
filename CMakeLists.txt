@@ -217,3 +217,38 @@ endif()
 file(COPY ${PROJECT_SOURCE_DIR}/data/BGM DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${PROJECT_SOURCE_DIR}/data/res DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${PROJECT_SOURCE_DIR}/data/SE DESTINATION ${CMAKE_BINARY_DIR})
+
+# copy sdl3 (TODO: add for sdl 1.2)
+if(SYOBONKZ_USE_SDL3)
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+    
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_image::SDL3_image-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_mixer::SDL3_mixer-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_ttf::SDL3_ttf-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_gfx_Shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+endif()
