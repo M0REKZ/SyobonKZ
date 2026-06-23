@@ -21,6 +21,7 @@ Supported platforms:
 * [x] Windows
 * [x] Linux
 * [x] macOS
+* [x] Android
 * [x] [Web Browsers (with Emscripten)](https://m0rekz.github.io/SyobonKZ/)
 
 About the license
@@ -75,7 +76,9 @@ Please report any bugs at the GitHub issue tracker: https://github.com/M0REKZ/Sy
 
 Command Line Arguments
 ----------------------
-`-nosound` - Disables sound
+`-h`,`--help` - Show available parameters
+`-nosound`,`--nosoun` - Disables sound
+`--fullscreen` - Start in fullscreen mode
 
 Building
 ------------
@@ -88,7 +91,15 @@ This project requires libraries that are old and may not be directly available i
 * SDL_ttf 1.2
 * SDL_gfx (dont confuse with SDL***2***_gfx)
 
-For convenience, the SDL 1.2 extensions are included as submodules in this repository, you can include them when cloning by doing:
+Optionally (and depending on your target platform) you may choose to use SDL3 instead:
+
+* SDL3
+* SDL3_image
+* SDL3_mixer
+* SDL3_ttf
+* SDL3_gfx
+
+For convenience, the SDL 1.2 extensions and SDL3_gfx (dont confuse again) are included as submodules in this repository, you can include them when cloning by doing:
 ```
 git clone --recursive https://github.com/M0REKZ/SyobonKZ.git
 ```
@@ -106,6 +117,11 @@ If you want to use the SDL 1.2 extension libraries that are installed in your sy
 cmake -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
 ```
 
+If you want to use SDL3 instead, use these CMake options:
+```
+cmake -DSYOBONKZ_USE_SDL3=ON -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
+```
+
 Gamepad Notes
 -------------
 Your gamepad or joystick may not work by default with Open Syobon Action. Check joyconfig.h for more information.
@@ -113,7 +129,7 @@ Your gamepad or joystick may not work by default with Open Syobon Action. Check 
 TODO:
 -------------
 * Font thickness (Not really important)
-* Port to other operating systems (iOS, Android, etc.) M0REKZ/SyobonKZ#3
+* Port to other operating systems (iOS, etc.) M0REKZ/SyobonKZ#3
 * Port more classic Syobon Action versions M0REKZ/SyobonKZ#4
 
 Release Changelog
