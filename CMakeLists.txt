@@ -150,10 +150,12 @@ else()
     add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES_SYOBON})
 endif()
 
-if(MINGW OR ${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-    # we should not need to include standard libraries as .dll/.so
+# we should not need to include standard libraries as .dll/.so
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     target_link_options(${EXECUTABLE_NAME} PRIVATE -static-libgcc)
     target_link_options(${EXECUTABLE_NAME} PRIVATE -static-libstdc++)
+elseif(MINGW)
+    target_link_options(${EXECUTABLE_NAME} PRIVATE --static)
 endif()
 
 #html
