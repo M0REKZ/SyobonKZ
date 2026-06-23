@@ -2,16 +2,19 @@ Release Changelog
 -----------------
 
 **SyobonKZ V1 (in development)**
+* Add macOS, Android and Web Browser support
 * Format, separate, rename and do more improvements to the code for readability
 * Added some "+KZ Edition" text
 * Fixed missing Syobon Action 2 assets
 * Fix non-transparent sprites
 * Make window resizable
 * Use CMake build system
-* Emscripten (web browser) support
 * Fix C++ warnings
 * Fix a out of bounds memory access
 * Fix including SDL libraries
+* Optimize japanese text rendering
+* Allow to optionally use SDL3 instead of SDL 1.2
+* Add "--fullscreen" and "--help" parameters
 * Fix other random bugs...
 
 **Open Syobon Action RC 3 (Karen／明美 fork)**
