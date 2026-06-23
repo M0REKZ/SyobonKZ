@@ -76,7 +76,7 @@ jobs:
         run: |
           cd build
           mkdir SyobonKZ-Windows
-          mv ./SyobonAction ./SyobonKZ-Windows/
+          mv ./SyobonAction.exe ./SyobonKZ-Windows/
           mv ./res ./SyobonKZ-Windows/
           mv ./BGM ./SyobonKZ-Windows/
           mv ./SE ./SyobonKZ-Windows/
