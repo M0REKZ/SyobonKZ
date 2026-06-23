@@ -68,6 +68,10 @@ jobs:
             mingw-w64-i686-SDL2
 
       - name: Build SyobonKZ
+        uses: msys2/setup-msys2@v2
+          id: msys2
+      - env:
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
         run: |
           mkdir -p build
           cd build
