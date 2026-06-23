@@ -56,13 +56,13 @@ jobs:
           msystem: mingw64
           update: true
           install: >
-            mingw-x86_64-toolchain
-            mingw-x86_64-cmake
-            mingw-x86_64-make
-            mingw-x86_64-sdl3
-            mingw-x86_64-sdl3_image
-            mingw-x86_64-sdl3_mixer
-            mingw-x86_64-sdl3_ttf
+            mingw-w64-toolchain
+            mingw-w64-cmake
+            mingw-w64-make
+            mingw-w64-sdl3
+            mingw-w64-sdl3_image
+            mingw-w64-sdl3_mixer
+            mingw-w64-sdl3_ttf
 
       - name: Build SyobonKZ
         shell: msys2 {0}
