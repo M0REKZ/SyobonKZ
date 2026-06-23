@@ -53,30 +53,29 @@ jobs:
       - name: Set up MinGW
         uses: egor-tensin/setup-mingw@v3
         with:
-          platform: x86
+          platform: x86_64
         
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
-          msystem: mingw32
+          msystem: mingw64
           update: true
           install: >
-            mingw-w64-i686-toolchain
-            mingw-w64-i686-cmake
-            mingw-w64-i686-make
-            mingw-w64-i686-sdl12-compat
-            mingw-w64-i686-SDL2
-            mingw-w64-i686-SDL_image
-            mingw-w64-i686-SDL_mixer
-            mingw-w64-i686-SDL_ttf
-            mingw-w64-i686-SDL_gfx
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-make
+            mingw-w64-x86_64-sdl12-compat
+            mingw-w64-x86_64-SDL2
+            mingw-w64-x86_64-SDL3_image
+            mingw-w64-x86_64-SDL3_mixer
+            mingw-w64-x86_64-SDL3_ttf
 
       - name: Build SyobonKZ
         shell: msys2 {0}
         run: |
           mkdir -p build
           cd build
-          cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
+          cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DSYOBONKZ_USE_SDL3=ON -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
           mingw32-make
 
       - name: Prepare artifact
