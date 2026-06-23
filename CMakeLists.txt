@@ -158,9 +158,9 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
 endif()
 
 #load libraries from lib folder
-set_target_properties(${EXECUTABLE_NAME} PROPERTIES
-    BUILD_RPATH "@loader_path/lib"
-)
+#set_target_properties(${EXECUTABLE_NAME} PROPERTIES
+#    BUILD_RPATH "@loader_path/lib"
+#)
 
 if(SYOBONKZ_USE_SDL3)
 
@@ -250,5 +250,77 @@ if(SYOBONKZ_USE_SDL3)
             COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_gfx_Shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
             VERBATIM
         )
+else()
 
+    set(SDL_LIB_TO_COPY "${SDL_LIBRARIES}")
+    # filter only shared libraries
+    list(FILTER SDL_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
+    file(REAL_PATH "${SDL_LIB_TO_COPY}" SDL_LIB_TO_COPY) # solve aliases
+
+    if(NOT SYOBONKZ_BUILD_SDL1_EXTENSIONS)
+        set(SDL_IMAGE_LIB_TO_COPY "${SDL_IMAGE_LIBRARIES}")
+        list(FILTER SDL_IMAGE_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
+        file(REAL_PATH "${SDL_IMAGE_LIB_TO_COPY}" SDL_IMAGE_LIB_TO_COPY)
+
+        set(SDL_MIXER_LIB_TO_COPY "${SDL_MIXER_LIBRARIES}")
+        list(FILTER SDL_MIXER_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
+        file(REAL_PATH "${SDL_MIXER_LIB_TO_COPY}" SDL_MIXER_LIB_TO_COPY)
+
+        set(SDL_GFX_LIB_TO_COPY "${SDL_GFX_LIBRARIES}")
+        list(FILTER SDL_GFX_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
+        file(REAL_PATH "${SDL_GFX_LIB_TO_COPY}" SDL_GFX_LIB_TO_COPY)
+
+        set(SDL_TTF_LIB_TO_COPY "${SDL_TTF_LIBRARIES}")
+        list(FILTER SDL_TTF_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
+        file(REAL_PATH "${SDL_TTF_LIB_TO_COPY}" SDL_TTF_LIB_TO_COPY)
+    else()
+        set(SDL_IMAGE_LIB_TO_COPY "${CMAKE_BINARY_DIR}/lib/libSDL_image${CMAKE_SHARED_LIBRARY_SUFFIX}")
+        set(SDL_MIXER_LIB_TO_COPY "${CMAKE_BINARY_DIR}/lib/libSDL_mixer${CMAKE_SHARED_LIBRARY_SUFFIX}")
+        set(SDL_GFX_LIB_TO_COPY "${CMAKE_BINARY_DIR}/lib/libSDL_gfx${CMAKE_SHARED_LIBRARY_SUFFIX}")
+        set(SDL_TTF_LIB_TO_COPY "${CMAKE_BINARY_DIR}/lib/libSDL_ttf${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    endif()
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_IMAGE_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_MIXER_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_GFX_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_TTF_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            VERBATIM
+        )
+
+    # Try to detect sdl12-compat, it has a superior SDL patch version!
+    # in that case, we should copy sdl2 too
+    if(SDL_VERSION_PATCH GREATER 16)
+        find_package(SDL2)
+        if(SDL2_FOUND)
+            add_custom_command(
+                TARGET ${EXECUTABLE_NAME} POST_BUILD
+                COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL2::SDL2> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+                VERBATIM
+            )
+        endif()
+    endif()
+    
 endif()
