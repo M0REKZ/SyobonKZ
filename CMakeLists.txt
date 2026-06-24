@@ -165,6 +165,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
     )
 endif()
 
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/syobon_libs)
 #load libraries from lib folder
 #set_target_properties(${EXECUTABLE_NAME} PROPERTIES
 #    BUILD_RPATH "@loader_path/lib"
@@ -231,31 +232,44 @@ if(SYOBONKZ_USE_SDL3)
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
     
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_image::SDL3_image-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_image::SDL3_image-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_mixer::SDL3_mixer-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_mixer::SDL3_mixer-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_ttf::SDL3_ttf-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_ttf::SDL3_ttf-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_gfx_Shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_gfx_Shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
+            VERBATIM
+        )
+
+    # SDL3_ttf needs harfbuzz
+    find_package(harfbuzz REQUIRED)
+
+    get_target_property(HARFBUZZ_LIB_TO_COPY harfbuzz::harfbuzz IMPORTED_LOCATION)
+    list(FILTER HARFBUZZ_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
+    file(REAL_PATH "${HARFBUZZ_LIB_TO_COPY}" HARFBUZZ_LIB_TO_COPY) # solve aliases
+
+    add_custom_command(
+            TARGET ${EXECUTABLE_NAME} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy "${HARFBUZZ_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 else()
@@ -290,31 +304,31 @@ else()
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_IMAGE_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_IMAGE_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_MIXER_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_MIXER_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_GFX_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_GFX_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 
     add_custom_command(
             TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_TTF_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+            COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_TTF_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
             VERBATIM
         )
 
@@ -325,10 +339,22 @@ else()
         if(SDL2_FOUND)
             add_custom_command(
                 TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL2::SDL2> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>
+                COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL2::SDL2> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
                 VERBATIM
             )
         endif()
     endif()
-    
 endif()
+
+# Both SDL_ttf 1.2 and SDL3_ttf need Freetype
+find_package(Freetype REQUIRED)
+
+set(FREETYPE_LIB_TO_COPY "${FREETYPE_LIBRARIES}")
+list(FILTER FREETYPE_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
+file(REAL_PATH "${FREETYPE_LIB_TO_COPY}" FREETYPE_LIB_TO_COPY) # solve aliases
+
+add_custom_command(
+        TARGET ${EXECUTABLE_NAME} POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E copy "${FREETYPE_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
+        VERBATIM
+    )
