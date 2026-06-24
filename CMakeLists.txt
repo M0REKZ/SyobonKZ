@@ -261,7 +261,9 @@ if(SYOBONKZ_USE_SDL3)
         )
 
     # SDL3_ttf needs harfbuzz
-    find_package(harfbuzz REQUIRED)
+    if(NOT harfbuzz_FOUND)
+        find_package(harfbuzz REQUIRED)
+    endif()
 
     get_target_property(HARFBUZZ_LIB_TO_COPY harfbuzz::harfbuzz IMPORTED_LOCATION)
     list(FILTER HARFBUZZ_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")

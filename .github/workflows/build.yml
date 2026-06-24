@@ -33,7 +33,7 @@ jobs:
           mv ./res ./SyobonKZ-Linux/
           mv ./BGM ./SyobonKZ-Linux/
           mv ./SE ./SyobonKZ-Linux/
-          mv ./*.so ./SyobonKZ-Linux/
+          mv ./syobon_libs ./SyobonKZ-Linux/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -80,7 +80,7 @@ jobs:
           mv ./res ./SyobonKZ-Windows/
           mv ./BGM ./SyobonKZ-Windows/
           mv ./SE ./SyobonKZ-Windows/
-          mv ./*.dll ./SyobonKZ-Windows/
+          mv ./syobon_libs ./SyobonKZ-Windows/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
