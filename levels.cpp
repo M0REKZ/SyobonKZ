@@ -5607,7 +5607,7 @@ void HandleSyobonActionTwoLevels()
     { // 2-4(3番)
         PlayerX = 4500;
         PlayerY = 3000 * 11;
-        bgmchange(Music[5]); // 6
+        bgmchange(Music[4]); // 6
         stagecolor = 4;
         scrollx = 2900 * (128 - 19);
         //
