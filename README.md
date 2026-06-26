@@ -76,9 +76,9 @@ Please report any bugs at the GitHub issue tracker: https://github.com/M0REKZ/Sy
 
 Command Line Arguments
 ----------------------
-`-h`,`--help` - Show available parameters
-`-nosound`,`--nosound` - Disables sound
-`--fullscreen` - Start in fullscreen mode
+* `-h`,`--help` - Show available parameters
+* `-nosound`,`--nosound` - Disables sound
+* `--fullscreen` - Start in fullscreen mode
 
 Building
 ------------
