@@ -28,30 +28,38 @@ void RenderBlocks()
                 xx[9] = 90;
             }
 
-            if (BlockType[t] < 100)
+            if ((int)BlockType[t] < 100)
             {
-                xx[6] = BlockType[t] + xx[9];
+                xx[6] = (int)BlockType[t] + xx[9];
                 drawimage(Sliced_GFX[xx[6]][1], xx[0] / 100, xx[1] / 100);
             }
 
             if (BlockSubType[t] != 10)
             {
 
-                if (BlockType[t] == 100 || BlockType[t] == 101 || BlockType[t] == 102 || BlockType[t] == 103 || BlockType[t] == 104 && BlockSubType[t] == 1 || BlockType[t] == 114 && BlockSubType[t] == 1 || BlockType[t] == 116)
+                if (
+                    BlockType[t] == EBlockType::ITEM_BLOCK_DODGE ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_ENEMY ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_MUSHROOM ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_MUSHROOM_2 ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_STAR && BlockSubType[t] == 1 ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN && BlockSubType[t] == 1 ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_PSWITCH
+                )
                 {
                     xx[6] = 2 + xx[9];
                     drawimage(Sliced_GFX[xx[6]][1],
                               xx[0] / 100, xx[1] / 100);
                 }
 
-                if (BlockType[t] == 112 || BlockType[t] == 104 && BlockSubType[t] == 0 || BlockType[t] == 115 && BlockSubType[t] == 1)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_COINS || BlockType[t] == EBlockType::ITEM_BLOCK_STAR && BlockSubType[t] == 0 || BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == 1)
                 {
                     xx[6] = 1 + xx[9];
                     drawimage(Sliced_GFX[xx[6]][1],
                               xx[0] / 100, xx[1] / 100);
                 }
 
-                if (BlockType[t] == 111 || BlockType[t] == 113 || BlockType[t] == 115 && BlockSubType[t] == 0 || BlockType[t] == 124)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_OPEN || BlockType[t] == EBlockType::ITEM_BLOCK_COINS_OPEN || BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == 0 || BlockType[t] == EBlockType::FIREBAR_GROW)
                 {
                     xx[6] = 3 + xx[9];
                     drawimage(Sliced_GFX[xx[6]][1],
@@ -59,50 +67,50 @@ void RenderBlocks()
                 }
             }
 
-            if (BlockType[t] == 117 && BlockSubType[t] == 1)
+            if (BlockType[t] == EBlockType::NOTE_BLOCK && BlockSubType[t] == 1)
             {
                 drawimage(Sliced_GFX[4][5], xx[0] / 100, xx[1] / 100);
             }
 
-            if (BlockType[t] == 117 && BlockSubType[t] >= 3)
+            if (BlockType[t] == EBlockType::NOTE_BLOCK && BlockSubType[t] >= 3)
             {
                 drawimage(Sliced_GFX[3][5], xx[0] / 100, xx[1] / 100);
             }
 
-            if (BlockType[t] == 115 && BlockSubType[t] == 3)
+            if (BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == 3)
             {
                 xx[6] = 1 + xx[9];
                 drawimage(Sliced_GFX[xx[6]][1], xx[0] / 100, xx[1] / 100);
             }
             // ジャンプ台
-            if (BlockType[t] == 120 && BlockSubType[t] != 1)
+            if (BlockType[t] == EBlockType::TRAMPOLINE && BlockSubType[t] != 1)
             {
                 drawimage(Sliced_GFX[16][1], xx[0] / 100 + 3,
                           xx[1] / 100 + 2);
             }
             // ON-OFF
-            if (BlockType[t] == 130)
+            if (BlockType[t] == EBlockType::ON_BLOCK)
                 drawimage(Sliced_GFX[10][5], xx[0] / 100, xx[1] / 100);
-            if (BlockType[t] == 131)
+            if (BlockType[t] == EBlockType::OFF_BLOCK)
                 drawimage(Sliced_GFX[11][5], xx[0] / 100, xx[1] / 100);
 
-            if (BlockType[t] == 140)
+            if (BlockType[t] == EBlockType::SWORD)
                 drawimage(Sliced_GFX[12][5], xx[0] / 100, xx[1] / 100);
-            if (BlockType[t] == 141)
+            if (BlockType[t] == EBlockType::BRIDGE_ROPE)
                 drawimage(Sliced_GFX[13][5], xx[0] / 100, xx[1] / 100);
-            if (BlockType[t] == 142)
+            if (BlockType[t] == EBlockType::ARTICHOKE)
                 drawimage(Sliced_GFX[14][5], xx[0] / 100, xx[1] / 100);
 
-            if (BlockType[t] == 300 || BlockType[t] == 301)
+            if (BlockType[t] == EBlockType::MESSAGE_BLOCK || BlockType[t] == EBlockType::MESSAGE_BLOCK_BREAKABLE)
                 drawimage(Sliced_GFX[1][5], xx[0] / 100, xx[1] / 100);
 
             // Pスイッチ (P switch)
-            if (BlockType[t] == 400)
+            if (BlockType[t] == EBlockType::PSWITCH)
             {
                 drawimage(Sliced_GFX[2][5], xx[0] / 100, xx[1] / 100);
             }
             // コイン (Coin)
-            if (BlockType[t] == 800)
+            if (BlockType[t] == EBlockType::COIN)
             {
                 drawimage(Sliced_GFX[0][2], xx[0] / 100 + 2,
                           xx[1] / 100 + 1);
@@ -417,3 +425,24 @@ void RenderOverwritePipe()
         }
     } // t
 }
+
+// ブロック出現 (Block appears)
+
+void BlockCreate(int x, int y, EBlockType type)
+{
+
+	BlockX[BlockCount] = x * 100;
+	BlockY[BlockCount] = y * 100;
+	BlockType[BlockCount] = type;
+
+	BlockCount++;
+	if (BlockCount >= tmax)
+		BlockCount = 0;
+} // BlockCreate
+
+// ブロック破壊 (Block destruction)
+void BlockBreak(int t)
+{
+	//+KZ removed useless code
+	BlockX[t] = -800000;
+} // brock

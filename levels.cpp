@@ -1,5 +1,6 @@
 
 #include "global_vars.h"
+#include "blocks.h"
 #include "levels.h"
 #include "main.h"
 
@@ -118,7 +119,7 @@ void stage()
 			xx[23] = xx[10];
 			if (xx[10] >= 1 && xx[10] <= 19 && xx[10] != 9)
 			{
-				BlockCreate(tt * 29, t * 29 - 12, xx[10]);
+				BlockCreate(tt * 29, t * 29 - 12, (EBlockType)xx[10]);
 			}
 			if (xx[10] >= 20 && xx[10] <= 29)
 			{
@@ -209,7 +210,7 @@ void stage()
 			// コイン (Coin)
 			if (xx[10] == 9)
 			{
-				BlockCreate(tt * 29, t * 29 - 12, 800);
+				BlockCreate(tt * 29, t * 29 - 12, EBlockType::COIN);
 			}
 			if (xx[10] == 99)
 			{
@@ -555,15 +556,15 @@ void HandleSyobonActionOneLevels()
              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
         // 追加情報
-        BlockCreate(8 * 29, 9 * 29 - 12, 100);
+        BlockCreate(8 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_DODGE);
         //BlockSubType[BlockCount] = 2; //+KZ: In Syobon Action by Chiku this block gives a useless mushroom
-        BlockCreate(13 * 29, 9 * 29 - 12, 102);
+        BlockCreate(13 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
         BlockSubType[BlockCount] = 0;
-        BlockCreate(14 * 29, 5 * 29 - 12, 101);
-        BlockCreate(35 * 29, 8 * 29 - 12, 110);
-        BlockCreate(47 * 29, 9 * 29 - 12, 103);
-        BlockCreate(59 * 29, 9 * 29 - 12, 112);
-        BlockCreate(67 * 29, 9 * 29 - 12, 104);
+        BlockCreate(14 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
+        BlockCreate(35 * 29, 8 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreate(47 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM_2);
+        BlockCreate(59 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_COINS);
+        BlockCreate(67 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_STAR);
 
         GroundCount = 0;
         t = GroundCount;
@@ -916,11 +917,11 @@ void HandleSyobonActionOneLevels()
         BlockCount = 0;
         // ヒント1
         BlockSubType[BlockCount] = 1;
-        BlockCreate(4 * 29, 9 * 29 - 12, 300);
+        BlockCreate(4 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         // BlockCreate(7*29,9*29-12,300);
 
         // 毒1
-        BlockCreate(13 * 29, 8 * 29 - 12, 114);
+        BlockCreate(13 * 29, 8 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN);
 
         // t=28;
         GroundCount = 0;
@@ -1306,21 +1307,21 @@ void HandleSyobonActionOneLevels()
 
         BlockCount = 0;
         BlockSubType[BlockCount] = 2;
-        BlockCreate(7 * 29, 9 * 29 - 12, 102);
-        BlockCreate(10 * 29, 9 * 29 - 12, 101);
+        BlockCreate(7 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
+        BlockCreate(10 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
 
         BlockSubType[BlockCount] = 2;
-        BlockCreate(49 * 29, 9 * 29 - 12, 114);
+        BlockCreate(49 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN);
 
         for (t = 0; t >= -7; t--)
         {
-            BlockCreate(53 * 29, t * 29 - 12, 1);
+            BlockCreate(53 * 29, t * 29 - 12, EBlockType::BRICK);
         }
 
         BlockSubType[BlockCount] = 1;
-        BlockCreate(80 * 29, 5 * 29 - 12, 104);
+        BlockCreate(80 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_STAR);
         BlockSubType[BlockCount] = 2;
-        BlockCreate(78 * 29, 5 * 29 - 12, 102);
+        BlockCreate(78 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
 
         // txtype[tco]=1;BlockCreate(11*29,9*29-12,114);//毒1
 
@@ -2511,41 +2512,41 @@ void HandleSyobonActionOneLevels()
                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
         BlockCount = 0;
-        BlockCreate(22 * 29, 3 * 29 - 12, 1);
+        BlockCreate(22 * 29, 3 * 29 - 12, EBlockType::BRICK);
         // 毒1
-        BlockCreate(54 * 29, 9 * 29 - 12, 116);
+        BlockCreate(54 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_PSWITCH);
         // 音符+
-        BlockCreate(18 * 29, 14 * 29 - 12, 117);
-        BlockCreate(19 * 29, 14 * 29 - 12, 117);
-        BlockCreate(20 * 29, 14 * 29 - 12, 117);
+        BlockCreate(18 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
+        BlockCreate(19 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
+        BlockCreate(20 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
         BlockSubType[BlockCount] = 1;
-        BlockCreate(61 * 29, 9 * 29 - 12, 101); // 5
-        BlockCreate(74 * 29, 9 * 29 - 12, 7);   // 6
+        BlockCreate(61 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY); // 5
+        BlockCreate(74 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_HIDDEN);   // 6
 
         // ヒント2
         BlockSubType[BlockCount] = 2;
-        BlockCreate(28 * 29, 9 * 29 - 12, 300); // 7
+        BlockCreate(28 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK); // 7
         // ファイア
         BlockSubType[BlockCount] = 3;
-        BlockCreate(7 * 29, 9 * 29 - 12, 101);
+        BlockCreate(7 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
         // ヒント3
         BlockSubType[BlockCount] = 4;
-        BlockCreate(70 * 29, 8 * 29 - 12, 300); // 9
+        BlockCreate(70 * 29, 8 * 29 - 12, EBlockType::MESSAGE_BLOCK); // 9
 
         // もろいぶろっく×３
         BlockSubType[BlockCount] = 1;
-        BlockCreate(58 * 29, 13 * 29 - 12, 115);
+        BlockCreate(58 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockSubType[BlockCount] = 1;
-        BlockCreate(59 * 29, 13 * 29 - 12, 115);
+        BlockCreate(59 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockSubType[BlockCount] = 1;
-        BlockCreate(60 * 29, 13 * 29 - 12, 115);
+        BlockCreate(60 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
 
         // ヒントブレイク
         BlockSubType[BlockCount] = 0;
-        BlockCreate(111 * 29, 6 * 29 - 12, 301);
+        BlockCreate(111 * 29, 6 * 29 - 12, EBlockType::MESSAGE_BLOCK_BREAKABLE);
         // ジャンプ
         BlockSubType[BlockCount] = 0;
-        BlockCreate(114 * 29, 9 * 29 - 12, 120);
+        BlockCreate(114 * 29, 9 * 29 - 12, EBlockType::TRAMPOLINE);
 
         // ファイア
         // BlockCreate(7*29,9*29-12,101);
@@ -3307,10 +3308,10 @@ void HandleSyobonActionOneLevels()
         // t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
 
         BlockSubType[BlockCount] = 0;
-        BlockCreate(12 * 29, 4 * 29 - 12, 112);
+        BlockCreate(12 * 29, 4 * 29 - 12, EBlockType::ITEM_BLOCK_COINS);
         // ヒント3
         BlockSubType[BlockCount] = 3;
-        BlockCreate(12 * 29, 8 * 29 - 12, 300);
+        BlockCreate(12 * 29, 8 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         // txtype[tco]=0;BlockCreate(13*29,4*29-12,110);
 
         // stc=0;
@@ -3871,51 +3872,51 @@ void HandleSyobonActionOneLevels()
         BlockCount = 0;
         // ON-OFFブロック
         BlockSubType[BlockCount] = 1;
-        BlockCreate(29 * 29, 3 * 29 - 12, 130);
+        BlockCreate(29 * 29, 3 * 29 - 12, EBlockType::ON_BLOCK);
         // 1-2
-        BlockCreate(34 * 29, 9 * 29 - 12, 5);
-        BlockCreate(35 * 29, 9 * 29 - 12, 5);
+        BlockCreate(34 * 29, 9 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreate(35 * 29, 9 * 29 - 12, EBlockType::GROUND_TOP);
         // 隠し
-        BlockCreate(55 * 29 + 15, 6 * 29 - 12, 7);
+        BlockCreate(55 * 29 + 15, 6 * 29 - 12, EBlockType::ITEM_BLOCK_HIDDEN);
         // BlockCreate(62*29,9*29-12,2);
         // 隠しON-OFF
         BlockSubType[BlockCount] = 10;
-        BlockCreate(50 * 29, 9 * 29 - 12, 114);
+        BlockCreate(50 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN);
         // ヒント3
         BlockSubType[BlockCount] = 5;
-        BlockCreate(1 * 29, 5 * 29 - 12, 300);
+        BlockCreate(1 * 29, 5 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         // ファイア
         BlockSubType[BlockCount] = 3;
-        BlockCreate(86 * 29, 9 * 29 - 12, 101);
+        BlockCreate(86 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
         // キノコなし　普通
         // txtype[tco]=2;BlockCreate(81*29,1*29-12,5);
         // 音符
         BlockSubType[BlockCount] = 2;
-        BlockCreate(86 * 29, 6 * 29 - 12, 117);
+        BlockCreate(86 * 29, 6 * 29 - 12, EBlockType::NOTE_BLOCK);
 
         // もろいぶろっく×３
         for (t = 0; t <= 2; t++)
         {
             BlockSubType[BlockCount] = 3;
-            BlockCreate((79 + t) * 29, 13 * 29 - 12, 115);
+            BlockCreate((79 + t) * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         }
 
         // ジャンプ
         BlockSubType[BlockCount] = 3;
-        BlockCreate(105 * 29, 11 * 29 - 12, 120);
+        BlockCreate(105 * 29, 11 * 29 - 12, EBlockType::TRAMPOLINE);
         // 毒1
         BlockSubType[BlockCount] = 3;
-        BlockCreate(109 * 29, 7 * 29 - 12, 102);
+        BlockCreate(109 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
         // デフラグ
         BlockSubType[BlockCount] = 4;
-        BlockCreate(111 * 29, 7 * 29 - 12, 101);
+        BlockCreate(111 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
         // 剣
-        BlockCreate(132 * 29, 8 * 29 - 12 - 3, 140);
-        BlockCreate(131 * 29, 9 * 29 - 12, 141);
+        BlockCreate(132 * 29, 8 * 29 - 12 - 3, EBlockType::SWORD);
+        BlockCreate(131 * 29, 9 * 29 - 12, EBlockType::BRIDGE_ROPE);
         // メロン
-        BlockCreate(161 * 29, 12 * 29 - 12, 142);
+        BlockCreate(161 * 29, 12 * 29 - 12, EBlockType::ARTICHOKE);
         // ファイアバー強化
-        BlockCreate(66 * 29, 4 * 29 - 12, 124);
+        BlockCreate(66 * 29, 4 * 29 - 12, EBlockType::FIREBAR_GROW);
 
         // リフト
         LiftCount = 0;
@@ -4194,28 +4195,28 @@ void HandleSyobonActionTwoLevels()
         BlockCount = 0;
         //
         BlockSubType[BlockCount] = 6;
-        BlockCreate(1 * 29, 9 * 29 - 12, 300);
+        BlockCreate(1 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(40 * 29, 9 * 29 - 12, 110);
+        BlockCreate(40 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 7;
-        BlockCreate(79 * 29, 7 * 29 - 12, 300);
+        BlockCreate(79 * 29, 7 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 2;
-        BlockCreate(83 * 29, 7 * 29 - 12, 102);
+        BlockCreate(83 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(83 * 29, 2 * 29 - 12, 114);
+        BlockCreate(83 * 29, 2 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN);
         BlockCount += 1;
         //
         for (int i = -1; i > -7; i -= 1)
         {
-            BlockCreate(85 * 29, i * 29 - 12, 4);
+            BlockCreate(85 * 29, i * 29 - 12, EBlockType::HARD_BLOCK);
             BlockCount += 1;
         }
         //
@@ -4354,7 +4355,7 @@ void HandleSyobonActionTwoLevels()
         GroundSubType[GroundCount] = 1;
         GroundCount += 1;
         //
-        BlockCreate(6 * 29, 9 * 29 - 12, 110);
+        BlockCreate(6 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -4786,48 +4787,48 @@ void HandleSyobonActionTwoLevels()
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = 0;
-        BlockCreate(0 * 29, 0 * 29 - 12, 4);
+        BlockCreate(0 * 29, 0 * 29 - 12, EBlockType::HARD_BLOCK);
         BlockCount = 1;
         BlockSubType[BlockCount] = 0;
-        BlockCreate(2 * 29, 9 * 29 - 12, 4);
+        BlockCreate(2 * 29, 9 * 29 - 12, EBlockType::HARD_BLOCK);
         BlockCount = 2;
         BlockSubType[BlockCount] = 0;
-        BlockCreate(3 * 29, 9 * 29 - 12, 4);
+        BlockCreate(3 * 29, 9 * 29 - 12, EBlockType::HARD_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(5 * 29, 9 * 29 - 12, 115);
+        BlockCreate(5 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         BlockSubType[BlockCount] = 1;
-        BlockCreate(6 * 29, 9 * 29 - 12, 115);
-        BlockCount += 1;
-        //
-        BlockSubType[BlockCount] = 1;
-        BlockCreate(5 * 29, 10 * 29 - 12, 115);
-        BlockCount += 1;
-        BlockSubType[BlockCount] = 1;
-        BlockCreate(6 * 29, 10 * 29 - 12, 115);
+        BlockCreate(6 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(5 * 29, 11 * 29 - 12, 115);
+        BlockCreate(5 * 29, 10 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         BlockSubType[BlockCount] = 1;
-        BlockCreate(6 * 29, 11 * 29 - 12, 115);
-        BlockCount += 1;
-        //
-        BlockSubType[BlockCount] = 1;
-        BlockCreate(5 * 29, 12 * 29 - 12, 115);
-        BlockCount += 1;
-        BlockSubType[BlockCount] = 1;
-        BlockCreate(6 * 29, 12 * 29 - 12, 115);
+        BlockCreate(6 * 29, 10 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(70 * 29, 7 * 29 - 12, 115);
+        BlockCreate(5 * 29, 11 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         BlockSubType[BlockCount] = 1;
-        BlockCreate(71 * 29, 7 * 29 - 12, 115);
+        BlockCreate(6 * 29, 11 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCount += 1;
+        //
+        BlockSubType[BlockCount] = 1;
+        BlockCreate(5 * 29, 12 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCount += 1;
+        BlockSubType[BlockCount] = 1;
+        BlockCreate(6 * 29, 12 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCount += 1;
+        //
+        BlockSubType[BlockCount] = 1;
+        BlockCreate(70 * 29, 7 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCount += 1;
+        BlockSubType[BlockCount] = 1;
+        BlockCreate(71 * 29, 7 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -5268,28 +5269,28 @@ void HandleSyobonActionTwoLevels()
         BlockSubType[BlockCount] = 0;
         for (int i = -1; i > -7; i -= 1)
         {
-            BlockCreate(55 * 29, i * 29 - 12, 4);
+            BlockCreate(55 * 29, i * 29 - 12, EBlockType::HARD_BLOCK);
             BlockCount += 1;
         }
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(64 * 29, 12 * 29 - 12, 120);
+        BlockCreate(64 * 29, 12 * 29 - 12, EBlockType::TRAMPOLINE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(66 * 29, 3 * 29 - 12, 115);
+        BlockCreate(66 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(67 * 29, 3 * 29 - 12, 115);
+        BlockCreate(67 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(68 * 29, 3 * 29 - 12, 115);
+        BlockCreate(68 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 8;
-        BlockCreate(60 * 29, 6 * 29 - 12, 300);
+        BlockCreate(60 * 29, 6 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         /*
            bco = 1;
@@ -5447,23 +5448,23 @@ void HandleSyobonActionTwoLevels()
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = 0;
-        BlockCreate(0 * 29, -1 * 29 - 12, 5);
+        BlockCreate(0 * 29, -1 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(4 * 29, -1 * 29 - 12, 5);
+        BlockCreate(4 * 29, -1 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(1 * 29, 14 * 29 - 12, 5);
+        BlockCreate(1 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(6 * 29, 14 * 29 - 12, 5);
+        BlockCreate(6 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(7 * 29, 14 * 29 - 12, 5);
+        BlockCreate(7 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         EnemyAppearCount = 0;
@@ -5549,15 +5550,15 @@ void HandleSyobonActionTwoLevels()
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = 1;
-        BlockCreate(12 * 29, 13 * 29 - 12, 115);
+        BlockCreate(12 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(13 * 29, 13 * 29 - 12, 115);
+        BlockCreate(13 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(14 * 29, 13 * 29 - 12, 115);
+        BlockCreate(14 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         GroundCount = 0;
@@ -5873,35 +5874,35 @@ void HandleSyobonActionTwoLevels()
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = 0;
-        BlockCreate(1 * 29, 14 * 29 - 12, 5);
+        BlockCreate(1 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(2 * 29, 14 * 29 - 12, 5);
+        BlockCreate(2 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 9;
-        BlockCreate(3 * 29, 4 * 29 - 12, 300);
+        BlockCreate(3 * 29, 4 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(32 * 29, 9 * 29 - 12, 115);
+        BlockCreate(32 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(76 * 29, 14 * 29 - 12, 5);
+        BlockCreate(76 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(108 * 29, 11 * 29 - 12, 141);
+        BlockCreate(108 * 29, 11 * 29 - 12, EBlockType::BRIDGE_ROPE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(109 * 29, 10 * 29 - 12 - 3, 140);
+        BlockCreate(109 * 29, 10 * 29 - 12 - 3, EBlockType::SWORD);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 0;
-        BlockCreate(121 * 29, 10 * 29 - 12, 142);
+        BlockCreate(121 * 29, 10 * 29 - 12, EBlockType::ARTICHOKE);
         BlockCount += 1;
         //
         EnemyAppearCount = 0;
@@ -6347,15 +6348,15 @@ void HandleSyobonActionTwoLevels()
         BlockCount = 0;
         //
         BlockSubType[BlockCount] = 10;
-        BlockCreate(2 * 29, 9 * 29 - 12, 300);
+        BlockCreate(2 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(63 * 29, 13 * 29 - 12, 115);
+        BlockCreate(63 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = 1;
-        BlockCreate(64 * 29, 13 * 29 - 12, 115);
+        BlockCreate(64 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         GroundCount = 0;
@@ -6733,7 +6734,7 @@ void HandleSyobonActionThreeLevels()
 
 
         BlockSubType[BlockCount] = 4; //nブロック[nブロックco].xtype = 4;
-        BlockCreate(348, 249, 102);
+        BlockCreate(348, 249, EBlockType::ITEM_BLOCK_MUSHROOM);
         int t_9 = GroundCount;
         GroundX[t_9] = 8700; //n地面[t_9].a = 8700;
         GroundY[t_9] = 36500; //n地面[t_9].b = 36500;

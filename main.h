@@ -61,13 +61,6 @@ void str(std::string c, int a, int b);
 //)
 
 
-
-//ブロック (Block)
-// @attention +KZ: void tyobi() is now void BlockCreate()
-void BlockCreate(int x, int y, int type);
-// @attention +KZ: void brockbreak() is now void BlockBreak()
-void BlockBreak(int t);
-
 //メッセージブロック (Message Block)
 void ttmsg();
 void setfont(int x, int y);

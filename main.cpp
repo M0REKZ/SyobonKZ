@@ -311,10 +311,10 @@ void Mainprogram()
 					{
 						BlockX[t] = (SyobonRand(500) - 1) * 29 * 100;
 						BlockY[t] = SyobonRand(14) * 100 * 29 - 1200;
-						BlockType[t] = SyobonRand(142);
-						if (BlockType[t] >= 9 && BlockType[t] <= 99)
+						BlockType[t] = (EBlockType)SyobonRand(142);
+						if ((int)BlockType[t] >= 9 && (int)BlockType[t] <= 99)
 						{
-							BlockType[t] = SyobonRand(8);
+							BlockType[t] = (EBlockType)SyobonRand(8);
 						}
 						BlockSubType[t] = SyobonRand(4);
 					}
@@ -700,27 +700,6 @@ void bgmchange(SyobonKZMusic *x)
 	else
 		SyobonKZVolumeMusic(SYOBONKZ_MAX_VOLUME * 50 / 100);
 } // bgmchange()
-
-// ブロック出現 (Block appears)
-
-void BlockCreate(int x, int y, int type)
-{
-
-	BlockX[BlockCount] = x * 100;
-	BlockY[BlockCount] = y * 100;
-	BlockType[BlockCount] = type;
-
-	BlockCount++;
-	if (BlockCount >= tmax)
-		BlockCount = 0;
-} // BlockCreate
-
-// ブロック破壊 (Block destruction)
-void BlockBreak(int t)
-{
-	//+KZ removed useless code
-	BlockX[t] = -800000;
-} // brock
 
 // メッセージ (Message)
 void ttmsg()

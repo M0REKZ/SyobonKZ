@@ -4,6 +4,7 @@
 #include "player.h"
 #include "entities.h"
 #include "extra_graphics.h"
+#include "blocks.h"
 
 std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 
@@ -701,7 +702,7 @@ void HandlePlayerBlocks()
         {
             if (PlayerState != 200 && PlayerState != 1 && PlayerState != 2)
             {
-                if (BlockType[t] < 1000 && BlockType[t] != 800 && BlockType[t] != 140 && BlockType[t] != 141)
+                if ((int)BlockType[t] < 1000 && BlockType[t] != EBlockType::COIN && BlockType[t] != EBlockType::SWORD && BlockType[t] != EBlockType::BRIDGE_ROPE)
                 { // && ttype[t]!=5){
 
                     // if (!(mztm>=1 && mztype==1 && actaon[3]==1)){
@@ -711,7 +712,7 @@ void HandlePlayerBlocks()
                         xx[17] = 0;
 
                         // 上 (Above)
-                        if (BlockType[t] != 7 && BlockType[t] != 110 && !(BlockType[t] == 114))
+                        if (BlockType[t] != EBlockType::ITEM_BLOCK_HIDDEN && BlockType[t] != EBlockType::ITEM_BLOCK_POISON_HIDDEN && !(BlockType[t] == EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN))
                         {
                             if (PlayerX +
                                         PlayerSizeX >
@@ -724,14 +725,14 @@ void HandlePlayerBlocks()
                                         xx[0] * 2 - 100 &&
                                 PlayerY + PlayerSizeY > xx[9] && PlayerY + PlayerSizeY < xx[9] + xx[1] && PlayerVelY >= -100)
                             {
-                                if (BlockType[t] != 115 && BlockType[t] != 400 && BlockType[t] != 117 && BlockType[t] != 118 && BlockType[t] != 120)
+                                if (BlockType[t] != EBlockType::BRICK_BRITTLE && BlockType[t] != EBlockType::PSWITCH && BlockType[t] != EBlockType::NOTE_BLOCK && BlockType[t] != EBlockType::PUSH_BLOCK && BlockType[t] != EBlockType::TRAMPOLINE)
                                 {
                                     PlayerY = xx[9] - PlayerSizeY + 100;
                                     PlayerVelY = 0;
                                     PlayerGrounded = 1;
                                     xx[16] = 1;
                                 }
-                                else if (BlockType[t] == 115)
+                                else if (BlockType[t] == EBlockType::BRICK_BRITTLE)
                                 {
                                     PlaySound(Sounds[3]);
                                     CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
@@ -753,22 +754,22 @@ void HandlePlayerBlocks()
                                     BlockBreak(t);
                                 }
                                 // Pスイッチ (P switch)
-                                else if (BlockType[t] == 400)
+                                else if (BlockType[t] == EBlockType::PSWITCH)
                                 {
                                     PlayerVelY = 0;
                                     BlockX[t] = -8000000;
                                     PlaySound(Sounds[13]);
                                     for (tt = 0; tt < tmax; tt++)
                                     {
-                                        if (BlockType[tt] != 7)
+                                        if (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN)
                                         {
-                                            BlockType[tt] = 800;
+                                            BlockType[tt] = EBlockType::COIN;
                                         }
                                     }
                                     SyobonKZHaltMusic();
                                 }
                                 // 音符+ (Musical note+)
-                                else if (BlockType[t] == 117)
+                                else if (BlockType[t] == EBlockType::NOTE_BLOCK)
                                 {
                                     PlaySound(Sounds[14]);
                                     PlayerVelY = -1500;
@@ -784,7 +785,7 @@ void HandlePlayerBlocks()
                                         BlockSubType[t] = 1;
                                 }
                                 // ジャンプ台 (Ski jump) //+KZ: ??
-                                else if (BlockType[t] == 120)
+                                else if (BlockType[t] == EBlockType::TRAMPOLINE)
                                 {
                                     // txtype[t]=0;
                                     PlayerVelY = -2400;
@@ -810,7 +811,7 @@ void HandlePlayerBlocks()
                         {
 
                             // 下 (Below)
-                            if (t3 == xx[21] && PlayerState != 100 && BlockType[t] != 117)
+                            if (t3 == xx[21] && PlayerState != 100 && BlockType[t] != EBlockType::NOTE_BLOCK)
                             { // && xx[12]==0){
                                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 + 800 && PlayerX < xx[8] + xx[1] - xx[0] * 2 - 800 && PlayerY > xx[9] - xx[0] * 2 && PlayerY < xx[9] + xx[1] - xx[0] * 2 && PlayerVelY <= 0)
                                 {
@@ -822,7 +823,7 @@ void HandlePlayerBlocks()
                                         PlayerVelY = -PlayerVelY * 2 / 3;
                                     } //}
                                     // 壊れる (Break)
-                                    if (BlockType[t] == 1 && PlayerGrounded == 0)
+                                    if (BlockType[t] == EBlockType::BRICK && PlayerGrounded == 0)
                                     {
                                         PlaySound(Sounds[3]);
                                         CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
@@ -848,7 +849,7 @@ void HandlePlayerBlocks()
                                         BlockBreak(t);
                                     }
                                     // コイン (Coin)
-                                    if (BlockType[t] == 2 && PlayerGrounded == 0)
+                                    if (BlockType[t] == EBlockType::ITEM_BLOCK_COIN && PlayerGrounded == 0)
                                     {
                                         PlaySound(Sounds[4]);
                                         CreateExtraGraphic(BlockX[t] +
@@ -859,10 +860,10 @@ void HandlePlayerBlocks()
                                               -800,
                                               0,
                                               40, 3000, 3000, 0, 16);
-                                        BlockType[t] = 3;
+                                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                                     }
                                     // 隠し (Hidden)
-                                    if (BlockType[t] == 7)
+                                    if (BlockType[t] == EBlockType::ITEM_BLOCK_HIDDEN)
                                     {
                                         PlaySound(Sounds[4]);
                                         CreateExtraGraphic(BlockX[t] +
@@ -874,14 +875,14 @@ void HandlePlayerBlocks()
                                               0,
                                               40, 3000, 3000, 0, 16);
                                         PlayerY = xx[9] + xx[1] + xx[0];
-                                        BlockType[t] = 3;
+                                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                                         if (PlayerVelY < 0)
                                         {
                                             PlayerVelY = -PlayerVelY * 2 / 3;
                                         }
                                     }
                                     // トゲ (Spikes)
-                                    if (BlockType[t] == 10)
+                                    if (BlockType[t] == EBlockType::SPIKE)
                                     {
                                         PlayerMessageTimer = 30;
                                         PlayerMessageType = 3;
@@ -892,9 +893,9 @@ void HandlePlayerBlocks()
                             // 左右 (Left and right)
                             if (t3 == xx[22] && xx[15] == 0)
                             {
-                                if (BlockType[t] != 7 && BlockType[t] != 110 && BlockType[t] != 117)
+                                if (BlockType[t] != EBlockType::ITEM_BLOCK_HIDDEN && BlockType[t] != EBlockType::ITEM_BLOCK_POISON_HIDDEN && BlockType[t] != EBlockType::NOTE_BLOCK)
                                 {
-                                    if (!(BlockType[t] == 114))
+                                    if (!(BlockType[t] == EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN))
                                     { // && txtype[t]==1)){
                                         if (BlockX[t] >= -20000)
                                         {
@@ -927,7 +928,7 @@ void HandlePlayerBlocks()
 
                 } // && ttype[t]<50
 
-                if (BlockType[t] == 800)
+                if (BlockType[t] == EBlockType::COIN)
                 {
                     // if (xx[0]+xx[2]>=-xx[14] && xx[0]<=fxmax+xx[14] && xx[1]+xx[3]>=-10-9000 && xx[1]<=fymax+10000){
                     if (PlayerY >
@@ -942,7 +943,7 @@ void HandlePlayerBlocks()
                     }
                 }
                 // 剣とってクリア (Get the sword and clear the stage.)
-                if (BlockType[t] == 140)
+                if (BlockType[t] == EBlockType::SWORD)
                 {
                     if (PlayerY >
                             xx[9] - xx[0] * 2 - 2000 &&
@@ -961,7 +962,7 @@ void HandlePlayerBlocks()
                     }
                 }
                 // 特殊的 (special)
-                if (BlockType[t] == 100)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_DODGE)
                 { // xx[9]+xx[1]+3000<mb && // && mb>xx[9]-xx[0]*2
                     if (PlayerY >
                             xx[9] - xx[0] * 2 - 2000 &&
@@ -997,17 +998,17 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[4]);
                         CreateExtraGraphic(BlockX[t] + 10, BlockY[t],
                               0, -800, 0, 40, 3000, 3000, 0, 16);
-                        BlockType[t] = 3;
+                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                     }
                 } // 100
 
                 // 敵出現 (Enemy Appearance)
-                if (BlockType[t] == 101)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_ENEMY)
                 { // xx[9]+xx[1]+3000<mb && // && mb>xx[9]-xx[0]*2
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[8]);
-                        BlockType[t] = 3;
+                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
                         if (BlockSubType[t] == 0)
                             CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL, 0);
@@ -1026,12 +1027,12 @@ void HandlePlayerBlocks()
                 } // 101
 
                 // おいしいきのこ出現 (Delicious mushrooms have appeared.)
-                if (BlockType[t] == 102)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_MUSHROOM)
                 {
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[8]);
-                        BlockType[t] = 3;
+                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
                         if (BlockSubType[t] == 0)
                             CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, 0);
@@ -1043,39 +1044,39 @@ void HandlePlayerBlocks()
                 } // 102
 
                 // まずいきのこ出現 (First, mushrooms appear.)
-                if (BlockType[t] == 103)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_MUSHROOM_2)
                 {
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[8]);
-                        BlockType[t] = 3;
+                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
                         CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, 1);
                     }
                 } // 103
 
                 // 悪スター出し (Bad Star)
-                if (BlockType[t] == 104)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_STAR)
                 {
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[8]);
-                        BlockType[t] = 3;
+                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
                         CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BAD_STAR, 0);
                     }
                 } // 104
 
                 // 毒きのこ量産 (Mass production of poisonous mushrooms)
-                if (BlockType[t] == 110)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_HIDDEN)
                 {
                     if (xx[17] == 1)
                     {
-                        BlockType[t] = 111;
+                        BlockType[t] = EBlockType::ITEM_BLOCK_POISON_OPEN;
                         thp[t] = 999;
                     }
                 } // 110
-                if (BlockType[t] == 111 && BlockX[t] - fx >= 0)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_OPEN && BlockX[t] - fx >= 0)
                 {
                     thp[t]++;
                     if (thp[t] >= 16)
@@ -1087,16 +1088,16 @@ void HandlePlayerBlocks()
                     }
                 }
                 // コイン量産 (Coin mass production)
-                if (BlockType[t] == 112)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_COINS)
                 {
                     if (xx[17] == 1)
                     {
-                        BlockType[t] = 113;
+                        BlockType[t] = EBlockType::ITEM_BLOCK_COINS_OPEN;
                         thp[t] = 999;
                         BlockItemCount[t] = 0;
                     }
                 } // 110
-                if (BlockType[t] == 113 && BlockX[t] - fx >= 0)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_COINS_OPEN && BlockX[t] - fx >= 0)
                 {
                     if (BlockItemCount[t] <= 19)
                         thp[t]++;
@@ -1111,14 +1112,14 @@ void HandlePlayerBlocks()
                     }
                 }
                 // 隠し毒きのこ (Hidden poisonous mushroom)
-                if (BlockType[t] == 114)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN)
                 {
                     if (xx[17] == 1)
                     {
                         if (BlockSubType[t] == 0)
                         {
                             PlaySound(Sounds[8]);
-                            BlockType[t] = 3;
+                            BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                             EnemyBlockAppearTimer[EnemyCount] = 16;
                             CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, 1);
                         }
@@ -1129,14 +1130,14 @@ void HandlePlayerBlocks()
                                       10,
                                   BlockY[t],
                                   0, -800, 0, 40, 3000, 3000, 0, 16);
-                            BlockType[t] = 115;
+                            BlockType[t] = EBlockType::BRICK_BRITTLE;
                             BlockSubType[t] = 0;
                         }
                         if (BlockSubType[t] == 10)
                         {
                             if (stageonoff == 1)
                             {
-                                BlockType[t] = 130;
+                                BlockType[t] = EBlockType::ON_BLOCK;
                                 stageonoff = 0;
                                 PlaySound(Sounds[13]);
                                 BlockSubType[t] = 2;
@@ -1160,32 +1161,32 @@ void HandlePlayerBlocks()
                                           [t],
                                       0,
                                       -800, 0, 40, 3000, 3000, 0, 16);
-                                BlockType[t] = 3;
+                                BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                             }
                         }
                     }
                 } // 114
 
                 // もろいブロック (Fragile block)
-                if (BlockType[t] == 115)
+                if (BlockType[t] == EBlockType::BRICK_BRITTLE)
                 {
 
                 } // 115
 
                 // Pスイッチ (P switch)
-                if (BlockType[t] == 116)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_PSWITCH)
                 {
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[8]);
                         // PlaySound(Sounds[13]);
-                        BlockType[t] = 3; // abrocktm[aco]=18;CreateEntity(ta[t],tb[t],0,0,0,104,1);
-                        BlockCreate(BlockX[t] / 100, (BlockY[t] / 100) - 29, 400);
+                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN; // abrocktm[aco]=18;CreateEntity(ta[t],tb[t],0,0,0,104,1);
+                        BlockCreate(BlockX[t] / 100, (BlockY[t] / 100) - 29, EBlockType::PSWITCH);
                     }
                 } // 116
 
                 // ファイアバー強化 (Fire Bar Enhancement)
-                if (BlockType[t] == 124)
+                if (BlockType[t] == EBlockType::FIREBAR_GROW)
                 {
                     if (xx[17] == 1)
                     {
@@ -1200,11 +1201,11 @@ void HandlePlayerBlocks()
                                 }
                             }
                         }
-                        BlockType[t] = 3;
+                        BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                     }
                 }
                 // ONスイッチ (ON switch)
-                if (BlockType[t] == 130)
+                if (BlockType[t] == EBlockType::ON_BLOCK)
                 {
                     if (xx[17] == 1)
                     {
@@ -1215,7 +1216,7 @@ void HandlePlayerBlocks()
                         }
                     }
                 }
-                else if (BlockType[t] == 131)
+                else if (BlockType[t] == EBlockType::OFF_BLOCK)
                 {
                     if (xx[17] == 1 && BlockSubType[t] != 2)
                     {
@@ -1238,7 +1239,7 @@ void HandlePlayerBlocks()
                     }
                 }
                 // ヒント (Hint)
-                if (BlockType[t] == 300)
+                if (BlockType[t] == EBlockType::MESSAGE_BLOCK)
                 {
                     if (xx[17] == 1)
                     {
@@ -1261,7 +1262,7 @@ void HandlePlayerBlocks()
                     }
                 } // 300
 
-                if (BlockType[t] == 301)
+                if (BlockType[t] == EBlockType::MESSAGE_BLOCK_BREAKABLE)
                 {
                     if (xx[17] == 1)
                     {
@@ -1304,16 +1305,16 @@ void HandlePlayerBlocks()
                 }
             }
             // ONOFF
-            if (BlockType[t] == 130 && stageonoff == 0)
+            if (BlockType[t] == EBlockType::ON_BLOCK && stageonoff == 0)
             {
-                BlockType[t] = 131;
+                BlockType[t] = EBlockType::OFF_BLOCK;
             }
-            if (BlockType[t] == 131 && stageonoff == 1)
+            if (BlockType[t] == EBlockType::OFF_BLOCK && stageonoff == 1)
             {
-                BlockType[t] = 130;
+                BlockType[t] = EBlockType::ON_BLOCK;
             }
-            // ヒント
-            if (BlockType[t] == 300)
+            // ヒント (Hint)
+            if (BlockType[t] == EBlockType::MESSAGE_BLOCK)
             {
                 if (BlockSubType[t] >= 500 && BlockX[t] >= -6000)
                 { // && ta[t]>=-6000){
@@ -1541,7 +1542,7 @@ void HandlePlayerWalls()
                 {
                     if (GroundType[t] == 100)
                     {
-                        if (GroundSubType[t] == 0 || GroundSubType[t] == 1 && BlockType[1] != 3)
+                        if (GroundSubType[t] == 0 || GroundSubType[t] == 1 && BlockType[1] != EBlockType::ITEM_BLOCK_OPEN)
                         {
                             CreateEntity(GroundX[t] + 1000, 32000, 0, 0, 0, EEnemyType::SEAL, 0);
                             GroundX[t] = -800000000;
@@ -1669,7 +1670,7 @@ void HandlePlayerWalls()
                             GroundX[t] = -800000000;
                         }
 
-                        if (GroundSubType[t] == 1 && BlockType[6] <= 6)
+                        if (GroundSubType[t] == 1 && (int)BlockType[6] <= 6)
                         {
                             EnemyMessageTimer[EnemyCount] = 10;
                             EnemyMessageType[EnemyCount] = 50;

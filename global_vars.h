@@ -207,8 +207,8 @@ extern int BlockX[tmax];
 extern int BlockY[tmax];
 //extern int tc[tmax], td[tmax]; //+KZ: unused
 extern int thp[tmax];
-// @attention +KZ: int ttype[tmax] is now int BlockType[tmax]
-extern int BlockType[tmax];
+// @attention +KZ: int ttype[tmax] is now EBlockType BlockType[tmax]
+extern EBlockType BlockType[tmax];
 //+KZ: titem[tmax] is specific for Block 112/113 (Coin mass production)
 // @attention +KZ: int titem[tmax] is now int BlockItemCount[tmax]
 extern int BlockItemCount[tmax];

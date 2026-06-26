@@ -1413,14 +1413,14 @@ void HandleEntitiesBlocks()
 		xx[9] = BlockY[tt] - fy;
 		if (BlockX[tt] - fx + xx[1] >= -12010 && BlockX[tt] - fx <= fxmax + 12000)
 		{
-			if (EnemyType[t] != EEnemyType::FALLING_CAT && EnemyType[t] != EEnemyType::BALL_BIG && BlockType[tt] != 140)
+			if (EnemyType[t] != EEnemyType::FALLING_CAT && EnemyType[t] != EEnemyType::BALL_BIG && BlockType[tt] != EBlockType::SWORD)
 			{
 
 				// 上 (Above)
-				if (BlockType[tt] != 7)
+				if (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN)
 				{
 					// if (ttype[tt]==117 && txtype[t]==1){ad[t]=-1500;}
-					if (!(BlockType[tt] == 117))
+					if (!(BlockType[tt] == EBlockType::NOTE_BLOCK))
 					{
 						// if (!(ttype[tt]==120 && txtype[t]==0)){
 						if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + xx[1] - xx[0] * 1 && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] + EnemySizeY[t] - fy < xx[9] + xx[1] && EnemyVelY[t] >= -100)
@@ -1429,7 +1429,7 @@ void HandleEntitiesBlocks()
 							EnemyVelY[t] = 0;
 							axzimen[t] = 1;
 							// ジャンプ台 (Ski jump)
-							if (BlockType[tt] == 120)
+							if (BlockType[tt] == EBlockType::TRAMPOLINE)
 							{
 								EnemyVelY[t] = -1600;
 								azimentype[t] = 30;
@@ -1439,7 +1439,7 @@ void HandleEntitiesBlocks()
 					}
 				}
 				// 下 (Below)
-				if (BlockType[tt] != 117)
+				if (BlockType[tt] != EBlockType::NOTE_BLOCK)
 				{
 					if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + xx[1] - xx[0] * 1 && EnemyY[t] - fy > xx[9] + xx[1] - xx[1] && EnemyY[t] - fy < xx[9] + xx[1] + xx[0])
 					{
@@ -1455,7 +1455,7 @@ void HandleEntitiesBlocks()
 				}
 				// 左右 (Left and right)
 				xx[27] = 0;
-				if (((int)EnemyType[t] >= 100 || (BlockType[tt] != 7 || BlockType[tt] == 7 && EnemyType[t] == EEnemyType::SHELL)) && BlockType[tt] != 117)
+				if (((int)EnemyType[t] >= 100 || (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN || BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL)) && BlockType[tt] != EBlockType::NOTE_BLOCK)
 				{
 					if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[2] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] / 2 - xx[0] && EnemyY[t] - fy < xx[9] + xx[2])
 					{
@@ -1474,17 +1474,17 @@ void HandleEntitiesBlocks()
 						xx[27] = 1;
 					}
 					// こうらブレイク (Shell break)
-					if (xx[27] == 1 && (BlockType[tt] == 7 || BlockType[tt] == 1) && EnemyType[t] == EEnemyType::SHELL)
+					if (xx[27] == 1 && (BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN || BlockType[tt] == EBlockType::BRICK) && EnemyType[t] == EEnemyType::SHELL)
 					{
-						if (BlockType[tt] == 7)
+						if (BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN)
 						{
 							PlaySound(Sounds[4]);
-							BlockType[tt] = 3;
+							BlockType[tt] = EBlockType::ITEM_BLOCK_OPEN;
 							CreateExtraGraphic(BlockX[tt] + 10,
 								  BlockY[tt], 0, -800,
 								  0, 40, 3000, 3000, 0, 16);
 						}
-						else if (BlockType[tt] == 1)
+						else if (BlockType[tt] == EBlockType::BRICK)
 						{
 							PlaySound(Sounds[3]);
 							CreateExtraGraphic(BlockX[tt] + 1200,
@@ -1522,7 +1522,7 @@ void HandleEntitiesBlocks()
 			} // 90
 		}
 		// 剣とってクリア (Get the sword and clear the stage)
-		if (BlockType[tt] == 140)
+		if (BlockType[tt] == EBlockType::SWORD)
 		{
 			if (EnemyY[t] - fy > xx[9] - xx[0] * 2 - 2000 && EnemyY[t] - fy < xx[9] + xx[1] - xx[0] * 2 + 2000 && EnemyX[t] + EnemySizeX[t] - fx > xx[8] - 400 && EnemyX[t] - fx < xx[8] + xx[1])
 			{

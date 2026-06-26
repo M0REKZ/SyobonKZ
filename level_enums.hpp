@@ -60,23 +60,23 @@ enum class EBlockType
     // (block at the start of 1-1)
     ITEM_BLOCK_DODGE = 100,
 
-    ITEM_BLOCK_ENEMY = 101,      // Item block with a goomba
+    ITEM_BLOCK_ENEMY = 101,      // Item block with a enemy (ball, spiky ball, burning flower, defrag)
     ITEM_BLOCK_MUSHROOM = 102,   // "Delicious!"
     ITEM_BLOCK_MUSHROOM_2 = 103, // "Not poisonous, but..."
-    BRICK_STAR = 104,
+    ITEM_BLOCK_STAR = 104,
 
     // Invisible item block with infinite poisonous mushrooms
-    ITEM_BLOCK_POISON = 110,
+    ITEM_BLOCK_POISON_HIDDEN = 110,
     // Same as above, but already open
     ITEM_BLOCK_POISON_OPEN = 111,
 
     // Has a ton of coins inside
-    BRICK_COIN = 112,
+    ITEM_BLOCK_COINS = 112,
     // Same as above but already open
-    BRICK_COIN_OPEN = 113,
+    ITEM_BLOCK_COINS_OPEN = 113,
 
     // Item block with a single poisonous mushroom inside
-    ITEM_BLOCK_POISON_SINGLE = 114,
+    ITEM_BLOCK_POISON_SINGLE_HIDDEN = 114,
 
     // Crumbles when stood on
     BRICK_BRITTLE = 115,
