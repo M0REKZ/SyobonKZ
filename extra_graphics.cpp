@@ -48,11 +48,11 @@ void RenderExtraGraphics()
             // ブロックの破片 (Block fragments)
             if (ExtraGraphicType[t] == 1)
             {
-                if (stagecolor == 1 || stagecolor == 3 || stagecolor == 5)
+                if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY)
                     setcolor(9 * 16, 6 * 16, 3 * 16);
-                if (stagecolor == 2)
+                if (StageColor == ELevelType::UNDERGROUND)
                     setcolor(0, 120, 160);
-                if (stagecolor == 4)
+                if (StageColor == ELevelType::CASTLE)
                     setcolor(192, 192, 192);
 
                 fillarc(xx[0] / 100, xx[1] / 100, 7, 7);
@@ -105,7 +105,7 @@ void RenderBackground()
 
             if (BackgroundType[t] != 3)
             {
-                if ((BackgroundType[t] == 1 || BackgroundType[t] == 2) && stagecolor == 5)
+                if ((BackgroundType[t] == 1 || BackgroundType[t] == 2) && StageColor == ELevelType::ICY)
                 {
                     drawimage(Sliced_GFX[BackgroundType[t] + 30] //+KZ: so.. this draws the broken grass in 3-1, did it even work correctly in any syobon action version?
                                         [4],

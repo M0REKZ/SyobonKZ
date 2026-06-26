@@ -15,15 +15,15 @@ void RenderBlocks()
         {
 
             xx[9] = 0;
-            if (stagecolor == 2)
+            if (StageColor == ELevelType::UNDERGROUND)
             {
                 xx[9] = 30;
             }
-            if (stagecolor == 4)
+            if (StageColor == ELevelType::CASTLE)
             {
                 xx[9] = 60;
             }
-            if (stagecolor == 5)
+            if (StageColor == ELevelType::ICY)
             {
                 xx[9] = 90;
             }
@@ -239,15 +239,15 @@ void RenderWalls()
             if (GroundType[t] == 52)
             {
                 xx[29] = 0;
-                if (stagecolor == 2)
+                if (StageColor == ELevelType::UNDERGROUND)
                 {
                     xx[29] = 30;
                 }
-                if (stagecolor == 4)
+                if (StageColor == ELevelType::CASTLE)
                 {
                     xx[29] = 60;
                 }
-                if (stagecolor == 5)
+                if (StageColor == ELevelType::ICY)
                 {
                     xx[29] = 90;
                 }
@@ -260,7 +260,7 @@ void RenderWalls()
                                   (GroundX[t] -
                                    fx) / 100 + 29 * t3,
                                   (GroundY[t] - fy) / 100);
-                        if (stagecolor != 4)
+                        if (StageColor != ELevelType::CASTLE)
                         {
                             drawimage(Sliced_GFX[6 + xx[29]]
                                                 [1],
@@ -319,9 +319,9 @@ void RenderWalls()
             {
                 if (GroundType[t] >= 100 && GroundType[t] <= 299)
                 {
-                    if (stagecolor == 1 || stagecolor == 3 || stagecolor == 5)
+                    if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY)
                         setc0();
-                    if (stagecolor == 2 || stagecolor == 4)
+                    if (StageColor == ELevelType::UNDERGROUND || StageColor == ELevelType::CASTLE)
                         setc1();
                     drawrect((GroundX[t] - fx) / 100,
                              (GroundY[t] - fy) / 100,

@@ -69,15 +69,15 @@ void rpaint()
 	// ダブルバッファリング (Double buffering)
 	setcolor(0, 0, 0);
 	// if (stagecolor==1)setcolor(170,170,255);
-	if (stagecolor == 1)
+	if (StageColor == ELevelType::OVERWORLD)
 		setcolor(160, 180, 250);
-	if (stagecolor == 2)
+	if (StageColor == ELevelType::UNDERGROUND)
 		setcolor(10, 10, 10);
-	if (stagecolor == 3)
+	if (StageColor == ELevelType::SKY)
 		setcolor(160, 180, 250);
-	if (stagecolor == 4)
+	if (StageColor == ELevelType::CASTLE)
 		setcolor(10, 10, 10);
-	if (stagecolor == 5)
+	if (StageColor == ELevelType::ICY)
 	{
 		setcolor(160, 180, 250);
 		PlayerGroundType = EGroundType::SLIP;
@@ -278,7 +278,7 @@ void Mainprogram()
 			zxon = 1;
 			mainmsgtype = 0;
 
-			stagecolor = 1;
+			StageColor = ELevelType::OVERWORLD;
 			PlayerX = 5600;
 			PlayerY = 32000;
 			PlayerLookingDirection = 1;
@@ -327,7 +327,7 @@ void Mainprogram()
 						EnemyAppearY[t] = SyobonRand(15) * 100 * 29 - 1200 - 3000;
 						if (SyobonRand(6) == 0)
 						{
-							EnemyAppearType[t] = SyobonRand(9);
+							EnemyAppearType[t] = (EEnemyType)SyobonRand(9);
 						}
 					}
 				}
@@ -344,7 +344,7 @@ void Mainprogram()
 				LiftCount++;
 
 				if (SyobonRand(4) == 0)
-					stagecolor = SyobonRand(5);
+					StageColor = (ELevelType)SyobonRand(5);
 			}
 
 		} // zxon

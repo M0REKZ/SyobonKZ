@@ -1,4 +1,5 @@
 #include <string>
+#include "level_enums.hpp"
 #include "DxLib.h"
 
 #ifndef SYOBON_GLOBAL_VARS_H
@@ -26,7 +27,8 @@ extern ESyobonState SyobonState;
 extern int SyobonStateTimer;
 
 //ステージ (Stage)
-extern int stagecolor;
+// @attention +KZ: int stagecolor is now LevelType StageColor
+extern ELevelType StageColor;
 // @attention +KZ: int sta is now int SyobonWorld
 extern int SyobonWorld;
 // @attention +KZ: int stb is now int SyobonLevel
@@ -263,7 +265,7 @@ extern int af[amax]; //+KZ: for what is this one?
 extern int EnemyBlockAppearTimer[amax];
 extern int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
 // @attention +KZ: int atype[amax] is now int EnemyType[amax]
-extern int EnemyType[amax];
+extern EEnemyType EnemyType[amax];
 // @attention +KZ: int axtype[amax] is now int EnemySubType[amax]
 extern int EnemySubType[amax];
 // @attention +KZ: int amuki[amax] is now int EnemyLookingDirection[amax]
@@ -292,8 +294,8 @@ extern int EnemyAppearX[bmax];
 extern int EnemyAppearY[bmax];
 // @attention +KZ: int btm[bmax] is now int EnemyAppearTimer[bmax]
 extern int EnemyAppearTimer[bmax];
-// @attention +KZ: int btype[bmax] is now int EnemyAppearType[bmax]
-extern int EnemyAppearType[bmax];
+// @attention +KZ: int btype[bmax] is now EEnemyType EnemyAppearType[bmax]
+extern EEnemyType EnemyAppearType[bmax];
 // @attention +KZ: int bxtype[bmax] is now int EnemyAppearSubType[bmax]
 extern int EnemyAppearSubType[bmax];
 extern int bz[bmax]; //+KZ: seems like a init indicator

@@ -583,7 +583,7 @@ void HandlePlayer()
         }
     }
     // if (mb>=42000){mb=42000;PlayerGrounded=1;}
-    if (PlayerY >= 38000 && Health >= 0 && stagecolor == 4)
+    if (PlayerY >= 38000 && Health >= 0 && StageColor == ELevelType::CASTLE)
     {
         Health = -2;
         PlayerMessageTimer = 30;
@@ -1010,20 +1010,18 @@ void HandlePlayerBlocks()
                         BlockType[t] = 3;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
                         if (BlockSubType[t] == 0)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 0, 0);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL, 0);
                         if (BlockSubType[t] == 1)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 4, 0);
-                        if (BlockSubType[t] == 3)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 101, 0);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL_SPIKY, 0);
+                        if (BlockSubType[t] == 3 || BlockSubType[t] == 10)
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BURNING_FLOWER, 0);
                         if (BlockSubType[t] == 4)
                         {
                             EnemyBlockAppearTimer[EnemyCount] = 20;
                             CreateEntity(BlockX[t] -
                                              400,
-                                         BlockY[t] - 1600, 0, 0, 0, 6, 0);
+                                         BlockY[t] - 1600, 0, 0, 0, EEnemyType::DEFRAG, 0);
                         }
-                        if (BlockSubType[t] == 10)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 101, 0);
                     }
                 } // 101
 
@@ -1036,11 +1034,11 @@ void HandlePlayerBlocks()
                         BlockType[t] = 3;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
                         if (BlockSubType[t] == 0)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 100, 0);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, 0);
                         if (BlockSubType[t] == 2)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 100, 2);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, 2);
                         if (BlockSubType[t] == 3)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 102, 1);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, 1);
                     }
                 } // 102
 
@@ -1052,7 +1050,7 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[8]);
                         BlockType[t] = 3;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
-                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 100, 1);
+                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, 1);
                     }
                 } // 103
 
@@ -1064,7 +1062,7 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[8]);
                         BlockType[t] = 3;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
-                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 110, 0);
+                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BAD_STAR, 0);
                     }
                 } // 104
 
@@ -1085,7 +1083,7 @@ void HandlePlayerBlocks()
                         thp[t] = 0;
                         PlaySound(Sounds[8]);
                         EnemyBlockAppearTimer[EnemyCount] = 16;
-                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 102, 1);
+                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, 1);
                     }
                 }
                 // コイン量産 (Coin mass production)
@@ -1122,7 +1120,7 @@ void HandlePlayerBlocks()
                             PlaySound(Sounds[8]);
                             BlockType[t] = 3;
                             EnemyBlockAppearTimer[EnemyCount] = 16;
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, 102, 1);
+                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, 1);
                         }
                         if (BlockSubType[t] == 2)
                         {
@@ -1144,7 +1142,7 @@ void HandlePlayerBlocks()
                                 BlockSubType[t] = 2;
                                 for (t = 0; t < amax; t++)
                                 {
-                                    if (EnemyType[t] == 87 || EnemyType[t] == 88)
+                                    if (EnemyType[t] == EEnemyType::FIREBAR_CLOCKWISE || EnemyType[t] == EEnemyType::FIREBAR_COUNTERCLOCKWISE)
                                     {
                                         if (EnemySubType[t] == 105)
                                         {
@@ -1194,7 +1192,7 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[13]);
                         for (t = 0; t < amax; t++)
                         {
-                            if (EnemyType[t] == 87 || EnemyType[t] == 88)
+                            if (EnemyType[t] == EEnemyType::FIREBAR_CLOCKWISE || EnemyType[t] == EEnemyType::FIREBAR_COUNTERCLOCKWISE)
                             {
                                 if (EnemySubType[t] == 101)
                                 {
@@ -1227,7 +1225,7 @@ void HandlePlayerBlocks()
                         {
                             for (t = 0; t < amax; t++)
                             {
-                                if (EnemyType[t] == 87 || EnemyType[t] == 88)
+                                if (EnemyType[t] == EEnemyType::FIREBAR_CLOCKWISE || EnemyType[t] == EEnemyType::FIREBAR_COUNTERCLOCKWISE)
                                 {
                                     if (EnemySubType[t] == 105)
                                     {
@@ -1545,14 +1543,14 @@ void HandlePlayerWalls()
                     {
                         if (GroundSubType[t] == 0 || GroundSubType[t] == 1 && BlockType[1] != 3)
                         {
-                            CreateEntity(GroundX[t] + 1000, 32000, 0, 0, 0, 3, 0);
+                            CreateEntity(GroundX[t] + 1000, 32000, 0, 0, 0, EEnemyType::SEAL, 0);
                             GroundX[t] = -800000000;
                             PlaySound(Sounds[10]);
                         }
                     }
                     if (GroundType[t] == 101)
                     {
-                        CreateEntity(GroundX[t] + 6000, -4000, 0, 0, 0, 3, 1);
+                        CreateEntity(GroundX[t] + 6000, -4000, 0, 0, 0, EEnemyType::SEAL, 1);
                         GroundX[t] = -800000000;
                         PlaySound(Sounds[10]);
                     }
@@ -1564,20 +1562,20 @@ void HandlePlayerWalls()
                             {
                                 CreateEntity(GroundX[t] +
                                                  t3 * 3000,
-                                             -3000, 0, 0, 0, 0, 0);
+                                             -3000, 0, 0, 0, EEnemyType::BALL, 0);
                             }
                         }
                         if (GroundSubType[t] == 1 && PlayerY >= 16000)
                         {
                             CreateEntity(GroundX[t] +
                                              1500,
-                                         44000, 0, -2000, 0, 4, 0);
+                                         44000, 0, -2000, 0, EEnemyType::BALL_SPIKY, 0);
                         }
                         else if (GroundSubType[t] == 2)
                         {
                             CreateEntity(GroundX[t] +
                                              4500,
-                                         30000, 0, -1600, 0, 5, 0);
+                                         30000, 0, -1600, 0, EEnemyType::KUMA, 0);
                             PlaySound(Sounds[10]);
                             GroundSubType[t] = 3;
                             GroundX[t] -= 12000;
@@ -1591,7 +1589,7 @@ void HandlePlayerWalls()
                         {
                             CreateEntity(GroundX[t] +
                                              4500,
-                                         30000, 0, -1600, 0, 5, 0);
+                                         30000, 0, -1600, 0, EEnemyType::KUMA, 0);
                             PlaySound(Sounds[10]);
                             GroundSubType[t] = 5;
                             GroundSubType[t] = 0;
@@ -1606,7 +1604,7 @@ void HandlePlayerWalls()
                             CreateEntity(GroundX[t] -
                                              5000 -
                                              3000 * 1,
-                                         26000, 0, -1600, 0, 5, 0);
+                                         26000, 0, -1600, 0, EEnemyType::KUMA, 0);
                             PlaySound(Sounds[10]);
                         }
                         else if (GroundSubType[t] == 9)
@@ -1617,7 +1615,7 @@ void HandlePlayerWalls()
                                                  t3 *
                                                      3000 +
                                                  3000,
-                                             48000, 0, -6000, 0, 3, 0);
+                                             48000, 0, -6000, 0, EEnemyType::SEAL, 0);
                             }
                         }
                         if (GroundSubType[t] == 10)
@@ -1634,7 +1632,7 @@ void HandlePlayerWalls()
                                                  t3 *
                                                      3000 -
                                                  1000,
-                                             40000, 0, -2600, 0, 9, 0);
+                                             40000, 0, -2600, 0, EEnemyType::MAGMA, 0);
                             }
                         }
                         // スクロール消し
@@ -1667,7 +1665,7 @@ void HandlePlayerWalls()
                             EnemyMessageType[EnemyCount] = 50;
                             CreateEntity(GroundX[t] +
                                              9000,
-                                         GroundY[t] + 2000, 0, 0, 0, 79, 0);
+                                         GroundY[t] + 2000, 0, 0, 0, EEnemyType::LASER, 0);
                             GroundX[t] = -800000000;
                         }
 
@@ -1677,7 +1675,7 @@ void HandlePlayerWalls()
                             EnemyMessageType[EnemyCount] = 50;
                             CreateEntity(GroundX[t] -
                                              12000,
-                                         GroundY[t] + 2000, 0, 0, 0, 79, 0);
+                                         GroundY[t] + 2000, 0, 0, 0, EEnemyType::LASER, 0);
                             GroundX[t] = -800000000;
                             BlockSubType[9] = 500; // ttype[9]=1;
                         }
@@ -1689,19 +1687,19 @@ void HandlePlayerWalls()
                         {
                             CreateEntity(GroundX[t] +
                                              12000,
-                                         GroundY[t] + 2000 + 3000, 0, 0, 0, 79, 0);
+                                         GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, 0);
                             CreateEntity(GroundX[t] +
                                              12000,
-                                         GroundY[t] + 2000 + 3000, 0, 0, 0, 79, 1);
+                                         GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, 1);
                             CreateEntity(GroundX[t] +
                                              12000,
-                                         GroundY[t] + 2000 + 3000, 0, 0, 0, 79, 2);
+                                         GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, 2);
                             CreateEntity(GroundX[t] +
                                              12000,
-                                         GroundY[t] + 2000 + 3000, 0, 0, 0, 79, 3);
+                                         GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, 3);
                             CreateEntity(GroundX[t] +
                                              12000,
-                                         GroundY[t] + 2000 + 3000, 0, 0, 0, 79, 4);
+                                         GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, 4);
                             GroundX[t] = -800000000;
                         }
                     }
@@ -1739,7 +1737,7 @@ void HandlePlayerWalls()
                         GroundVelY[t] = 0;
                         CreateEntity(GroundX[t], 30000,
                                      SyobonRand(600) - 300,
-                                     -1600 - SyobonRand(900), 0, 84, 0);
+                                     -1600 - SyobonRand(900), 0, EEnemyType::LAVA_FROM_PIPE, 0);
                     }
                 }
             }

@@ -16,7 +16,7 @@ ESyobonState SyobonState = ESyobonState::TITLE;
 int SyobonStateTimer = 0;
 
 //ステージ
-int stagecolor = 1;
+ELevelType StageColor = ELevelType::OVERWORLD;
 int SyobonWorld;
 int SyobonLevel;
 int SyobonSection;
@@ -139,7 +139,8 @@ int EnemyCount;
 int EnemyX[amax], EnemyY[amax], EnemySizeX[amax], EnemySizeY[amax], EnemyVelX[amax], EnemyVelY[amax];
 int af[amax], EnemyBlockAppearTimer[amax];
 int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
-int EnemyType[amax], EnemySubType[amax], EnemyLookingDirection[amax];
+EEnemyType EnemyType[amax];
+int EnemySubType[amax], EnemyLookingDirection[amax];
 int anotm[amax], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
 int EnemyAITimer[amax];
 int EnemyMessageTimer[amax], EnemyMessageType[amax];
@@ -147,7 +148,8 @@ int EnemyMessageTimer[amax], EnemyMessageType[amax];
 //敵出現
 int EnemyAppearCount;
 int EnemyAppearX[bmax], EnemyAppearY[bmax], EnemyAppearTimer[bmax];
-int EnemyAppearType[bmax], EnemyAppearSubType[bmax], bz[bmax];
+EEnemyType EnemyAppearType[bmax];
+int EnemyAppearSubType[bmax], bz[bmax];
 
 
 //背景

@@ -89,17 +89,17 @@ void HandleEntities()
 
             switch (EnemyType[t])
             {
-            case 0:
+            case EEnemyType::BALL:
                 xx[10] = 100;
                 break;
 
                 // こうらの敵 (Shell enemy)
-            case 1:
+            case EEnemyType::BALL_SHELLED:
                 xx[10] = 100;
                 break;
 
                 // こうら (Shell)
-            case 2:
+            case EEnemyType::SHELL:
                 xx[10] = 0;
                 xx[17] = 800;
                 if (EnemySubType[t] >= 1)
@@ -147,7 +147,7 @@ void HandleEntities()
                 break;
 
                 // あらまき
-            case 3:
+            case EEnemyType::SEAL:
                 azimentype[t] = 0; // end();
                 if (EnemySubType[t] == 0)
                 {
@@ -160,7 +160,7 @@ void HandleEntities()
                 break;
 
                 // スーパージエン
-            case 4:
+            case EEnemyType::BALL_SPIKY:
                 xx[10] = 120;
                 xx[0] = 250;
                 xx[8] = EnemyX[t] - fx;
@@ -183,13 +183,13 @@ void HandleEntities()
                 break;
 
                 // クマー (Bear)
-            case 5:
+            case EEnemyType::KUMA:
                 xx[10] = 160;
                 // azimentype[t]=2;
                 break;
 
                 // デフラグさん (Defrag-san)
-            case 6:
+            case EEnemyType::DEFRAG:
                 if (azimentype[t] == 30)
                 {
                     EnemyVelY[t] = -1600;
@@ -302,7 +302,7 @@ void HandleEntities()
                     xx[1] = 1600;
                     xx[8] = EnemyX[tt] - fx;
                     xx[9] = EnemyY[tt] - fy;
-                    if (t != tt && EnemyType[tt] >= 100)
+                    if (t != tt && (int)EnemyType[tt] >= 100) //WARNING +KZ: EEnemyType is casted to int here!
                     {
                         if (EnemyX[t] + EnemySizeX[t] -
                                     fx >
@@ -326,7 +326,7 @@ void HandleEntities()
                 break;
 
                 // ジエン大砲
-            case 7:
+            case EEnemyType::BALL_ROCKET:
                 azimentype[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
@@ -340,8 +340,8 @@ void HandleEntities()
                     EnemyY[t] += xx[11];
                 break;
 
-                // スーパーブーン (Super Boom) //+KZ: xD??
-            case 8:
+                // スーパーブーン (Super Boon) //+KZ: xD??
+            case EEnemyType::SUPER_BOON:
                 azimentype[t] = 0;
                 xx[22] = 20;
                 if (EnemyAITimer[t] == 0)
@@ -365,13 +365,13 @@ void HandleEntities()
                 EnemyY[t] += EnemyVelY[t];
                 // atype[t]=151;
                 break;
-                // ノーマルブーン (Normal Boom)
-            case 151:
+                // ノーマルブーン (Normal Boon)
+            case EEnemyType::NORMAL_BOON:
                 azimentype[t] = 2;
                 break;
 
                 // ファイアー玉 (Fireball)
-            case 9:
+            case EEnemyType::MAGMA:
                 azimentype[t] = 5;
                 EnemyY[t] += EnemyVelY[t];
                 EnemyVelY[t] += 100;
@@ -387,7 +387,7 @@ void HandleEntities()
                 break;
 
                 // ファイアー (Fire)
-            case 10:
+            case EEnemyType::FLAME:
                 azimentype[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
@@ -398,7 +398,7 @@ void HandleEntities()
                 break;
 
                 // モララー (Molalla)
-            case 30:
+            case EEnemyType::MOLALLA:
                 EnemyAITimer[t] += 1;
                 if (EnemySubType[t] == 0)
                 {
@@ -417,7 +417,7 @@ void HandleEntities()
                         xx[1] = 1600;
                         xx[8] = EnemyX[tt] - fx;
                         xx[9] = EnemyY[tt] - fy;
-                        if (t != tt && EnemyType[tt] == 102)
+                        if (t != tt && EnemyType[tt] == EEnemyType::MUSHROOM_POISONOUS)
                         {
                             if (EnemyX[t] +
                                         EnemySizeX[t] -
@@ -455,7 +455,7 @@ void HandleEntities()
                 break;
 
                 // レーザー (Laser)
-            case 79:
+            case EEnemyType::LASER:
                 azimentype[t] = 0;
                 xx[10] = 1600;
                 if (EnemySubType[t] == 1)
@@ -481,25 +481,25 @@ void HandleEntities()
                 break;
 
                 // 雲の敵 (Enemy of the Clouds)
-            case 80:
+            case EEnemyType::EVIL_CLOUD:
                 azimentype[t] = 0;
                 // xx[10]=100;
                 break;
-            case 81:
+            case EEnemyType::EVIL_CLOUD_TOUCHED:
                 azimentype[t] = 0;
                 break;
-            case 82:
+            case EEnemyType::SPIKY_BLOCK:
                 azimentype[t] = 0;
                 break;
-            case 83:
+            case EEnemyType::SPIKY_BLOCK_TOUCHED:
                 azimentype[t] = 0;
                 break;
 
-            case 84:
+            case EEnemyType::LAVA_FROM_PIPE:
                 azimentype[t] = 2;
                 break;
 
-            case 85:
+            case EEnemyType::FAKE_POLE:
                 xx[23] = 400;
                 if (EnemySubType[t] == 0)
                 {
@@ -520,7 +520,7 @@ void HandleEntities()
                     xx[10] = xx[23];
                 break;
 
-            case 86:
+            case EEnemyType::FALLING_CAT:
                 azimentype[t] = 4;
                 xx[23] = 1000;
                 if (PlayerX >= EnemyX[t] - fx - PlayerSizeX - xx[26] && PlayerX <= EnemyX[t] - fx + EnemySizeX[t] + xx[26])
@@ -534,7 +534,7 @@ void HandleEntities()
                 break;
 
                 // ファイアバー (Fire Bar)
-            case 87:
+            case EEnemyType::FIREBAR_CLOCKWISE:
                 azimentype[t] = 0;
                 if (EnemyX[t] % 10 != 1)
                     EnemyAITimer[t] += 6;
@@ -570,7 +570,7 @@ void HandleEntities()
                 break;
 
                 //+KZ: Syobon Action 2 inverted Fire Bar
-            case 88:
+            case EEnemyType::FIREBAR_COUNTERCLOCKWISE:
                 azimentype[t] = 0;
                 if (EnemyX[t] % 10 != 1)
                     EnemyAITimer[t] += 6;
@@ -605,13 +605,13 @@ void HandleEntities()
 
                 break;
 
-            case 90:
+            case EEnemyType::BALL_BIG:
                 xx[10] = 160;
                 // azimentype[t]=0;
                 break;
 
                 // おいしいキノコ (Delicious mushrooms)
-            case 100:
+            case EEnemyType::MUSHROOM:
                 azimentype[t] = 1;
                 xx[10] = 100;
 
@@ -646,9 +646,9 @@ void HandleEntities()
                                         fy <
                                     xx[9] + xx[1] * 3 + xx[12])
                             {
-                                if (EnemyType[tt] == 0 || EnemyType[tt] == 4)
+                                if (EnemyType[tt] == EEnemyType::BALL || EnemyType[tt] == EEnemyType::BALL_SPIKY)
                                 {
-                                    EnemyType[tt] = 90; // PlaySound(Sounds[6]);
+                                    EnemyType[tt] = EEnemyType::BALL_BIG; // PlaySound(Sounds[6]);
                                     EnemySizeX[tt] = 6400;
                                     EnemySizeY[tt] = 6300;
                                     EnemySubType[tt] = 0;
@@ -665,7 +665,7 @@ void HandleEntities()
                 break;
 
                 // 毒キノコ (Poisonous mushrooms)
-            case 102:
+            case EEnemyType::MUSHROOM_POISONOUS:
                 azimentype[t] = 1;
                 xx[10] = 100;
                 if (EnemySubType[t] == 1)
@@ -673,7 +673,7 @@ void HandleEntities()
                 break;
 
                 // 悪スター (Bad Star)
-            case 110:
+            case EEnemyType::BAD_STAR:
                 azimentype[t] = 1;
                 xx[10] = 200;
                 if (axzimen[t] == 1)
@@ -683,129 +683,13 @@ void HandleEntities()
                 }
                 break;
 
-            case 200:
+            case EEnemyType::BALL_NO_COLLISION:
                 azimentype[t] = 1;
                 xx[10] = 100;
                 break;
 
                 /*
-                case 1:
-                xx[10]=180;
-                if (axtype[t]==2)xx[10]=0;
-                if (axzimen[t]==1){
-                ab[t]-=1000;ad[t]=-1200;
-                if (axtype[t]==1)ad[t]=-1600;
-                if (axtype[t]==2){
-                atm[t]+=1;
-                if (atm[t]>=2){atm[t]=0;ad[t]=-1600;}else{ad[t]=-1000;}
-                }
-                }
-
-                break;
-
-                case 2:
-                xx[10]=160;
-                if (axtype[t]==1)azimentype[t]=2;xx[10]=100;
-                if (axtype[t]==2)xx[10]=0;
-                break;
-
-                case 3:
-                xx[10]=180;
-                if (ae[t]==0)ad[t]+=10;
-                if (ae[t]==1)ad[t]-=10;
-                if (ad[t]>=100)ae[t]=1;
-                if (ad[t]<=-100)ae[t]=0;
-                ab[t]+=ad[t];//ad[t]+=
-
-                if (axtype[t]==1){
-                if (ab[t]<mb){ab[t]+=100;}
-                }
-                if (axtype[t]==2)xx[10]=0;
-                break;
-
-                case 4:
-                if (ae[t]==0)ad[t]+=8;
-                if (ae[t]==1)ad[t]-=8;
-                if (ad[t]>=80)ae[t]=1;
-                if (ad[t]<=-80)ae[t]=0;
-                ab[t]+=ad[t];
-
-                //sstr=""+atm[t];
-                if (axtype[t]>=1){
-                xx[22]=200;xx[21]=3600;
-
-                if (atm[t]==0){atm[t]=ab[t]%2+1;a2tm[t]=aa[t];if (axtype[t]%2==0)a2tm[t]=ab[t];}
-
-                if (axtype[t]%2==1){
-                if (aa[t]<a2tm[t]-xx[21]){atm[t]=2;}
-                if (aa[t]>a2tm[t]+xx[21]){atm[t]=1;}
-                if (atm[t]==1){aa[t]-=xx[22];amuki[t]=0;}
-                if (atm[t]==2){aa[t]+=xx[22];amuki[t]=1;}
-                }
-                if (axtype[t]%2==0){
-                if (ab[t]<a2tm[t]-xx[21]){atm[t]=2;}
-                if (ab[t]>a2tm[t]+xx[21]){atm[t]=1;}
-                if (atm[t]==1){ab[t]-=xx[22];}
-                if (atm[t]==2){ab[t]+=xx[22];}
-                }
-
-                }//axtype1
-
-                break;
-
-                case 5:
-                xx[10]=120;atm[t]++;
-                if (axtype[t]==2){xx[10]=200;azimentype[t]=2;}
-                if (ma+mnobia>=aa[t]-fx && ma<=aa[t]+anobia[t]-fx && mb+mnobib+1000<ab[t]-fy){
-                xx[10]=300;
-                if (axtype[t]>=1){
-                //xx[10]=240;
-                if (atm[t]>=16){amuki[t]+=1;if (amuki[t]>=2)amuki[t]=0;atm[t]=0;
-                //if (axtype[t]==2){ab[t]-=600;ad[t]=-900;}
-                }}
-                }
-                break;
-
-                case 6:
-                atm[t]+=1;xx[10]=0;
-                if (axtype[t]==1)atm[t]+=(rand(9)-4);
-                if (axtype[t]==2)xx[10]=100;
-                if (atm[t]>=40){
-                xx[22]=360;if (amuki[t]==0)xx[22]=-xx[22];
-                cyobi(aa[t]+amuki[t]*anobia[t],ab[t]+1600,xx[22],0,0,0,0,60);
-                atm[t]=0;
-                }
-
-                if (axtype[t]!=2){
-                if (ma+mnobia/2<=aa[t]+anobia[t]/2-fx){amuki[t]=0;}else{amuki[t]=1;}
-                }
-                break;
-
-                case 7:
-                xx[10]=160;
-                if (axtype[t]==1)xx[10]=240;
-                if (axtype[t]==2)xx[10]=60;
-                break;
-
-                case 8:
-                atm[t]+=1;xx[10]=0;
-                xx[15]=12;xx[17]=0;
-                if (axtype[t]==1)xx[15]=8;
-                if (axtype[t]==2){xx[15]=40;xx[17]=3;}
-
-                if (atm[t]>=xx[15]){
-                for (t3=0;t3<=xx[17];t3++){
-                xx[16]=300;xx[22]=rand(xx[16])*5/4-xx[16]/4;
-                a2tm[t]+=1;if (a2tm[t]>=1){xx[22]=-xx[22];a2tm[t]=-1;}
-                cyobi(aa[t]+amuki[t]*anobia[t]/2,ab[t]+600,xx[22],-400-rand(600),0,80,1,60);
-                //if ((xx[16]==0) || t3==xx[16])atm[t]=0;
-                }//t
-                atm[t]=0;
-                }
-
-                break;
-
-
+                    +KZ: there was a lot of commented out code here, i just removed it
                 */
 
             } // sw
@@ -906,10 +790,10 @@ void HandleEntities()
 
             if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 && PlayerX < xx[8] + EnemySizeX[t] - xx[0] * 2 && PlayerY + PlayerSizeY > xx[9] - xx[5] && PlayerY + PlayerSizeY < xx[9] + xx[1] + xx[12] && (mmutekitm <= 0 || PlayerVelY >= 100) && EnemyBlockAppearTimer[t] <= 0)
             {
-                if (EnemyType[t] != 4 && EnemyType[t] != 9 && EnemyType[t] != 10 && (EnemyType[t] <= 78 || EnemyType[t] == 85) && PlayerGrounded != 1 && PlayerState != 200)
+                if (EnemyType[t] != EEnemyType::BALL_SPIKY && EnemyType[t] != EEnemyType::MAGMA && EnemyType[t] != EEnemyType::FLAME && ((int)EnemyType[t] <= 78 || EnemyType[t] == EEnemyType::FAKE_POLE) && PlayerGrounded != 1 && PlayerState != 200)
                 { // && atype[t]!=4 && atype[t]!=7){
 
-                    if (EnemyType[t] == 0)
+                    if (EnemyType[t] == EEnemyType::BALL)
                     {
                         if (EnemySubType[t] == 0)
                             EnemyX[t] = -900000;
@@ -923,14 +807,14 @@ void HandleEntities()
                         }
                     }
 
-                    if (EnemyType[t] == 1)
+                    if (EnemyType[t] == EEnemyType::BALL_SHELLED)
                     {
-                        EnemyType[t] = 2;
+                        EnemyType[t] = EEnemyType::SHELL;
                         EnemySizeY[t] = 3000;
                         EnemySubType[t] = 0;
                     }
                     // こうら (Shell)
-                    else if (EnemyType[t] == 2 && PlayerVelY >= 0)
+                    else if (EnemyType[t] == EEnemyType::SHELL && PlayerVelY >= 0)
                     {
                         if (EnemySubType[t] == 1 || EnemySubType[t] == 2)
                         {
@@ -955,33 +839,33 @@ void HandleEntities()
                             }
                         }
                     }
-                    if (EnemyType[t] == 3)
+                    if (EnemyType[t] == EEnemyType::SEAL)
                     {
                         xx[25] = 1;
                     }
 
-                    if (EnemyType[t] == 6)
+                    if (EnemyType[t] == EEnemyType::DEFRAG)
                     {
                         EnemyAITimer[t] = 10;
                         PlayerVelY = 0;
                         actaon[2] = 0;
                     }
 
-                    if (EnemyType[t] == 7)
+                    if (EnemyType[t] == EEnemyType::BALL_ROCKET)
                     {
                         EnemyX[t] = -900000;
                     }
 
-                    if (EnemyType[t] == 8)
+                    if (EnemyType[t] == EEnemyType::SUPER_BOON)
                     {
-                        EnemyType[t] = 151;
+                        EnemyType[t] = EEnemyType::NORMAL_BOON;
                         EnemyVelY[t] = 0;
                     }
                     // if (atype[t]==4){
                     // xx[25]=1;
                     // }
 
-                    if (EnemyType[t] != 85)
+                    if (EnemyType[t] != EEnemyType::FAKE_POLE)
                     {
                         if (xx[25] == 0)
                         {
@@ -990,7 +874,7 @@ void HandleEntities()
                             PlayerVelY = -1000;
                         }
                     }
-                    if (EnemyType[t] == 85)
+                    if (EnemyType[t] == EEnemyType::FAKE_POLE)
                     {
                         if (xx[25] == 0)
                         {
@@ -1016,11 +900,11 @@ void HandleEntities()
 
             // プレイヤーに触れた時 (When the player touches it)
             xx[16] = 0;
-            if (EnemyType[t] == 4 || EnemyType[t] == 9 || EnemyType[t] == 10)
+            if (EnemyType[t] == EEnemyType::BALL_SPIKY || EnemyType[t] == EEnemyType::MAGMA || EnemyType[t] == EEnemyType::FLAME)
                 xx[16] = -3000;
-            if (EnemyType[t] == 82 || EnemyType[t] == 83 || EnemyType[t] == 84)
+            if (EnemyType[t] == EEnemyType::SPIKY_BLOCK || EnemyType[t] == EEnemyType::SPIKY_BLOCK_TOUCHED || EnemyType[t] == EEnemyType::LAVA_FROM_PIPE)
                 xx[16] = -3200;
-            if (EnemyType[t] == 85)
+            if (EnemyType[t] == EEnemyType::FAKE_POLE)
                 xx[16] = -EnemySizeY[t] + 6000;
             if (PlayerX + PlayerSizeX > xx[8] + xx[4] && PlayerX < xx[8] + EnemySizeX[t] - xx[4] && PlayerY < xx[9] + EnemySizeY[t] + xx[15] && PlayerY + PlayerSizeY > xx[9] + EnemySizeY[t] - xx[0] + xx[16] && anotm[t] <= 0 && EnemyBlockAppearTimer[t] <= 0)
             {
@@ -1028,23 +912,23 @@ void HandleEntities()
                 {
                     EnemyX[t] = -9000000;
                 }
-                if (mmutekitm <= 0 && (EnemyType[t] <= 99 || EnemyType[t] >= 200))
+                if (mmutekitm <= 0 && ((int)EnemyType[t] <= 99 || (int)EnemyType[t] >= 200))
                 {
                     if (mmutekion != 1 && PlayerState != 200)
                     {
                         // if (mmutekitm<=0)
 
                         // ダメージ (Damage)
-                        if ((EnemyType[t] != 2 || EnemySubType[t] != 0) && Health >= 1)
+                        if ((EnemyType[t] != EEnemyType::SHELL || EnemySubType[t] != 0) && Health >= 1)
                         {
-                            if (EnemyType[t] != 6)
+                            if (EnemyType[t] != EEnemyType::DEFRAG)
                             {
                                 Health -= 1;
                                 // mmutekitm=40;
                             }
                         }
 
-                        if (EnemyType[t] == 6)
+                        if (EnemyType[t] == EEnemyType::DEFRAG)
                         {
                             EnemyAITimer[t] = 10;
                         }
@@ -1052,91 +936,91 @@ void HandleEntities()
                         if (Health == 0)
                         {
 
-                            if (EnemyType[t] == 0 || EnemyType[t] == 7)
+                            if (EnemyType[t] == EEnemyType::BALL || EnemyType[t] == EEnemyType::BALL_ROCKET)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = SyobonRand(7) + 1 + 1000 + (SyobonLevel - 1) * 10;
                             }
 
-                            if (EnemyType[t] == 1)
+                            if (EnemyType[t] == EEnemyType::BALL_SHELLED)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = SyobonRand(2) + 15;
                             }
 
-                            if (EnemyType[t] == 2 && EnemySubType[t] >= 1 && mmutekitm <= 0)
+                            if (EnemyType[t] == EEnemyType::SHELL && EnemySubType[t] >= 1 && mmutekitm <= 0)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = 18;
                             }
 
-                            if (EnemyType[t] == 3)
+                            if (EnemyType[t] == EEnemyType::SEAL)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = 20;
                             }
 
-                            if (EnemyType[t] == 4)
+                            if (EnemyType[t] == EEnemyType::BALL_SPIKY)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = SyobonRand(7) + 1 + 1000 + (SyobonLevel - 1) * 10;
                             }
 
-                            if (EnemyType[t] == 5)
+                            if (EnemyType[t] == EEnemyType::KUMA)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = 21;
                             }
 
-                            if (EnemyType[t] == 9 || EnemyType[t] == 10)
+                            if (EnemyType[t] == EEnemyType::MAGMA || EnemyType[t] == EEnemyType::FLAME)
                             {
                                 PlayerMessageTimer = 30;
                                 PlayerMessageType = 54;
                             }
 
-                            if (EnemyType[t] == 31)
+                            if (EnemyType[t] == EEnemyType::KUKURRU)
                             {
                                 EnemyMessageTimer[t] = 30;
                                 EnemyMessageType[t] = 24;
                             }
 
-                            if (EnemyType[t] == 80 || EnemyType[t] == 81)
+                            if (EnemyType[t] == EEnemyType::EVIL_CLOUD || EnemyType[t] == EEnemyType::EVIL_CLOUD_TOUCHED)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = 30;
                             }
 
-                            if (EnemyType[t] == 82)
+                            if (EnemyType[t] == EEnemyType::SPIKY_BLOCK)
                             {
                                 EnemyMessageTimer[t] = 20;
                                 EnemyMessageType[t] = SyobonRand(1) + 31;
                                 xx[24] = 900;
-                                EnemyType[t] = 83;
+                                EnemyType[t] = EEnemyType::SPIKY_BLOCK_TOUCHED;
                                 EnemyX[t] -= xx[24] + 100;
                                 EnemyY[t] -= xx[24] - 100 * 0;
                             } // 82
 
-                            if (EnemyType[t] == 84)
+                            if (EnemyType[t] == EEnemyType::LAVA_FROM_PIPE)
                             {
                                 PlayerMessageTimer = 30;
                                 PlayerMessageType = 50;
                             }
 
-                            if (EnemyType[t] == 85)
+                            if (EnemyType[t] == EEnemyType::FAKE_POLE)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = SyobonRand(1) + 85;
                             }
                             // 雲
-                            if (EnemyType[t] == 80)
+                            if (EnemyType[t] == EEnemyType::EVIL_CLOUD)
                             {
-                                EnemyType[t] = 81;
+                                EnemyType[t] = EEnemyType::EVIL_CLOUD_TOUCHED;
                             }
 
                         } // Health==0
 
                         // こうら (Shell)
-                        if (EnemyType[t] == 2)
+                        if (EnemyType[t] == EEnemyType::SHELL)
                         {
                             // if (axtype[t]==1 || axtype[t]==2){axtype[t]=0;}
                             if (EnemySubType[t] == 0)
@@ -1165,22 +1049,22 @@ void HandleEntities()
                 }
                 // else if (mmutekitm>=0 && mmutekitm<=2){mmutekitm+=1;}
                 // アイテム (Item)
-                if (EnemyType[t] >= 100 && EnemyType[t] <= 199)
+                if ((int)EnemyType[t] >= 100 && (int)EnemyType[t] <= 199)
                 {
 
-                    if (EnemyType[t] == 100 && EnemySubType[t] == 0)
+                    if (EnemyType[t] == EEnemyType::MUSHROOM && EnemySubType[t] == 0)
                     {
                         PlayerMessageTimer = 30;
                         PlayerMessageType = 1;
                         PlaySound(Sounds[9]);
                     }
-                    if (EnemyType[t] == 100 && EnemySubType[t] == 1)
+                    if (EnemyType[t] == EEnemyType::MUSHROOM && EnemySubType[t] == 1)
                     {
                         PlayerMessageTimer = 30;
                         PlayerMessageType = 2;
                         PlaySound(Sounds[9]);
                     }
-                    if (EnemyType[t] == 100 && EnemySubType[t] == 2)
+                    if (EnemyType[t] == EEnemyType::MUSHROOM && EnemySubType[t] == 2)
                     {
                         PlayerSizeX = 5200;
                         PlayerSizeY = 7300;
@@ -1191,20 +1075,20 @@ void HandleEntities()
                         Health = 50000000;
                     }
 
-                    if (EnemyType[t] == 101)
+                    if (EnemyType[t] == EEnemyType::BURNING_FLOWER)
                     {
                         Health -= 1;
                         PlayerMessageTimer = 30;
                         PlayerMessageType = 11;
                     }
-                    if (EnemyType[t] == 102)
+                    if (EnemyType[t] == EEnemyType::MUSHROOM_POISONOUS)
                     {
                         Health -= 1;
                         PlayerMessageTimer = 30;
                         PlayerMessageType = 10;
                     }
                     //?ボール (? Ball)
-                    if (EnemyType[t] == 105)
+                    if (EnemyType[t] == EEnemyType::MYSTERY_BALL)
                     {
                         if (EnemySubType[t] == 0)
                         {
@@ -1220,38 +1104,38 @@ void HandleEntities()
                             CreateEntity(EnemyX[t] -
                                              8 * 3000 -
                                              1000,
-                                         -4 * 3000, 0, 0, 0, 110, 0);
+                                         -4 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, 0);
                             CreateEntity(EnemyX[t] -
                                              10 *
                                                  3000 +
                                              1000,
-                                         -1 * 3000, 0, 0, 0, 110, 0);
+                                         -1 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, 0);
 
                             CreateEntity(EnemyX[t] +
                                              4 * 3000 +
                                              1000,
-                                         -2 * 3000, 0, 0, 0, 110, 0);
+                                         -2 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, 0);
                             CreateEntity(EnemyX[t] +
                                              5 * 3000 -
                                              1000,
-                                         -3 * 3000, 0, 0, 0, 110, 0);
+                                         -3 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, 0);
                             CreateEntity(EnemyX[t] +
                                              6 * 3000 +
                                              1000,
-                                         -4 * 3000, 0, 0, 0, 110, 0);
+                                         -4 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, 0);
                             CreateEntity(EnemyX[t] +
                                              7 * 3000 -
                                              1000,
-                                         -2 * 3000, 0, 0, 0, 110, 0);
+                                         -2 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, 0);
                             CreateEntity(EnemyX[t] +
                                              8 * 3000 +
                                              1000,
-                                         -2 * 3000 - 1000, 0, 0, 0, 110, 0);
+                                         -2 * 3000 - 1000, 0, 0, 0, EEnemyType::BAD_STAR, 0);
                             BlockY[0] += 3000 * 3;
                         }
                     } // 105
 
-                    if (EnemyType[t] == 110)
+                    if (EnemyType[t] == EEnemyType::BAD_STAR)
                     {
                         Health -= 1;
                         PlayerMessageTimer = 30;
@@ -1289,6 +1173,7 @@ void HandleEntities()
     } // t
 }
 
+//+KZ: uhhh i realized about lines like EnemyDefaultSizeX[(int)EnemyAppearType[t]], i dont recommend using EnemyAppear things
 void PlaceEntities()
 {
     // 敵キャラの配置 (Enemy character placement)
@@ -1312,13 +1197,13 @@ void PlaceEntities()
                     local_xx_0 = 1;
                     EnemyLookingDirection[EnemyCount] = 0;
                 } // && mmuki==1
-                if (bz[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= -400 - EnemyDefaultSizeX[EnemyAppearType[t]] + PlayerVelX && EnemyAppearX[t] - fx < -400 - EnemyDefaultSizeX[EnemyAppearType[t]] && tt == 1)
+                if (bz[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= -400 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] + PlayerVelX && EnemyAppearX[t] - fx < -400 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] && tt == 1)
                 {
                     local_xx_0 = 1;
                     local_xx_1 = 1;
                     EnemyLookingDirection[EnemyCount] = 1;
                 } // && mmuki==0
-                if (bz[t] == 1 && EnemyAppearX[t] - fx >= 0 - EnemyDefaultSizeX[EnemyAppearType[t]] && EnemyAppearX[t] - fx <= fxmax + 4000 && EnemyAppearY[t] - fy >= -9000 && EnemyAppearY[t] - fy <= fymax + 4000 && EnemyAppearTimer[t] < 0)
+                if (bz[t] == 1 && EnemyAppearX[t] - fx >= 0 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] && EnemyAppearX[t] - fx <= fxmax + 4000 && EnemyAppearY[t] - fy >= -9000 && EnemyAppearY[t] - fy <= fymax + 4000 && EnemyAppearTimer[t] < 0)
                 {
                     local_xx_0 = 1;
                     bz[t] = 0;
@@ -1330,7 +1215,7 @@ void PlaceEntities()
                 { // 400
                     EnemyAppearTimer[t] = 401;
                     local_xx_0 = 0; // if (btype[t]>=20 && btype[t]<=23){btm[t]=90000;}
-                    if (EnemyAppearType[t] >= 10)
+                    if ((int)EnemyAppearType[t] >= 10)
                     {
                         EnemyAppearTimer[t] = 9999999;
                     }
@@ -1528,7 +1413,7 @@ void HandleEntitiesBlocks()
 		xx[9] = BlockY[tt] - fy;
 		if (BlockX[tt] - fx + xx[1] >= -12010 && BlockX[tt] - fx <= fxmax + 12000)
 		{
-			if (EnemyType[t] != 86 && EnemyType[t] != 90 && BlockType[tt] != 140)
+			if (EnemyType[t] != EEnemyType::FALLING_CAT && EnemyType[t] != EEnemyType::BALL_BIG && BlockType[tt] != 140)
 			{
 
 				// 上 (Above)
@@ -1570,7 +1455,7 @@ void HandleEntitiesBlocks()
 				}
 				// 左右 (Left and right)
 				xx[27] = 0;
-				if ((EnemyType[t] >= 100 || (BlockType[tt] != 7 || BlockType[tt] == 7 && EnemyType[t] == 2)) && BlockType[tt] != 117)
+				if (((int)EnemyType[t] >= 100 || (BlockType[tt] != 7 || BlockType[tt] == 7 && EnemyType[t] == EEnemyType::SHELL)) && BlockType[tt] != 117)
 				{
 					if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[2] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] / 2 - xx[0] && EnemyY[t] - fy < xx[9] + xx[2])
 					{
@@ -1589,7 +1474,7 @@ void HandleEntitiesBlocks()
 						xx[27] = 1;
 					}
 					// こうらブレイク (Shell break)
-					if (xx[27] == 1 && (BlockType[tt] == 7 || BlockType[tt] == 1) && EnemyType[t] == 2)
+					if (xx[27] == 1 && (BlockType[tt] == 7 || BlockType[tt] == 1) && EnemyType[t] == EEnemyType::SHELL)
 					{
 						if (BlockType[tt] == 7)
 						{
@@ -1619,7 +1504,7 @@ void HandleEntitiesBlocks()
 					}
 				}
 			}
-			if (EnemyType[t] == 86 || EnemyType[t] == 90)
+			if (EnemyType[t] == EEnemyType::FALLING_CAT || EnemyType[t] == EEnemyType::BALL_BIG)
 			{
 				if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[1] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] - fy < xx[9] + xx[1])
 				{
@@ -1668,32 +1553,32 @@ void RenderEnemies()
             {
                 mirror = 1;
             }
-            if (EnemyType[t] == 3 && EnemySubType[t] == 1)
+            if (EnemyType[t] == EEnemyType::SEAL && EnemySubType[t] == 1)
             {
                 DrawVertTurnGraph(xx[0] / 100 + 13,
-                                  xx[1] / 100 + 15, Sliced_GFX[EnemyType[t]][3]);
+                                  xx[1] / 100 + 15, Sliced_GFX[(int)EEnemyType::SEAL][3]);
                 xx[16] = 1;
             }
-            if (EnemyType[t] == 9 && EnemyVelY[t] >= 1)
+            if (EnemyType[t] == EEnemyType::MAGMA && EnemyVelY[t] >= 1)
             {
                 DrawVertTurnGraph(xx[0] / 100 + 13,
-                                  xx[1] / 100 + 15, Sliced_GFX[EnemyType[t]][3]);
+                                  xx[1] / 100 + 15, Sliced_GFX[(int)EEnemyType::MAGMA][3]);
                 xx[16] = 1;
             }
-            if (EnemyType[t] >= 100 && EnemyLookingDirection[t] == 1)
+            if ((int)EnemyType[t] >= 100 && EnemyLookingDirection[t] == 1)
                 mirror = 0;
 
             // メイン (main)
-            if (EnemyType[t] < 200 && xx[16] == 0 && EnemyType[t] != 6 && EnemyType[t] != 79 && EnemyType[t] != 86 && EnemyType[t] != 30)
+            if ((int)EnemyType[t] < 200 && xx[16] == 0 && EnemyType[t] != EEnemyType::DEFRAG && EnemyType[t] != EEnemyType::LASER && EnemyType[t] != EEnemyType::FALLING_CAT && EnemyType[t] != EEnemyType::MOLALLA)
             {
-                if (!((EnemyType[t] == 80 || EnemyType[t] == 81) && EnemySubType[t] == 1))
+                if (!((EnemyType[t] == EEnemyType::EVIL_CLOUD || EnemyType[t] == EEnemyType::EVIL_CLOUD_TOUCHED) && EnemySubType[t] == 1))
                 {
-                    drawimage(Sliced_GFX[EnemyType[t]][3],
+                    drawimage(Sliced_GFX[(int)EnemyType[t]][3],
                               xx[0] / 100, xx[1] / 100);
                 }
             }
             // デフラグさん (Defrag-san)
-            if (EnemyType[t] == 6)
+            if (EnemyType[t] == EEnemyType::DEFRAG)
             {
                 if (EnemyAITimer[t] >= 10 && EnemyAITimer[t] <= 19 || EnemyAITimer[t] >= 100 && EnemyAITimer[t] <= 119 || EnemyAITimer[t] >= 200)
                 {
@@ -1705,7 +1590,7 @@ void RenderEnemies()
                 }
             }
             // モララー (Molalla)
-            if (EnemyType[t] == 30)
+            if (EnemyType[t] == EEnemyType::MOLALLA)
             {
                 if (EnemySubType[t] == 0)
                     drawimage(Sliced_GFX[30][3], xx[0] / 100, xx[1] / 100);
@@ -1713,12 +1598,12 @@ void RenderEnemies()
                     drawimage(Sliced_GFX[155][3], xx[0] / 100, xx[1] / 100);
             }
             // ステルス雲 (Stealth cloud)
-            if ((EnemyType[t] == 81) && EnemySubType[t] == 1)
+            if ((EnemyType[t] == EEnemyType::EVIL_CLOUD_TOUCHED) && EnemySubType[t] == 1)
             {
                 drawimage(Sliced_GFX[130][3], xx[0] / 100, xx[1] / 100);
             }
 
-            if (EnemyType[t] == 79)
+            if (EnemyType[t] == EEnemyType::LASER)
             {
                 setcolor(250, 250, 0);
                 fillrect(xx[0] / 100, xx[1] / 100, xx[2], xx[3]);
@@ -1726,21 +1611,21 @@ void RenderEnemies()
                 drawrect(xx[0] / 100, xx[1] / 100, xx[2], xx[3]);
             }
 
-            if (EnemyType[t] == 82)
+            if (EnemyType[t] == EEnemyType::SPIKY_BLOCK)
             {
 
                 if (EnemySubType[t] == 0)
                 {
                     xx[9] = 0;
-                    if (stagecolor == 2)
+                    if (StageColor == ELevelType::UNDERGROUND)
                     {
                         xx[9] = 30;
                     }
-                    if (stagecolor == 4)
+                    if (StageColor == ELevelType::CASTLE)
                     {
                         xx[9] = 60;
                     }
-                    if (stagecolor == 5)
+                    if (StageColor == ELevelType::ICY)
                     {
                         xx[9] = 90;
                     }
@@ -1752,15 +1637,15 @@ void RenderEnemies()
                 if (EnemySubType[t] == 1)
                 {
                     xx[9] = 0;
-                    if (stagecolor == 2)
+                    if (StageColor == ELevelType::UNDERGROUND)
                     {
                         xx[9] = 30;
                     }
-                    if (stagecolor == 4)
+                    if (StageColor == ELevelType::CASTLE)
                     {
                         xx[9] = 60;
                     }
-                    if (stagecolor == 5)
+                    if (StageColor == ELevelType::ICY)
                     {
                         xx[9] = 90;
                     }
@@ -1774,21 +1659,21 @@ void RenderEnemies()
                     drawimage(Sliced_GFX[1][5], xx[0] / 100, xx[1] / 100);
                 }
             }
-            if (EnemyType[t] == 83)
+            if (EnemyType[t] == EEnemyType::SPIKY_BLOCK_TOUCHED)
             {
 
                 if (EnemySubType[t] == 0)
                 {
                     xx[9] = 0;
-                    if (stagecolor == 2)
+                    if (StageColor == ELevelType::UNDERGROUND)
                     {
                         xx[9] = 30;
                     }
-                    if (stagecolor == 4)
+                    if (StageColor == ELevelType::CASTLE)
                     {
                         xx[9] = 60;
                     }
-                    if (stagecolor == 5)
+                    if (StageColor == ELevelType::ICY)
                     {
                         xx[9] = 90;
                     }
@@ -1800,15 +1685,15 @@ void RenderEnemies()
                 if (EnemySubType[t] == 1)
                 {
                     xx[9] = 0;
-                    if (stagecolor == 2)
+                    if (StageColor == ELevelType::UNDERGROUND)
                     {
                         xx[9] = 30;
                     }
-                    if (stagecolor == 4)
+                    if (StageColor == ELevelType::CASTLE)
                     {
                         xx[9] = 60;
                     }
-                    if (stagecolor == 5)
+                    if (StageColor == ELevelType::ICY)
                     {
                         xx[9] = 90;
                     }
@@ -1818,7 +1703,7 @@ void RenderEnemies()
                 }
             }
             // 偽ポール (Fake Pole)
-            if (EnemyType[t] == 85)
+            if (EnemyType[t] == EEnemyType::FAKE_POLE)
             {
                 setc1();
                 fillrect((xx[0]) / 100 + 10, (xx[1]) / 100, 10, xx[3]);
@@ -1832,7 +1717,7 @@ void RenderEnemies()
             } // 85
 
             // ニャッスン
-            if (EnemyType[t] == 86)
+            if (EnemyType[t] == EEnemyType::FALLING_CAT)
             {
                 if (PlayerX >= EnemyX[t] - fx - PlayerSizeX - 4000 && PlayerX <= EnemyX[t] - fx + EnemySizeX[t] + 4000)
                 {
@@ -1844,7 +1729,7 @@ void RenderEnemies()
                 }
             }
 
-            if (EnemyType[t] == 200)
+            if (EnemyType[t] == EEnemyType::BALL_NO_COLLISION)
                 drawimage(Sliced_GFX[0][3], xx[0] / 100, xx[1] / 100);
 
             mirror = 0;
@@ -1862,7 +1747,7 @@ void RenderEnemiesTwo()
         xx[1] = EnemyY[t] - fy;
         xx[14] = 12000;
         xx[16] = 0;
-        if (EnemyType[t] == 87 || EnemyType[t] == 88)
+        if (EnemyType[t] == EEnemyType::FIREBAR_CLOCKWISE || EnemyType[t] == EEnemyType::FIREBAR_COUNTERCLOCKWISE)
         {
             if (xx[0] + xx[2] * 100 >= -10 - xx[14] && xx[1] <= fxmax + xx[14] && xx[1] + xx[3] * 100 >= -10 && xx[3] <= fymax)
             {
@@ -1877,7 +1762,7 @@ void RenderEnemiesTwo()
                     setcolor(230, 120, 0);
                     xx[23] = 8;
                     //+KZ: this checks rotation direction, was added in Syobon Action 2
-                    if (EnemyType[t] == 87)
+                    if (EnemyType[t] == EEnemyType::FIREBAR_CLOCKWISE)
                     {
                         fillarc(xx[0] / 100 +
                                     xx[24],
@@ -2291,7 +2176,7 @@ void CreateEntity(
     int VelX, //int xc
     int VelY, //int xd
     int xnotm,
-    int EntityType, // int xtype
+    EEnemyType EntityType, // int xtype
     int EntitySubType // int xxtype
 )
 {
@@ -2328,16 +2213,16 @@ void CreateEntity(
             if (EnemyBlockAppearTimer[EnemyCount] == 20)
                 EnemyLookingDirection[EnemyCount] = 0;
 
-            EnemySizeX[EnemyCount] = EnemyDefaultSizeX[EnemyType[EnemyCount]];
-            EnemySizeY[EnemyCount] = EnemyDefaultSizeY[EnemyType[EnemyCount]];
+            EnemySizeX[EnemyCount] = EnemyDefaultSizeX[(int)EnemyType[EnemyCount]];
+            EnemySizeY[EnemyCount] = EnemyDefaultSizeY[(int)EnemyType[EnemyCount]];
 
             // 大砲音 (Cannon sound)
-            if (EntityType == 7 && CheckSoundMem(Sounds[10]) == 0)
+            if (EntityType == EEnemyType::BALL_ROCKET && CheckSoundMem(Sounds[10]) == 0)
             {
                 PlaySound(Sounds[10]);
             }
             // ファイア音 (Fire sound)
-            if (EntityType == 10 && CheckSoundMem(Sounds[18]) == 0)
+            if (EntityType == EEnemyType::FLAME && CheckSoundMem(Sounds[18]) == 0)
             {
                 PlaySound(Sounds[18]);
             }
@@ -2350,7 +2235,7 @@ void CreateEntity(
 
             //+KZ removed empty switch
 
-            if (EntityType == 87)
+            if (EntityType == EEnemyType::FIREBAR_CLOCKWISE)
             {
                 EnemyAITimer[EnemyCount] = SyobonRand(179) + (-90);
             }
