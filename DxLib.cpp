@@ -463,37 +463,52 @@ SDL_Surface *LoadGraph(const char *filename, bool fix)
 
 void PlaySoundMem(SyobonKZChunk *s, int l)
 {
-    static unsigned char NextChannel = 0;
-    static void * LastSoundInChannel[8] = {
-        nullptr, nullptr, nullptr, nullptr,
-        nullptr, nullptr, nullptr, nullptr
+    struct ChannelState {
+        SyobonKZChunk* sound = nullptr;
+        Uint32 StartTime = 0;
     };
-    constexpr char MAXCHANNELS = (char)(SYOBONKZ_MIX_CHANNELS * 0.75f);
-    if (sound)
+    static ChannelState channels[SYOBONKZ_MIX_CHANNELS];
+
+    Uint32 CurrentTime = SDL_GetTicks();
+
+    int bestChannel = -1;
+
+    //dont play if there is the same sound playing in this lapse
+    Uint32 Lapse = 30;
+
+    if(s == Sounds[3])
+        Lapse = 300;
+
+    // Try to find free channel
+    for (int i = 0; i < SYOBONKZ_MIX_CHANNELS; i++)
     {
-        int start_check = -1;
-        bool found = false;
-        while(NextChannel != start_check && !found)
+        if (!SyobonKZIsChannelPlaying(i))
         {
-            if(LastSoundInChannel[NextChannel] == s ||
-                !SyobonKZIsChannelPlaying(NextChannel))
-            {      
-                SyobonKZHaltChannel(NextChannel);
-                SyobonKZPlayChunk(NextChannel, s, l);
-                LastSoundInChannel[NextChannel] = s;
-                found = true;
-            }
-
-            if(start_check == -1)
-                start_check = NextChannel;
-
-            NextChannel++;
-            if(NextChannel >= MAXCHANNELS)
+            bestChannel = i;
+        }
+ 
+        if (channels[i].sound == s)
+        {
+            if(CurrentTime < channels[i].StartTime + Lapse)
             {
-                NextChannel = 0;
+                //Same sound already just started playing, dont overlap
+                return;
             }
+
+            bestChannel = i;
+            break;
         }
     }
+    
+
+    if (bestChannel == -1)
+        return;
+
+    SyobonKZHaltChannel(bestChannel);
+    SyobonKZPlayChunk(bestChannel, s, l);
+
+    channels[bestChannel].sound = s;
+    channels[bestChannel].StartTime = CurrentTime;
 }
 
 SyobonKZChunk *LoadSoundMem(const char *f)
