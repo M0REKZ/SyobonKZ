@@ -340,7 +340,7 @@ void Mainprogram()
 				srtype[t] = 0;
 				sracttype[t] = 0;
 				LiftVelY[t] = 0;
-				srsp[t] = 0;
+				LiftType[t] = ELiftType::YELLOW;
 				LiftCount++;
 
 				if (SyobonRand(4) == 0)

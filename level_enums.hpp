@@ -206,10 +206,10 @@ enum class EDecorationType
 
 
 // -------------------------
-// Platform types (srtypes)
+// Platform types (srtypes) //+KZ: it is srsp
 // -------------------------
 
-enum class EPlatformType
+enum class ELiftType
 {
     YELLOW = 0,
     BREAKING = 1,
@@ -222,6 +222,7 @@ enum class EPlatformType
 
     // Will start falling as soon as you get close to it
     PILLAR_FALL = 11,
+
     PILLAR_BOUNCY = 12,
     PILLAR_BRICKS = 15,
 

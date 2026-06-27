@@ -37,7 +37,7 @@ void stagecls()
 		srsok[t] = 0;
 		srmove[t] = 0;
 		srmovep[t] = 0;
-		srsp[t] = 0;
+		LiftType[t] = ELiftType::YELLOW;
 	}
 	// for (t=0;t<sqmax;t++){sqa[t]=-9000000;sqb[t]=1;sqc[t]=1;sqd[t]=1;sqgtype[t]=0;sqtype[t]=0;}
 	// for (t=0;t<kmax;t++){ka[t]=-9000000;kmuki[t]=0;ksoka[t]=0;ksokb[t]=0;kxsoka[t]=0;kxsokb[t]=0;}
@@ -2643,7 +2643,7 @@ void HandleSyobonActionOneLevels()
         srtype[t] = 0;
         sracttype[t] = 0;
         LiftVelY[t] = 0;
-        srsp[t] = 1;
+        LiftType[t] = ELiftType::BREAKING;
         LiftCount++;
         t = LiftCount;
         LiftX[t] = 39 * 29 * 100 - 2000;
@@ -2660,7 +2660,7 @@ void HandleSyobonActionOneLevels()
         srtype[t] = 0;
         sracttype[t] = 0;
         LiftVelY[t] = 0;
-        srsp[t] = 2;
+        LiftType[t] = ELiftType::PUSH_LEFT;
         LiftCount++;
 
         t = LiftCount;
@@ -2670,7 +2670,7 @@ void HandleSyobonActionOneLevels()
         srtype[t] = 0;
         sracttype[t] = 0;
         LiftVelY[t] = 0;
-        srsp[t] = 10;
+        LiftType[t] = ELiftType::PILLAR;
         LiftCount++;
         t = LiftCount;
         LiftX[t] = 104 * 29 * 100;
@@ -2679,7 +2679,7 @@ void HandleSyobonActionOneLevels()
         srtype[t] = 0;
         sracttype[t] = 0;
         LiftVelY[t] = 0;
-        srsp[t] = 12;
+        LiftType[t] = ELiftType::PILLAR_BOUNCY;
         LiftCount++;
         t = LiftCount;
         LiftX[t] = 117 * 29 * 100;
@@ -2688,7 +2688,7 @@ void HandleSyobonActionOneLevels()
         srtype[t] = 0;
         sracttype[t] = 1;
         LiftVelY[t] = 0;
-        srsp[t] = 15;
+        LiftType[t] = ELiftType::PILLAR_BRICKS;
         LiftCount++;
         t = LiftCount;
         LiftX[t] = 124 * 29 * 100;
@@ -2697,7 +2697,7 @@ void HandleSyobonActionOneLevels()
         srtype[t] = 0;
         sracttype[t] = 0;
         LiftVelY[t] = 0;
-        srsp[t] = 10;
+        LiftType[t] = ELiftType::PILLAR;
         LiftCount++;
 
         if (stagepoint == 1)
@@ -3934,7 +3934,7 @@ void HandleSyobonActionOneLevels()
         LiftSizeX[t] = 12 * 30 * 100 + 1000;
         srtype[t] = 0;
         sracttype[t] = 0;
-        srsp[t] = 21;
+        LiftType[t] = ELiftType::GRAY;
         LiftVelY[t] = 0;
         LiftCount++;
 
@@ -5314,7 +5314,7 @@ void HandleSyobonActionTwoLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 1;
         LiftVelY[LiftCount] = 0;
-        srsp[LiftCount] = 10;
+        LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
         //
         LiftX[LiftCount] = 18 * 29 * 100;
@@ -5323,7 +5323,7 @@ void HandleSyobonActionTwoLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        srsp[LiftCount] = 10;
+        LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
         //
         LiftX[LiftCount] = 35 * 29 * 100;
@@ -5332,7 +5332,7 @@ void HandleSyobonActionTwoLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        srsp[LiftCount] = 10;
+        LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
         //
         LiftX[LiftCount] = 35 * 29 * 100;
@@ -5341,7 +5341,7 @@ void HandleSyobonActionTwoLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        srsp[LiftCount] = 10;
+        LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
         //
         LiftX[LiftCount] = 94 * 29 * 100;
@@ -5350,7 +5350,7 @@ void HandleSyobonActionTwoLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        srsp[LiftCount] = 1;
+        LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -6072,7 +6072,7 @@ void HandleSyobonActionTwoLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 1;
         LiftVelY[LiftCount] = 0;
-        srsp[LiftCount] = 0;
+        LiftType[LiftCount] = ELiftType::YELLOW;
         LiftCount = 20;
         //
         LiftX[LiftCount] = 97 * 29 * 100;
@@ -6081,7 +6081,7 @@ void HandleSyobonActionTwoLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        srsp[LiftCount] = 21;
+        LiftType[LiftCount] = ELiftType::GRAY;
         LiftCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -6420,7 +6420,7 @@ void HandleSyobonActionTwoLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        srsp[LiftCount] = 3;
+        LiftType[LiftCount] = ELiftType::PUSH_RIGHT;
         LiftCount = 0;
         //
         for (tt = 0; tt <= 1000; tt++)

@@ -165,7 +165,8 @@ int BackgroundWidth[nmax], BackgroundHeight[nmax];
 //リフト
 int LiftCount;
 int LiftX[srmax], LiftY[srmax], LiftSizeX[srmax], LiftVelY[srmax], LiftFrictionY[srmax];
-int srtype[srmax], sracttype[srmax], srsp[srmax];
+int srtype[srmax], sracttype[srmax];
+ELiftType LiftType[srmax];
 int srmuki[srmax], sron[srmax], sree[srmax];
 int srsok[srmax], srmovep[srmax], srmove[srmax];
 

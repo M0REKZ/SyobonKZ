@@ -339,7 +339,9 @@ extern int LiftFrictionY[srmax];
 extern int srtype[srmax];
 //extern int srgtype[srmax]; //+KZ: unused
 extern int sracttype[srmax];
-extern int srsp[srmax];
+// @attention +KZ int srsp[srmax] is now ELiftType LiftType[srmax]
+// +KZ: This is confusing, there are like 3 or more variables indicating the type of the lifts,
+extern ELiftType LiftType[srmax];
 extern int srmuki[srmax], sron[srmax], sree[srmax];
 extern int srsok[srmax], srmovep[srmax], srmove[srmax];
 

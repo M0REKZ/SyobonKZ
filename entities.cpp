@@ -1918,7 +1918,7 @@ void HandleLifts()
                         LiftVelY[11] = 900;
                     }
 
-                    if (srsp[t] != 12)
+                    if (LiftType[t] != ELiftType::PILLAR_BOUNCY)
                     {
                         PlayerGrounded = 1;
                         PlayerVelY = 0;
@@ -1969,7 +1969,7 @@ void HandleLifts()
                         }
                     }
                     // 特殊 (Special)
-                    if (srsp[t] == 1)
+                    if (LiftType[t] == ELiftType::BREAKING)
                     {
                         PlaySound(Sounds[3]);
                         CreateExtraGraphic(LiftX[t] + 200,
@@ -1982,7 +1982,7 @@ void HandleLifts()
                         LiftX[t] = -70000000;
                     }
 
-                    if (srsp[t] == 2)
+                    if (LiftType[t] == ELiftType::PUSH_LEFT)
                     {
                         PlayerVelX = -2400;
                         srmove[t] += 1;
@@ -1995,7 +1995,7 @@ void HandleLifts()
                         }
                     }
 
-                    if (srsp[t] == 3)
+                    if (LiftType[t] == ELiftType::PUSH_RIGHT)
                     {
                         PlayerVelX = 2400;
                         srmove[t] += 1;
@@ -2011,12 +2011,12 @@ void HandleLifts()
                 } // 判定内
 
                 // 疲れ初期化
-                if ((srsp[t] == 2 || srsp[t] == 3) && PlayerVelX != -2400 && srmove[t] > 0)
+                if ((LiftType[t] == ELiftType::PUSH_LEFT || LiftType[t] == ELiftType::PUSH_RIGHT) && PlayerVelX != -2400 && srmove[t] > 0)
                 {
                     srmove[t]--;
                 }
 
-                if (srsp[t] == 11)
+                if (LiftType[t] == ELiftType::PILLAR_FALL)
                 {
                     if (PlayerX + PlayerSizeX >
                             xx[8] + xx[0] - 2000 &&
@@ -2107,19 +2107,19 @@ void RenderLifts()
         if (xx[0] + LiftSizeX[t] >= -10 && xx[1] <= fxmax + 12100 && LiftSizeX[t] / 100 >= 1)
         {
             xx[2] = 14;
-            if (srsp[t] == 1)
+            if (LiftType[t] == ELiftType::BREAKING)
             {
                 xx[2] = 12;
             }
 
-            if (srsp[t] <= 9 || srsp[t] >= 20)
+            if (LiftType[t] < ELiftType::PILLAR /* +KZ: it was <= 9 */ || (int)LiftType[t] >= 20)
             {
                 setcolor(220, 220, 0);
-                if (srsp[t] == 2 || srsp[t] == 3)
+                if (LiftType[t] == ELiftType::PUSH_LEFT || LiftType[t] == ELiftType::PUSH_RIGHT)
                 {
                     setcolor(0, 220, 0);
                 }
-                if (srsp[t] == 21)
+                if (LiftType[t] == ELiftType::GRAY)
                 {
                     setcolor(180, 180, 180);
                 }
@@ -2127,18 +2127,18 @@ void RenderLifts()
                          (LiftY[t] - fy) / 100, LiftSizeX[t] / 100, xx[2]);
 
                 setcolor(180, 180, 0);
-                if (srsp[t] == 2 || srsp[t] == 3)
+                if (LiftType[t] == ELiftType::PUSH_LEFT || LiftType[t] == ELiftType::PUSH_RIGHT)
                 {
                     setcolor(0, 180, 0);
                 }
-                if (srsp[t] == 21)
+                if (LiftType[t] == ELiftType::GRAY)
                 {
                     setcolor(150, 150, 150);
                 }
                 drawrect((LiftX[t] - fx) / 100,
                          (LiftY[t] - fy) / 100, LiftSizeX[t] / 100, xx[2]);
             }
-            else if (srsp[t] <= 14)
+            else if (LiftType[t] < ELiftType::PILLAR_BRICKS /* +KZ: it was <= 14 */)
             {
                 if (LiftSizeX[t] >= 5000)
                 {
@@ -2163,12 +2163,12 @@ void RenderLifts()
                              LiftSizeX[t] / 100 - 40, 480);
                 }
             }
-            if (srsp[t] == 15)
+            if (LiftType[t] == ELiftType::PILLAR_BRICKS)
             {
                 for (t2 = 0; t2 <= 2; t2++)
                 {
-                    xx[6] = 1 + 0;
-                    drawimage(Sliced_GFX[xx[6]][1],
+                    //xx[6] = 1 + 0; //+KZ: this is useless, and xx[6] is set to other value after RenderLifts(), it is safe to remove
+                    drawimage(Sliced_GFX[1][1],
                               (LiftX[t] - fx) / 100 +
                                   t2 * 29,
                               (LiftY[t] - fy) / 100);
