@@ -50,7 +50,7 @@ void stagecls()
 		EnemyVelY[t] = 1;
 		azimentype[t] = 0;
 		EnemyType[t] = EEnemyType::BALL;
-		EnemySubType[t] = 0;
+		EnemySubType[t] = EEnemySubType::NONE;
 		af[t] = 0;
 		EnemyAITimer[t] = 0;
 		EnemyBlockAppearTimer[t] = 0;
@@ -62,7 +62,7 @@ void stagecls()
 		EnemyAppearY[t] = 1;
 		bz[t] = 1;
 		EnemyAppearTimer[t] = 0;
-		EnemyAppearSubType[t] = 0;
+		EnemyAppearSubType[t] = EEnemySubType::NONE;
 	}
 	for (t = 0; t < emax; t++)
 	{
@@ -631,13 +631,13 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 27 * 29 * 100;
         EnemyAppearY[t] = (9 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::BALL;
-        EnemyAppearSubType[t] = 1; //+KZ: In Syobon Action by Chiku you can not stomp this enemy
+        EnemyAppearSubType[t] = EEnemySubType::BALL_UNSTOMPABLE; //+KZ: In Syobon Action by Chiku you can not stomp this enemy
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 103 * 29 * 100;
         EnemyAppearY[t] = (5 * 29 - 12 + 10) * 100;
         EnemyAppearType[t] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[t] = 0;
+        EnemyAppearSubType[t] = EEnemySubType::EVIL_CLOUD_NORMAL;
         EnemyAppearCount++;
         // t=bco;ba[t]=13*29*100;bb[t]=(5*29-12)*100;btype[t]=81;bxtype[t]=0;bco++;
 
@@ -1474,14 +1474,14 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 18 * 29 * 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[t] = 1;
+        EnemyAppearSubType[t] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount++;
         // t=bco;ba[t]=52*29*100;bb[t]=(2*29-12)*100;btype[t]=82;bxtype[t]=1;bco++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 51 * 29 * 100 + 1000;
         EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100;
         EnemyAppearType[t] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[t] = 1;
+        EnemyAppearSubType[t] = EEnemySubType::EVIL_CLOUD_HIDDEN;
         EnemyAppearCount++;
 
         // ？ボール
@@ -1489,7 +1489,7 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 96 * 29 * 100 + 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::MYSTERY_BALL;
-        EnemyAppearSubType[t] = 0;
+        EnemyAppearSubType[t] = EEnemySubType::MYSTERY_BALL_LEVEL_1_2;
         EnemyAppearCount++;
 
         // リフト
@@ -2037,7 +2037,7 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 19 * 29 * 100;
         EnemyAppearY[t] = (2 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::FAKE_POLE;
-        EnemyAppearSubType[t] = 0;
+        EnemyAppearSubType[t] = EEnemySubType::FAKE_POLE_STAY;
         EnemyAppearCount++;
 
         for (tt = 0; tt <= 1000; tt++)
@@ -2556,13 +2556,13 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 101 * 29 * 100;
         EnemyAppearY[t] = (5 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::BALL_SPIKY;
-        EnemyAppearSubType[t] = 1;
+        EnemyAppearSubType[t] = EEnemySubType::BALL_SPIKY_JUMPER;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 146 * 29 * 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::DEFRAG;
-        EnemyAppearSubType[t] = 1;
+        EnemyAppearSubType[t] = EEnemySubType::DEFRAG_GRAB_POLE;
         EnemyAppearCount++;
 
         t = GroundCount;
@@ -2616,14 +2616,14 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 10 * 29 * 100 + 100;
         EnemyAppearY[t] = (11 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::MYSTERY_BALL;
-        EnemyAppearSubType[t] = 1;
+        EnemyAppearSubType[t] = EEnemySubType::MYSTERY_BALL_LEVEL_1_3;
         EnemyAppearCount++;
         // ブロックもどき
         t = EnemyAppearCount;
         EnemyAppearX[t] = 43 * 29 * 100;
         EnemyAppearY[t] = (11 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[t] = 1;
+        EnemyAppearSubType[t] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount++;
         // t=bco;ba[t]=146*29*100;bb[t]=(12*29-12)*100;btype[t]=82;bxtype[t]=1;bco++;
         // うめぇ
@@ -2631,7 +2631,7 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 1 * 29 * 100;
         EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100 - 1000;
         EnemyAppearType[t] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[t] = 0;
+        EnemyAppearSubType[t] = EEnemySubType::EVIL_CLOUD_NORMAL;
         EnemyAppearCount++;
 
         // リフト
@@ -3780,43 +3780,43 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 8 * 29 * 100 - 1400;
         EnemyAppearY[t] = (2 * 29 - 12) * 100 + 500;
         EnemyAppearType[t] = EEnemyType::FALLING_CAT;
-        EnemyAppearSubType[t] = 0;
+        EnemyAppearSubType[t] = EEnemySubType::NONE;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 42 * 29 * 100 - 1400;
         EnemyAppearY[t] = (-2 * 29 - 12) * 100 + 500;
         EnemyAppearType[t] = EEnemyType::FALLING_CAT;
-        EnemyAppearSubType[t] = 0;
+        EnemyAppearSubType[t] = EEnemySubType::NONE;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 29 * 29 * 100 + 1500;
         EnemyAppearY[t] = (7 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[t] = 105;
+        EnemyAppearSubType[t] = (EEnemySubType)105;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 47 * 29 * 100 + 1500;
         EnemyAppearY[t] = (9 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[t] = 110;
+        EnemyAppearSubType[t] = (EEnemySubType)110;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 70 * 29 * 100 + 1500;
         EnemyAppearY[t] = (9 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[t] = 105;
+        EnemyAppearSubType[t] = (EEnemySubType)105;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 66 * 29 * 100 + 1501;
         EnemyAppearY[t] = (4 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[t] = 101;
+        EnemyAppearSubType[t] = (EEnemySubType)101;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 85 * 29 * 100 + 1501;
         EnemyAppearY[t] = (4 * 29 - 12) * 100 + 1500;
         EnemyAppearType[t] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[t] = 105;
+        EnemyAppearSubType[t] = (EEnemySubType)105;
         EnemyAppearCount++;
 
         // ステルスうめぇ
@@ -3824,28 +3824,28 @@ void HandleSyobonActionOneLevels()
         EnemyAppearX[t] = 57 * 29 * 100;
         EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100 - 500;
         EnemyAppearType[t] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[t] = 1;
+        EnemyAppearSubType[t] = EEnemySubType::EVIL_CLOUD_HIDDEN;
         EnemyAppearCount++;
         // ブロックもどき
         t = EnemyAppearCount;
         EnemyAppearX[t] = 77 * 29 * 100;
         EnemyAppearY[t] = (5 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[t] = 2;
+        EnemyAppearSubType[t] = EEnemySubType::SPIKY_BLOCK_MESSAGE_BLOCK;
         EnemyAppearCount++;
         // ボス
         t = EnemyAppearCount;
         EnemyAppearX[t] = 130 * 29 * 100;
         EnemyAppearY[t] = (8 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::MOLALLA;
-        EnemyAppearSubType[t] = 0;
+        EnemyAppearSubType[t] = EEnemySubType::MOLALLA_ALIVE;
         EnemyAppearCount++;
         // クックル
         t = EnemyAppearCount;
         EnemyAppearX[t] = 142 * 29 * 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::KUKURRU;
-        EnemyAppearSubType[t] = 0;
+        EnemyAppearSubType[t] = EEnemySubType::NONE;
         EnemyAppearCount++;
 
         // マグマ
@@ -4258,37 +4258,37 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearX[EnemyAppearCount] = 6 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (3 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::EVIL_CLOUD_NORMAL;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 13 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::BALL_SPIKY;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 23 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::EVIL_CLOUD_NORMAL;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 25 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::EVIL_CLOUD_HIDDEN;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 27 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::EVIL_CLOUD_NORMAL;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 88 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (12 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -4657,67 +4657,67 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearX[EnemyAppearCount] = 32 * 29 * 100 - 1400;
         EnemyAppearY[EnemyAppearCount] = (-2 * 29 - 12) * 100 + 500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FALLING_CAT;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::NONE;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = (31 * 29 - 12) * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::BALL_ROCKET;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::BALL_ROCKET_0;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 38 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 38 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 42 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 42 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 46 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 46 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 58 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 66 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 76 * 29 * 100 - 1400;
         EnemyAppearY[EnemyAppearCount] = (-2 * 29 - 12) * 100 + 500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FALLING_CAT;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::NONE;
         EnemyAppearCount += 1;
         //
         GroundCount = 0;
@@ -4920,73 +4920,73 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearX[EnemyAppearCount] = 9 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (12 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 10 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (11 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 11 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (10 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 12 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (9 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 13 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 14 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 15 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 16 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 17 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 18 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 19 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 20 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -5304,7 +5304,7 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearX[GroundCount] = (102 * 29 - 12) * 100;
         EnemyAppearY[GroundCount] = (10 * 29 - 12) * 100;
         EnemyAppearType[GroundCount] = EEnemyType::UNKNOWN_ID_50;
-        EnemyAppearSubType[GroundCount] = 1;
+        EnemyAppearSubType[GroundCount] = EEnemySubType::UNKNOWN_ID_50_1;
         GroundCount += 1;
         //
         LiftCount = 0;
@@ -5471,13 +5471,13 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearX[EnemyAppearCount] = 2 * 29 * 100 - 1400;
         EnemyAppearY[EnemyAppearCount] = (-2 * 29 - 12) * 100 + 500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FALLING_CAT;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::NONE;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 20 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (5 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         GroundCount = 0;
@@ -5909,103 +5909,103 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearX[EnemyAppearCount] = 0 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)105;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 2 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (0 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::EVIL_CLOUD_HIDDEN;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 3 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)105;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 6 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 9 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 107;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 25 * 29 * 100 - 1400;
         EnemyAppearY[EnemyAppearCount] = (2 * 29 - 12) * 100 - 400;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FALLING_CAT;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::NONE;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 40 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_GROUND_TOP;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 42 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (8 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_GROUND_TOP;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 43 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)105;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 47 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)105;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 57 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_GROUND_TOP;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 77 * 29 * 100 - 1400;
         EnemyAppearY[EnemyAppearCount] = (2 * 29 - 12) * 100 - 400;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FALLING_CAT;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::NONE;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 83 * 29 * 100 - 1400;
         EnemyAppearY[EnemyAppearCount] = (2 * 29 - 12) * 100 - 400;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FALLING_CAT;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::NONE;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 88 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (9 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)105;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 88 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (9 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)105;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 90 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (9 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_GROUND_TOP;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 107 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (10 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::MOLALLA;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::MOLALLA_ALIVE;
         EnemyAppearCount += 1;
         //
         GroundCount = 0;
@@ -6380,37 +6380,37 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearX[EnemyAppearCount] = 108 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (6 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::DEFRAG;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::DEFRAG_GRAB_POLE;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 33 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (10 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 36 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (0 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::EVIL_CLOUD;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::EVIL_CLOUD_HIDDEN;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 78 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_COUNTERCLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)105;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 80 * 29 * 100 + 1500;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100 + 1500;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::FIREBAR_CLOCKWISE;
-        EnemyAppearSubType[EnemyAppearCount] = 105;
+        EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)105;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 85 * 29 * 100;
         EnemyAppearY[EnemyAppearCount] = (11 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount += 1;
         //
         LiftCount = 0;

@@ -10,10 +10,10 @@
 // @attention +KZ: int xb is now int PosY
 // @attention +KZ: int xc is now int VelX
 // @attention +KZ: int xd is now int VelY
-// @attention +KZ: int xtype is now int EntityType
-// @attention +KZ: int xxtype is now int EntitySubType
+// @attention +KZ: int xtype is now EEnemyType EntityType
+// @attention +KZ: int xxtype is now EEnemySubType EntitySubType
 void CreateEntity(int PosX, int PosY, int xc, int xd, int xnotm, EEnemyType EntityType,
-	   int EntitySubType);
+	   EEnemySubType EntitySubType);
 
 // @attention +KZ: void tekizimen() is now void HandleTiles()
 void HandleEntitiesBlocks();

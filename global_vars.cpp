@@ -143,7 +143,8 @@ int EnemyX[amax], EnemyY[amax], EnemySizeX[amax], EnemySizeY[amax], EnemyVelX[am
 int af[amax], EnemyBlockAppearTimer[amax];
 int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
 EEnemyType EnemyType[amax];
-int EnemySubType[amax], EnemyLookingDirection[amax];
+EEnemySubType EnemySubType[amax];
+int EnemyLookingDirection[amax];
 int anotm[amax], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
 int EnemyAITimer[amax];
 int EnemyMessageTimer[amax], EnemyMessageType[amax];
@@ -152,7 +153,8 @@ int EnemyMessageTimer[amax], EnemyMessageType[amax];
 int EnemyAppearCount;
 int EnemyAppearX[bmax], EnemyAppearY[bmax], EnemyAppearTimer[bmax];
 EEnemyType EnemyAppearType[bmax];
-int EnemyAppearSubType[bmax], bz[bmax];
+EEnemySubType EnemyAppearSubType[bmax];
+int bz[bmax];
 
 
 //背景

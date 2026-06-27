@@ -265,10 +265,10 @@ extern int af[amax]; //+KZ: for what is this one?
 // @attention +KZ: int abrocktm[amax] is now int EnemyBlockAppearTimer[amax]
 extern int EnemyBlockAppearTimer[amax];
 extern int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
-// @attention +KZ: int atype[amax] is now int EnemyType[amax]
+// @attention +KZ: int atype[amax] is now EEnemyType EnemyType[amax]
 extern EEnemyType EnemyType[amax];
-// @attention +KZ: int axtype[amax] is now int EnemySubType[amax]
-extern int EnemySubType[amax];
+// @attention +KZ: int axtype[amax] is now EEnemySubType EnemySubType[amax]
+extern EEnemySubType EnemySubType[amax];
 // @attention +KZ: int amuki[amax] is now int EnemyLookingDirection[amax]
 extern int EnemyLookingDirection[amax];
 //extern int ahp[amax]; //+KZ: unused
@@ -297,8 +297,8 @@ extern int EnemyAppearY[bmax];
 extern int EnemyAppearTimer[bmax];
 // @attention +KZ: int btype[bmax] is now EEnemyType EnemyAppearType[bmax]
 extern EEnemyType EnemyAppearType[bmax];
-// @attention +KZ: int bxtype[bmax] is now int EnemyAppearSubType[bmax]
-extern int EnemyAppearSubType[bmax];
+// @attention +KZ: int bxtype[bmax] is now EEnemySubType EnemyAppearSubType[bmax]
+extern EEnemySubType EnemyAppearSubType[bmax];
 extern int bz[bmax]; //+KZ: seems like a init indicator
 
 

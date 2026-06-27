@@ -276,4 +276,80 @@ enum class EObjectType
     CHECKPOINT = 500,
 };
 
+///********************************************///
+/// Enums added by +KZ:
+///********************************************///
+
+// @note FIREBAR_CLOCKWISE and FIREBAR_COUNTERCLOCKWISE uses EnemySubType as their length
+enum class EEnemySubType
+{
+    NONE = 0, //"none" wildcard for most enemy types
+
+    BALL_NORMAL = 0,
+    BALL_UNSTOMPABLE = 1,
+
+    SHELL_STAY = 0,
+    SHELL_MOVING,
+    SHELL_MOVING_2, //unknown purpose
+
+    SEAL_UP = 0,
+    SEAL_DOWN,
+
+    BALL_SPIKY_NORMAL = 0,
+    BALL_SPIKY_JUMPER = 1,
+
+    DEFRAG_NORMAL = 0,
+    DEFRAG_GRAB_POLE,
+
+    BALL_ROCKET_0 = 0,
+    BALL_ROCKET_1,
+    BALL_ROCKET_2,
+    BALL_ROCKET_3,
+
+    FLAME_0 = 0,
+    FLAME_1,
+
+    MOLALLA_ALIVE = 0,
+    MOLALLA_DEAD,
+
+    LASER_HORIZONTAL = 0,
+    LASER_10_DEGREE_UP,
+    LASER_10_DEGREE_DOWN,
+    LASER_33_DEGREE_UP,
+    LASER_33_DEGREE_DOWN,
+
+    FAKE_POLE_STAY = 0,
+    FAKE_POLE_TALKING = 1,
+    FAKE_POLE_MOVE = 5,
+
+    MUSHROOM_DELICIOUS = 0,
+    MUSHROOM_NOT_POISONOUS = 1,
+    MUSHROOM_GROW = 2,
+
+    MUSHROOM_POISONOUS_FASTER = 1,
+
+    MYSTERY_BALL_LEVEL_1_2 = 0,
+    MYSTERY_BALL_LEVEL_1_3,
+
+    EVIL_CLOUD_NORMAL = 0,
+    EVIL_CLOUD_HIDDEN = 1,
+
+    SPIKY_BLOCK_GROUND_TOP = 0,
+    SPIKY_BLOCK_HARD_BLOCK,
+    SPIKY_BLOCK_MESSAGE_BLOCK,
+
+    SPIKY_BLOCK_TOUCHED_GROUND_TOP = 0,
+    SPIKY_BLOCK_TOUCHED_HARD_BLOCK,
+
+    UNKNOWN_ID_50_1 = 1,
+
+};
+
+enum class EBlockSubType
+{
+    NONE = 0, //"none" wildcard for most block types
+
+
+};
+
 #endif
