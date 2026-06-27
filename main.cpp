@@ -80,11 +80,11 @@ void rpaint()
 	if (StageColor == ELevelType::ICY)
 	{
 		setcolor(160, 180, 250);
-		PlayerGroundType = EGroundType::SLIP;
+		PlayerGroundType = EPlayerGroundType::SLIP;
 	}
 	else
 	{
-		PlayerGroundType = EGroundType::NORMAL;
+		PlayerGroundType = EPlayerGroundType::NORMAL;
 	}
 
 	//: Clear screen

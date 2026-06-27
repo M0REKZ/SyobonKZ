@@ -89,6 +89,15 @@ void HandleEntities()
 
             switch (EnemyType[t])
             {
+            //+KZ: These were not in the switch, however, since now they are a enum class, excluding them will give a warning
+            case EEnemyType::BURNING_FLOWER:
+            case EEnemyType::FALLING_BLOCK:
+            case EEnemyType::FALLING_BLOCK_2:
+            case EEnemyType::KUKURRU:
+            case EEnemyType::MYSTERY_BALL:
+            case EEnemyType::UNKNOWN_ID_50:
+                break;
+
             case EEnemyType::BALL:
                 xx[10] = 100;
                 break;
@@ -234,7 +243,7 @@ void HandleEntities()
                 {
                     for (tt = 0; tt < smax; tt++)
                     {
-                        if (GroundType[tt] == 300)
+                        if (GroundType[tt] == EObjectType::GOAL_POLE)
                         {
                             // sa[sco]=xx[21]*100;sb[sco]=xx[22]*100;sc[sco]=3000;sd[sco]=(12-t)*3000;stype[sco]=300;sco++;
                             if (EnemyX[t] -
@@ -267,7 +276,7 @@ void HandleEntities()
                         }
                         for (t1 = 0; t1 < smax; t1++)
                         {
-                            if (GroundType[t1] == 104)
+                            if (GroundType[t1] == EObjectType::TRIGGER_MULTI_LASER)
                                 GroundX[t1] = -80000000;
                         }
                     }
@@ -1366,7 +1375,7 @@ void HandleEntitiesBlocks()
 	// 壁 (Wall)
 	for (tt = 0; tt < smax; tt++)
 	{
-		if (GroundX[tt] - fx + GroundSizeX[tt] >= -12010 && GroundX[tt] - fx <= fxmax + 12100 && GroundType[tt] <= 99)
+		if (GroundX[tt] - fx + GroundSizeX[tt] >= -12010 && GroundX[tt] - fx <= fxmax + 12100 && (int)GroundType[tt] <= 99)
 		{
 			xx[0] = 200;
 			xx[2] = 1000;

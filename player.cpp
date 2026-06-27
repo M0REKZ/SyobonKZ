@@ -41,7 +41,7 @@ void HandlePlayer()
     xx[13] = 2;
 
     // すべり補正 (Slip correction)
-    if (PlayerGroundType == EGroundType::SLIP)
+    if (PlayerGroundType == EPlayerGroundType::SLIP)
     {
         xx[0] = 20;
         xx[12] = 9;
@@ -63,7 +63,7 @@ void HandlePlayer()
             if (PlayerVelX < -xx[9] && atktm <= 0)
                 PlayerVelX -= xx[0] / 10;
         }
-        if (PlayerGroundType != EGroundType::SLIP)
+        if (PlayerGroundType != EPlayerGroundType::SLIP)
         {
             if (PlayerVelX > 100 && PlayerGrounded == 0)
             {
@@ -96,7 +96,7 @@ void HandlePlayer()
             if (PlayerVelX > xx[9] && atktm <= 0)
                 PlayerVelX += xx[0] / 10;
         }
-        if (PlayerGroundType != EGroundType::SLIP)
+        if (PlayerGroundType != EPlayerGroundType::SLIP)
         {
             if (PlayerVelX < -100 && PlayerGrounded == 0)
             {
@@ -116,7 +116,7 @@ void HandlePlayer()
 
     // すべり補正初期化 (Initialization of slip correction)
     if (PlayerGrounded != 1)
-        PlayerGroundType = EGroundType::NORMAL;
+        PlayerGroundType = EPlayerGroundType::NORMAL;
 
     // ジャンプ (Jump)
     if (mjumptm >= 0)
@@ -386,7 +386,7 @@ void HandlePlayer()
                 SyobonLevel++;
                 SyobonSection = 0;
                 zxon = 0;
-                tyuukan = 0;
+                CurrentPlayerCheckpoint = 0;
                 SyobonState = ESyobonState::LIVES_SPLASH;
                 SyobonStateTimer = 0;
             }
@@ -475,7 +475,7 @@ void HandlePlayer()
                     SyobonLevel = 1;
                     SyobonSection = 0;
                     zxon = 0;
-                    tyuukan = 0;
+                    CurrentPlayerCheckpoint = 0;
                     SyobonState = ESyobonState::LIVES_SPLASH;
                     SyobonStateTimer = 0;
                 }
@@ -539,7 +539,7 @@ void HandlePlayer()
     {
         if ((PlayerState <= 9) || PlayerState == 300 || PlayerState == 301 || PlayerState == 302)
         {
-            if (PlayerGroundType == EGroundType::NORMAL)
+            if (PlayerGroundType == EPlayerGroundType::NORMAL)
             {
                 xx[2] = 30;
                 xx[1] = 60;
@@ -557,7 +557,7 @@ void HandlePlayer()
                     PlayerVelX += xx[1];
                 }
             }
-            if (PlayerGroundType == EGroundType::SLIP)
+            if (PlayerGroundType == EPlayerGroundType::SLIP)
             {
                 xx[2] = 5;
                 xx[1] = 10;
@@ -1355,11 +1355,12 @@ void HandlePlayerWalls()
 
             xx[8] = GroundX[t] - fx;
             xx[9] = GroundY[t] - fy;
-            if ((GroundType[t] <= 99 || GroundType[t] == 200) && PlayerState < 10)
+            if ((GroundType[t] < EObjectType::TRIGGERS_START /* +KZ: it was <= 99 */ ||
+                GroundType[t] == EObjectType::CASTLE_BRICKS) && PlayerState < 10)
             {
 
                 // おちるブロック (Falling blocks)
-                if (GroundType[t] == 51)
+                if (GroundType[t] == EObjectType::FALLING_BLOCKS)
                 {
                     if (PlayerX + PlayerSizeX >
                             xx[8] + xx[0] + 3000 &&
@@ -1416,7 +1417,7 @@ void HandlePlayerWalls()
                     }
                 }
                 // おちるブロック2 (Falling Block 2)
-                if (GroundType[t] == 52)
+                if (GroundType[t] == EObjectType::FALLING_FLOOR)
                 {
                     if (GroundAI[t] == 0 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 2000 && PlayerX < xx[8] + GroundSizeX[t] - xx[0] - 2500 && PlayerY + PlayerSizeY > xx[9] - 3000)
                     {
@@ -1467,7 +1468,7 @@ void HandlePlayerWalls()
                 } // xx[7]
 
                 // 入る土管 (Entering a pipe)
-                if (GroundType[t] == 50)
+                if (GroundType[t] == EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD)
                 {
                     if (PlayerX + PlayerSizeX > xx[8] + 2800 && PlayerX < xx[8] + GroundSizeX[t] - 3000 && PlayerY + PlayerSizeY > xx[9] - 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && actaon[3] == 1 && PlayerState == 0)
                     {
@@ -1514,7 +1515,7 @@ void HandlePlayerWalls()
                 } // 50
 
                 // 入る土管(左から) (Pipes to enter (from left))
-                if (GroundType[t] == 40)
+                if (GroundType[t] == EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD)
                 {
                     if (PlayerX + PlayerSizeX > xx[8] - 300 && PlayerX < xx[8] + GroundSizeX[t] - 1000 && PlayerY > xx[9] + 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && actaon[4] == 1 && PlayerState == 0)
                     { // end();
@@ -1551,7 +1552,7 @@ void HandlePlayerWalls()
             {
                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + GroundSizeX[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY < xx[9] + GroundSizeY[t] + xx[0])
                 {
-                    if (GroundType[t] == 100)
+                    if (GroundType[t] == EObjectType::TRIGGER_SEAL_UP)
                     {
                         if (GroundSubType[t] == 0 || GroundSubType[t] == 1 && BlockType[1] != EBlockType::ITEM_BLOCK_OPEN)
                         {
@@ -1560,13 +1561,13 @@ void HandlePlayerWalls()
                             PlaySound(Sounds[10]);
                         }
                     }
-                    if (GroundType[t] == 101)
+                    if (GroundType[t] == EObjectType::TRIGGER_SEAL_DOWN)
                     {
                         CreateEntity(GroundX[t] + 6000, -4000, 0, 0, 0, EEnemyType::SEAL, 1);
                         GroundX[t] = -800000000;
                         PlaySound(Sounds[10]);
                     }
-                    if (GroundType[t] == 102)
+                    if (GroundType[t] == EObjectType::TRIGGER_GENERIC_1)
                     {
                         if (GroundSubType[t] == 0)
                         {
@@ -1633,7 +1634,7 @@ void HandlePlayerWalls()
                         if (GroundSubType[t] == 10)
                         {
                             GroundX[t] -= 5 * 30 * 100;
-                            GroundType[t] = 101;
+                            GroundType[t] = EObjectType::TRIGGER_SEAL_DOWN;
                         }
 
                         if (GroundSubType[t] == 12)
@@ -1669,7 +1670,7 @@ void HandlePlayerWalls()
                         }
                     }
 
-                    if (GroundType[t] == 103)
+                    if (GroundType[t] == EObjectType::TRIGGER_LASER)
                     {
                         if (GroundSubType[t] == 0)
                         {
@@ -1693,7 +1694,7 @@ void HandlePlayerWalls()
                         }
                     } // 103
 
-                    if (GroundType[t] == 104)
+                    if (GroundType[t] == EObjectType::TRIGGER_MULTI_LASER)
                     {
                         if (GroundSubType[t] == 0)
                         {
@@ -1716,7 +1717,7 @@ void HandlePlayerWalls()
                         }
                     }
 
-                    if (GroundType[t] == 105 && PlayerGrounded == 0 && PlayerVelY >= 0)
+                    if (GroundType[t] == EObjectType::TRIGGER_PLATFORM_SPLIT && PlayerGrounded == 0 && PlayerVelY >= 0)
                     {
                         BlockX[1] -= 1000;
                         BlockX[2] += 1000;
@@ -1725,7 +1726,7 @@ void HandlePlayerWalls()
                             GroundX[t] = -8000000;
                     }
 
-                    if (GroundType[t] == 300 && PlayerState == 0 && PlayerY < xx[9] + GroundSizeY[t] + xx[0] - 3000 && Health >= 1)
+                    if (GroundType[t] == EObjectType::GOAL_POLE && PlayerState == 0 && PlayerY < xx[9] + GroundSizeY[t] + xx[0] - 3000 && Health >= 1)
                     {
                         SyobonKZHaltMusic();
                         PlayerState = 300;
@@ -1734,14 +1735,14 @@ void HandlePlayerWalls()
                         PlaySound(Sounds[11]);
                     }
                     // 中間ゲート (Intermediate gate)
-                    if (GroundType[t] == 500 && PlayerState == 0 && Health >= 1)
+                    if (GroundType[t] == EObjectType::CHECKPOINT && PlayerState == 0 && Health >= 1)
                     {
-                        tyuukan += 1;
+                        CurrentPlayerCheckpoint += 1;
                         GroundX[t] = -80000000;
                     }
                 }
 
-                if (GroundType[t] == 180)
+                if (GroundType[t] == EObjectType::TRIGGER_LAVA_SPAWNER)
                 {
                     GroundVelY[t]++;
                     if (GroundVelY[t] >= GroundAI[t])

@@ -239,35 +239,39 @@ enum class EPlatformType
 enum class EObjectType
 {
     // not sure what this is
-    GREEN_BLOCK = 0,
-
+    // +KZ: it is the same as PIPE_BODY :D
+    VERTICAL_PIPE_BODY = 0,
     VERTICAL_PIPE_HEAD = 1,
-    PIPE_BODY = 2,
+    HORIZONTAL_PIPE_BODY = 2,
     HORIZONTAL_PIPE_HEAD = 5,
 
-    // It's the same as PIPE_BODY (???)
-    PIPE_BODY_2 = 40,
-    PIPE_TROLL = 50,
+    // +KZ: You can go inside the pipe
+    ENTRANCE_HORIZONTAL_PIPE_HEAD = 40,
+    ENTRANCE_VERTICAL_PIPE_HEAD = 50,
 
     // Falling brick ceiling
-    FALLING_BRICKS = 51,
+    FALLING_BLOCKS = 51,
     FALLING_FLOOR = 52,
+
+    TRIGGERS_START = 100, //+KZ: TrapDisplay shows traps with types from 100 to 299
+    TRIGGERS_END = 299,
 
     TRIGGER_SEAL_UP = 100,
     TRIGGER_SEAL_DOWN = 101,
-    TRIGGER_FOUR_ENEMIES = 102,
+    TRIGGER_GENERIC_1 = 102,
     TRIGGER_LASER = 103,
+    // 1-3 and 2-4 multi laser trap
     TRIGGER_MULTI_LASER = 104,
-
     // This is what makes the brick platform split in 1-4
     TRIGGER_PLATFORM_SPLIT = 105,
+
+    // Makes lava come out of the pipe in 1-2
+    TRIGGER_LAVA_SPAWNER = 180,
 
     CASTLE_BRICKS = 200,
 
     GOAL_POLE = 300,
 
-    // Makes lava come out of the pipe in 1-2
-    LAVA_SPAWNER = 180,
     CHECKPOINT = 500,
 };
 

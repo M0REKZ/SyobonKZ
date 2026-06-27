@@ -13,7 +13,7 @@ void stagecls()
 		GroundSizeX[t] = 1;
 		GroundSizeY[t] = 1;
 		GroundAI[t] = 0;
-		GroundType[t] = 0;
+		GroundType[t] = EObjectType::VERTICAL_PIPE_BODY;
 		GroundSubType[t] = 0;
 	}
 	// for (t=0;t<spmax;t++){spa[t]=-9000000;szyunni[t]=t;spb[t]=1;spc[t]=1;spd[t]=1;sptype[t]=0;spgtype[t]=0;}
@@ -137,7 +137,7 @@ void stage()
 				GroundY[GroundCount] = xx[22] * 100;
 				GroundSizeX[GroundCount] = 3000;
 				GroundSizeY[GroundCount] = 6000;
-				GroundType[GroundCount] = 500;
+				GroundType[GroundCount] = EObjectType::CHECKPOINT;
 				GroundCount++;
 				if (GroundCount >= smax)
 					GroundCount = 0;
@@ -148,7 +148,7 @@ void stage()
 				GroundY[GroundCount] = xx[22] * 100;
 				GroundSizeX[GroundCount] = 6000;
 				GroundSizeY[GroundCount] = 3000;
-				GroundType[GroundCount] = 1;
+				GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_HEAD;
 				GroundCount++;
 				if (GroundCount >= smax)
 					GroundCount = 0;
@@ -159,7 +159,7 @@ void stage()
 				GroundY[GroundCount] = xx[22] * 100;
 				GroundSizeX[GroundCount] = 5000;
 				GroundSizeY[GroundCount] = 3000;
-				GroundType[GroundCount] = 2;
+				GroundType[GroundCount] = EObjectType::HORIZONTAL_PIPE_BODY;
 				GroundCount++;
 				if (GroundCount >= smax)
 					GroundCount = 0;
@@ -171,7 +171,7 @@ void stage()
 				GroundY[GroundCount] = xx[22] * 100 + 500;
 				GroundSizeX[GroundCount] = 2900;
 				GroundSizeY[GroundCount] = 5300;
-				GroundType[GroundCount] = 1;
+				GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_HEAD;
 				GroundCount++;
 				if (GroundCount >= smax)
 					GroundCount = 0;
@@ -182,7 +182,7 @@ void stage()
 				GroundY[GroundCount] = xx[22] * 100 + 700;
 				GroundSizeX[GroundCount] = 3900;
 				GroundSizeY[GroundCount] = 5000;
-				GroundType[GroundCount] = 5;
+				GroundType[GroundCount] = EObjectType::HORIZONTAL_PIPE_HEAD;
 				GroundCount++;
 				if (GroundCount >= smax)
 					GroundCount = 0;
@@ -218,7 +218,7 @@ void stage()
 				GroundY[GroundCount] = xx[22] * 100;
 				GroundSizeX[GroundCount] = 3000;
 				GroundSizeY[GroundCount] = (12 - t) * 3000;
-				GroundType[GroundCount] = 300;
+				GroundType[GroundCount] = EObjectType::GOAL_POLE;
 				GroundCount++;
 				if (GroundCount >= smax)
 					GroundCount = 0;
@@ -226,24 +226,24 @@ void stage()
 		}
 	}
 
-	if (tyuukan >= 1)
+	if (CurrentPlayerCheckpoint >= 1)
 	{
 		xx[17] = 0;
 		for (t = 0; t < smax; t++)
 		{
-			if (GroundType[t] == 500 && tyuukan >= 1)
+			if (GroundType[t] == EObjectType::CHECKPOINT && CurrentPlayerCheckpoint >= 1)
 			{
 				fx = GroundX[t] - fxmax / 2;
 				fzx = fx;
 				PlayerX = GroundX[t] - fx;
 				PlayerY = GroundY[t] - fy;
-				tyuukan--;
+				CurrentPlayerCheckpoint--;
 				xx[17]++;
 
 				GroundX[t] = -80000000;
 			}
 		}
-		tyuukan += xx[17];
+		CurrentPlayerCheckpoint += xx[17];
 	}
 	// BlockCreate(1,2,3);
 
@@ -572,35 +572,35 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = -6000;
         GroundSizeX[t] = 5000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 100;
+        GroundType[t] = EObjectType::TRIGGER_SEAL_UP;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 54 * 29 * 100 - 500;
         GroundY[t] = -6000;
         GroundSizeX[t] = 7000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 101;
+        GroundType[t] = EObjectType::TRIGGER_SEAL_DOWN;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 112 * 29 * 100 + 1000;
         GroundY[t] = -6000;
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 117 * 29 * 100;
         GroundY[t] = (2 * 29 - 12) * 100 - 1500;
         GroundSizeX[t] = 15000;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 103;
+        GroundType[t] = EObjectType::TRIGGER_LASER;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 125 * 29 * 100;
         GroundY[t] = -6000;
         GroundSizeX[t] = 9000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 101;
+        GroundType[t] = EObjectType::TRIGGER_SEAL_DOWN;
         GroundCount++;
         // t=sco;sa[t]=77*29*100;sb[t]=(6*29-12)*100-1500;sc[t]=12000;sd[t]=3000;stype[t]=103;sco++;
         t = 28;
@@ -608,14 +608,14 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (9 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 49 * 29 * 100;
         GroundY[t] = (5 * 29 - 12) * 100;
         GroundSizeX[t] = 9000 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 51;
+        GroundType[t] = EObjectType::FALLING_BLOCKS;
         GroundAI[t] = 0;
         GroundCount++;
         t = GroundCount;
@@ -623,7 +623,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (13 * 29 - 12) * 100;
         GroundSizeX[t] = 3000 * 5 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 52;
+        GroundType[t] = EObjectType::FALLING_FLOOR;
         GroundCount++;
 
         EnemyAppearCount = 0;
@@ -930,7 +930,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (9 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[t] = 1;
         GroundCount++;
         t = GroundCount;
@@ -938,7 +938,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (11 * 29 - 12) * 100;
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 6000 - 200;
-        GroundType[t] = 40;
+        GroundType[t] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
         GroundSubType[t] = 0;
         GroundCount++;
         t = GroundCount;
@@ -946,7 +946,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = -6000;
         GroundSizeX[t] = 5000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 100;
+        GroundType[t] = EObjectType::TRIGGER_SEAL_UP;
         GroundSubType[t] = 1;
         GroundCount++;
 
@@ -1331,7 +1331,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (13 * 29 - 12) * 100;
         GroundSizeX[t] = 3000 * 1 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 52;
+        GroundType[t] = EObjectType::FALLING_FLOOR;
         GroundCount++;
         // t=sco;sa[t]=19*29*100;sb[t]=(13*29-12)*100;sc[t]=3000*1-1;sd[t]=3000;stype[t]=52;sco++;
         t = GroundCount;
@@ -1339,14 +1339,14 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (13 * 29 - 12) * 100;
         GroundSizeX[t] = 3000 * 1 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 52;
+        GroundType[t] = EObjectType::FALLING_FLOOR;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 43 * 29 * 100 + 500;
         GroundY[t] = -6000;
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[t] = 1;
         GroundCount++;
         t = GroundCount;
@@ -1354,7 +1354,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = -6000;
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[t] = 2;
         GroundCount++;
         t = GroundCount;
@@ -1362,7 +1362,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (7 * 29 - 12) * 100;
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 6000 - 200;
-        GroundType[t] = 40;
+        GroundType[t] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
         GroundSubType[t] = 2;
         GroundCount++;
         t = GroundCount;
@@ -1370,7 +1370,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = 3000;
         GroundSizeX[t] = 9000;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[t] = 7;
         GroundCount++;
 
@@ -1381,7 +1381,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (1 * 29 - 12) * 100;
         GroundSizeX[t] = 9000 * 2 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 51;
+        GroundType[t] = EObjectType::FALLING_BLOCKS;
         GroundSubType[t] = 0;
         GroundAI[t] = 0;
         GroundCount++;
@@ -1390,7 +1390,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (1 * 29 - 12) * 100;
         GroundSizeX[t] = 9000 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 51;
+        GroundType[t] = EObjectType::FALLING_BLOCKS;
         GroundSubType[t] = 1;
         GroundAI[t] = 0;
         GroundCount++;
@@ -1399,7 +1399,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (-2 * 29 - 12) * 100;
         GroundSizeX[t] = 9000 * 3 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 51;
+        GroundType[t] = EObjectType::FALLING_BLOCKS;
         GroundSubType[t] = 2;
         GroundAI[t] = 0;
         GroundCount++;
@@ -1410,7 +1410,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (9 * 29 - 12) * 100 - 2000;
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 180;
+        GroundType[t] = EObjectType::TRIGGER_LAVA_SPAWNER;
         GroundSubType[t] = 0;
         GroundVelY[t] = 0;
         GroundAI[t] = 48;
@@ -1420,7 +1420,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (9 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[t] = 2;
         GroundCount++;
         t = GroundCount;
@@ -1428,7 +1428,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (9 * 29 - 12) * 100;
         GroundSizeX[t] = 3000 * 5 - 1;
         GroundSizeY[t] = 3000 * 5;
-        GroundType[t] = 52;
+        GroundType[t] = EObjectType::FALLING_FLOOR;
         GroundSubType[t] = 1;
         GroundCount++;
 
@@ -1437,7 +1437,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (1 * 29 - 12) * 100;
         GroundSizeX[t] = 4700;
         GroundSizeY[t] = 3000 * 8 - 700;
-        GroundType[t] = 1;
+        GroundType[t] = EObjectType::VERTICAL_PIPE_HEAD;
         GroundSubType[t] = 0;
         GroundCount++;
 
@@ -1449,7 +1449,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (9 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[t] = 5;
         GroundCount++;
         t = GroundCount;
@@ -1457,7 +1457,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (9 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[t] = 5;
         GroundCount++;
         t = GroundCount;
@@ -1465,7 +1465,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (9 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[t] = 5;
         GroundCount++;
 
@@ -2019,7 +2019,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = -6000;
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[t] = 8;
         GroundCount++;
         // 空飛ぶ土管
@@ -2028,7 +2028,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (10 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 9000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundCount++;
 
         // ポールもどき
@@ -2570,7 +2570,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (13 * 29 - 12) * 100;
         GroundSizeX[t] = 9000 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 52;
+        GroundType[t] = EObjectType::FALLING_FLOOR;
         GroundCount++;
         // t=sco;sa[t]=58*29*100;sb[t]=(13*29-12)*100;sc[t]=9000-1;sd[t]=3000;stype[t]=52;sco++;
 
@@ -2580,7 +2580,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (10 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 9000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[t] = 1;
         GroundCount++;
         // t=28;sa[t]=65*29*100;sb[t]=(10*29-12)*100;sc[t]=6000;sd[t]=9000-200;stype[t]=50;sco++;
@@ -2591,7 +2591,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (8 * 29 - 12) * 100 - 1500;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 103;
+        GroundType[t] = EObjectType::TRIGGER_LASER;
         GroundSubType[t] = 1;
         GroundCount++;
         t = GroundCount;
@@ -2599,7 +2599,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = -6000;
         GroundSizeX[t] = 9000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[t] = 10;
         GroundCount++;
         // ポール砲
@@ -2608,7 +2608,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (1 * 29 - 12) * 100 - 3000;
         GroundSizeX[t] = 15000;
         GroundSizeY[t] = 14000;
-        GroundType[t] = 104;
+        GroundType[t] = EObjectType::TRIGGER_MULTI_LASER;
         GroundCount++;
 
         // ？ボール
@@ -2705,7 +2705,7 @@ void HandleSyobonActionOneLevels()
             stagepoint = 0;
             PlayerX = 4500;
             PlayerY = -3000;
-            tyuukan = 0;
+            CurrentPlayerCheckpoint = 0;
         }
 
         for (tt = 0; tt <= 1000; tt++)
@@ -3301,7 +3301,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (11 * 29 - 12) * 100;
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 15000 - 200;
-        GroundType[t] = 50;
+        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[t] = 1;
         GroundCount++;
         // t=sco;sa[t]=12*29*100;sb[t]=(11*29-12)*100;sc[t]=3000;sd[t]=6000-200;stype[t]=40;sxtype[t]=0;sco++;
@@ -3701,14 +3701,14 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (8 * 29 - 12) * 100 - 1500;
         GroundSizeX[t] = 1500;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 105;
+        GroundType[t] = EObjectType::TRIGGER_PLATFORM_SPLIT;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 67 * 29 * 100;
         GroundY[t] = (4 * 29 - 12) * 100;
         GroundSizeX[t] = 9000 - 1;
         GroundSizeY[t] = 3000 * 1 - 1;
-        GroundType[t] = 51;
+        GroundType[t] = EObjectType::FALLING_BLOCKS;
         GroundSubType[t] = 3;
         GroundAI[t] = 0;
         GroundCount++;
@@ -3717,7 +3717,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (13 * 29 - 12) * 100;
         GroundSizeX[t] = 3000 * 1 - 1;
         GroundSizeY[t] = 3000;
-        GroundType[t] = 52;
+        GroundType[t] = EObjectType::FALLING_FLOOR;
         GroundCount++;
         // t=sco;sa[t]=79*29*100;sb[t]=(13*29-12)*100;sc[t]=30*3*100-1;sd[t]=6000-200;stype[t]=51;sxtype[t]=4;sco++;
         // t=sco;sa[t]=83*29*100;sb[t]=(-2*29-12)*100;sc[t]=30*5*100-1;sd[t]=3000-200;stype[t]=51;sxtype[t]=4;sco++;
@@ -3726,7 +3726,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (1 * 29 - 12) * 100;
         GroundSizeX[t] = 30 * 6 * 100 - 1 + 0;
         GroundSizeY[t] = 3000 - 200;
-        GroundType[t] = 51;
+        GroundType[t] = EObjectType::FALLING_BLOCKS;
         GroundSubType[t] = 10;
         GroundCount++;
         // スクロール消し
@@ -3735,7 +3735,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (2 * 29 - 12) * 100;
         GroundSizeX[t] = 3000 * 1 - 1;
         GroundSizeY[t] = 300000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[t] = 20;
         GroundCount++;
         t = GroundCount;
@@ -3743,7 +3743,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = (-12 * 29 - 12) * 100;
         GroundSizeX[t] = 3000 * 1 - 1;
         GroundSizeY[t] = 300000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[t] = 30;
         GroundCount++;
 
@@ -3753,7 +3753,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = -6000;
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
-        GroundType[t] = 102;
+        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[t] = 12;
         GroundCount++;
 
@@ -3763,7 +3763,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = 9 * 29 * 100 + 1700;
         GroundSizeX[t] = 3000 * 7 - 1;
         GroundSizeY[t] = 3000 * 5 - 1;
-        GroundType[t] = 200;
+        GroundType[t] = EObjectType::CASTLE_BRICKS;
         GroundSubType[t] = 0;
         GroundCount++;
         t = GroundCount;
@@ -3771,7 +3771,7 @@ void HandleSyobonActionOneLevels()
         GroundY[t] = -1 * 29 * 100 + 1700;
         GroundSizeX[t] = 3000 * 8 - 1;
         GroundSizeY[t] = 3000 * 4 - 1;
-        GroundType[t] = 200;
+        GroundType[t] = EObjectType::CASTLE_BRICKS;
         GroundSubType[t] = 0;
         GroundCount++;
 
@@ -4225,7 +4225,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 12000 - 1;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4233,7 +4233,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (4 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 51;
+        GroundType[GroundCount] = EObjectType::FALLING_BLOCKS;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4241,7 +4241,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4249,7 +4249,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 15000 - 1;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4329,21 +4329,21 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = -6000;
         GroundSizeX[GroundCount] = 5000;
         GroundSizeY[GroundCount] = 70000;
-        GroundType[GroundCount] = 100;
+        GroundType[GroundCount] = EObjectType::TRIGGER_SEAL_UP;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 12 * 29 * 100 + 1200;
         GroundY[GroundCount] = -6000;
         GroundSizeX[GroundCount] = 7000;
         GroundSizeY[GroundCount] = 70000;
-        GroundType[GroundCount] = 101;
+        GroundType[GroundCount] = EObjectType::TRIGGER_SEAL_DOWN;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 12 * 29 * 100;
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 6000 - 1;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundAI[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4351,7 +4351,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (9 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 12000 - 200;
-        GroundType[GroundCount] = 50;
+        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[GroundCount] = 1;
         GroundCount += 1;
         //
@@ -4725,7 +4725,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 300000 - 6001;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4733,7 +4733,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (7 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 3000;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 105;
+        GroundType[GroundCount] = EObjectType::TRIGGER_PLATFORM_SPLIT;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4741,7 +4741,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (9 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 24000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 1;
         GroundCount += 1;
         //
@@ -4749,7 +4749,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (7 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 3000;
         GroundSizeY[GroundCount] = 6000 - 200;
-        GroundType[GroundCount] = 40;
+        GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4757,7 +4757,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (0 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 4700;
         GroundSizeY[GroundCount] = 27000 - 1000;
-        GroundType[GroundCount] = 0;
+        GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -4765,7 +4765,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (9 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 24000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 1;
         GroundCount += 1;
         //
@@ -4773,7 +4773,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (9 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 3000;
         GroundSizeY[GroundCount] = 6000 - 200;
-        GroundType[GroundCount] = 40;
+        GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
         GroundSubType[GroundCount] = 2;
         GroundCount += 1;
         //
@@ -4781,7 +4781,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (0 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 4700;
         GroundSizeY[GroundCount] = 32000;
-        GroundType[GroundCount] = 0;
+        GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -5485,7 +5485,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (9 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 21000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 2;
         GroundCount += 1;
         //
@@ -5493,7 +5493,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 6000;
-        GroundType[GroundCount] = 50;
+        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[GroundCount] = 6;
         GroundCount += 1;
         //
@@ -5501,7 +5501,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (5 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 30000;
-        GroundType[GroundCount] = 50;
+        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[GroundCount] = 1;
         GroundCount += 1;
         //
@@ -5566,7 +5566,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (6 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 18000 - 1;
         GroundSizeY[GroundCount] = 6000 - 1;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -5574,7 +5574,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (8 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 2;
         GroundCount += 1;
         //
@@ -5582,7 +5582,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (11 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 3000;
         GroundSizeY[GroundCount] = 6000;
-        GroundType[GroundCount] = 40;
+        GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
         GroundSubType[GroundCount] = 2;
         GroundCount += 1;
         //
@@ -5590,7 +5590,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (0 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 4700;
         GroundSizeY[GroundCount] = 38000;
-        GroundType[GroundCount] = 0;
+        GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -6013,7 +6013,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (8 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 33000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 2;
         GroundCount += 1;
         //
@@ -6021,7 +6021,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (0 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 33000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = 51;
+        GroundType[GroundCount] = EObjectType::FALLING_BLOCKS;
         GroundSubType[GroundCount] = 3;
         GroundCount += 1;
         //
@@ -6029,7 +6029,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 6000;
-        GroundType[GroundCount] = 50;
+        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[GroundCount] = 6;
         GroundCount += 1;
         //
@@ -6037,7 +6037,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (12 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 2;
         GroundCount += 1;
         //
@@ -6045,7 +6045,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 6000;
-        GroundType[GroundCount] = 50;
+        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
         GroundSubType[GroundCount] = 6;
         GroundCount += 1;
         //
@@ -6053,7 +6053,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (10 * 29 - 12) * 100 - 3000;
         GroundSizeX[GroundCount] = 12000;
         GroundSizeY[GroundCount] = 12000;
-        GroundType[GroundCount] = 104;
+        GroundType[GroundCount] = EObjectType::TRIGGER_MULTI_LASER;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -6061,7 +6061,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (2 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 3000 - 1;
         GroundSizeY[GroundCount] = 300000;
-        GroundType[GroundCount] = 102;
+        GroundType[GroundCount] = EObjectType::TRIGGER_GENERIC_1;
         GroundSubType[GroundCount] = 20;
         GroundCount += 1;
         //
@@ -6364,7 +6364,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -6372,7 +6372,7 @@ void HandleSyobonActionTwoLevels()
         GroundY[GroundCount] = (13 * 29 - 12) * 100;
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = 52;
+        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
         GroundSubType[GroundCount] = 0;
         GroundCount += 1;
         //
@@ -6740,7 +6740,7 @@ void HandleSyobonActionThreeLevels()
         GroundY[t_9] = 36500; //n地面[t_9].b = 36500;
         GroundSizeX[t_9] = 11999; //n地面[t_9].c = 11999;
         GroundSizeY[t_9] = 3000; //n地面[t_9].d = 3000;
-        GroundType[t_9] = 52; //n地面[t_9].type = 52;
+        GroundType[t_9] = EObjectType::FALLING_FLOOR; //n地面[t_9].type = 52;
         GroundCount++; //n地面co++;
         for (int num34 = 0; num34 <= 1000; num34++)
         {

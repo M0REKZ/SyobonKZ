@@ -159,7 +159,9 @@ void loadg(void)
     Sliced_GFX[32][x1] = Sliced_GFX_KZ[1];
 
     // 中間フラグ (Intermediate flag)
-    Sliced_GFX[20][x1] = DerivationGraph(40, 182, 40, 60, Main_GFX[x1]);
+    //+KZ: 42 to fix gray line, previously it was 40
+    //Original Syobon Action had it in 0, i prefer the version with text
+    Sliced_GFX[20][x1] = DerivationGraph(42, 182, 40, 60, Main_GFX[x1]);
 
     // グラ
     x1 = 5;

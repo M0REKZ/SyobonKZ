@@ -39,11 +39,12 @@ extern int SyobonSection;
 //クイック (Quick)
 extern int fast;
 
-//トラップ表示 (Trap display) //+KZ: ??
-extern int trap;
+//トラップ表示 (Trap display) //+KZ: Enabling this will show trap hit boxes in-game
+extern int TrapDisplay;
 
-//中間ゲート (Intermediate gate) //+KZ: ??
-extern int tyuukan;
+//中間ゲート (Intermediate gate)
+// @attention +KZ: int tyuukan is now int CurrentPlayerCheckpoint
+extern int CurrentPlayerCheckpoint;
 
 
 //スタッフロール
@@ -119,8 +120,8 @@ extern int GroundY[smax];
 extern int GroundSizeX[smax];
 // @attention +KZ: int sd[smax] is now GroundSizeY[smax]
 extern int GroundSizeY[smax];
-// @attention +KZ: int stype[smax] is now GroundType[smax]
-extern int GroundType[smax];
+// @attention +KZ: int stype[smax] is now EObjectType GroundType[smax]
+extern EObjectType GroundType[smax];
 // @attention +KZ: int sxtype[smax] is now GroundSubType[smax]
 extern int GroundSubType[smax];
 // @attention +KZ: int sr[smax] is now GroundVelY[smax]
@@ -166,13 +167,13 @@ extern int PlayerAITimer;
 extern int mzz;
 // @attention +KZ: int mzimen is now int PlayerGrounded
 extern int PlayerGrounded;
-enum class EGroundType
+enum class EPlayerGroundType
 {
     NORMAL = 0,
     SLIP = 1,
 };
 // @attention +KZ: int mrzimen is now EGroundType GroundType
-extern EGroundType PlayerGroundType;
+extern EPlayerGroundType PlayerGroundType;
 // @attention +KZ: int mmuki is now int PlayerLookingDirection
 extern int PlayerLookingDirection;
 

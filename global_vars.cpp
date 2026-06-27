@@ -25,10 +25,10 @@ int SyobonSection;
 int fast = 1;
 
 //トラップ表示
-int trap = 1;
+int TrapDisplay = 1;
 
 //中間ゲート
-int tyuukan = 0;
+int CurrentPlayerCheckpoint = 0;
 
 
 //スタッフロール
@@ -90,7 +90,9 @@ double pai = 3.1415926535;
 
 //地面
 int GroundCount;
-int GroundX[smax], GroundY[smax], GroundSizeX[smax], GroundSizeY[smax], GroundType[smax], GroundSubType[smax],
+int GroundX[smax], GroundY[smax], GroundSizeX[smax], GroundSizeY[smax];
+EObjectType GroundType[smax];
+int GroundSubType[smax],
     GroundVelY[smax];
 int GroundAI[smax];
 
@@ -104,7 +106,7 @@ int Lives = 3;
 
 int PlayerState, PlayerSubState, PlayerAITimer, mzz;
 int PlayerGrounded, PlayerLookingDirection, mjumptm, mkeytm;
-EGroundType PlayerGroundType;
+EPlayerGroundType PlayerGroundType;
 int mmutekitm, mmutekion;
 //+KZ: these are never set, but are read?
 int mztm, mztype;

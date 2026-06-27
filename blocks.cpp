@@ -127,7 +127,7 @@ void RenderWalls()
         if (GroundX[t] - fx + GroundSizeX[t] >= -10 && GroundX[t] - fx <= fxmax + 1100)
         {
 
-            if (GroundType[t] == 0)
+            if (GroundType[t] == EObjectType::VERTICAL_PIPE_BODY)
             {
                 setcolor(40, 200, 40);
                 fillrect((GroundX[t] - fx) / 100,
@@ -138,7 +138,7 @@ void RenderWalls()
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
             }
             // 土管
-            if (GroundType[t] == 1)
+            if (GroundType[t] == EObjectType::VERTICAL_PIPE_HEAD)
             {
                 setcolor(0, 230, 0);
                 fillrect((GroundX[t] - fx) / 100,
@@ -150,7 +150,7 @@ void RenderWalls()
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
             }
             // 土管(下)
-            if (GroundType[t] == 2)
+            if (GroundType[t] == EObjectType::HORIZONTAL_PIPE_BODY)
             {
                 setcolor(0, 230, 0);
                 fillrect((GroundX[t] - fx) / 100,
@@ -169,7 +169,7 @@ void RenderWalls()
                          (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
             }
             // 土管(横)
-            if (GroundType[t] == 5)
+            if (GroundType[t] == EObjectType::HORIZONTAL_PIPE_HEAD)
             {
                 setcolor(0, 230, 0);
                 fillrect((GroundX[t] - fx) / 100,
@@ -189,7 +189,7 @@ void RenderWalls()
                          (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
             }
             // 落ちてくるブロック (Falling blocks)
-            if (GroundType[t] == 51)
+            if (GroundType[t] == EObjectType::FALLING_BLOCKS)
             {
                 if (GroundSubType[t] == 0)
                 {
@@ -244,7 +244,7 @@ void RenderWalls()
             } // 51
 
             // 落ちるやつ (The one that falls)
-            if (GroundType[t] == 52)
+            if (GroundType[t] == EObjectType::FALLING_FLOOR)
             {
                 xx[29] = 0;
                 if (StageColor == ELevelType::UNDERGROUND)
@@ -323,9 +323,9 @@ void RenderWalls()
                 }
             }
             // ステージトラップ (Stage Trap)
-            if (trap == 1)
+            if (TrapDisplay == 1)
             {
-                if (GroundType[t] >= 100 && GroundType[t] <= 299)
+                if (GroundType[t] >= EObjectType::TRIGGERS_START && GroundType[t] <= EObjectType::TRIGGERS_END)
                 {
                     if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY)
                         setc0();
@@ -337,7 +337,7 @@ void RenderWalls()
                 }
             }
             // ゴール (Goal)
-            if (GroundType[t] == 300)
+            if (GroundType[t] == EObjectType::GOAL_POLE)
             {
                 setc1();
                 fillrect((GroundX[t] - fx) / 100 + 10,
@@ -353,7 +353,7 @@ void RenderWalls()
                         (GroundY[t] - fy) / 100, 10, 10);
             }
             // 中間
-            if (GroundType[t] == 500)
+            if (GroundType[t] == EObjectType::CHECKPOINT)
             {
                 drawimage(Sliced_GFX[20][4],
                           (GroundX[t] - fx) / 100, (GroundY[t] - fy) / 100);
@@ -371,7 +371,7 @@ void RenderOverwritePipe()
         {
 
             // 入る土管(右)
-            if (GroundType[t] == 40)
+            if (GroundType[t] == EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD)
             {
                 setcolor(0, 230, 0);
                 fillrect((GroundX[t] - fx) / 100,
@@ -383,7 +383,7 @@ void RenderOverwritePipe()
                          GroundSizeX[t] / 100, GroundSizeY[t] / 100);
             }
             // とぶ土管
-            if (GroundType[t] == 50)
+            if (GroundType[t] == EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD)
             {
                 setcolor(0, 230, 0);
                 fillrect((GroundX[t] - fx) / 100 + 5,
@@ -409,7 +409,7 @@ void RenderOverwritePipe()
                          (GroundY[t] - fy) / 100 + 1, 60, 30);
             }
             // 地面(ブロック)
-            if (GroundType[t] == 200)
+            if (GroundType[t] == EObjectType::CASTLE_BRICKS)
             {
                 for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
                 {
