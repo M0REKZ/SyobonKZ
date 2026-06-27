@@ -78,7 +78,7 @@ void stagecls()
 		BackgroundY[t] = 1;
 		BackgroundWidth[t] = 1;
 		BackgroundHeight[t] = 1;
-		BackgroundType[t] = 0;
+		BackgroundType[t] = EDecorationType::HILL;
 	}
 	// for (t=0;t<cmax;t++){ca[t]=-9000000;cb[t]=1;contm[t]=0;ctype[t]=0;ce[t]=0;cf[t]=0;}
 	// for (t=0;t<vmax;t++){va[t]=-9000000;vtype[t]=0;vb[t]=0;vc[t]=1;vd[t]=1;}
@@ -202,7 +202,7 @@ void stage()
 			{
 				BackgroundX[BackgroundCount] = xx[21] * 100;
 				BackgroundY[BackgroundCount] = xx[22] * 100;
-				BackgroundType[BackgroundCount] = xx[23] - 80;
+				BackgroundType[BackgroundCount] = (EDecorationType)(xx[23] - 80);
 				BackgroundCount++;
 				if (BackgroundCount >= nmax)
 					BackgroundCount = 0;
@@ -3852,19 +3852,19 @@ void HandleSyobonActionOneLevels()
         BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 7 * 29 * 100 - 300;
         BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
-        BackgroundType[BackgroundCount] = 6;
+        BackgroundType[BackgroundCount] = EDecorationType::LAVA;
         BackgroundCount++;
         if (BackgroundCount >= nmax)
             BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 41 * 29 * 100 - 300;
         BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
-        BackgroundType[BackgroundCount] = 6;
+        BackgroundType[BackgroundCount] = EDecorationType::LAVA;
         BackgroundCount++;
         if (BackgroundCount >= nmax)
             BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 149 * 29 * 100 - 1100;
         BackgroundY[BackgroundCount] = 10 * 29 * 100 - 600;
-        BackgroundType[BackgroundCount] = 100;
+        BackgroundType[BackgroundCount] = EDecorationType::TEXT_51;
         BackgroundCount++;
         if (BackgroundCount >= nmax)
             BackgroundCount = 0;

@@ -103,39 +103,44 @@ void RenderBackground()
         if (xx[0] + xx[2] >= -10 && xx[0] <= fxmax && xx[1] + xx[3] >= -10 && xx[3] <= fymax)
         {
 
-            if (BackgroundType[t] != 3)
+            if (BackgroundType[t] != EDecorationType::CASTLE)
             {
-                if ((BackgroundType[t] == 1 || BackgroundType[t] == 2) && StageColor == ELevelType::ICY)
+                if ((BackgroundType[t] == EDecorationType::GRASS || BackgroundType[t] == EDecorationType::CLOUD)
+                    && StageColor == ELevelType::ICY)
                 {
-                    drawimage(Sliced_GFX[BackgroundType[t] + 30] //+KZ: so.. this draws the broken grass in 3-1, did it even work correctly in any syobon action version?
+                    //+KZ: so.. this draws the broken grass in 3-1, did it even work correctly in any syobon action version?
+                    //  Fixed with custom sprites in SyobonKZ
+                    drawimage(Sliced_GFX[(int)BackgroundType[t] + 30]
                                         [4],
                               xx[0] / 100, xx[1] / 100);
                 }
                 else
                 {
-                    drawimage(Sliced_GFX[BackgroundType[t]][4],
+                    drawimage(Sliced_GFX[(int)BackgroundType[t]][4],
                               xx[0] / 100, xx[1] / 100);
                 }
             }
-            if (BackgroundType[t] == 3)
-                drawimage(Sliced_GFX[BackgroundType[t]][4],
+            else
+            {
+                drawimage(Sliced_GFX[(int)EDecorationType::CASTLE][4],
                           xx[0] / 100 - 5, xx[1] / 100);
+            }
 
             // 51
-            if (BackgroundType[t] == 100)
+            if (BackgroundType[t] == EDecorationType::TEXT_51)
             {
                 DrawFormatString(xx[0] / 100,
                                  xx[1] / 100,
                                  GetColor(255, 255, 255), "51");
             }
 
-            if (BackgroundType[t] == 101)
+            if (BackgroundType[t] == EDecorationType::TEXT_GAME_CLEAR)
                 DrawFormatString(xx[0] / 100,
                                  xx[1] / 100,
                                  GetColor(255, 255,
                                           255),
                                  "ゲームクリアー");
-            if (BackgroundType[t] == 102)
+            if (BackgroundType[t] == EDecorationType::TEXT_THANKS_FOR_PLAYING)
                 DrawFormatString(xx[0] / 100,
                                  xx[1] / 100,
                                  GetColor(255, 255,

@@ -157,7 +157,8 @@ int EnemyAppearSubType[bmax], bz[bmax];
 
 //背景
 int BackgroundCount;
-int BackgroundX[nmax], BackgroundY[nmax], BackgroundType[nmax];
+int BackgroundX[nmax], BackgroundY[nmax];
+EDecorationType BackgroundType[nmax];
 int BackgroundWidth[nmax], BackgroundHeight[nmax];
 
 

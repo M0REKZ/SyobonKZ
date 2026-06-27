@@ -313,7 +313,7 @@ extern int BackgroundX[nmax];
 extern int BackgroundY[nmax];
 //extern int nc[nmax], nd[nmax]; //+KZ: unused
 // @attention +KZ: int ntype[nmax] is now int BackgroundType[nmax]
-extern int BackgroundType[nmax];
+extern EDecorationType BackgroundType[nmax];
 // @attention +KZ int ne[nmax] renamed to BackgroundWidth[nmax]
 extern int BackgroundWidth[nmax];
 // @attention +KZ int nf[nmax] renamed to BackgroundHeight[nmax]

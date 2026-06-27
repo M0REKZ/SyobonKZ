@@ -434,13 +434,13 @@ void HandlePlayer()
                 {
                     BackgroundX[BackgroundCount] = 117 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 4 * 29 * 100;
-                    BackgroundType[BackgroundCount] = 101;
+                    BackgroundType[BackgroundCount] = EDecorationType::TEXT_GAME_CLEAR;
                     BackgroundCount++;
                     if (BackgroundCount >= nmax)
                         BackgroundCount = 0;
                     BackgroundX[BackgroundCount] = 115 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 6 * 29 * 100;
-                    BackgroundType[BackgroundCount] = 102;
+                    BackgroundType[BackgroundCount] = EDecorationType::TEXT_THANKS_FOR_PLAYING;
                     BackgroundCount++;
                     if (BackgroundCount >= nmax)
                         BackgroundCount = 0;
@@ -449,13 +449,13 @@ void HandlePlayer()
                 {
                     BackgroundX[BackgroundCount] = 157 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 4 * 29 * 100;
-                    BackgroundType[BackgroundCount] = 101;
+                    BackgroundType[BackgroundCount] = EDecorationType::TEXT_GAME_CLEAR;
                     BackgroundCount++;
                     if (BackgroundCount >= nmax)
                         BackgroundCount = 0;
                     BackgroundX[BackgroundCount] = 155 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 6 * 29 * 100;
-                    BackgroundType[BackgroundCount] = 102;
+                    BackgroundType[BackgroundCount] = EDecorationType::TEXT_THANKS_FOR_PLAYING;
                     BackgroundCount++;
                     if (BackgroundCount >= nmax)
                         BackgroundCount = 0;
