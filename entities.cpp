@@ -1788,7 +1788,7 @@ void RenderEnemiesTwo()
     }
 
     // Syobon Action 3 Big Mushroom (WIP!)
-    if (currentGame == 2 && fx >= 42000 && SA3_Level1MushroomTriggered)
+    if (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && fx >= 42000 && SA3_Level1MushroomTriggered)
     {
         SA3_Level1MushroomTimer++;
         DrawGraphZ(580 - fx / 100, (SA3_Level1MushroomTimer - 5) * 29, nullptr /*Big mushroom grapkz*/);

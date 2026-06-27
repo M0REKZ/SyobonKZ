@@ -263,12 +263,12 @@ void stagep()
 
 	// 1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
 
-	if (currentGame == SYOBON_ACTION_1 || currentGame == SYOBON_ACTION_2)
+	if (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
 	{
 		HandleSyobonActionOneLevels();
 		HandleSyobonActionTwoLevels();
 	}
-	else if (currentGame == SYOBON_ACTION_3)
+	else if (currentGame == ESyobonActionGame::SYOBON_ACTION_3)
 	{
 		HandleSyobonActionThreeLevels();
 	}
@@ -3844,7 +3844,7 @@ void HandleSyobonActionOneLevels()
         t = EnemyAppearCount;
         EnemyAppearX[t] = 142 * 29 * 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
-        EnemyAppearType[t] = EEnemyType::CHICKEN;
+        EnemyAppearType[t] = EEnemyType::KUKURRU;
         EnemyAppearSubType[t] = 0;
         EnemyAppearCount++;
 

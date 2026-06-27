@@ -410,7 +410,18 @@ void HandlePlayer()
                 fzx += xx[5];
             }
 
-            if ((PlayerState == 301 || PlayerState == 302) && PlayerAITimer >= 2 && PlayerAITimer <= 100)
+            //+KZ: Sword ending does not work in Syobon Action 1
+            //  however, seems it was fixed in Syobon Action 2...
+            //  but we want the original version, right?
+            //  Lets "un-fix" it for level 1-4
+            if (
+                (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 && SyobonRandomMode == 0 &&
+                SyobonWorld == 1 && SyobonLevel == 4 && SyobonSection == 0)
+                ?
+                (PlayerState == 301 || (PlayerState == 302 && PlayerAITimer >= 2 && PlayerAITimer <= 100)) //Original Syobon Action
+                :
+                ((PlayerState == 301 || PlayerState == 302) && PlayerAITimer >= 2 && PlayerAITimer <= 100) //Syobon Action 2
+            )
             {
                 PlayerVelX = 250;
                 PlayerLookingDirection = 1;

@@ -388,10 +388,9 @@ extern long stimeZ;
 extern bool HelpFlagHandled; // --help cli flag
 extern bool StartFullScreenFlag;
 
-enum ESyobonActionGame
+enum class ESyobonActionGame
 {
-    SYOBON_ACTION_1 = 0,
-    SYOBON_ACTION_2,
+    SYOBON_ACTION_1_AND_2 = 0,
     SYOBON_ACTION_3, // Extremely incomplete, dont allow to choose
 };
 extern ESyobonActionGame currentGame;
