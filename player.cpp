@@ -209,7 +209,7 @@ void HandlePlayer()
         {
             blackx = 1;
             blacktm = 20;
-            SyobonSection += 85;
+            SyobonSection += 5;
             SyobonKZHaltMusic();
             PlayerAITimer = 0;
             PlayerState = 0;
