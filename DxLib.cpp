@@ -475,9 +475,20 @@ void PlaySoundMem(SyobonKZChunk *s, int l)
 
     //dont play if there is the same sound playing in this lapse
     Uint32 Lapse = 30;
+    int AllowedInstances = 1;
 
+    //brockbreak.ogg
     if(s == Sounds[3])
+    {
         Lapse = 300;
+    }
+
+    //coin.ogg
+    if(s == Sounds[4])
+    {
+        Lapse = 250;
+        AllowedInstances = 2;
+    }
 
     // Try to find free channel
     for (int i = 0; i < SYOBONKZ_MIX_CHANNELS; i++)
@@ -492,7 +503,12 @@ void PlaySoundMem(SyobonKZChunk *s, int l)
             if(CurrentTime < channels[i].StartTime + Lapse)
             {
                 //Same sound already just started playing, dont overlap
-                return;
+                //but check for allowed instances first
+                AllowedInstances--;
+                if(!AllowedInstances)
+                    return;
+                else
+                    continue;
             }
 
             bestChannel = i;
