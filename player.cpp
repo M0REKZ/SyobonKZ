@@ -11,21 +11,18 @@ std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 void CreatePlayerMessageCache()
 {
     Uint32 temp_color = GetColor(255, 255, 255);
-    #define PLAYER_MESSAGE(text) apPlayerMessages[text] = StringToSurface(text, temp_color, 16, DX_FONTTYPE_EDGE)
 
-    PLAYER_MESSAGE("お、おいしい!!");
-    PLAYER_MESSAGE("毒は無いが……");
-    PLAYER_MESSAGE("刺さった!!");
-    PLAYER_MESSAGE("食べるべきではなかった!!");
-    PLAYER_MESSAGE("俺は燃える男だ!!");
-    PLAYER_MESSAGE("体が……焼ける……");
-    PLAYER_MESSAGE("たーまやー!!");
-    PLAYER_MESSAGE("見事にオワタ");
-    PLAYER_MESSAGE("足が、足がぁ!!");
-    PLAYER_MESSAGE("流石は摂氏800度!!");
-    PLAYER_MESSAGE("溶岩と合体したい……");
-
-    #undef PLAYER_MESSAGE
+    apPlayerMessages["お、おいしい!!"] = LoadGraph("text/player_10.bmp", false);
+    apPlayerMessages["毒は無いが……"] = LoadGraph("text/player_9.bmp", false);
+    apPlayerMessages["刺さった!!"] = LoadGraph("text/player_8.bmp", false);
+    apPlayerMessages["食べるべきではなかった!!"] = LoadGraph("text/player_7.bmp", false);
+    apPlayerMessages["俺は燃える男だ!!"] = LoadGraph("text/player_6.bmp", false);
+    apPlayerMessages["体が……焼ける……"] = LoadGraph("text/player_4.bmp", false);
+    apPlayerMessages[ "たーまやー!!"] = LoadGraph("text/player_2.bmp", false);
+    apPlayerMessages["見事にオワタ"] = LoadGraph("text/player_1.bmp", false);
+    apPlayerMessages["足が、足がぁ!!"] = LoadGraph("text/player_5.bmp", false);
+    apPlayerMessages["流石は摂氏800度!!"] = LoadGraph("text/player_0.bmp", false);
+    apPlayerMessages["溶岩と合体したい……"] = LoadGraph("text/player_3.bmp", false);
 }
 
 void HandlePlayer()

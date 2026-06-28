@@ -790,7 +790,8 @@ void ttmsg()
 			txmsg(" そこの落とし穴から Let's dive!    ", 3);
 		}
 
-		if (tmsg == 8)
+		//+KZ: 80 was missing?
+		if (tmsg == 8 || tmsg == 80)
 		{
 			txmsg("そんな容易に", 1);
 			txmsg("ヒントに頼るもんじゃないぜ", 2);
@@ -848,76 +849,72 @@ void setfont(int x, int y)
 
 void CreateGlobalTextCache()
 {
-	#define CACHE_GLOBAL_TEXT(text, c, sz, type) apGlobalTexts[text] = StringToSurface(text, c, sz, type)
-
 	//Warp zone
-	CACHE_GLOBAL_TEXT("WELCOME TO OWATA ZONE", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("1", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts["WELCOME TO OWATA ZONE"] = LoadGraph("text/main_25.bmp", false);
+	apGlobalTexts["1"] = LoadGraph("text/main_50.bmp", false);
 
 	// Credits
-    CACHE_GLOBAL_TEXT("制作・プレイに関わった方々", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("ステージ１　プレイ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("先輩　Ｘ～Ｚ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("ステージ２　プレイ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("友人　willowlet ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("ステージ３　プレイ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("ステージ４　プレイ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("友人２　ann ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("ご協力", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("Ｔ先輩", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("Ｓ先輩", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("動画技術提供", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("Ｋ先輩", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("動画キャプチャ・編集・エンコード", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("willowlet ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("プログラム・描画・ネタ・動画編集", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("ちく", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-    CACHE_GLOBAL_TEXT("プレイしていただき　ありがとうございました〜", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+    apGlobalTexts["制作・プレイに関わった方々"] = LoadGraph("text/main_46.bmp", false);
+    apGlobalTexts["ステージ１　プレイ"] = LoadGraph("text/main_45.bmp", false);
+    apGlobalTexts["先輩　Ｘ～Ｚ"] = LoadGraph("text/main_34.bmp", false);
+    apGlobalTexts["ステージ２　プレイ"] = LoadGraph("text/main_28.bmp", false);
+    apGlobalTexts["友人　willowlet "] = LoadGraph("text/main_30.bmp", false);
+    apGlobalTexts["ステージ３　プレイ"] = LoadGraph("text/main_40.bmp", false);
+    apGlobalTexts["ステージ４　プレイ"] = LoadGraph("text/main_38.bmp", false);
+    apGlobalTexts["友人２　ann "] = LoadGraph("text/main_36.bmp", false);
+    apGlobalTexts["ご協力"] = LoadGraph("text/main_41.bmp", false);
+    apGlobalTexts["Ｔ先輩"] = LoadGraph("text/main_48.bmp", false);
+    apGlobalTexts["Ｓ先輩"] = LoadGraph("text/main_44.bmp", false);
+    apGlobalTexts["動画技術提供"] = LoadGraph("text/main_43.bmp", false);
+    apGlobalTexts["Ｋ先輩"] = LoadGraph("text/main_31.bmp", false);
+    apGlobalTexts["動画キャプチャ・編集・エンコード"] = LoadGraph("text/main_27.bmp", false);
+    apGlobalTexts["willowlet "] = LoadGraph("text/main_32.bmp", false);
+    apGlobalTexts["プログラム・描画・ネタ・動画編集"] = LoadGraph("text/main_29.bmp", false);
+    apGlobalTexts["ちく"] = LoadGraph("text/main_17.bmp", false);
+    apGlobalTexts["プレイしていただき　ありがとうございました〜"] = LoadGraph("text/main_51.bmp", false);
 
 	// Text boxes
-	CACHE_GLOBAL_TEXT("テスト　hoge", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts["テスト　hoge"] = LoadGraph("text/main_42.bmp", false);
 
-	CACHE_GLOBAL_TEXT("ステージ 1 より", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("特殊的なものが増えたので", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("気をつけてくれよ〜", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("後、アイテムの一部を利用するかも…", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("                       ちく より", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts["ステージ 1 より"] = LoadGraph("text/main_33.bmp", false);
+	apGlobalTexts["特殊的なものが増えたので"] = LoadGraph("text/main_26.bmp", false);
+	apGlobalTexts["気をつけてくれよ〜"] = LoadGraph("text/main_23.bmp", false);
+	apGlobalTexts["後、アイテムの一部を利用するかも…"] = LoadGraph("text/main_22.bmp", false);
+	apGlobalTexts["                       ちく より"] = LoadGraph("text/main_8.bmp", false);
 
-	CACHE_GLOBAL_TEXT("            ？が必要です ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("                         m9(^Д^)", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts["            ？が必要です "] = LoadGraph("text/main_20.bmp", false);
+	apGlobalTexts["                         m9(^Д^)"] = LoadGraph("text/main_16.bmp", false);
 
-	CACHE_GLOBAL_TEXT("   別にコインに意味ないけどね ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("                      (・ω・ )ﾉｼ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts["   別にコインに意味ないけどね "] = LoadGraph("text/main_15.bmp", false);
+	apGlobalTexts["                      (・ω・ )ﾉｼ"] = LoadGraph("text/main_14.bmp", false);
 
-	CACHE_GLOBAL_TEXT("この先に隠しブロックがあります ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("注意してください !!", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts["この先に隠しブロックがあります "] = LoadGraph("text/main_39.bmp", false);
+	apGlobalTexts["注意してください !!"] = LoadGraph("text/main_13.bmp", false);
 
-	CACHE_GLOBAL_TEXT(" 前回よりも難易度を下げましたので", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT(" 気楽にプレイしてください    ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts[" 前回よりも難易度を下げましたので"] = LoadGraph("text/main_19.bmp", false);
+	apGlobalTexts[" 気楽にプレイしてください    "] = LoadGraph("text/main_37.bmp", false);
 
-	CACHE_GLOBAL_TEXT(" そこにいる敵のそばによると、      ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT(" 自分と一緒にジャンプしてくれます。", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("   可愛いですね。                  ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts[" そこにいる敵のそばによると、      "] = LoadGraph("text/main_12.bmp", false);
+	apGlobalTexts[" 自分と一緒にジャンプしてくれます。"] = LoadGraph("text/main_24.bmp", false);
+	apGlobalTexts["   可愛いですね。                  "] = LoadGraph("text/main_49.bmp", false);
 
-	CACHE_GLOBAL_TEXT(" あの敵は連れて来れましたか?、     ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT(" 連れて来れなかった貴方は、        ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT(" そこの落とし穴から Let's dive!    ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts[" あの敵は連れて来れましたか?、     "] = LoadGraph("text/main_11.bmp", false);
+	apGlobalTexts[" 連れて来れなかった貴方は、        "] = LoadGraph("text/main_6.bmp", false);
+	apGlobalTexts[" そこの落とし穴から Let's dive!    "] = LoadGraph("text/main_10.bmp", false);
 
-	CACHE_GLOBAL_TEXT("そんな容易に", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("ヒントに頼るもんじゃないぜ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("ほら、さっさと次行きな!!", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts["そんな容易に"] = LoadGraph("text/main_35.bmp", false);
+	apGlobalTexts["ヒントに頼るもんじゃないぜ"] = LoadGraph("text/main_9.bmp", false);
+	apGlobalTexts["ほら、さっさと次行きな!!"] = LoadGraph("text/main_21.bmp", false);
 
-	CACHE_GLOBAL_TEXT(" 正真正銘のファイナルステージ。    ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT(" クリアすれば遂にエンディング!!    ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT(" その土管から戻ってもいいんだぜ?   ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts[" 正真正銘のファイナルステージ。    "] = LoadGraph("text/main_7.bmp", false);
+	apGlobalTexts[" クリアすれば遂にエンディング!!    "] = LoadGraph("text/main_5.bmp", false);
+	apGlobalTexts[" その土管から戻ってもいいんだぜ?   "] = LoadGraph("text/main_18.bmp", false);
 
-	CACHE_GLOBAL_TEXT(" 床が凍ってるから、すっごい滑るよ。", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
+	apGlobalTexts[" 床が凍ってるから、すっごい滑るよ。"] = LoadGraph("text/main_47.bmp", false);
 
-	CACHE_GLOBAL_TEXT("え？私ですか？ ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("いやぁ、ただの通りすがりの", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("ヒントブロックですよ〜", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("決して怪しいブロックじゃないですよ", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-	CACHE_GLOBAL_TEXT("                          (…チッ)", GetColor(255, 255, 255), 20, DX_FONTTYPE_NORMAL);
-
-	#undef CACHE_GLOBAL_TEXT
+	apGlobalTexts["え？私ですか？ "] = LoadGraph("text/main_3.bmp", false);
+	apGlobalTexts["いやぁ、ただの通りすがりの"] = LoadGraph("text/main_2.bmp", false);
+	apGlobalTexts["ヒントブロックですよ〜"] = LoadGraph("text/main_1.bmp", false);
+	apGlobalTexts["決して怪しいブロックじゃないですよ"] = LoadGraph("text/main_4.bmp", false);
+	apGlobalTexts["                          (…チッ)"] = LoadGraph("text/main_0.bmp", false);
 }

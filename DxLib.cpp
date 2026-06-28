@@ -134,7 +134,7 @@ SDL_Surface *StringToSurface(const char *pstring, Uint32 color, byte font_size, 
         if(newrendered)
         {
             //copy shadow
-            SDL_Color blk = {30, 30, 30}; //forever TODO: 0,0,0 invisible?
+            SDL_Color blk = {0, 0, 0}; //forever TODO: 0,0,0 invisible?
             SDL_Surface *shadow = SyobonKZRenderUTF8Text(font[font_size], pstring, blk);
             shadow = SyobonKZFixImage(shadow, pstring);
             printf("SHADOW %p %s\n",shadow, pstring);

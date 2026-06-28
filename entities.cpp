@@ -11,61 +11,55 @@ void CreateEntityMessageCache()
 {
     Uint32 temp_color = GetColor(255, 255, 255);
 
-    #define ENEMY_MESSAGE(text) apEnemyMessages[text] = StringToSurface(text, temp_color, 16, DX_FONTTYPE_EDGE)
+    apEnemyMessages["ヤッフー!!"] = LoadGraph("text/enemy_30.bmp", false);
+    apEnemyMessages["え?俺勝っちゃったの?"] = LoadGraph("text/enemy_29.bmp", false);
+    apEnemyMessages["貴様の死に場所はここだ!"] = LoadGraph("text/enemy_23.bmp", false);
+    apEnemyMessages["二度と会う事もないだろう"] = LoadGraph("text/enemy_27.bmp", false);
+    apEnemyMessages["俺、最強!!"] = LoadGraph("text/enemy_26.bmp", false);
+    apEnemyMessages["一昨日来やがれ!!"] = LoadGraph("text/enemy_28.bmp", false);
+    apEnemyMessages["漢に後退の二文字は無い!!"] = LoadGraph("text/enemy_25.bmp", false);
+    apEnemyMessages["ハッハァ!!"] = LoadGraph("text/enemy_21.bmp", false);
+    apEnemyMessages["身の程知らずが……"] = LoadGraph("text/enemy_20.bmp", false);
+    apEnemyMessages["油断が死を招く"] = LoadGraph("text/enemy_6.bmp", false);
+    apEnemyMessages["おめでたい奴だ"] = LoadGraph("text/enemy_19.bmp", false);
+    apEnemyMessages["屑が!!"] = LoadGraph("text/enemy_18.bmp", false);
+    apEnemyMessages["無謀な……"] = LoadGraph("text/enemy_13.bmp", false);
+    apEnemyMessages["二度と会う事もないだろう"] = LoadGraph("text/enemy_27.bmp", false);
+    apEnemyMessages["僕は……負けない!!"] = LoadGraph("text/enemy_11.bmp", false);
+    apEnemyMessages["貴様に見切れる筋は無い"] = LoadGraph("text/enemy_17.bmp", false);
+    apEnemyMessages["今死ね、すぐ死ね、骨まで砕けろ!!"] = LoadGraph("text/enemy_12.bmp", false);
+    apEnemyMessages["任務完了!!"] = LoadGraph("text/enemy_5.bmp", false);
+    apEnemyMessages["鉄壁!!よって、無敵!!"] = LoadGraph("text/enemy_9.bmp", false);
+    apEnemyMessages["丸腰で勝てるとでも?"] = LoadGraph("text/enemy_7.bmp", false);
+    apEnemyMessages["パリイ!!"] = LoadGraph("text/enemy_24.bmp", false);
+    apEnemyMessages["自業自得だ"] = LoadGraph("text/enemy_4.bmp", false);
+    apEnemyMessages["Zzz"] = LoadGraph("text/enemy_16.bmp", false);
+    apEnemyMessages["ク、クマー"] = LoadGraph("text/enemy_3.bmp", false);
+    apEnemyMessages["食べるべきではなかった!!"] = LoadGraph("text/enemy_10.bmp", false);
+    apEnemyMessages["うめぇ!!"] = LoadGraph("text/enemy_2.bmp", false);
+    apEnemyMessages["ブロックを侮ったな?"] = LoadGraph("text/enemy_1.bmp", false);
+    apEnemyMessages["シャキーン"] = LoadGraph("text/enemy_0.bmp", false);
+    apEnemyMessages["波動砲!!"] = LoadGraph("text/enemy_15.bmp", false);
+    apEnemyMessages["裏切られたとでも思ったか?"] = LoadGraph("text/enemy_22.bmp", false);
+    apEnemyMessages["ポールアターック!!"] = LoadGraph("text/enemy_14.bmp", false);
 
-    ENEMY_MESSAGE("ヤッフー!!");
-    ENEMY_MESSAGE("え?俺勝っちゃったの?");
-    ENEMY_MESSAGE("貴様の死に場所はここだ!");
-    ENEMY_MESSAGE("二度と会う事もないだろう");
-    ENEMY_MESSAGE("俺、最強!!");
-    ENEMY_MESSAGE("一昨日来やがれ!!");
-    ENEMY_MESSAGE("漢に後退の二文字は無い!!");
-    ENEMY_MESSAGE("ハッハァ!!");
-
-    //ENEMY_MESSAGE("ヤッフー!!"];
-    //ENEMY_MESSAGE("え?俺勝っちゃったの?"];
-    //ENEMY_MESSAGE("貴様の死に場所はここだ!"];
-    ENEMY_MESSAGE("身の程知らずが……");
-    ENEMY_MESSAGE("油断が死を招く");
-    ENEMY_MESSAGE("おめでたい奴だ");
-    ENEMY_MESSAGE("屑が!!");
-    ENEMY_MESSAGE("無謀な……");
-
-    //ENEMY_MESSAGE("ヤッフー!!"];
-    //ENEMY_MESSAGE("え?俺勝っちゃったの?"];
-    ENEMY_MESSAGE("二度と会う事もないだろう");
-    //ENEMY_MESSAGE("身の程知らずが……"];
-    ENEMY_MESSAGE("僕は……負けない!!");
-    ENEMY_MESSAGE("貴様に見切れる筋は無い");
-    ENEMY_MESSAGE("今死ね、すぐ死ね、骨まで砕けろ!!");
-    ENEMY_MESSAGE("任務完了!!");
-
-    //ENEMY_MESSAGE("ヤッフー!!"];
-    //ENEMY_MESSAGE("え?俺勝っちゃったの?"];
-    //ENEMY_MESSAGE("貴様の死に場所はここだ!"];
-    //ENEMY_MESSAGE("身の程知らずが……"];
-    //ENEMY_MESSAGE("油断が死を招く"];
-    //ENEMY_MESSAGE("おめでたい奴だ"];
-    //ENEMY_MESSAGE("屑が!!"];
-    //ENEMY_MESSAGE("無謀な……"];
-
-    ENEMY_MESSAGE("鉄壁!!よって、無敵!!");
-    ENEMY_MESSAGE("丸腰で勝てるとでも?");
-    ENEMY_MESSAGE("パリイ!!");
-    ENEMY_MESSAGE("自業自得だ");
-    ENEMY_MESSAGE("Zzz");
-    ENEMY_MESSAGE("ク、クマー");
-    ENEMY_MESSAGE("?");
-    ENEMY_MESSAGE("食べるべきではなかった!!");
-    ENEMY_MESSAGE("うめぇ!!");
-    ENEMY_MESSAGE("ブロックを侮ったな?");
-    ENEMY_MESSAGE("シャキーン");
-
-    ENEMY_MESSAGE("波動砲!!");
-    ENEMY_MESSAGE("裏切られたとでも思ったか?");
-    ENEMY_MESSAGE("ポールアターック!!");
-
-    #undef ENEMY_MESSAGE
+    //+KZ: These are from the original Syobon Action, but got removed/modified in Syobon Action 2
+    apEnemyMessages["？"] = LoadGraph("text/enemy_8.bmp", false);
+    apEnemyMessages["HE☆TA☆RE"] = LoadGraph("text/hetare.bmp", false);
+    apEnemyMessages["遅すぎるんだよ!!"] = LoadGraph("text/itstoolate.bmp", false);
+    apEnemyMessages["フハハハハハハ"] = LoadGraph("text/hahahaha.bmp", false);
+    apEnemyMessages["グゥレイトォ!!"] = LoadGraph("text/great.bmp", false);
+    apEnemyMessages["さぁ 悪い子はどんどん(ry"] = LoadGraph("text/morebadkids.bmp", false);
+    apEnemyMessages["粛清してやる!!"] = LoadGraph("text/illpurge.bmp", false);
+    apEnemyMessages["ゆとりはいい 想像を絶する"] = LoadGraph("text/beyondimagination.bmp", false);
+    apEnemyMessages["嘘だ!!"] = LoadGraph("text/thatsalie.bmp", false);
+    apEnemyMessages["これぞ 必 殺!!"] = LoadGraph("text/suretokill.bmp", false);
+    apEnemyMessages["ぷー クスクス"] = LoadGraph("text/poocouscous.bmp", false);
+    apEnemyMessages["ごめんねぇ 強くてさぁ!!"] = LoadGraph("text/imsorryimstrong.bmp", false);
+    apEnemyMessages["貴様 それでも軍人か!?"] = LoadGraph("text/stillasoldier.bmp", false);
+    apEnemyMessages["戦闘力 1 のごみくずが…"] = LoadGraph("text/combatpowerofone.bmp", false);
+    apEnemyMessages["性能の差だな…"] = LoadGraph("text/differenceinperfomance.bmp", false);
+    apEnemyMessages["無駄無駄無駄無駄ァ!!"] = LoadGraph("text/uselessuseless.bmp", false);
 }
 
 void HandleEntities()
@@ -1249,14 +1243,16 @@ void HandleEnemiesMessages()
 
             xs[0] = "";
 
+            // +KZ: Syobon Action 2 replaced many strings with duplicated ones for some reason
+            // ill try to replace some duplicates with some of the original strings
             if (EnemyMessageType[t] == 1001)
-                xs[0] = "ヤッフー!!";
+                xs[0] = "遅すぎるんだよ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1002)
-                xs[0] = "え?俺勝っちゃったの?";
+                xs[0] = "無駄無駄無駄無駄ァ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1003)
-                xs[0] = "貴様の死に場所はここだ!";
+                xs[0] = "性能の差だな…"; //From original Syobon Action
             if (EnemyMessageType[t] == 1004)
-                xs[0] = "二度と会う事もないだろう";
+                xs[0] = "ぷー クスクス"; //From original Syobon Action
             if (EnemyMessageType[t] == 1005)
                 xs[0] = "俺、最強!!";
             if (EnemyMessageType[t] == 1006)
@@ -1267,30 +1263,30 @@ void HandleEnemiesMessages()
                 xs[0] = "ハッハァ!!";
 
             if (EnemyMessageType[t] == 1011)
-                xs[0] = "ヤッフー!!";
+                xs[0] = "嘘だ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1012)
-                xs[0] = "え?俺勝っちゃったの?";
+                xs[0] = "HE☆TA☆RE"; //From original Syobon Action
             if (EnemyMessageType[t] == 1013)
-                xs[0] = "貴様の死に場所はここだ!";
+                xs[0] = "ごめんねぇ 強くてさぁ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1014)
-                xs[0] = "身の程知らずが……";
+                xs[0] = "貴様 それでも軍人か!?"; //From original Syobon Action
             if (EnemyMessageType[t] == 1015)
-                xs[0] = "油断が死を招く";
+                xs[0] = "ゆとりはいい 想像を絶する"; //From original Syobon Action
             if (EnemyMessageType[t] == 1016)
-                xs[0] = "おめでたい奴だ";
+                xs[0] = "粛清してやる!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1017)
-                xs[0] = "屑が!!";
+                xs[0] = "さぁ 悪い子はどんどん(ry"; //From original Syobon Action
             if (EnemyMessageType[t] == 1018)
-                xs[0] = "無謀な……";
+                xs[0] = "戦闘力 1 のごみくずが…"; //From original Syobon Action
 
             if (EnemyMessageType[t] == 1021)
-                xs[0] = "ヤッフー!!";
+                xs[0] = "グゥレイトォ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1022)
-                xs[0] = "え?俺勝っちゃったの?";
+                xs[0] = "これぞ 必 殺!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1023)
                 xs[0] = "二度と会う事もないだろう";
             if (EnemyMessageType[t] == 1024)
-                xs[0] = "身の程知らずが……";
+                xs[0] = "フハハハハハハ"; //From original Syobon Action
             if (EnemyMessageType[t] == 1025)
                 xs[0] = "僕は……負けない!!";
             if (EnemyMessageType[t] == 1026)
@@ -1331,7 +1327,7 @@ void HandleEnemiesMessages()
             if (EnemyMessageType[t] == 21)
                 xs[0] = "ク、クマー";
             if (EnemyMessageType[t] == 24)
-                xs[0] = "?";
+                xs[0] = "？"; //From original Syobon Action
             if (EnemyMessageType[t] == 25)
                 xs[0] = "食べるべきではなかった!!";
             if (EnemyMessageType[t] == 30)
