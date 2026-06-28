@@ -1106,7 +1106,7 @@ void HandleEntities()
                         }
                         if (EnemySubType[t] == EEnemySubType::MYSTERY_BALL_LEVEL_1_3)
                         {
-                            BlockSubType[7] = 80;
+                            BlockSubType[7] = EBlockSubType::MESSAGE_BLOCK_1_3_0_3;
                             PlaySound(Sounds[4]);
 
                             // CreateEntity(aa[t]-6*3000+1000,-3*3000,0,0,0,110,0);

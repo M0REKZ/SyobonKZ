@@ -124,7 +124,8 @@ int mascrollmax = 21000;	//9000
 int BlockCount;
 int BlockX[tmax], BlockY[tmax], thp[tmax];
 EBlockType BlockType[tmax];
-int BlockItemCount[tmax], BlockSubType[tmax];
+int BlockItemCount[tmax];
+EBlockSubType BlockSubType[tmax];
 
 //メッセージブロック
 int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;

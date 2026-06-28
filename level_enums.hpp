@@ -76,7 +76,8 @@ enum class EBlockType
     ITEM_BLOCK_COINS_OPEN = 113,
 
     // Item block with a single poisonous mushroom inside
-    ITEM_BLOCK_POISON_SINGLE_HIDDEN = 114,
+    // +KZ: Used for other traps too
+    ITEM_BLOCK_TRAP_HIDDEN = 114,
 
     // Crumbles when stood on
     BRICK_BRITTLE = 115,
@@ -101,7 +102,7 @@ enum class EBlockType
 
     SWORD = 140,
     BRIDGE_ROPE = 141,
-    ARTICHOKE = 142,
+    MELON = 142,
 
     // Hitting this will display the test message (id 0)
     MESSAGE_BLOCK = 300,
@@ -349,7 +350,69 @@ enum class EBlockSubType
 {
     NONE = 0, //"none" wildcard for most block types
 
+    ITEM_BLOCK_UNKNOWN_10 = 10, //unknown purpose
 
+    ITEM_BLOCK_DODGE_VERTICAL = 0,
+    ITEM_BLOCK_DODGE_HORIZONTAL = 1, //unused
+
+    ITEM_BLOCK_ENEMY_BALL_NORMAL = 0,
+    ITEM_BLOCK_ENEMY_BALL_SPIKY_NORMAL = 1,
+    ITEM_BLOCK_ENEMY_BURNING_FLOWER = 3,
+    ITEM_BLOCK_ENEMY_DEFRAG_NORMAL = 4,
+    ITEM_BLOCK_ENEMY_BURNING_FLOWER_10 = 10, //unused, same as ITEM_BLOCK_ENEMY_BURNING_FLOWER
+
+    ITEM_BLOCK_MUSHROOM_DELICIOUS = 0,
+    ITEM_BLOCK_MUSHROOM_GROW = 2,
+    ITEM_BLOCK_MUSHROOM_POISONOUS_FASTER = 3,
+    ITEM_BLOCK_MUSHROOM_4 = 4, //added in SA:All Stars for SA3, unknown purpose since i didnt port it yet
+
+    ITEM_BLOCK_STAR_BRICK = 0,
+    ITEM_BLOCK_STAR_NORMAL = 1,
+
+    ITEM_BLOCK_TRAP_HIDDEN_NORMAL = 0,
+    ITEM_BLOCK_TRAP_HIDDEN_VISIBLE = 1,
+    ITEM_BLOCK_TRAP_HIDDEN_BRITTLE = 2,
+    ITEM_BLOCK_TRAP_HIDDEN_FIREBAR_SWITCH = 10,
+
+    BRICK_BRITTLE_ITEM_BLOCK_OPEN = 0,
+    BRICK_BRITTLE_BRICK = 1,
+    BRICK_BRITTLE_BRICK_3 = 3, //same as BRICK_BRITTLE_BRICK
+
+    ON_BLOCK_LOCKED = 1, //can not be disabled
+    ON_BLOCK_UNLOCKED = 2,
+
+    OFF_BLOCK_FIREBARS = 1,
+    OFF_BLOCK_LOCKED = 2, //can not be enabled
+
+    NOTE_BLOCK_RED_HIDDEN = 0,
+    NOTE_BLOCK_RED_VISIBLE = 1,
+    NOTE_BLOCK_WHITE_HIDDEN = 2,
+    NOTE_BLOCK_WHITE_VISIBLE = 3,
+
+    TRAMPOLINE_VISIBLE = 0,
+    TRAMPOLINE_HIDDEN = 1,
+    TRAMPOLINE_VISIBLE_3 = 3, //same as TRAMPOLINE_VISIBLE
+
+    //triggers text box for specific levels...
+    //had a lot of magic numbers
+    //named by World_Level_Section(_Number)
+    MESSAGE_BLOCK_1_2_0 = 1,
+    MESSAGE_BLOCK_1_3_0_1 = 2,
+    MESSAGE_BLOCK_1_3_5 = 3,
+    MESSAGE_BLOCK_1_3_0_2 = 4,
+    MESSAGE_BLOCK_1_4_0 = 5,
+    MESSAGE_BLOCK_2_1_0_1 = 6,
+    MESSAGE_BLOCK_2_1_0_2 = 7,
+    MESSAGE_BLOCK_2_3_0 = 8,
+    MESSAGE_BLOCK_2_4_2 = 9,
+    MESSAGE_BLOCK_3_1_0 = 10,
+    MESSAGE_BLOCK_1_3_0_3 = 80, //appears after mystery ball is taken
+    MESSAGE_BLOCK_MAX = 100, //seems to be a "MAX" ids value
+
+    //animation after firing laser in 1-3
+    MESSAGE_BLOCK_1_3_0_4_WAIT_START = 500,
+    MESSAGE_BLOCK_1_3_0_4_WAIT_END = 540,
+    MESSAGE_BLOCK_1_3_0_4_SHOW_MESSAGE = 541,
 };
 
 #endif

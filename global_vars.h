@@ -213,8 +213,8 @@ extern EBlockType BlockType[tmax];
 //+KZ: titem[tmax] is specific for Block 112/113 (Coin mass production)
 // @attention +KZ: int titem[tmax] is now int BlockItemCount[tmax]
 extern int BlockItemCount[tmax];
-// @attention +KZ: int txtype[tmax] is now int BlockSubType[tmax]
-extern int BlockSubType[tmax];
+// @attention +KZ: int txtype[tmax] is now EBlockSubType BlockSubType[tmax]
+extern EBlockSubType BlockSubType[tmax];
 
 //メッセージブロック (Message Block)
 extern int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
@@ -375,7 +375,9 @@ extern int blacktm, blackx;
 
 
 //自由な値 (Free value)
-//+KZ: these should be local variables in many places inside main.cpp
+//+KZ: these should be just local variables in many places
+//  but we can not replace them in a crazy way, make sure
+//  it wont break anything in the game.
 extern int xx[91];
 extern double xd[11];
 extern std::string xs[31];

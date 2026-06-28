@@ -316,7 +316,7 @@ void Mainprogram()
 						{
 							BlockType[t] = (EBlockType)SyobonRand(8);
 						}
-						BlockSubType[t] = SyobonRand(4);
+						BlockSubType[t] = (EBlockSubType)SyobonRand(4);
 					}
 				}
 				for (t = 0; t < bmax; t++)

@@ -34,7 +34,7 @@ void RenderBlocks()
                 drawimage(Sliced_GFX[xx[6]][1], xx[0] / 100, xx[1] / 100);
             }
 
-            if (BlockSubType[t] != 10)
+            if (BlockSubType[t] != EBlockSubType::ITEM_BLOCK_UNKNOWN_10)
             {
 
                 if (
@@ -42,8 +42,8 @@ void RenderBlocks()
                     BlockType[t] == EBlockType::ITEM_BLOCK_ENEMY ||
                     BlockType[t] == EBlockType::ITEM_BLOCK_MUSHROOM ||
                     BlockType[t] == EBlockType::ITEM_BLOCK_MUSHROOM_2 ||
-                    BlockType[t] == EBlockType::ITEM_BLOCK_STAR && BlockSubType[t] == 1 ||
-                    BlockType[t] == EBlockType::ITEM_BLOCK_POISON_SINGLE_HIDDEN && BlockSubType[t] == 1 ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_STAR && BlockSubType[t] == EBlockSubType::ITEM_BLOCK_STAR_NORMAL ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_TRAP_HIDDEN && BlockSubType[t] == EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_VISIBLE ||
                     BlockType[t] == EBlockType::ITEM_BLOCK_PSWITCH
                 )
                 {
@@ -52,14 +52,14 @@ void RenderBlocks()
                               xx[0] / 100, xx[1] / 100);
                 }
 
-                if (BlockType[t] == EBlockType::ITEM_BLOCK_COINS || BlockType[t] == EBlockType::ITEM_BLOCK_STAR && BlockSubType[t] == 0 || BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == 1)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_COINS || BlockType[t] == EBlockType::ITEM_BLOCK_STAR && BlockSubType[t] == EBlockSubType::ITEM_BLOCK_STAR_BRICK || BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == EBlockSubType::BRICK_BRITTLE_BRICK)
                 {
                     xx[6] = 1 + xx[9];
                     drawimage(Sliced_GFX[xx[6]][1],
                               xx[0] / 100, xx[1] / 100);
                 }
 
-                if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_OPEN || BlockType[t] == EBlockType::ITEM_BLOCK_COINS_OPEN || BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == 0 || BlockType[t] == EBlockType::FIREBAR_GROW)
+                if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_OPEN || BlockType[t] == EBlockType::ITEM_BLOCK_COINS_OPEN || BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN || BlockType[t] == EBlockType::FIREBAR_GROW)
                 {
                     xx[6] = 3 + xx[9];
                     drawimage(Sliced_GFX[xx[6]][1],
@@ -67,23 +67,23 @@ void RenderBlocks()
                 }
             }
 
-            if (BlockType[t] == EBlockType::NOTE_BLOCK && BlockSubType[t] == 1)
+            if (BlockType[t] == EBlockType::NOTE_BLOCK && BlockSubType[t] == EBlockSubType::NOTE_BLOCK_RED_VISIBLE)
             {
                 drawimage(Sliced_GFX[4][5], xx[0] / 100, xx[1] / 100);
             }
 
-            if (BlockType[t] == EBlockType::NOTE_BLOCK && BlockSubType[t] >= 3)
+            if (BlockType[t] == EBlockType::NOTE_BLOCK && BlockSubType[t] >= EBlockSubType::NOTE_BLOCK_WHITE_VISIBLE)
             {
                 drawimage(Sliced_GFX[3][5], xx[0] / 100, xx[1] / 100);
             }
 
-            if (BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == 3)
+            if (BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == EBlockSubType::BRICK_BRITTLE_BRICK_3)
             {
                 xx[6] = 1 + xx[9];
                 drawimage(Sliced_GFX[xx[6]][1], xx[0] / 100, xx[1] / 100);
             }
             // ジャンプ台
-            if (BlockType[t] == EBlockType::TRAMPOLINE && BlockSubType[t] != 1)
+            if (BlockType[t] == EBlockType::TRAMPOLINE && BlockSubType[t] != EBlockSubType::TRAMPOLINE_HIDDEN)
             {
                 drawimage(Sliced_GFX[16][1], xx[0] / 100 + 3,
                           xx[1] / 100 + 2);
@@ -98,7 +98,7 @@ void RenderBlocks()
                 drawimage(Sliced_GFX[12][5], xx[0] / 100, xx[1] / 100);
             if (BlockType[t] == EBlockType::BRIDGE_ROPE)
                 drawimage(Sliced_GFX[13][5], xx[0] / 100, xx[1] / 100);
-            if (BlockType[t] == EBlockType::ARTICHOKE)
+            if (BlockType[t] == EBlockType::MELON)
                 drawimage(Sliced_GFX[14][5], xx[0] / 100, xx[1] / 100);
 
             if (BlockType[t] == EBlockType::MESSAGE_BLOCK || BlockType[t] == EBlockType::MESSAGE_BLOCK_BREAKABLE)
