@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
         
       - name: Prepare Linux
         run: |
@@ -53,7 +53,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
         
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
@@ -74,7 +74,7 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+          cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ ..
           mingw32-make
 
       - name: Prepare artifact
