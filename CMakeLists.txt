@@ -41,11 +41,12 @@ include(ExternalProject)
 
 # set the output directory for built objects.
 # this makes sure that the dynamic libraries goes into the build directory automatically.
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
+set(SYOBONKZ_LIB_INSTALL_DIR ${CMAKE_BINARY_DIR}/local_libs)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${SYOBONKZ_LIB_INSTALL_DIR}")
 
 # prevent installing to system directories. 
-set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/$<CONFIGURATION>" CACHE INTERNAL "")
+set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE INTERNAL "")
 
 if(SYOBONKZ_USE_SDL3)
 
@@ -102,7 +103,7 @@ elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
     ExternalProject_Add(SDL_image
         SOURCE_DIR ${PROJECT_SOURCE_DIR}/lib/SDL_image
         PREFIX ${CMAKE_INSTALL_PREFIX}
-        CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--prefix=${CMAKE_INSTALL_PREFIX}"
+        CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--prefix=${SYOBONKZ_LIB_INSTALL_DIR}"
         BUILD_COMMAND make
         INSTALL_COMMAND make install
     )
@@ -110,7 +111,7 @@ elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
     ExternalProject_Add(SDL_mixer
         SOURCE_DIR ${PROJECT_SOURCE_DIR}/lib/SDL_mixer
         PREFIX ${CMAKE_INSTALL_PREFIX}
-        CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--prefix=${CMAKE_INSTALL_PREFIX}"
+        CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--prefix=${SYOBONKZ_LIB_INSTALL_DIR}"
         BUILD_COMMAND make
         INSTALL_COMMAND make install
     )
@@ -118,7 +119,7 @@ elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
     ExternalProject_Add(SDL_gfx
         SOURCE_DIR ${PROJECT_SOURCE_DIR}/lib/SDL_gfx
         PREFIX ${CMAKE_INSTALL_PREFIX}
-        CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--prefix=${CMAKE_INSTALL_PREFIX}" "--enable-mmx=no" # need to disable mmx on non-x86 CPUs
+        CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--prefix=${SYOBONKZ_LIB_INSTALL_DIR}" "--enable-mmx=no" # need to disable mmx on non-x86 CPUs
         BUILD_COMMAND make
         INSTALL_COMMAND make install
     )
@@ -126,7 +127,7 @@ elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
     ExternalProject_Add(SDL_ttf
         SOURCE_DIR ${PROJECT_SOURCE_DIR}/lib/SDL_ttf
         PREFIX ${CMAKE_INSTALL_PREFIX}
-        CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--prefix=${CMAKE_INSTALL_PREFIX}"
+        CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--prefix=${SYOBONKZ_LIB_INSTALL_DIR}"
         BUILD_COMMAND make noinst_PROGRAMS= # noinst_PROGRAMS= avoids building showfont.c, building showfont.c on macOS may fail due to iconv
         INSTALL_COMMAND make install noinst_PROGRAMS= # read above
     )
@@ -194,7 +195,7 @@ if(SYOBONKZ_USE_SDL3)
         SDL3_ttf::Headers
         SDL3_gfx::Headers
         ${CMAKE_BINARY_DIR}/include/
-        lib/
+        ${PROJECT_SOURCE_DIR}/lib/
     )
 
     target_link_libraries(${EXECUTABLE_NAME} PRIVATE
@@ -208,15 +209,15 @@ elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
 
     target_include_directories(${EXECUTABLE_NAME} PRIVATE
         ${SDL_INCLUDE_DIRS}
-        ${CMAKE_BINARY_DIR}/include/SDL
+        ${SYOBONKZ_LIB_INSTALL_DIR}/include/SDL
     )
 
     target_link_libraries(${EXECUTABLE_NAME} PRIVATE
         ${SDL_LIBRARIES}
-        ${CMAKE_BINARY_DIR}/lib/libSDL_image${CMAKE_SHARED_LIBRARY_SUFFIX}
-        ${CMAKE_BINARY_DIR}/lib/libSDL_mixer${CMAKE_SHARED_LIBRARY_SUFFIX}
-        ${CMAKE_BINARY_DIR}/lib/libSDL_gfx${CMAKE_SHARED_LIBRARY_SUFFIX}
-        ${CMAKE_BINARY_DIR}/lib/libSDL_ttf${CMAKE_SHARED_LIBRARY_SUFFIX}
+        ${SYOBONKZ_LIB_INSTALL_DIR}/lib/libSDL_image${CMAKE_SHARED_LIBRARY_SUFFIX}
+        ${SYOBONKZ_LIB_INSTALL_DIR}/lib/libSDL_mixer${CMAKE_SHARED_LIBRARY_SUFFIX}
+        ${SYOBONKZ_LIB_INSTALL_DIR}/lib/libSDL_gfx${CMAKE_SHARED_LIBRARY_SUFFIX}
+        ${SYOBONKZ_LIB_INSTALL_DIR}/lib/libSDL_ttf${CMAKE_SHARED_LIBRARY_SUFFIX}
     )
 endif()
 
