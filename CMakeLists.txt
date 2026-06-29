@@ -134,9 +134,10 @@ elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
 endif()
 
 if(MINGW)
-    set(SYOBONKZ_WINDOWS_ICON icon.rc)
+    set(SYOBONKZ_WINDOWS_ICON_RC icon.rc)
+    configure_file("icon.rc.in" "${SYOBONKZ_WINDOWS_ICON_RC}")
 else()
-    set(SYOBONKZ_WINDOWS_ICON)
+    set(SYOBONKZ_WINDOWS_ICON_RC)
 endif()
 
 set(SOURCE_FILES_SYOBON
@@ -171,7 +172,7 @@ set(SOURCE_FILES_SYOBON
     sdl_includer.cpp
 
     # windows icon
-    ${SYOBONKZ_WINDOWS_ICON}
+    ${SYOBONKZ_WINDOWS_ICON_RC}
 )
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
