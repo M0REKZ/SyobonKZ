@@ -22,7 +22,14 @@ jobs:
           libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev \
           libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev libthai-dev \
           libusb-1.0-0-dev libpipewire-0.3-dev libwayland-dev libdecor-0-dev liburing-dev
-          sudo apt-get install libsdl3-dev
+
+      - name: Install SDL3
+        uses: libsdl-org/setup-sdl@main
+        id: sdl
+        with:
+          install-linux-dependencies: true
+          version: 3-latest
+          version-sdl-image: 3-latest
 
       - name: Build SyobonKZ
         run: |
