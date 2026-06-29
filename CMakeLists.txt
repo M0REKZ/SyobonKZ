@@ -134,7 +134,7 @@ elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
 endif()
 
 if(MINGW)
-    set(CMAKE_RC_FLAGS "--use-temp-file")
+    set(SYOBONKZ_WINDOWS_ICON icon.ico)
     set(SYOBONKZ_WINDOWS_ICON_RC icon.rc)
     set(SYOBONKZ_WINDOWS_ICON_RC_FULL_PATH ${PROJECT_SOURCE_DIR}/${SYOBONKZ_WINDOWS_ICON})
     configure_file("icon.rc.in" "${SYOBONKZ_WINDOWS_ICON_RC}")
