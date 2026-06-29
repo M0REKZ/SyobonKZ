@@ -118,7 +118,7 @@ jobs:
       - name: Build SyobonKZ
         run: |
           export PATH="$PATH:$ANDROID_HOME/platform-tools/"
-          cd android-project && ./gradleW build
+          cd android-project && ./gradlew build
 
       - name: Prepare artifact
         run: |
