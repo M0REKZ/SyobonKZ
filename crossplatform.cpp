@@ -190,65 +190,74 @@ void Emscripten_WaitKey()
         }
     }
 
-    //+KZ: SDL_FillSurfaceRect does not support alpha blending....
-    //  some ugly code to fix that...
-    void AlphaFillRect(SDL_Surface *surface, const SDL_Rect *rect, Uint32 color)
-    {
-        SDL_LockSurface(surface);
-
-        Uint8 r, g, b, a;
-
-        SDL_GetRGBA(color, SDL_GetPixelFormatDetails(surface->format), SDL_GetSurfacePalette(surface), &r, &g, &b, &a);
-
-        Uint8 *pixels = (Uint8 *)surface->pixels;
-
-        for (int y = rect->y; y < rect->y + rect->h; y++)
-        {
-            Uint32 *row = (Uint32 *)(pixels + y * surface->pitch);
-
-            for (int x = rect->x; x < rect->x + rect->w; x++)
-            {
-                Uint8 dr, dg, db, da;
-
-                SDL_GetRGBA(row[x], SDL_GetPixelFormatDetails(surface->format), SDL_GetSurfacePalette(surface), &dr, &dg, &db, &da);
-
-                dr = (dr * (255 - a) + r * a) / 255;
-                dg = (dg * (255 - a) + g * a) / 255;
-                db = (db * (255 - a) + b * a) / 255;
-
-                row[x] = SDL_MapSurfaceRGBA(surface, dr, dg, db, 255);
-            }
-        }
-
-        SDL_UnlockSurface(surface);
-    }
+    SDL_Surface * pDrawControlsSurface = nullptr;
+    SDL_Texture * pDrawControlsTexture = nullptr;
+    bool FirstRun = true;
 
     void DrawTouchControls()
     {
         SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);
+        static int prev_window_w = -1, prev_window_h = -1;
+        if(
+            !pDrawControlsSurface ||
+            !pDrawControlsTexture ||
+            prev_window_w != pWindowSurface->w ||
+            prev_window_h != pWindowSurface->h
+        )
+        {
+
+            if(pDrawControlsSurface || FirstRun)
+            {
+                if(pDrawControlsSurface)
+                    SDL_DestroySurface(pDrawControlsSurface);
+                pDrawControlsSurface = SDL_CreateSurface(pWindowSurface->w, pWindowSurface->h, pWindowSurface->format);
+            }
+
+            if(!pDrawControlsSurface)
+                return;
+
+            if(pDrawControlsTexture || FirstRun)
+            {
+                if(pDrawControlsTexture)
+                    SDL_DestroyTexture(pDrawControlsTexture);
+                pDrawControlsTexture = SDL_CreateTexture(pWindowRenderer, pWindowSurface->format,
+                SDL_TEXTUREACCESS_STREAMING, pWindowSurface->w, pWindowSurface->h);
+            }
+
+            if(!pDrawControlsTexture)
+                return;
+            
+            SDL_SetTextureBlendMode(pDrawControlsTexture, SDL_BLENDMODE_BLEND);
+            SDL_SetTextureScaleMode(pDrawControlsTexture, SDL_SCALEMODE_NEAREST);
+
+            prev_window_w = pWindowSurface->w;
+            prev_window_h = pWindowSurface->h;
+        }
+
+        SDL_ClearSurface(pDrawControlsSurface, 0, 0, 0, 0);
 
         Uint32 buttoncolor;
         if(GetKeyState(KEY_INPUT_LEFT))
-            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
         else
-            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        AlphaFillRect(pWindowSurface, &LeftButton, buttoncolor);
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pDrawControlsSurface, &LeftButton, buttoncolor);
         if(GetKeyState(KEY_INPUT_RIGHT))
-            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
         else
-            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        AlphaFillRect(pWindowSurface, &RightButton, buttoncolor);
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pDrawControlsSurface, &RightButton, buttoncolor);
         if(GetKeyState(KEY_INPUT_DOWN))
-            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
         else
-            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        AlphaFillRect(pWindowSurface, &DownButton, buttoncolor);
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pDrawControlsSurface, &DownButton, buttoncolor);
         if(GetKeyState(KEY_INPUT_Z))
-            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
         else
-            buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        AlphaFillRect(pWindowSurface, &JumpButton, buttoncolor);
-        buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 0, 0, 0, 100);
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pDrawControlsSurface, &JumpButton, buttoncolor);
+        buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 0, 0, 0, 100);
 
         //MOAHAHAHAHAHAA
         #define SyobonKZEvilRectangleColor(surface, rect, color) \
@@ -267,10 +276,15 @@ void Emscripten_WaitKey()
             SDL_FillSurfaceRect(surface, &tempthing, color);    \
         }
 
-        SyobonKZEvilRectangleColor(pWindowSurface, LeftButton, buttoncolor);
-        SyobonKZEvilRectangleColor(pWindowSurface, RightButton, buttoncolor);
-        SyobonKZEvilRectangleColor(pWindowSurface, DownButton, buttoncolor);
-        SyobonKZEvilRectangleColor(pWindowSurface, JumpButton, buttoncolor);
+        SyobonKZEvilRectangleColor(pDrawControlsSurface, LeftButton, buttoncolor);
+        SyobonKZEvilRectangleColor(pDrawControlsSurface, RightButton, buttoncolor);
+        SyobonKZEvilRectangleColor(pDrawControlsSurface, DownButton, buttoncolor);
+        SyobonKZEvilRectangleColor(pDrawControlsSurface, JumpButton, buttoncolor);
+
+        SDL_UpdateTexture(pDrawControlsTexture, nullptr, pDrawControlsSurface->pixels, pDrawControlsSurface->pitch);
+        SDL_RenderTexture(pWindowRenderer, pDrawControlsTexture, nullptr, nullptr);
+
+        FirstRun = false;
     }
 
     #endif

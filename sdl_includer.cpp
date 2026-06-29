@@ -6,12 +6,14 @@
 
     SDL_Window * pWindow = nullptr;
     SDL_Renderer * pRenderer = nullptr;
+    SDL_Renderer * pWindowRenderer = nullptr;
     MIX_Track * pBGMTrack = nullptr;
     MIX_Mixer * pMixer = nullptr;
     MIX_Track * apSETracks[8] = { /* in SDL 1.2 MIX_CHANNELS is 8 */
         nullptr, nullptr, nullptr, nullptr,
         nullptr, nullptr, nullptr, nullptr
     };
+    SDL_Texture * pTexture = nullptr;
 
     SDL_Surface *SyobonKZZoomSurface(SDL_Surface *image, double zoomx, double zoomy, int smooth)
     {
@@ -88,6 +90,20 @@ SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
 
         //SDL3_gfx needs a renderer to draw on
         pRenderer = SDL_CreateSoftwareRenderer(pWindowSurface);
+
+        //We need to copy the surface to this texture for faster rendering
+        pWindowRenderer = SDL_GetRenderer(pWindow);
+
+        if(!pWindowRenderer)
+            return nullptr;
+
+        pTexture = SDL_CreateTexture(pWindowRenderer, pRealWindowSurface->format,
+        SDL_TEXTUREACCESS_STREAMING, 480, 420);
+
+        if(!pTexture)
+            return nullptr;
+
+        SDL_SetTextureScaleMode(pTexture, SDL_SCALEMODE_NEAREST);
 
         if(!pRenderer)
             return nullptr;

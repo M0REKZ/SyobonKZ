@@ -11,8 +11,10 @@
     extern SDL_Window * pWindow;
     extern MIX_Track * pBGMTrack;
     extern SDL_Renderer * pRenderer;
+    extern SDL_Renderer * pWindowRenderer;
     extern MIX_Mixer * pMixer;
     extern MIX_Track * apSETracks[8]; /* in SDL 1.2 MIX_CHANNELS is 8 */
+    extern SDL_Texture *pTexture; //SDL_BlitSurface is too slow
 
     #define SyobonKZSDLInit(flags) (SDL_Init(flags) == false ? -1 : 0)
 
@@ -152,7 +154,7 @@
         }   \
         else    \
         {   \
-            SDL_Rect srcrect, destrect;     \
+            SDL_FRect srcrect, destrect;     \
             srcrect.x = 0; srcrect.y = 0; srcrect.w = 480; srcrect.h = 420; \
         \
             float scaleX = (float)pWindowSurface->w / srcrect.w; \
@@ -166,10 +168,12 @@
             destrect.h = destH; \
             destrect.x = (pWindowSurface->w - destW) / 2;   \
             destrect.y = (pWindowSurface->h - destH) / 2;   \
-            SDL_FillSurfaceRect(pWindowSurface, NULL, 0);  /* Clear trash pixels */\
-            SDL_BlitSurfaceScaled(screensurface, &srcrect, pWindowSurface, &destrect, SDL_SCALEMODE_PIXELART);    \
+            SDL_SetRenderDrawColor(pWindowRenderer, 0, 0, 0, 255);  \
+            SDL_RenderClear(pWindowRenderer);    \
+            SDL_UpdateTexture(pTexture, nullptr, screensurface->pixels, screensurface->pitch);  \
+            SDL_RenderTexture(pWindowRenderer, pTexture, &srcrect, &destrect);  \
             __SYOBONKZ_MACRO_CALL_DRAW_TOUCH_CONTROLS()    \
-            SDL_UpdateWindowSurface(pWindow);   \
+            SDL_RenderPresent(pWindowRenderer);  \
         }   \
     }
 
