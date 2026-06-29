@@ -142,12 +142,12 @@ void Emscripten_WaitKey()
 
         int ButtonsSizeY = Landscape ? 150 : 130;
         int ButtonsStartX = Landscape ? 75 : 25;
-        int ButtonsStartY = pWindowSurface->h - ((Landscape ? 75 : 256) + ButtonsSizeY * 2);
+        int ButtonsStartY = (pWindowSurface->h - ((Landscape ? 75 : 256) + ButtonsSizeY * 2)) + ButtonsSizeY / 2;
 
         //Left
         LeftButton = {ButtonsStartX, ButtonsStartY, ButtonsSizeY + ButtonsSizeY/2, ButtonsSizeY};
         RightButton = {LeftButton.x + LeftButton.w + 6, ButtonsStartY, ButtonsSizeY + ButtonsSizeY/2, ButtonsSizeY};
-        DownButton = {LeftButton.x + (LeftButton.w + 6) / 2, ButtonsStartY + ButtonsSizeY + 6, ButtonsSizeY + ButtonsSizeY/2 + 3, ButtonsSizeY};
+        DownButton = {LeftButton.x + (LeftButton.w + 6 * 2) / 2, ButtonsStartY + ButtonsSizeY + 6, ButtonsSizeY + ButtonsSizeY/2 + 3 * 2, ButtonsSizeY / 3 * 2};
 
         //Right
         JumpButton = {pWindowSurface->w - (int)(ButtonsSizeY * 1.5f + ButtonsStartX), ButtonsStartY, (int)(ButtonsSizeY * 1.5f), (int)(ButtonsSizeY * 1.5f)};
@@ -190,6 +190,39 @@ void Emscripten_WaitKey()
         }
     }
 
+    //+KZ: SDL_FillSurfaceRect does not support alpha blending....
+    //  some ugly code to fix that...
+    void AlphaFillRect(SDL_Surface *surface, const SDL_Rect *rect, Uint32 color)
+    {
+        SDL_LockSurface(surface);
+
+        Uint8 r, g, b, a;
+
+        SDL_GetRGBA(color, SDL_GetPixelFormatDetails(surface->format), SDL_GetSurfacePalette(surface), &r, &g, &b, &a);
+
+        Uint8 *pixels = (Uint8 *)surface->pixels;
+
+        for (int y = rect->y; y < rect->y + rect->h; y++)
+        {
+            Uint32 *row = (Uint32 *)(pixels + y * surface->pitch);
+
+            for (int x = rect->x; x < rect->x + rect->w; x++)
+            {
+                Uint8 dr, dg, db, da;
+
+                SDL_GetRGBA(row[x], SDL_GetPixelFormatDetails(surface->format), SDL_GetSurfacePalette(surface), &dr, &dg, &db, &da);
+
+                dr = (dr * (255 - a) + r * a) / 255;
+                dg = (dg * (255 - a) + g * a) / 255;
+                db = (db * (255 - a) + b * a) / 255;
+
+                row[x] = SDL_MapSurfaceRGBA(surface, dr, dg, db, 255);
+            }
+        }
+
+        SDL_UnlockSurface(surface);
+    }
+
     void DrawTouchControls()
     {
         SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);
@@ -199,22 +232,22 @@ void Emscripten_WaitKey()
             buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
         else
             buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        SDL_FillSurfaceRect(pWindowSurface, &LeftButton, buttoncolor);
+        AlphaFillRect(pWindowSurface, &LeftButton, buttoncolor);
         if(GetKeyState(KEY_INPUT_RIGHT))
             buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
         else
             buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        SDL_FillSurfaceRect(pWindowSurface, &RightButton, buttoncolor);
+        AlphaFillRect(pWindowSurface, &RightButton, buttoncolor);
         if(GetKeyState(KEY_INPUT_DOWN))
             buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
         else
             buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        SDL_FillSurfaceRect(pWindowSurface, &DownButton, buttoncolor);
+        AlphaFillRect(pWindowSurface, &DownButton, buttoncolor);
         if(GetKeyState(KEY_INPUT_Z))
             buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 150, 150, 150, 100);
         else
             buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 255, 255, 255, 100);
-        SDL_FillSurfaceRect(pWindowSurface, &JumpButton, buttoncolor);
+        AlphaFillRect(pWindowSurface, &JumpButton, buttoncolor);
         buttoncolor = SDL_MapSurfaceRGBA(pWindowSurface, 0, 0, 0, 100);
 
         //MOAHAHAHAHAHAA
