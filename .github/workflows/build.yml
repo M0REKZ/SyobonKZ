@@ -1,4 +1,4 @@
-name: Build
+name: Build Release Artifacts
 
 on:
   workflow_dispatch:
@@ -100,3 +100,36 @@ jobs:
         with:
           name: SyobonKZ-windows
           path: build/SyobonKZ-Windows
+
+  build-android:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          
+      - name: Prepare Linux
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install ninja-build openjdk-21-jdk openssl cmake
+      
+      # Github ubuntu 22.04 runner already has a android SDK (27 by default)
+      - name: Build SyobonKZ
+        run: |
+          export PATH="$PATH:$ANDROID_HOME/platform-tools/"
+          cd android-project
+          ./gradleW build
+
+      - name: Prepare artifact
+        run: |
+          cd ./android-project/app/build/outputs/apk/release/
+          mkdir SyobonKZ-Android
+          mv app-release.apk ./SyobonKZ-Android/SyobonKZ.apk
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SyobonKZ-android
+          path: android-project/app/build/outputs/apk/release/SyobonKZ-Android
+
