@@ -16,3 +16,15 @@
 [submodule "lib/SDL3_gfx"]
 	path = lib/SDL3_gfx
 	url = https://github.com/sabdul-khabir/SDL3_gfx.git
+[submodule "lib/SDL3_ttf"]
+	path = lib/SDL3_ttf
+	url = https://github.com/libsdl-org/SDL_ttf.git
+[submodule "lib/SDL3_mixer"]
+	path = lib/SDL3_mixer
+	url = https://github.com/libsdl-org/SDL_mixer.git
+[submodule "lib/SDL3_image"]
+	path = lib/SDL3_image
+	url = https://github.com/libsdl-org/SDL_image.git
+[submodule "lib/SDL3"]
+	path = lib/SDL3
+	url = https://github.com/libsdl-org/SDL.git

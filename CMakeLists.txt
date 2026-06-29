@@ -9,16 +9,18 @@ else()
     set(EXECUTABLE_NAME SyobonAction)
 endif()
 
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
+    set(BUILD_SHARED_LIBS ON)
+else()
+    set(BUILD_SHARED_LIBS OFF)
+endif()
+
 # options
-option(SYOBONKZ_BUILD_SDL1_EXTENSIONS "Build SDL_image, SDL_mixer, SDL_gfx and SDL_ttf (requires submodules being cloned)" ON)
-option(SYOBONKZ_USE_SDL3 "Use SDL3, SDL3_image, SDL3_mixer and SDL3_ttf instead of SDL 1.2 counterparts" OFF)
+option(SYOBONKZ_USE_SDL3 "Use SDL3, SDL3_image, SDL3_mixer and SDL3_ttf instead of SDL 1.2 counterparts" ON)
 
 # SDL3 error checking
 if(SYOBONKZ_USE_SDL3)
     add_compile_definitions(SYOBONKZ_USE_SDL3=1)
-    if(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
-        message( FATAL_ERROR "SYOBONKZ_BUILD_SDL1_EXTENSIONS can not be set with SYOBONKZ_USE_SDL3")
-    endif()
 
     if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
         message( FATAL_ERROR "SYOBONKZ_USE_SDL3 is unsupported with Emscripten")
@@ -31,7 +33,6 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
     set(SYOBONKZ_EMSCRIPTEN_LINK_FLAGS "--use-preload-plugins --preload-file text --preload-file res --preload-file BGM --preload-file SE -sSTACK_SIZE=8MB")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${SYOBONKZ_EMSCRIPTEN_C_FLAGS} ${SYOBONKZ_EMSCRIPTEN_LINK_FLAGS}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SYOBONKZ_EMSCRIPTEN_C_FLAGS} ${SYOBONKZ_EMSCRIPTEN_LINK_FLAGS}")
-    set(SYOBONKZ_BUILD_SDL1_EXTENSIONS OFF)
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 endif()
 
@@ -44,23 +45,51 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 
 # prevent installing to system directories. 
-set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}" CACHE INTERNAL "")
+set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/$<CONFIGURATION>" CACHE INTERNAL "")
 
 if(SYOBONKZ_USE_SDL3)
 
-    find_package(SDL3 REQUIRED)
-    find_package(SDL3_image REQUIRED)
-    find_package(SDL3_mixer REQUIRED)
-    find_package(SDL3_ttf REQUIRED)
+    if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
+        find_package(SDL3 REQUIRED)
+        find_package(SDL3_image REQUIRED)
+        find_package(SDL3_mixer REQUIRED)
+        find_package(SDL3_ttf REQUIRED)
 
-    # we save SDL3::Headers in SDL3_INCLUDE_DIR to pass it into SDL3_gfx
-    get_target_property(SDL3_INCLUDE_DIR SDL3::Headers INTERFACE_INCLUDE_DIRECTORIES)
+        # we will put SDL3::Headers in SDL3_INCLUDE_DIR to pass it into SDL3_gfx
+        get_target_property(SDL3_INCLUDE_DIR SDL3::Headers INTERFACE_INCLUDE_DIRECTORIES)
 
-    # need to use SDL3_gfx
-    add_subdirectory(${PROJECT_SOURCE_DIR}/lib/SDL3_gfx)
+        # add SDL3_gfx
+        add_subdirectory(${PROJECT_SOURCE_DIR}/lib/SDL3_gfx EXCLUDE_FROM_ALL)
 
+        # dont build static
+        set_target_properties(SDL3_gfx_Static PROPERTIES EXCLUDE_FROM_ALL TRUE)
+        set(SDL3_GFX_LIB SDL3_gfx_Shared)
+    else()
+        # dont build sdl3 tests
+        set(SDL_TEST_LIBRARY OFF CACHE BOOL "" FORCE)
+        set(SDL_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
+        # need ttf libs
+        set(SDLTTF_VENDORED ON)
+
+        # add SDL3 libs
+        add_subdirectory(${PROJECT_SOURCE_DIR}/lib/SDL3 EXCLUDE_FROM_ALL)
+        add_subdirectory(${PROJECT_SOURCE_DIR}/lib/SDL3_image EXCLUDE_FROM_ALL)
+        add_subdirectory(${PROJECT_SOURCE_DIR}/lib/SDL3_mixer EXCLUDE_FROM_ALL)
+        add_subdirectory(${PROJECT_SOURCE_DIR}/lib/SDL3_ttf EXCLUDE_FROM_ALL)
+
+        # we will put SDL3::Headers in SDL3_INCLUDE_DIR to pass it into SDL3_gfx
+        get_target_property(SDL3_INCLUDE_DIR SDL3::Headers INTERFACE_INCLUDE_DIRECTORIES)
+
+        # add SDL3_gfx
+        add_subdirectory(${PROJECT_SOURCE_DIR}/lib/SDL3_gfx EXCLUDE_FROM_ALL)
+
+        # dont build static
+        set_target_properties(SDL3_gfx_Shared PROPERTIES EXCLUDE_FROM_ALL TRUE)
+        set(SDL3_GFX_LIB SDL3_gfx_Static)
+    endif()
+
+elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
 
     # search SDL 1.2 in the system
     # this allows choosing to use:
@@ -101,15 +130,6 @@ elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
         BUILD_COMMAND make noinst_PROGRAMS= # noinst_PROGRAMS= avoids building showfont.c, building showfont.c on macOS may fail due to iconv
         INSTALL_COMMAND make install noinst_PROGRAMS= # read above
     )
-
-else()
-    if(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
-        find_package(SDL REQUIRED)
-        find_package(SDL_image REQUIRED)
-        find_package(SDL_mixer REQUIRED)
-        find_package(SDL_gfx REQUIRED)
-        find_package(SDL_ttf REQUIRED)
-    endif()
 endif()
 
 set(SOURCE_FILES_SYOBON
@@ -165,12 +185,6 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
     )
 endif()
 
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/syobon_libs)
-#load libraries from lib folder
-#set_target_properties(${EXECUTABLE_NAME} PROPERTIES
-#    BUILD_RPATH "@loader_path/lib"
-#)
-
 if(SYOBONKZ_USE_SDL3)
 
     target_include_directories(${EXECUTABLE_NAME} PRIVATE
@@ -188,9 +202,9 @@ if(SYOBONKZ_USE_SDL3)
         SDL3_image::SDL3_image
         SDL3_mixer::SDL3_mixer
         SDL3_ttf::SDL3_ttf
-        SDL3_gfx_Shared
+        ${SDL3_GFX_LIB}
     )
-elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
+elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
 
     target_include_directories(${EXECUTABLE_NAME} PRIVATE
         ${SDL_INCLUDE_DIRS}
@@ -204,22 +218,6 @@ elseif(SYOBONKZ_BUILD_SDL1_EXTENSIONS)
         ${CMAKE_BINARY_DIR}/lib/libSDL_gfx${CMAKE_SHARED_LIBRARY_SUFFIX}
         ${CMAKE_BINARY_DIR}/lib/libSDL_ttf${CMAKE_SHARED_LIBRARY_SUFFIX}
     )
-else()
-    target_include_directories(${EXECUTABLE_NAME} PRIVATE
-        ${SDL_INCLUDE_DIRS}
-        ${SDL_IMAGE_INCLUDE_DIRS}
-        ${SDL_MIXER_INCLUDE_DIRS}
-        ${SDL_GFX_INCLUDE_DIRS}
-        ${SDL_TTF_INCLUDE_DIRS}
-    )
-
-    target_link_libraries(${EXECUTABLE_NAME} PRIVATE
-        ${SDL_LIBRARIES}
-        ${SDL_IMAGE_LIBRARIES}
-        ${SDL_MIXER_LIBRARIES}
-        ${SDL_GFX_LIBRARIES}
-        ${SDL_TTF_LIBRARIES}
-    )
 endif()
 
 # copy syobon action data
@@ -227,139 +225,3 @@ file(COPY ${PROJECT_SOURCE_DIR}/data/BGM DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${PROJECT_SOURCE_DIR}/data/res DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${PROJECT_SOURCE_DIR}/data/SE DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${PROJECT_SOURCE_DIR}/data/text DESTINATION ${CMAKE_BINARY_DIR})
-
-# copy sdl3 (TODO: add for sdl 1.2)
-if(NOT (${CMAKE_SYSTEM_NAME} MATCHES "Android"))
-    if(SYOBONKZ_USE_SDL3)
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-        
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_image::SDL3_image-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_mixer::SDL3_mixer-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_ttf::SDL3_ttf-shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL3_gfx_Shared> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        # SDL3_ttf needs harfbuzz
-        if(NOT harfbuzz_FOUND)
-            find_package(harfbuzz REQUIRED)
-        endif()
-
-        get_target_property(HARFBUZZ_LIB_TO_COPY harfbuzz::harfbuzz IMPORTED_LOCATION)
-        list(FILTER HARFBUZZ_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
-        file(REAL_PATH "${HARFBUZZ_LIB_TO_COPY}" HARFBUZZ_LIB_TO_COPY) # solve aliases
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy "${HARFBUZZ_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-    else()
-
-        set(SDL_LIB_TO_COPY "${SDL_LIBRARIES}")
-        # filter only shared libraries
-        list(FILTER SDL_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
-        file(REAL_PATH "${SDL_LIB_TO_COPY}" SDL_LIB_TO_COPY) # solve aliases
-
-        if(NOT SYOBONKZ_BUILD_SDL1_EXTENSIONS)
-            set(SDL_IMAGE_LIB_TO_COPY "${SDL_IMAGE_LIBRARIES}")
-            list(FILTER SDL_IMAGE_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
-            file(REAL_PATH "${SDL_IMAGE_LIB_TO_COPY}" SDL_IMAGE_LIB_TO_COPY)
-
-            set(SDL_MIXER_LIB_TO_COPY "${SDL_MIXER_LIBRARIES}")
-            list(FILTER SDL_MIXER_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
-            file(REAL_PATH "${SDL_MIXER_LIB_TO_COPY}" SDL_MIXER_LIB_TO_COPY)
-
-            set(SDL_GFX_LIB_TO_COPY "${SDL_GFX_LIBRARIES}")
-            list(FILTER SDL_GFX_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
-            file(REAL_PATH "${SDL_GFX_LIB_TO_COPY}" SDL_GFX_LIB_TO_COPY)
-
-            set(SDL_TTF_LIB_TO_COPY "${SDL_TTF_LIBRARIES}")
-            list(FILTER SDL_TTF_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
-            file(REAL_PATH "${SDL_TTF_LIB_TO_COPY}" SDL_TTF_LIB_TO_COPY)
-        else()
-            set(SDL_IMAGE_LIB_TO_COPY "${CMAKE_BINARY_DIR}/lib/libSDL_image${CMAKE_SHARED_LIBRARY_SUFFIX}")
-            set(SDL_MIXER_LIB_TO_COPY "${CMAKE_BINARY_DIR}/lib/libSDL_mixer${CMAKE_SHARED_LIBRARY_SUFFIX}")
-            set(SDL_GFX_LIB_TO_COPY "${CMAKE_BINARY_DIR}/lib/libSDL_gfx${CMAKE_SHARED_LIBRARY_SUFFIX}")
-            set(SDL_TTF_LIB_TO_COPY "${CMAKE_BINARY_DIR}/lib/libSDL_ttf${CMAKE_SHARED_LIBRARY_SUFFIX}")
-        endif()
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_IMAGE_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_MIXER_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_GFX_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        add_custom_command(
-                TARGET ${EXECUTABLE_NAME} POST_BUILD
-                COMMAND "${CMAKE_COMMAND}" -E copy "${SDL_TTF_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                VERBATIM
-            )
-
-        # Try to detect sdl12-compat, it has a superior SDL patch version!
-        # in that case, we should copy sdl2 too
-        if(SDL_VERSION_PATCH GREATER 16)
-            find_package(SDL2)
-            if(SDL2_FOUND)
-                add_custom_command(
-                    TARGET ${EXECUTABLE_NAME} POST_BUILD
-                    COMMAND "${CMAKE_COMMAND}" -E copy $<TARGET_FILE:SDL2::SDL2> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-                    VERBATIM
-                )
-            endif()
-        endif()
-    endif()
-
-    # Both SDL_ttf 1.2 and SDL3_ttf need Freetype
-    find_package(Freetype REQUIRED)
-
-    set(FREETYPE_LIB_TO_COPY "${FREETYPE_LIBRARIES}")
-    list(FILTER FREETYPE_LIB_TO_COPY INCLUDE REGEX "\\${CMAKE_SHARED_LIBRARY_SUFFIX}$")
-    file(REAL_PATH "${FREETYPE_LIB_TO_COPY}" FREETYPE_LIB_TO_COPY) # solve aliases
-
-    add_custom_command(
-            TARGET ${EXECUTABLE_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E copy "${FREETYPE_LIB_TO_COPY}" $<TARGET_FILE_DIR:${EXECUTABLE_NAME}>/syobon_libs/
-            VERBATIM
-        )
-endif()
