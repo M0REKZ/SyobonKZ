@@ -82,7 +82,17 @@ Command Line Arguments
 
 Building
 ------------
-This project requires libraries that are old and may not be directly available in your package manager.
+This project requires the following SDL3 libraries, they are included in this repository as submodules and they will be compiled when building SyobonKZ:
+
+* CMake
+* SDL3
+* SDL3_image
+* SDL3_mixer
+* SDL3_ttf
+* SDL3_gfx
+
+Alternatively you can build SyobonKZ using SDL 1.2 (for old platforms), but note that SDL 1.2 itself
+is NOT included in this repository:
 
 * CMake
 * SDL 1.2 (or sdl12-compat with SDL2)
@@ -91,20 +101,12 @@ This project requires libraries that are old and may not be directly available i
 * SDL_ttf 1.2
 * SDL_gfx (dont confuse with SDL***2***_gfx)
 
-Optionally (and depending on your target platform) you may choose to use SDL3 instead:
-
-* SDL3
-* SDL3_image
-* SDL3_mixer
-* SDL3_ttf
-* SDL3_gfx
-
-For convenience, the SDL 1.2 extensions and SDL3_gfx (dont confuse again) are included as submodules in this repository, you can include them when cloning by doing:
+As mentioned, the SDL 1.2 extensions and all SDL3 libraries are included as submodules in this repository, to build this project you need to include them when cloning by doing:
 ```
 git clone --recursive https://github.com/M0REKZ/SyobonKZ.git
 ```
 
-After doing that you can do the following to build the game:
+After that you can do the following to build the game:
 ```
 mkdir build
 cd build
@@ -112,14 +114,9 @@ cmake ..
 make
 ```
 
-If you want to use the SDL 1.2 extension libraries that are installed in your system add this option to CMake:
+If you want to use SDL 1.2 instead, use this CMake option:
 ```
-cmake -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
-```
-
-If you want to use SDL3 instead, use these CMake options:
-```
-cmake -DSYOBONKZ_USE_SDL3=ON -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
+cmake -DSYOBONKZ_USE_SDL3=OFF ..
 ```
 
 Gamepad Notes
