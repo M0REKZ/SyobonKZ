@@ -15,8 +15,13 @@ jobs:
       - name: Prepare Linux
         run: |
           sudo apt-get update -y
-          sudo apt install build-essential git
-          sudo apt-get install libsdl1.2-compat-dev libsdl2-dev cmake
+          sudo apt-get install build-essential git make \
+          pkg-config cmake ninja-build gnome-desktop-testing libasound2-dev libpulse-dev \
+          libaudio-dev libfribidi-dev libjack-dev libsndio-dev libx11-dev libxext-dev \
+          libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxtst-dev \
+          libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev \
+          libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev libthai-dev \
+          libusb-1.0-0-dev libpipewire-0.3-dev libwayland-dev libdecor-0-dev liburing-dev
 
       - name: Build SyobonKZ
         run: |
@@ -33,7 +38,7 @@ jobs:
           mv ./res ./SyobonKZ-Linux/
           mv ./BGM ./SyobonKZ-Linux/
           mv ./SE ./SyobonKZ-Linux/
-          mv ./syobon_libs ./SyobonKZ-Linux/
+          mv ./text ./SyobonKZ-Linux/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -69,7 +74,7 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DSYOBONKZ_USE_SDL3=ON -DSYOBONKZ_BUILD_SDL1_EXTENSIONS=OFF ..
+          cmake -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
           mingw32-make
 
       - name: Prepare artifact
@@ -80,10 +85,10 @@ jobs:
           mv ./res ./SyobonKZ-Windows/
           mv ./BGM ./SyobonKZ-Windows/
           mv ./SE ./SyobonKZ-Windows/
-          mv ./syobon_libs ./SyobonKZ-Windows/
+          mv ./text ./SyobonKZ-Windows/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SyobonKZ-windows-32
+          name: SyobonKZ-windows
           path: build/SyobonKZ-Windows
