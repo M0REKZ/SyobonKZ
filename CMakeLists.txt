@@ -135,6 +135,7 @@ endif()
 
 if(MINGW)
     set(SYOBONKZ_WINDOWS_ICON_RC icon.rc)
+    set(SYOBONKZ_WINDOWS_ICON_RC_FULL_PATH ${PROJECT_SOURCE_DIR}/${SYOBONKZ_WINDOWS_ICON})
     configure_file("icon.rc.in" "${SYOBONKZ_WINDOWS_ICON_RC}")
 else()
     set(SYOBONKZ_WINDOWS_ICON_RC)
