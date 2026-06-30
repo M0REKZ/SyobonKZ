@@ -5294,14 +5294,14 @@ void HandleSyobonActionTwoLevels()
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_2_3_0;
         BlockCreate(60 * 29, 6 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
-        /*
-           bco = 1;
-           ba[bco]=(54*29-12)*100;
-           bb[bco]=(1*29-12)*100;
-           btype[bco]=80;
-           bxtype[bco]=0;
-           bco += 1;
-         */
+        
+        EnemyAppearCount = 1;
+        EnemyAppearX[EnemyAppearCount]=(54*29-12)*100;
+        EnemyAppearY[EnemyAppearCount]=(1*29-12)*100;
+        EnemyAppearType[EnemyAppearCount]= EEnemyType::EVIL_CLOUD;
+        EnemyAppearSubType[EnemyAppearCount]= EEnemySubType::EVIL_CLOUD_NORMAL;
+        EnemyAppearCount += 1;
+        
         GroundCount = 0;
         EnemyAppearX[GroundCount] = (102 * 29 - 12) * 100;
         EnemyAppearY[GroundCount] = (10 * 29 - 12) * 100;
