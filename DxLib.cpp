@@ -52,6 +52,7 @@ int DxLib_Init()
                                420 /*(int)fymax/100 */, 32,
                                SYOBONKZ_SDL_SWSURFACE | SYOBONKZ_SDL_DOUBLEBUF | SYOBONKZ_SDL_RESIZABLE | (StartFullScreenFlag ? SYOBONKZ_SDL_FULLSCREEN : 0))))
     {
+        fprintf(stderr, "Unable to create SDL Window: %s\n", SDL_GetError());
         SDL_Quit();
         return -1;
     }
