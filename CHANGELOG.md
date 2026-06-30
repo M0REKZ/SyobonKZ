@@ -5,6 +5,7 @@ Release Changelog
 * Add macOS, Android and Web Browser support
 * Format, separate, rename and do more improvements to the code for readability
 * Added some "+KZ Edition" text
+* Use a new icon :P
 * Fixed missing Syobon Action 2 assets
 * Fix non-transparent sprites
 * Make window resizable
@@ -12,9 +13,25 @@ Release Changelog
 * Fix C++ warnings
 * Fix a out of bounds memory access
 * Fix including SDL libraries
-* Optimize japanese text rendering
-* Allow to optionally use SDL3 instead of SDL 1.2
+* Optimize japanese text rendering by loading CPU expensive images as bmp
+* Fix sound overlap
+* Allow to use SDL3 instead of SDL 1.2
 * Add "--fullscreen" and "--help" parameters
+* Fix some mismatches/bugs from the original games:
+    * Level 1-1:
+        * Restored delicious mushroom
+        * Restored unstompable enemy
+        * Fixed gray line of the checkpoint (but keep the text)
+    * Level 1-4:
+        * Fixed sword ending (it should not end the game here)
+    * Level 2-3:
+        * Restored stompable enemy from the start
+        * Restored a Evil Cloud that was removed
+        * Now hitting the hidden block with the shell is consistent
+    * Level 2-4:
+        * Fix wrong music in final section (it was credits music)
+    * Level 3-1 (Secret level 9):
+        * Fix loading a invalid level after beating it
 * Fix other random bugs...
 
 **Open Syobon Action RC 3 (Karen／明美 fork)**
