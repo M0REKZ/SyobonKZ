@@ -76,37 +76,62 @@ SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
         pWindow = SDL_CreateWindow("", width, height, newflags);
         
         if(!pWindow)
+        {
+            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pWindow: %s\n", SDL_GetError());
             return nullptr;
+        }
 
         SDL_Surface *pRealWindowSurface = SDL_GetWindowSurface(pWindow);
 
         if(!pRealWindowSurface)
+        {
+            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pRealWindowSurface: %s\n", SDL_GetError());
             return nullptr;
+        }
 
         SDL_Surface * pWindowSurface = SDL_CreateSurface(width, height, pRealWindowSurface->format);
 
         if(!pWindowSurface)
+        {
+            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pWindowSurface: %s\n", SDL_GetError());
             return nullptr;
+        }
 
         //SDL3_gfx needs a renderer to draw on
         pRenderer = SDL_CreateSoftwareRenderer(pWindowSurface);
+
+        if(!pRenderer)
+        {
+            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pRenderer: %s\n", SDL_GetError());
+            return nullptr;
+        }
 
         //We need to copy the surface to this texture for faster rendering
         pWindowRenderer = SDL_GetRenderer(pWindow);
 
         if(!pWindowRenderer)
-            return nullptr;
+        {
+            printf("SyobonKZCreateWindow - SDL_GetRenderer returned NULL for pWindowRenderer, trying to create a new Renderer...\n");
+
+            pWindowRenderer = SDL_CreateRenderer(pWindow, nullptr);
+
+            if(!pWindowRenderer)
+            {
+                fprintf(stderr, "SyobonKZCreateWindow - Unable to create pWindowRenderer: %s\n", SDL_GetError());
+                return nullptr;
+            }
+        }
 
         pTexture = SDL_CreateTexture(pWindowRenderer, pRealWindowSurface->format,
         SDL_TEXTUREACCESS_STREAMING, 480, 420);
 
         if(!pTexture)
+        {
+            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pWindowRenderer: %s\n", SDL_GetError());
             return nullptr;
+        }
 
         SDL_SetTextureScaleMode(pTexture, SDL_SCALEMODE_NEAREST);
-
-        if(!pRenderer)
-            return nullptr;
 
         return pWindowSurface;
     #endif
