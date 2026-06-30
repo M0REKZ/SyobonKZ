@@ -1471,6 +1471,43 @@ void HandleEntitiesBlocks()
 				xx[27] = 0;
 				if (((int)EnemyType[t] >= 100 || (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN || BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL)) && BlockType[tt] != EBlockType::NOTE_BLOCK)
 				{
+
+                    //+KZ: Syobon Action has broken physics, which makes 2-3 be inconsistent when trying to hit
+                    //  the hidden block with the shell in the start, this patch adds a very specific collision
+                    //  check only for that SPECIFIC shell and that SPECIFIC block in that SPECIFIC level!
+                    if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 && SyobonRandomMode == 0 &&
+                        (
+                            SyobonWorld == 2 &&
+                            SyobonLevel == 3 &&
+                            SyobonSection == 0 &&
+
+                            //check for specific types and position
+                            EnemyType[t] == EEnemyType::SHELL &&
+                            BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN &&
+                            BlockX[tt] == (45 * 29 * 100) && //yeah im checking for the position instead of the index
+                            BlockY[tt] == ((11 * 29 - 12) * 100)
+                        )
+                    )
+                    {
+                        //copypasted collision code but removed check for Y axis
+                        if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[2])
+                        {
+                            EnemyX[t] = xx[8] - EnemySizeX[t] + fx;
+                            EnemyVelX[t] = 0;
+                            EnemyLookingDirection[t] = 0;
+                            xx[27] = 1;
+                        }
+                        if (EnemyX[t] + EnemySizeX[t] - fx >
+                                xx[8] + xx[1] - xx[0] * 2 &&
+                            EnemyX[t] - fx < xx[8] + xx[1])
+                        {
+                            EnemyX[t] = xx[8] + xx[1] + fx;
+                            EnemyVelX[t] = 0;
+                            EnemyLookingDirection[t] = 1;
+                            xx[27] = 1;
+                        }
+                    }
+
 					if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[2] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] / 2 - xx[0] && EnemyY[t] - fy < xx[9] + xx[2])
 					{
 						EnemyX[t] = xx[8] - EnemySizeX[t] + fx;

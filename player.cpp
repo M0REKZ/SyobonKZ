@@ -438,9 +438,9 @@ void HandlePlayer()
             }
 
             //+KZ: Sword ending does not work in Syobon Action 1
-            //  however, seems it was fixed in Syobon Action 2...
+            //  however, seems it was "fixed" in Syobon Action 2...
             //  but we want the original version, right?
-            //  Lets "un-fix" it for level 1-4
+            //  Lets "un-fix" it for level 1-4 so the chicken trap works
             if (
                 (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 && SyobonRandomMode == 0 &&
                 SyobonWorld == 1 && SyobonLevel == 4 && SyobonSection == 0)
