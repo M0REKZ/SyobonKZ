@@ -62,6 +62,15 @@ void CreateEntityMessageCache()
     apEnemyMessages["無駄無駄無駄無駄ァ!!"] = LoadGraph("text/uselessuseless.bmp", false);
 }
 
+void DestroyEntityMessageCache()
+{
+    for(auto &pEnemyMsg : apEnemyMessages)
+    {
+        if(pEnemyMsg.second)
+            SyobonKZFreeImage(pEnemyMsg.second);
+    }
+}
+
 void HandleEntities()
 {
     // 敵キャラ (Enemy character)

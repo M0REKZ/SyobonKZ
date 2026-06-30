@@ -60,6 +60,44 @@
     }
 #endif
 
+void SyobonKZQuit()
+{
+    #ifdef SYOBONKZ_USE_SDL3
+
+        //Destroy all weird things we created here for SDL3
+        //
+        //pWindowSurface is not here
+
+        //Texture 480x420 for faster rendering
+        if(pTexture)
+        {
+            SDL_DestroyTexture(pTexture);
+        }
+
+        //Renderer for 480x420 game surface (only for SDL3_gfx.....)
+        if(pRenderer)
+        {
+            SDL_DestroyRenderer(pRenderer);
+        }
+
+        //window renderer (full screen)
+        if(pWindowRenderer)
+        {
+            SDL_DestroyRenderer(pWindowRenderer);
+        }
+
+        //finally the window
+        if(pWindow)
+        {
+            SDL_DestroyWindow(pWindow);
+        }
+
+    #endif
+
+    //SDL_Quit is called the same way in SDL 1.2 and SDL3
+    return SDL_Quit();
+}
+
 SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
 {
     #ifndef SYOBONKZ_USE_SDL3

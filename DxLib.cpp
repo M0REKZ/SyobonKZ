@@ -464,6 +464,9 @@ SDL_Surface *LoadGraph(const char *filename, bool fix)
 
 void PlaySoundMem(SyobonKZChunk *s, int l)
 {
+    if(!sound) //game is muted
+        return;
+
     struct ChannelState {
         SyobonKZChunk* sound = nullptr;
         Uint32 StartTime = 0;

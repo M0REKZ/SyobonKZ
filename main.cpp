@@ -529,6 +529,11 @@ void deinit()
 	for (int i = 0; i < 161; i++)
 		for (int j = 0; j < 8; j++)
 			SyobonKZFreeImage(Sliced_GFX[i][j]);
+
+	//+KZ: Destroy surfaces cache
+	DestroyEntityMessageCache();
+	DestroyPlayerMessageCache();
+	DestroyGlobalTextCache();
 	//--
 
 	// SOUNDS
@@ -545,11 +550,14 @@ void deinit()
 	// Joystick
 	SyobonKZJoystickClose(joystick);
 
+	// Destroy game screen surface
+	SyobonKZFreeImage(screen);
+
 	// Close libraries
 	SyobonKZImageQuit();
 	TTF_Quit();
 	SyobonKZAudioQuit();
-	SDL_Quit();
+	SyobonKZQuit();
 }
 // 画像関係 (Image related)
 //{
@@ -690,6 +698,9 @@ void PlaySound(SyobonKZChunk *x)
 // BGM変更 (Change background music)
 void bgmchange(SyobonKZMusic *x)
 {
+	if(!sound) //game is muted
+        return;
+
 	SyobonKZHaltMusic();
 	// Music[0]=0;
 	Music[0] = x;
@@ -917,4 +928,13 @@ void CreateGlobalTextCache()
 	apGlobalTexts["ヒントブロックですよ〜"] = LoadGraph("text/main_1.bmp", false);
 	apGlobalTexts["決して怪しいブロックじゃないですよ"] = LoadGraph("text/main_4.bmp", false);
 	apGlobalTexts["                          (…チッ)"] = LoadGraph("text/main_0.bmp", false);
+}
+
+void DestroyGlobalTextCache()
+{
+    for(auto &pGlobalTxt : apGlobalTexts)
+    {
+        if(pGlobalTxt.second)
+            SyobonKZFreeImage(pGlobalTxt.second);
+    }
 }

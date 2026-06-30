@@ -8,6 +8,7 @@ void HandlePlayerBlocks();
 void HandlePlayerWalls();
 void HandlePlayerMessage();
 void CreatePlayerMessageCache();
+void DestroyPlayerMessageCache();
 
 void RenderPlayer();
 

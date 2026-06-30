@@ -68,5 +68,6 @@ void setfont(int x, int y);
 //+KZ
 extern std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
 void CreateGlobalTextCache();
+void DestroyGlobalTextCache();
 
 #endif

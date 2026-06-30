@@ -25,6 +25,15 @@ void CreatePlayerMessageCache()
     apPlayerMessages["溶岩と合体したい……"] = LoadGraph("text/player_3.bmp", false);
 }
 
+void DestroyPlayerMessageCache()
+{
+    for(auto &pPlayerMsg : apPlayerMessages)
+    {
+        if(pPlayerMsg.second)
+            SyobonKZFreeImage(pPlayerMsg.second);
+    }
+}
+
 void HandlePlayer()
 {
     HandlePlayerInput();

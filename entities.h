@@ -23,6 +23,7 @@ void HandleEntities();
 void PlaceEntities();
 void HandleEnemiesMessages();
 void CreateEntityMessageCache();
+void DestroyEntityMessageCache();
 
 void RenderEnemies();
 void RenderEnemiesTwo();

@@ -314,5 +314,6 @@
 #define SYOBONKZ_SDL_SWSURFACE 0
 #define SYOBONKZ_SDL_DISABLE 0
 
+void SyobonKZQuit();
 SDL_Surface * SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags);
 SDL_Surface * SyobonKZFixImage(SDL_Surface * image, const char *filename);

@@ -78,4 +78,7 @@ bool GetKeyState(Uint32 key);
 
 extern bool DxLibExit;
 
+//moved here to be used in other places
+extern bool sound;
+
 #endif
