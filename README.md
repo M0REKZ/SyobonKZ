@@ -10,6 +10,7 @@
 SyobonKZ is a cross-platform port of the unforgiving Japanese platformer ***Syobon Action***.
 
 It is also known as:
+* しょぼんのアクション
 * Cat Mario
 * Shobon no Action
 * Neko Mario
