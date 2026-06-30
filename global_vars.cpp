@@ -90,11 +90,11 @@ double pai = 3.1415926535;
 
 //地面
 int GroundCount;
-int GroundX[smax], GroundY[smax], GroundSizeX[smax], GroundSizeY[smax];
-EObjectType GroundType[smax];
-int GroundSubType[smax],
-    GroundVelY[smax];
-int GroundAI[smax];
+int GroundX[GROUND_MAX], GroundY[GROUND_MAX], GroundSizeX[GROUND_MAX], GroundSizeY[GROUND_MAX];
+EObjectType GroundType[GROUND_MAX];
+int GroundSubType[GROUND_MAX],
+    GroundVelY[GROUND_MAX];
+int GroundAI[GROUND_MAX];
 
 
 
@@ -122,56 +122,56 @@ int mascrollmax = 21000;	//9000
 
 //ブロック
 int BlockCount;
-int BlockX[tmax], BlockY[tmax], thp[tmax];
-EBlockType BlockType[tmax];
-int BlockItemCount[tmax];
-EBlockSubType BlockSubType[tmax];
+int BlockX[BLOCK_MAX], BlockY[BLOCK_MAX], thp[BLOCK_MAX];
+EBlockType BlockType[BLOCK_MAX];
+int BlockItemCount[BLOCK_MAX];
+EBlockSubType BlockSubType[BLOCK_MAX];
 
 //メッセージブロック
 int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
 
 //効果を持たないグラ
 int ExtraGraphicCount;
-int ExtraGraphicX[emax], ExtraGraphicY[emax], ExtraGraphicSizeX[emax], ExtraGraphicSizeY[emax], ExtraGraphicVelX[emax], ExtraGraphicVelY[emax];
-int ExtraGraphicFrictionX[emax], ExtraGraphicFrictionY[emax], ExtraGraphicTimer[emax];
-int ExtraGraphicType[emax];
+int ExtraGraphicX[EXTRA_GRAPHIC_MAX], ExtraGraphicY[EXTRA_GRAPHIC_MAX], ExtraGraphicSizeX[EXTRA_GRAPHIC_MAX], ExtraGraphicSizeY[EXTRA_GRAPHIC_MAX], ExtraGraphicVelX[EXTRA_GRAPHIC_MAX], ExtraGraphicVelY[EXTRA_GRAPHIC_MAX];
+int ExtraGraphicFrictionX[EXTRA_GRAPHIC_MAX], ExtraGraphicFrictionY[EXTRA_GRAPHIC_MAX], ExtraGraphicTimer[EXTRA_GRAPHIC_MAX];
+int ExtraGraphicType[EXTRA_GRAPHIC_MAX];
 
 
 
 //敵キャラ
 int EnemyCount;
-int EnemyX[amax], EnemyY[amax], EnemySizeX[amax], EnemySizeY[amax], EnemyVelX[amax], EnemyVelY[amax];
-int af[amax], EnemyBlockAppearTimer[amax];
-int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
-EEnemyType EnemyType[amax];
-EEnemySubType EnemySubType[amax];
-int EnemyLookingDirection[amax];
-int anotm[amax], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
-int EnemyAITimer[amax];
-int EnemyMessageTimer[amax], EnemyMessageType[amax];
+int EnemyX[ENEMY_MAX], EnemyY[ENEMY_MAX], EnemySizeX[ENEMY_MAX], EnemySizeY[ENEMY_MAX], EnemyVelX[ENEMY_MAX], EnemyVelY[ENEMY_MAX];
+int af[ENEMY_MAX], EnemyBlockAppearTimer[ENEMY_MAX];
+int aacta[ENEMY_MAX], aactb[ENEMY_MAX], azimentype[ENEMY_MAX], axzimen[ENEMY_MAX];
+EEnemyType EnemyType[ENEMY_MAX];
+EEnemySubType EnemySubType[ENEMY_MAX];
+int EnemyLookingDirection[ENEMY_MAX];
+int anotm[ENEMY_MAX], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
+int EnemyAITimer[ENEMY_MAX];
+int EnemyMessageTimer[ENEMY_MAX], EnemyMessageType[ENEMY_MAX];
 
 //敵出現
 int EnemyAppearCount;
-int EnemyAppearX[bmax], EnemyAppearY[bmax], EnemyAppearTimer[bmax];
-EEnemyType EnemyAppearType[bmax];
-EEnemySubType EnemyAppearSubType[bmax];
-int bz[bmax];
+int EnemyAppearX[ENEMY_APPEAR_MAX], EnemyAppearY[ENEMY_APPEAR_MAX], EnemyAppearTimer[ENEMY_APPEAR_MAX];
+EEnemyType EnemyAppearType[ENEMY_APPEAR_MAX];
+EEnemySubType EnemyAppearSubType[ENEMY_APPEAR_MAX];
+int bz[ENEMY_APPEAR_MAX];
 
 
 //背景
 int BackgroundCount;
-int BackgroundX[nmax], BackgroundY[nmax];
-EDecorationType BackgroundType[nmax];
-int BackgroundWidth[nmax], BackgroundHeight[nmax];
+int BackgroundX[BACKGROUND_MAX], BackgroundY[BACKGROUND_MAX];
+EDecorationType BackgroundType[BACKGROUND_MAX];
+int BackgroundWidth[BACKGROUND_MAX], BackgroundHeight[BACKGROUND_MAX];
 
 
 //リフト
 int LiftCount;
-int LiftX[srmax], LiftY[srmax], LiftSizeX[srmax], LiftVelY[srmax], LiftFrictionY[srmax];
-int srtype[srmax], sracttype[srmax];
-ELiftType LiftType[srmax];
-int srmuki[srmax], sron[srmax], sree[srmax];
-int srsok[srmax], srmovep[srmax], srmove[srmax];
+int LiftX[LIFT_MAX], LiftY[LIFT_MAX], LiftSizeX[LIFT_MAX], LiftVelY[LIFT_MAX], LiftFrictionY[LIFT_MAX];
+int srtype[LIFT_MAX], sracttype[LIFT_MAX];
+ELiftType LiftType[LIFT_MAX];
+int srmuki[LIFT_MAX], sron[LIFT_MAX], sree[LIFT_MAX];
+int srsok[LIFT_MAX], srmovep[LIFT_MAX], srmove[LIFT_MAX];
 
 
 

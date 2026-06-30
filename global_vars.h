@@ -108,26 +108,27 @@ extern double pai;
 
 
 //地面 (Ground)
-#define smax 31
+// @attention +KZ: smax is now GROUND_MAX
+#define GROUND_MAX 31
 //extern int sx; //+KZ: unused
 // @attention +KZ: int sco is now GroundCount
 extern int GroundCount;
 // @attention +KZ: int sa[smax] is now GroundX[smax]
-extern int GroundX[smax];
+extern int GroundX[GROUND_MAX];
 // @attention +KZ: int sb[smax] is now GroundY[smax]
-extern int GroundY[smax];
+extern int GroundY[GROUND_MAX];
 // @attention +KZ: int sc[smax] is now GroundSizeX[smax]
-extern int GroundSizeX[smax];
+extern int GroundSizeX[GROUND_MAX];
 // @attention +KZ: int sd[smax] is now GroundSizeY[smax]
-extern int GroundSizeY[smax];
+extern int GroundSizeY[GROUND_MAX];
 // @attention +KZ: int stype[smax] is now EObjectType GroundType[smax]
-extern EObjectType GroundType[smax];
+extern EObjectType GroundType[GROUND_MAX];
 // @attention +KZ: int sxtype[smax] is now GroundSubType[smax]
-extern int GroundSubType[smax];
+extern int GroundSubType[GROUND_MAX];
 // @attention +KZ: int sr[smax] is now GroundVelY[smax]
-extern int GroundVelY[smax];
+extern int GroundVelY[GROUND_MAX];
 // @attention +KZ: int sgtype[smax] is now GroundAI[smax]
-extern int GroundAI[smax];
+extern int GroundAI[GROUND_MAX];
 
 
 
@@ -199,151 +200,157 @@ extern int PlayerMessageType;
 extern int mascrollmax;	//9000
 
 //ブロック (Block)
-#define tmax 641
+// @attention +KZ: tmax is now BLOCK_MAX
+#define BLOCK_MAX 641
 // @attention +KZ: int tco is now int BlockCount
 extern int BlockCount;
 // @attention +KZ: int ta[tmax] is now int BlockX[tmax]
-extern int BlockX[tmax];
+extern int BlockX[BLOCK_MAX];
 // @attention +KZ: int tb[tmax] is now int BlockY[tmax]
-extern int BlockY[tmax];
+extern int BlockY[BLOCK_MAX];
 //extern int tc[tmax], td[tmax]; //+KZ: unused
-extern int thp[tmax];
+extern int thp[BLOCK_MAX];
 // @attention +KZ: int ttype[tmax] is now EBlockType BlockType[tmax]
-extern EBlockType BlockType[tmax];
+extern EBlockType BlockType[BLOCK_MAX];
 //+KZ: titem[tmax] is specific for Block 112/113 (Coin mass production)
 // @attention +KZ: int titem[tmax] is now int BlockItemCount[tmax]
-extern int BlockItemCount[tmax];
+extern int BlockItemCount[BLOCK_MAX];
 // @attention +KZ: int txtype[tmax] is now EBlockSubType BlockSubType[tmax]
-extern EBlockSubType BlockSubType[tmax];
+extern EBlockSubType BlockSubType[BLOCK_MAX];
 
 //メッセージブロック (Message Block)
 extern int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
 
 //効果を持たないグラ (Grass with no effect) //+KZ: or Graphics with no effect? Google translate...
-#define emax 201
+// @attention +KZ: emax is now EXTRA_GRAPHIC_MAX
+#define EXTRA_GRAPHIC_MAX 201
 // @attention +KZ: int eco is now int ExtraGraphicCount
 extern int ExtraGraphicCount;
 // @attention +KZ: int ea[emax] is now int ExtraGraphicX[emax]
-extern int ExtraGraphicX[emax];
+extern int ExtraGraphicX[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int eb[emax] is now int ExtraGraphicY[emax]
-extern int ExtraGraphicY[emax];
+extern int ExtraGraphicY[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int enobia[emax] is now int ExtraGraphicSizeX[emax]
-extern int ExtraGraphicSizeX[emax];
+extern int ExtraGraphicSizeX[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int enobib[emax] is now int ExtraGraphicSizeY[emax]
-extern int ExtraGraphicSizeY[emax];
+extern int ExtraGraphicSizeY[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int ec[emax] is now int ExtraGraphicVelX[emax]
-extern int ExtraGraphicVelX[emax];
+extern int ExtraGraphicVelX[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int ed[emax] is now int ExtraGraphicVelY[emax]
-extern int ExtraGraphicVelY[emax];
+extern int ExtraGraphicVelY[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int ee[emax] is now int ExtraGraphicFrictionX[emax] (maybe should be a different name)
-extern int ExtraGraphicFrictionX[emax];
+extern int ExtraGraphicFrictionX[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int ef[emax] is now int ExtraGraphicFrictionY[emax] (maybe should be a different name)
-extern int ExtraGraphicFrictionY[emax];
+extern int ExtraGraphicFrictionY[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int etm[emax] is now int ExtraGraphicTimer[emax]
-extern int ExtraGraphicTimer[emax];
+extern int ExtraGraphicTimer[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int egtype[emax] is now int ExtraGraphicType[emax]
-extern int ExtraGraphicType[emax];
+extern int ExtraGraphicType[EXTRA_GRAPHIC_MAX];
 
 //敵キャラ (Enemy character)
-#define amax 24
+// @attention +KZ: amax is now ENEMY_MAX
+#define ENEMY_MAX 24
 // @attention +KZ: int aco[amax] is now int EnemyCount[amax]
 extern int EnemyCount;
 // @attention +KZ: int aa[amax] is now int EnemyX[amax]
-extern int EnemyX[amax];
+extern int EnemyX[ENEMY_MAX];
 // @attention +KZ: int ab[amax] is now int EnemyY[amax]
-extern int EnemyY[amax];
+extern int EnemyY[ENEMY_MAX];
 // @attention +KZ: int anobia[amax] is now int EnemySizeX[amax]
-extern int EnemySizeX[amax];
+extern int EnemySizeX[ENEMY_MAX];
 // @attention +KZ: int anobib[amax] is now int EnemySizeY[amax]
-extern int EnemySizeY[amax];
+extern int EnemySizeY[ENEMY_MAX];
 // @attention +KZ: int ac[amax] is now int EnemyVelX[amax]
-extern int EnemyVelX[amax];
+extern int EnemyVelX[ENEMY_MAX];
 // @attention +KZ: int ad[amax] is now int EnemyVelY[amax]
-extern int EnemyVelY[amax];
+extern int EnemyVelY[ENEMY_MAX];
 //extern int ae[amax]; //+KZ: unused, always set to 0
-extern int af[amax]; //+KZ: for what is this one?
+extern int af[ENEMY_MAX]; //+KZ: for what is this one?
 // @attention +KZ: int abrocktm[amax] is now int EnemyBlockAppearTimer[amax]
-extern int EnemyBlockAppearTimer[amax];
-extern int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
+extern int EnemyBlockAppearTimer[ENEMY_MAX];
+extern int aacta[ENEMY_MAX], aactb[ENEMY_MAX], azimentype[ENEMY_MAX], axzimen[ENEMY_MAX];
 // @attention +KZ: int atype[amax] is now EEnemyType EnemyType[amax]
-extern EEnemyType EnemyType[amax];
+extern EEnemyType EnemyType[ENEMY_MAX];
 // @attention +KZ: int axtype[amax] is now EEnemySubType EnemySubType[amax]
-extern EEnemySubType EnemySubType[amax];
+extern EEnemySubType EnemySubType[ENEMY_MAX];
 // @attention +KZ: int amuki[amax] is now int EnemyLookingDirection[amax]
-extern int EnemyLookingDirection[amax];
+extern int EnemyLookingDirection[ENEMY_MAX];
 //extern int ahp[amax]; //+KZ: unused
-extern int anotm[amax]; //+KZ: it is a timer but not sure for what exactly
+extern int anotm[ENEMY_MAX]; //+KZ: it is a timer but not sure for what exactly
 // @attention +KZ: int anx[160] is now int EnemyDefaultSizeX[160]
 extern int EnemyDefaultSizeX[160];
 // @attention +KZ: int any[160] is now int EnemyDefaultSizeY[160]
 extern int EnemyDefaultSizeY[160];
 // @attention +KZ: int atm[amax] is now int EnemyAITimer[amax]
-extern int EnemyAITimer[amax];
+extern int EnemyAITimer[ENEMY_MAX];
 //extern int a2tm[amax]; //+KZ: unused
 // @attention +KZ: int amsgtm[amax] is now int EnemyMessageTimer[amax]
-extern int EnemyMessageTimer[amax];
+extern int EnemyMessageTimer[ENEMY_MAX];
 // @attention +KZ: int amsgtype[amax] is now int EnemyMessageType[amax]
-extern int EnemyMessageType[amax];
+extern int EnemyMessageType[ENEMY_MAX];
 
 //敵出現 (Enemy Appearance)
-#define bmax 81
+// @attention +KZ: bmax is now ENEMY_APPEAR_MAX
+#define ENEMY_APPEAR_MAX 81
 // @attention +KZ: int bco is now int EnemyAppearCount[bmax]
 extern int EnemyAppearCount;
 // @attention +KZ: int ba[bmax] is now int EnemyAppearX[bmax]
-extern int EnemyAppearX[bmax];
+extern int EnemyAppearX[ENEMY_APPEAR_MAX];
 // @attention +KZ: int bb[bmax] is now int EnemyAppearY[bmax]
-extern int EnemyAppearY[bmax];
+extern int EnemyAppearY[ENEMY_APPEAR_MAX];
 // @attention +KZ: int btm[bmax] is now int EnemyAppearTimer[bmax]
-extern int EnemyAppearTimer[bmax];
+extern int EnemyAppearTimer[ENEMY_APPEAR_MAX];
 // @attention +KZ: int btype[bmax] is now EEnemyType EnemyAppearType[bmax]
-extern EEnemyType EnemyAppearType[bmax];
+extern EEnemyType EnemyAppearType[ENEMY_APPEAR_MAX];
 // @attention +KZ: int bxtype[bmax] is now EEnemySubType EnemyAppearSubType[bmax]
-extern EEnemySubType EnemyAppearSubType[bmax];
-extern int bz[bmax]; //+KZ: seems like a init indicator
+extern EEnemySubType EnemyAppearSubType[ENEMY_APPEAR_MAX];
+extern int bz[ENEMY_APPEAR_MAX]; //+KZ: seems like a init indicator
 
 
 //背景 (Background)
-#define nmax 41
+// @attention +KZ: nmax is now BACKGROUND_MAX
+#define BACKGROUND_MAX 41
 //extern int nxxmax; //+KZ: unused
 // @attention +KZ: int nco[nmax] is now int BackgroundCount
 extern int BackgroundCount;
 // @attention +KZ: int na[nmax] is now int BackgroundX[nmax]
-extern int BackgroundX[nmax];
+extern int BackgroundX[BACKGROUND_MAX];
 // @attention +KZ: int nb[nmax] is now int BackgroundY[nmax]
-extern int BackgroundY[nmax];
+extern int BackgroundY[BACKGROUND_MAX];
 //extern int nc[nmax], nd[nmax]; //+KZ: unused
 // @attention +KZ: int ntype[nmax] is now int BackgroundType[nmax]
-extern EDecorationType BackgroundType[nmax];
+extern EDecorationType BackgroundType[BACKGROUND_MAX];
 // @attention +KZ int ne[nmax] renamed to BackgroundWidth[nmax]
-extern int BackgroundWidth[nmax];
+extern int BackgroundWidth[BACKGROUND_MAX];
 // @attention +KZ int nf[nmax] renamed to BackgroundHeight[nmax]
-extern int BackgroundHeight[nmax];
+extern int BackgroundHeight[BACKGROUND_MAX];
 //extern int ng[nmax], nx[nmax]; //+KZ: unused
 
 
 //リフト (Lift)
-#define srmax 21
+// @attention +KZ: srmax is now LIFT_MAX
+#define LIFT_MAX 21
 // @attention +KZ int srco renamed to LiftCount
 extern int LiftCount;
 // @attention +KZ int sra[srmax] renamed to LiftX[srmax]
-extern int LiftX[srmax];
+extern int LiftX[LIFT_MAX];
 // @attention +KZ int srb[srmax] renamed to LiftY[srmax]
-extern int LiftY[srmax];
+extern int LiftY[LIFT_MAX];
 // @attention +KZ int src[srmax] renamed to LiftSizeX[srmax]
-extern int LiftSizeX[srmax];
+extern int LiftSizeX[LIFT_MAX];
 //extern int srd[srmax]; //+KZ: useless
 // @attention +KZ int sre[srmax] renamed to LiftVelY[srmax]
-extern int LiftVelY[srmax];
+extern int LiftVelY[LIFT_MAX];
 // @attention +KZ int srf[srmax] renamed to LiftFrictionY[srmax]
-extern int LiftFrictionY[srmax];
-extern int srtype[srmax];
+extern int LiftFrictionY[LIFT_MAX];
+extern int srtype[LIFT_MAX];
 //extern int srgtype[srmax]; //+KZ: unused
-extern int sracttype[srmax];
+extern int sracttype[LIFT_MAX];
 // @attention +KZ int srsp[srmax] is now ELiftType LiftType[srmax]
 // +KZ: This is confusing, there are like 3 or more variables indicating the type of the lifts,
-extern ELiftType LiftType[srmax];
-extern int srmuki[srmax], sron[srmax], sree[srmax];
-extern int srsok[srmax], srmovep[srmax], srmove[srmax];
+extern ELiftType LiftType[LIFT_MAX];
+extern int srmuki[LIFT_MAX], sron[LIFT_MAX], sree[LIFT_MAX];
+extern int srsok[LIFT_MAX], srmovep[LIFT_MAX], srmove[LIFT_MAX];
 
 
 

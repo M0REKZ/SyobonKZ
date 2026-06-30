@@ -305,7 +305,7 @@ void Mainprogram()
 			// ランダムにさせる (Make it random)
 			if (SyobonRandomMode == 1)
 			{
-				for (t = 0; t < tmax; t++)
+				for (t = 0; t < BLOCK_MAX; t++)
 				{
 					if (SyobonRand(3) <= 1)
 					{
@@ -319,7 +319,7 @@ void Mainprogram()
 						BlockSubType[t] = (EBlockSubType)SyobonRand(4);
 					}
 				}
-				for (t = 0; t < bmax; t++)
+				for (t = 0; t < ENEMY_APPEAR_MAX; t++)
 				{
 					if (SyobonRand(2) <= 1)
 					{

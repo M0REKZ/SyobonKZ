@@ -74,7 +74,7 @@ void DestroyEntityMessageCache()
 void HandleEntities()
 {
     // 敵キャラ (Enemy character)
-    for (t = 0; t < amax; t++)
+    for (t = 0; t < ENEMY_MAX; t++)
     {
         xx[0] = EnemyX[t] - fx;
         xx[1] = EnemyY[t] - fy;
@@ -121,7 +121,7 @@ void HandleEntities()
                 // 他の敵を倒す (Defeat other enemies)
                 if (EnemySubType[t] >= EEnemySubType::SHELL_MOVING)
                 {
-                    for (tt = 0; tt < amax; tt++)
+                    for (tt = 0; tt < ENEMY_MAX; tt++)
                     {
                         xx[0] = 250;
                         xx[5] = -800;
@@ -244,7 +244,7 @@ void HandleEntities()
                 // ポール捨て (Discarding the pole)
                 if (EnemySubType[t] == EEnemySubType::DEFRAG_GRAB_POLE)
                 {
-                    for (tt = 0; tt < smax; tt++)
+                    for (tt = 0; tt < GROUND_MAX; tt++)
                     {
                         if (GroundType[tt] == EObjectType::GOAL_POLE)
                         {
@@ -277,7 +277,7 @@ void HandleEntities()
                             StopSoundMem(Sounds[11]);
                             bgmchange(Music[1]);
                         }
-                        for (t1 = 0; t1 < smax; t1++)
+                        for (t1 = 0; t1 < GROUND_MAX; t1++)
                         {
                             if (GroundType[t1] == EObjectType::TRIGGER_MULTI_LASER)
                                 GroundX[t1] = -80000000;
@@ -306,7 +306,7 @@ void HandleEntities()
                     EnemyLookingDirection[t] = 0;
                 }
                 // 他の敵を投げる (Throw other enemies)
-                for (tt = 0; tt < amax; tt++)
+                for (tt = 0; tt < ENEMY_MAX; tt++)
                 {
                     xx[0] = 250;
                     xx[5] = -800;
@@ -421,7 +421,7 @@ void HandleEntities()
                         EnemyY[t] -= 1000;
                     }
 
-                    for (tt = 0; tt < amax; tt++)
+                    for (tt = 0; tt < ENEMY_MAX; tt++)
                     {
                         xx[0] = 250;
                         xx[5] = -800;
@@ -630,7 +630,7 @@ void HandleEntities()
                 // ほかの敵を巨大化 (Enlarge other enemies)
                 if (EnemySubType[t] == EEnemySubType::MUSHROOM_GROW)
                 {
-                    for (tt = 0; tt < amax; tt++)
+                    for (tt = 0; tt < ENEMY_MAX; tt++)
                     {
                         xx[0] = 250;
                         xx[5] = -800;
@@ -1189,7 +1189,7 @@ void HandleEntities()
 void PlaceEntities()
 {
     // 敵キャラの配置 (Enemy character placement)
-    for (t = 0; t < bmax; t++)
+    for (t = 0; t < ENEMY_APPEAR_MAX; t++)
     {
         if (EnemyAppearX[t] >= -80000)
         {
@@ -1244,7 +1244,7 @@ void HandleEnemiesMessages()
 {
     // 敵キャラのメッセージ (Message from enemy character)
     setc0();
-    for (t = 0; t < amax; t++)
+    for (t = 0; t < ENEMY_MAX; t++)
     {
         if (EnemyMessageTimer[t] >= 1)
         {
@@ -1378,7 +1378,7 @@ void HandleEntitiesBlocks()
 {
 
 	// 壁 (Wall)
-	for (tt = 0; tt < smax; tt++)
+	for (tt = 0; tt < GROUND_MAX; tt++)
 	{
 		if (GroundX[tt] - fx + GroundSizeX[tt] >= -12010 && GroundX[tt] - fx <= fxmax + 12100 && (int)GroundType[tt] <= 99)
 		{
@@ -1418,7 +1418,7 @@ void HandleEntitiesBlocks()
 	}
 
 	// ブロック (Block)
-	for (tt = 0; tt < tmax; tt++)
+	for (tt = 0; tt < BLOCK_MAX; tt++)
 	{
 		xx[0] = 200;
 		xx[1] = 3000;
@@ -1589,7 +1589,7 @@ void HandleEntitiesBlocks()
 void RenderEnemies()
 {
     // 敵キャラ (Enemy character)
-    for (t = 0; t < amax; t++)
+    for (t = 0; t < ENEMY_MAX; t++)
     {
 
         xx[0] = EnemyX[t] - fx;
@@ -1791,7 +1791,7 @@ void RenderEnemies()
 void RenderEnemiesTwo()
 {
     // ファイアバー (Fire Bar)
-    for (t = 0; t < amax; t++)
+    for (t = 0; t < ENEMY_MAX; t++)
     {
 
         xx[0] = EnemyX[t] - fx;
@@ -1857,7 +1857,7 @@ void RenderEnemiesTwo()
 void HandleLifts()
 {
     // リフト (Lift)
-    for (t = 0; t < srmax; t++)
+    for (t = 0; t < LIFT_MAX; t++)
     {
         xx[10] = LiftX[t];
         xx[11] = LiftY[t];
@@ -2123,7 +2123,7 @@ void HandleLifts()
                     LiftY[t] += srsok[t];
             }
             // 敵キャラ適用 (Applies to enemy characters)
-            for (tt = 0; tt < amax; tt++)
+            for (tt = 0; tt < ENEMY_MAX; tt++)
             {
                 if (azimentype[tt] == 1)
                 {
@@ -2142,7 +2142,7 @@ void HandleLifts()
 void RenderLifts()
 {
     // リフト (lift)
-    for (t = 0; t < srmax; t++)
+    for (t = 0; t < LIFT_MAX; t++)
     {
         xx[0] = LiftX[t] - fx;
         xx[1] = LiftY[t] - fy;
@@ -2239,7 +2239,7 @@ void CreateEntity(
             t1 = 0;
         rz++;
 
-        if (rz <= amax)
+        if (rz <= ENEMY_MAX)
         {
             t1 = 3;
 
@@ -2292,7 +2292,7 @@ void CreateEntity(
             }
 
             EnemyCount += 1;
-            if (EnemyCount >= amax - 1)
+            if (EnemyCount >= ENEMY_MAX - 1)
             {
                 EnemyCount = 0;
             }

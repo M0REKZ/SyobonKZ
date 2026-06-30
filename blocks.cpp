@@ -5,7 +5,7 @@
 void RenderBlocks()
 {
     // ブロック描画 (Block drawing)
-    for (t = 0; t < tmax; t++)
+    for (t = 0; t < BLOCK_MAX; t++)
     {
         xx[0] = BlockX[t] - fx;
         xx[1] = BlockY[t] - fy;
@@ -122,7 +122,7 @@ void RenderBlocks()
 void RenderWalls()
 {
     // 地面(壁)//土管も (Ground (walls) // Also pipes)
-    for (t = 0; t < smax; t++)
+    for (t = 0; t < GROUND_MAX; t++)
     {
         if (GroundX[t] - fx + GroundSizeX[t] >= -10 && GroundX[t] - fx <= fxmax + 1100)
         {
@@ -365,7 +365,7 @@ void RenderWalls()
 void RenderOverwritePipe()
 {
     // 描画上書き(土管) (Overwrite drawing (pipe)) //+KZ: ??
-    for (t = 0; t < smax; t++)
+    for (t = 0; t < GROUND_MAX; t++)
     {
         if (GroundX[t] - fx + GroundSizeX[t] >= -10 && GroundX[t] - fx <= fxmax + 1100)
         {
@@ -436,7 +436,7 @@ void BlockCreate(int x, int y, EBlockType type)
 	BlockType[BlockCount] = type;
 
 	BlockCount++;
-	if (BlockCount >= tmax)
+	if (BlockCount >= BLOCK_MAX)
 		BlockCount = 0;
 } // BlockCreate
 

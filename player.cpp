@@ -463,13 +463,13 @@ void HandlePlayer()
                     BackgroundY[BackgroundCount] = 4 * 29 * 100;
                     BackgroundType[BackgroundCount] = EDecorationType::TEXT_GAME_CLEAR;
                     BackgroundCount++;
-                    if (BackgroundCount >= nmax)
+                    if (BackgroundCount >= BACKGROUND_MAX)
                         BackgroundCount = 0;
                     BackgroundX[BackgroundCount] = 115 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 6 * 29 * 100;
                     BackgroundType[BackgroundCount] = EDecorationType::TEXT_THANKS_FOR_PLAYING;
                     BackgroundCount++;
-                    if (BackgroundCount >= nmax)
+                    if (BackgroundCount >= BACKGROUND_MAX)
                         BackgroundCount = 0;
                 }
                 else
@@ -478,13 +478,13 @@ void HandlePlayer()
                     BackgroundY[BackgroundCount] = 4 * 29 * 100;
                     BackgroundType[BackgroundCount] = EDecorationType::TEXT_GAME_CLEAR;
                     BackgroundCount++;
-                    if (BackgroundCount >= nmax)
+                    if (BackgroundCount >= BACKGROUND_MAX)
                         BackgroundCount = 0;
                     BackgroundX[BackgroundCount] = 155 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 6 * 29 * 100;
                     BackgroundType[BackgroundCount] = EDecorationType::TEXT_THANKS_FOR_PLAYING;
                     BackgroundCount++;
-                    if (BackgroundCount >= nmax)
+                    if (BackgroundCount >= BACKGROUND_MAX)
                         BackgroundCount = 0;
                 }
             }
@@ -728,7 +728,7 @@ void HandlePlayerBlocks()
     // 1-れんが、コイン、無し、土台、7-隠し (1 - Brick, Coin, None, Base, 7 - Hidden)
 
     xx[15] = 0;
-    for (t = 0; t < tmax; t++)
+    for (t = 0; t < BLOCK_MAX; t++)
     {
         xx[0] = 200;
         xx[1] = 3000;
@@ -797,7 +797,7 @@ void HandlePlayerBlocks()
                                     PlayerVelY = 0;
                                     BlockX[t] = -8000000;
                                     PlaySound(Sounds[13]);
-                                    for (tt = 0; tt < tmax; tt++)
+                                    for (tt = 0; tt < BLOCK_MAX; tt++)
                                     {
                                         if (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN)
                                         {
@@ -1179,7 +1179,7 @@ void HandlePlayerBlocks()
                                 stageonoff = 0;
                                 PlaySound(Sounds[13]);
                                 BlockSubType[t] = EBlockSubType::ON_BLOCK_UNLOCKED;
-                                for (t = 0; t < amax; t++)
+                                for (t = 0; t < ENEMY_MAX; t++)
                                 {
                                     if (EnemyType[t] == EEnemyType::FIREBAR_CLOCKWISE || EnemyType[t] == EEnemyType::FIREBAR_COUNTERCLOCKWISE)
                                     {
@@ -1229,7 +1229,7 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[13]);
-                        for (t = 0; t < amax; t++)
+                        for (t = 0; t < ENEMY_MAX; t++)
                         {
                             if (EnemyType[t] == EEnemyType::FIREBAR_CLOCKWISE || EnemyType[t] == EEnemyType::FIREBAR_COUNTERCLOCKWISE)
                             {
@@ -1262,7 +1262,7 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[13]);
                         if (BlockSubType[t] == EBlockSubType::OFF_BLOCK_FIREBARS)
                         {
-                            for (t = 0; t < amax; t++)
+                            for (t = 0; t < ENEMY_MAX; t++)
                             {
                                 if (EnemyType[t] == EEnemyType::FIREBAR_CLOCKWISE || EnemyType[t] == EEnemyType::FIREBAR_COUNTERCLOCKWISE)
                                 {
@@ -1374,7 +1374,7 @@ void HandlePlayerBlocks()
 void HandlePlayerWalls()
 {
     // 壁 (Wall)
-    for (t = 0; t < smax; t++)
+    for (t = 0; t < GROUND_MAX; t++)
     {
         if (GroundX[t] - fx + GroundSizeX[t] >= -12000 && GroundX[t] - fx <= fxmax)
         {

@@ -6,7 +6,7 @@
 void HandleExtraGraphics()
 {
     // グラ
-    for (t = 0; t < emax; t++)
+    for (t = 0; t < EXTRA_GRAPHIC_MAX; t++)
     {
         xx[0] = ExtraGraphicX[t] - fx;
         xx[1] = ExtraGraphicY[t] - fy;
@@ -32,7 +32,7 @@ void HandleExtraGraphics()
 void RenderExtraGraphics()
 {
     // グラ //+KZ: Seems this is about non-entitty graphics
-    for (t = 0; t < emax; t++)
+    for (t = 0; t < EXTRA_GRAPHIC_MAX; t++)
     {
         xx[0] = ExtraGraphicX[t] - fx;
         xx[1] = ExtraGraphicY[t] - fy;
@@ -86,7 +86,7 @@ void RenderExtraGraphics()
 void RenderBackground()
 {
     // 背景 (Background)
-    for (t = 0; t < nmax; t++)
+    for (t = 0; t < BACKGROUND_MAX; t++)
     {
         xx[0] = BackgroundX[t] - fx;
         xx[1] = BackgroundY[t] - fy;
@@ -177,7 +177,7 @@ void CreateExtraGraphic(
 	ExtraGraphicSizeY[ExtraGraphicCount] = SizeY;
 
 	ExtraGraphicCount++;
-	if (ExtraGraphicCount >= emax)
+	if (ExtraGraphicCount >= EXTRA_GRAPHIC_MAX)
 		ExtraGraphicCount = 0;
 
 } // eyobi

@@ -6,7 +6,7 @@
 
 void stagecls()
 {
-	for (t = 0; t < smax; t++)
+	for (t = 0; t < GROUND_MAX; t++)
 	{
 		GroundX[t] = -9000000;
 		GroundY[t] = 1;
@@ -17,14 +17,14 @@ void stagecls()
 		GroundSubType[t] = 0;
 	}
 	// for (t=0;t<spmax;t++){spa[t]=-9000000;szyunni[t]=t;spb[t]=1;spc[t]=1;spd[t]=1;sptype[t]=0;spgtype[t]=0;}
-	for (t = 0; t < tmax; t++)
+	for (t = 0; t < BLOCK_MAX; t++)
 	{
 		BlockX[t] = -9000000;
 		BlockY[t] = 1;
 		BlockItemCount[t] = 0;
 		BlockSubType[t] = EBlockSubType::NONE;
 	}
-	for (t = 0; t < srmax; t++)
+	for (t = 0; t < LIFT_MAX; t++)
 	{
 		LiftX[t] = -9000000;
 		LiftY[t] = 1;
@@ -42,7 +42,7 @@ void stagecls()
 	// for (t=0;t<sqmax;t++){sqa[t]=-9000000;sqb[t]=1;sqc[t]=1;sqd[t]=1;sqgtype[t]=0;sqtype[t]=0;}
 	// for (t=0;t<kmax;t++){ka[t]=-9000000;kmuki[t]=0;ksoka[t]=0;ksokb[t]=0;kxsoka[t]=0;kxsokb[t]=0;}
 	// for (t=0;t<imax;t++){ia[t]=-9000000;ib[t]=1;ic[t]=1;id[t]=1;}
-	for (t = 0; t < amax; t++)
+	for (t = 0; t < ENEMY_MAX; t++)
 	{
 		EnemyX[t] = -9000000;
 		EnemyY[t] = 1;
@@ -56,7 +56,7 @@ void stagecls()
 		EnemyBlockAppearTimer[t] = 0;
 		EnemyMessageTimer[t] = 0;
 	}
-	for (t = 0; t < bmax; t++)
+	for (t = 0; t < ENEMY_APPEAR_MAX; t++)
 	{
 		EnemyAppearX[t] = -9000000;
 		EnemyAppearY[t] = 1;
@@ -64,7 +64,7 @@ void stagecls()
 		EnemyAppearTimer[t] = 0;
 		EnemyAppearSubType[t] = EEnemySubType::NONE;
 	}
-	for (t = 0; t < emax; t++)
+	for (t = 0; t < EXTRA_GRAPHIC_MAX; t++)
 	{
 		ExtraGraphicX[t] = -9000000;
 		ExtraGraphicY[t] = 1;
@@ -72,7 +72,7 @@ void stagecls()
 		ExtraGraphicVelY[t] = 1;
 		ExtraGraphicType[t] = 0;
 	}
-	for (t = 0; t < nmax; t++)
+	for (t = 0; t < BACKGROUND_MAX; t++)
 	{
 		BackgroundX[t] = -9000000;
 		BackgroundY[t] = 1;
@@ -128,7 +128,7 @@ void stage()
 				LiftSizeX[LiftCount] = 3000;
 				srtype[LiftCount] = 0;
 				LiftCount++;
-				if (LiftCount >= srmax)
+				if (LiftCount >= LIFT_MAX)
 					LiftCount = 0;
 			}
 			if (xx[10] == 30)
@@ -139,7 +139,7 @@ void stage()
 				GroundSizeY[GroundCount] = 6000;
 				GroundType[GroundCount] = EObjectType::CHECKPOINT;
 				GroundCount++;
-				if (GroundCount >= smax)
+				if (GroundCount >= GROUND_MAX)
 					GroundCount = 0;
 			}
 			if (xx[10] == 40)
@@ -150,7 +150,7 @@ void stage()
 				GroundSizeY[GroundCount] = 3000;
 				GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_HEAD;
 				GroundCount++;
-				if (GroundCount >= smax)
+				if (GroundCount >= GROUND_MAX)
 					GroundCount = 0;
 			}
 			if (xx[10] == 41)
@@ -161,7 +161,7 @@ void stage()
 				GroundSizeY[GroundCount] = 3000;
 				GroundType[GroundCount] = EObjectType::HORIZONTAL_PIPE_BODY;
 				GroundCount++;
-				if (GroundCount >= smax)
+				if (GroundCount >= GROUND_MAX)
 					GroundCount = 0;
 			}
 
@@ -173,7 +173,7 @@ void stage()
 				GroundSizeY[GroundCount] = 5300;
 				GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_HEAD;
 				GroundCount++;
-				if (GroundCount >= smax)
+				if (GroundCount >= GROUND_MAX)
 					GroundCount = 0;
 			}
 			if (xx[10] == 44)
@@ -184,7 +184,7 @@ void stage()
 				GroundSizeY[GroundCount] = 5000;
 				GroundType[GroundCount] = EObjectType::HORIZONTAL_PIPE_HEAD;
 				GroundCount++;
-				if (GroundCount >= smax)
+				if (GroundCount >= GROUND_MAX)
 					GroundCount = 0;
 			}
 			// これなぜかバグの原因ｗ (For some reason, this is the cause of the bug lol)
@@ -194,7 +194,7 @@ void stage()
 				EnemyAppearY[EnemyAppearCount] = xx[22] * 100;
 				EnemyAppearType[EnemyAppearCount] = (EEnemyType)(xx[23] - 50);
 				EnemyAppearCount++;
-				if (EnemyAppearCount >= bmax)
+				if (EnemyAppearCount >= ENEMY_APPEAR_MAX)
 					EnemyAppearCount = 0;
 			}
 
@@ -204,7 +204,7 @@ void stage()
 				BackgroundY[BackgroundCount] = xx[22] * 100;
 				BackgroundType[BackgroundCount] = (EDecorationType)(xx[23] - 80);
 				BackgroundCount++;
-				if (BackgroundCount >= nmax)
+				if (BackgroundCount >= BACKGROUND_MAX)
 					BackgroundCount = 0;
 			}
 			// コイン (Coin)
@@ -220,7 +220,7 @@ void stage()
 				GroundSizeY[GroundCount] = (12 - t) * 3000;
 				GroundType[GroundCount] = EObjectType::GOAL_POLE;
 				GroundCount++;
-				if (GroundCount >= smax)
+				if (GroundCount >= GROUND_MAX)
 					GroundCount = 0;
 			}
 		}
@@ -229,7 +229,7 @@ void stage()
 	if (CurrentPlayerCheckpoint >= 1)
 	{
 		xx[17] = 0;
-		for (t = 0; t < smax; t++)
+		for (t = 0; t < GROUND_MAX; t++)
 		{
 			if (GroundType[t] == EObjectType::CHECKPOINT && CurrentPlayerCheckpoint >= 1)
 			{
@@ -3854,19 +3854,19 @@ void HandleSyobonActionOneLevels()
         BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
         BackgroundType[BackgroundCount] = EDecorationType::LAVA;
         BackgroundCount++;
-        if (BackgroundCount >= nmax)
+        if (BackgroundCount >= BACKGROUND_MAX)
             BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 41 * 29 * 100 - 300;
         BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
         BackgroundType[BackgroundCount] = EDecorationType::LAVA;
         BackgroundCount++;
-        if (BackgroundCount >= nmax)
+        if (BackgroundCount >= BACKGROUND_MAX)
             BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 149 * 29 * 100 - 1100;
         BackgroundY[BackgroundCount] = 10 * 29 * 100 - 600;
         BackgroundType[BackgroundCount] = EDecorationType::TEXT_51;
         BackgroundCount++;
-        if (BackgroundCount >= nmax)
+        if (BackgroundCount >= BACKGROUND_MAX)
             BackgroundCount = 0;
 
         BlockCount = 0;
