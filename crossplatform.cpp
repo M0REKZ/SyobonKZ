@@ -135,14 +135,16 @@ void Emscripten_WaitKey()
 
     void UpdateTouchControls()
     {
-        SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);
+        int w, h;
+        if(!SDL_GetWindowSize(pWindow, &w, &h))
+            return;
 
         //simple way to detect if phone is landscape so we put the buttons in a better position
-        bool Landscape = pWindowSurface->w > pWindowSurface->h;
+        bool Landscape = w > h;
 
         int ButtonsSizeY = Landscape ? 150 : 130;
         int ButtonsStartX = Landscape ? 75 : 25;
-        int ButtonsStartY = (pWindowSurface->h - ((Landscape ? 75 : 256) + ButtonsSizeY * 2)) + ButtonsSizeY / 2;
+        int ButtonsStartY = (h - ((Landscape ? 75 : 256) + ButtonsSizeY * 2)) + ButtonsSizeY / 2;
 
         //Left
         LeftButton = {ButtonsStartX, ButtonsStartY, ButtonsSizeY + ButtonsSizeY/2, ButtonsSizeY};
@@ -150,7 +152,7 @@ void Emscripten_WaitKey()
         DownButton = {LeftButton.x + (LeftButton.w + 6 * 2) / 2, ButtonsStartY + ButtonsSizeY + 6, ButtonsSizeY + ButtonsSizeY/2 + 3 * 2, ButtonsSizeY / 3 * 2};
 
         //Right
-        JumpButton = {pWindowSurface->w - (int)(ButtonsSizeY * 1.5f + ButtonsStartX), ButtonsStartY, (int)(ButtonsSizeY * 1.5f), (int)(ButtonsSizeY * 1.5f)};
+        JumpButton = {w - (int)(ButtonsSizeY * 1.5f + ButtonsStartX), ButtonsStartY, (int)(ButtonsSizeY * 1.5f), (int)(ButtonsSizeY * 1.5f)};
     }
 
     void HandleTouchInput()
@@ -159,6 +161,10 @@ void Emscripten_WaitKey()
         SDL_TouchID * touchids = SDL_GetTouchDevices(&devicecount);
         
         if(!touchids)
+            return;
+
+        int w, h;
+        if(!SDL_GetWindowSize(pWindow, &w, &h))
             return;
 
         for(int j = 0; j < devicecount; ++j)
@@ -174,9 +180,8 @@ void Emscripten_WaitKey()
 
             for(int i = 0; i < count; i ++)
             {
-                SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);
                 const bool PressState = true;
-                SDL_Point TouchedPos = {(int)(fingers[i]->x * pWindowSurface->w), (int)(fingers[i]->y * pWindowSurface->h)};
+                SDL_Point TouchedPos = {(int)(fingers[i]->x * w), (int)(fingers[i]->y * h)};
 
                 if(SDL_PointInRect(&TouchedPos, &LeftButton))
                     SetKeyState(KEY_INPUT_LEFT, PressState); 
@@ -196,13 +201,15 @@ void Emscripten_WaitKey()
 
     void DrawTouchControls()
     {
-        SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);
+        int w, h;
+        if(!SDL_GetWindowSize(pWindow, &w, &h))
+            return;
         static int prev_window_w = -1, prev_window_h = -1;
         if(
             !pDrawControlsSurface ||
             !pDrawControlsTexture ||
-            prev_window_w != pWindowSurface->w ||
-            prev_window_h != pWindowSurface->h
+            prev_window_w != w ||
+            prev_window_h != h
         )
         {
 
@@ -210,7 +217,7 @@ void Emscripten_WaitKey()
             {
                 if(pDrawControlsSurface)
                     SDL_DestroySurface(pDrawControlsSurface);
-                pDrawControlsSurface = SDL_CreateSurface(pWindowSurface->w, pWindowSurface->h, pWindowSurface->format);
+                pDrawControlsSurface = SDL_CreateSurface(w, h, PixelFormat);
             }
 
             if(!pDrawControlsSurface)
@@ -220,8 +227,8 @@ void Emscripten_WaitKey()
             {
                 if(pDrawControlsTexture)
                     SDL_DestroyTexture(pDrawControlsTexture);
-                pDrawControlsTexture = SDL_CreateTexture(pWindowRenderer, pWindowSurface->format,
-                SDL_TEXTUREACCESS_STREAMING, pWindowSurface->w, pWindowSurface->h);
+                pDrawControlsTexture = SDL_CreateTexture(pWindowRenderer, PixelFormat,
+                SDL_TEXTUREACCESS_STREAMING, w, h);
             }
 
             if(!pDrawControlsTexture)
@@ -230,8 +237,8 @@ void Emscripten_WaitKey()
             SDL_SetTextureBlendMode(pDrawControlsTexture, SDL_BLENDMODE_BLEND);
             SDL_SetTextureScaleMode(pDrawControlsTexture, SDL_SCALEMODE_NEAREST);
 
-            prev_window_w = pWindowSurface->w;
-            prev_window_h = pWindowSurface->h;
+            prev_window_w = w;
+            prev_window_h = h;
         }
 
         SDL_ClearSurface(pDrawControlsSurface, 0, 0, 0, 0);

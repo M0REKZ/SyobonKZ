@@ -14,6 +14,7 @@
         nullptr, nullptr, nullptr, nullptr
     };
     SDL_Texture * pTexture = nullptr;
+    SDL_PixelFormat PixelFormat;
 
     SDL_Surface *SyobonKZZoomSurface(SDL_Surface *image, double zoomx, double zoomy, int smooth)
     {
@@ -81,31 +82,6 @@ SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
             return nullptr;
         }
 
-        SDL_Surface *pRealWindowSurface = SDL_GetWindowSurface(pWindow);
-
-        if(!pRealWindowSurface)
-        {
-            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pRealWindowSurface: %s\n", SDL_GetError());
-            return nullptr;
-        }
-
-        SDL_Surface * pWindowSurface = SDL_CreateSurface(width, height, pRealWindowSurface->format);
-
-        if(!pWindowSurface)
-        {
-            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pWindowSurface: %s\n", SDL_GetError());
-            return nullptr;
-        }
-
-        //SDL3_gfx needs a renderer to draw on
-        pRenderer = SDL_CreateSoftwareRenderer(pWindowSurface);
-
-        if(!pRenderer)
-        {
-            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pRenderer: %s\n", SDL_GetError());
-            return nullptr;
-        }
-
         //We need to copy the surface to this texture for faster rendering
         pWindowRenderer = SDL_GetRenderer(pWindow);
 
@@ -122,7 +98,37 @@ SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
             }
         }
 
-        pTexture = SDL_CreateTexture(pWindowRenderer, pRealWindowSurface->format,
+        //hacky way to get pixel format from renderer
+        //i dont want to overcomplicate my life and Simple Direct Media Layer 3 is NOT simple! >:(
+        SDL_Rect TempRect = {0,0,1,1};
+        SDL_Surface * pTempRendererSurface = SDL_RenderReadPixels(pWindowRenderer, &TempRect);
+        if(!pTempRendererSurface)
+        {
+            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pTempRendererSurface: %s\n", SDL_GetError());
+            return nullptr;
+        }
+        PixelFormat = pTempRendererSurface->format;
+        SDL_DestroySurface(pTempRendererSurface);
+
+        //This will be the game screen
+        SDL_Surface * pWindowSurface = SDL_CreateSurface(width, height, PixelFormat);
+
+        if(!pWindowSurface)
+        {
+            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pWindowSurface: %s\n", SDL_GetError());
+            return nullptr;
+        }
+
+        //SDL3_gfx needs a renderer to draw on
+        pRenderer = SDL_CreateSoftwareRenderer(pWindowSurface);
+
+        if(!pRenderer)
+        {
+            fprintf(stderr, "SyobonKZCreateWindow - Unable to create pRenderer: %s\n", SDL_GetError());
+            return nullptr;
+        }
+
+        pTexture = SDL_CreateTexture(pWindowRenderer, PixelFormat,
         SDL_TEXTUREACCESS_STREAMING, 480, 420);
 
         if(!pTexture)

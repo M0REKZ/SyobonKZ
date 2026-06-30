@@ -15,6 +15,7 @@
     extern MIX_Mixer * pMixer;
     extern MIX_Track * apSETracks[8]; /* in SDL 1.2 MIX_CHANNELS is 8 */
     extern SDL_Texture *pTexture; //SDL_BlitSurface is too slow
+    extern SDL_PixelFormat PixelFormat;
 
     #define SyobonKZSDLInit(flags) (SDL_Init(flags) == false ? -1 : 0)
 
@@ -147,18 +148,14 @@
         #define __SYOBONKZ_MACRO_CALL_DRAW_TOUCH_CONTROLS()
     #endif
     #define SyobonKZScreenFlip(screensurface) {  \
-        SDL_Surface *pWindowSurface = SDL_GetWindowSurface(pWindow);    \
-        if(!pWindowSurface) \
-        {   \
-            fprintf(stderr, "Error: Could not get window surface: %s\n", SDL_GetError()); \
-        }   \
-        else    \
+        int w, h;   \
+        if(SDL_GetWindowSize(pWindow, &w, &h))    \
         {   \
             SDL_FRect srcrect, destrect;     \
             srcrect.x = 0; srcrect.y = 0; srcrect.w = 480; srcrect.h = 420; \
         \
-            float scaleX = (float)pWindowSurface->w / srcrect.w; \
-            float scaleY = (float)pWindowSurface->h / srcrect.h; \
+            float scaleX = (float)w / srcrect.w; \
+            float scaleY = (float)h / srcrect.h; \
             float scale  = (scaleX < scaleY) ? scaleX : scaleY; \
         \
             int destW = (int)(srcrect.w * scale);    \
@@ -166,8 +163,8 @@
         \
             destrect.w = destW; \
             destrect.h = destH; \
-            destrect.x = (pWindowSurface->w - destW) / 2;   \
-            destrect.y = (pWindowSurface->h - destH) / 2;   \
+            destrect.x = (w - destW) / 2;   \
+            destrect.y = (h - destH) / 2;   \
             SDL_SetRenderDrawColor(pWindowRenderer, 0, 0, 0, 255);  \
             SDL_RenderClear(pWindowRenderer);    \
             SDL_UpdateTexture(pTexture, nullptr, screensurface->pixels, screensurface->pitch);  \
