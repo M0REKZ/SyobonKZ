@@ -380,12 +380,33 @@ void HandlePlayer()
             }
             if (PlayerAITimer == 250)
             {
-                SyobonLevel++;
-                SyobonSection = 0;
-                zxon = 0;
-                CurrentPlayerCheckpoint = 0;
-                SyobonState = ESyobonState::LIVES_SPLASH;
-                SyobonStateTimer = 0;
+                //+KZ: patch for level 3-1 finish
+                // so we dont get stuck in a invalid level (3-2 does not exist)
+                if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 &&
+                    (
+                        SyobonWorld == 3 &&
+                        SyobonLevel == 1 &&
+                        SyobonSection == 0
+                    )
+                )
+                {
+                    SyobonState = ESyobonState::TITLE;
+                    Lives = 2;
+                    SyobonStateTimer = 0;
+                    SyobonLevel = 0;
+                    SyobonSection = 0;
+                    CurrentPlayerCheckpoint = 0;
+                    zxon = 0;
+                }
+                else
+                {
+                    SyobonLevel++;
+                    SyobonSection = 0;
+                    zxon = 0;
+                    CurrentPlayerCheckpoint = 0;
+                    SyobonState = ESyobonState::LIVES_SPLASH;
+                    SyobonStateTimer = 0;
+                }
             }
         } // mtype==300
 
