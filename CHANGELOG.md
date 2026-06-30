@@ -35,6 +35,8 @@ Release Changelog
         * Fix wrong music in final section (it was credits music)
     * Level 3-1 (Secret level 9):
         * Fix loading a invalid level after beating it
+    * Other:
+        * Restore some of the enemy messages from Syobon Action 1
 * Fix other random bugs...
 
 **Open Syobon Action RC 3 (Karen／明美 fork)**
