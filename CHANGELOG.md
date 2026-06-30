@@ -1,7 +1,10 @@
 Release Changelog
 -----------------
 
-**SyobonKZ V1 (in development)**
+**SyobonKZ V2**
+* Still nothing xd
+
+**SyobonKZ V1**
 * Add macOS, Android and Web Browser support
 * Format, separate, rename and do more improvements to the code for readability
 * Added some "+KZ Edition" text
