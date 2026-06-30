@@ -192,7 +192,7 @@ int fxmax = 48000, fymax = 42000;
 
 
 //ステージ
-byte stagedate[17][2001];
+ELegacyStageDate stagedate[17][2001];
 
 //画面黒
 int blacktm = 1, blackx = 0;

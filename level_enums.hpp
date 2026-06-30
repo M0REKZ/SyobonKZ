@@ -281,6 +281,78 @@ enum class EObjectType
 /// Enums added by +KZ:
 ///********************************************///
 
+enum ELegacyStageDate : unsigned char
+{
+    //only IDs from 1 to 255 (unsigned char)
+    //many IDs were not even used though and many things are missing
+    //i would not recommend using that stagedate thing to mod this game
+    NONE = 0,
+
+    //1-19 are Blocks
+    //this list does not match EBlockType enum!
+    BRICK = 1,
+    ITEM_BLOCK_COIN = 2,
+    ITEM_BLOCK_OPEN = 3,
+    HARD_BLOCK = 4,
+    GROUND_TOP = 5,
+    GROUND_BOTTOM = 6,
+    ITEM_BLOCK_HIDDEN = 7, // Has a coin inside
+    CLOUD_BLOCK = 8, // Only visible in overworld or sky stages
+    COIN = 9, //9 makes a coin in stagedate!!
+    SPIKE = 10,
+    TRAMPOLINE_BROKEN = 16, // A trampoline that you can't interact with
+
+    //20-29 makes Lifts
+    //however it does not set a type listed in this file,
+    //but it sets srtype...
+
+    //30 is a Checkpoint
+    CHECKPOINT = 30,
+
+    //Pipes... does not seem to be used as their name indicate
+    VERTICAL_PIPE_HEAD = 40, //40 is the Vertical pipe head
+    HORIZONTAL_PIPE_BODY = 41, //41 is the Horizontal pipe body
+    VERTICAL_PIPE_HEAD_2 = 43, //43 is the Vertical pipe head but another size?
+    HORIZONTAL_PIPE_HEAD = 44, //44 is the Horizontal pipe head
+
+    // Chiku(?): "これなぜかバグの原因ｗ (For some reason, this is the cause of the bug lol)"
+    // what
+    // 50-79 will create enemies/entities
+    // the enemy will have type ID minus 50 from this list
+    // check stage() function
+    BALL = 50,
+    BALL_SHELLED = 51,
+    SHELL = 52,
+    SEAL = 53,
+    BALL_SPIKY = 54,
+    KUMA = 55,
+    DEFRAG = 56,
+    BALL_ROCKET = 57,
+    SUPER_BOON = 58, //CAPE_GUY (+KZ: when stomped it turns into NORMAL_BOON)
+    MAGMA = 59,
+    FLAME = 60,
+
+    //80-89 will make background decorations
+    //it will be ID - 80
+    HILL = 80,
+    GRASS = 81,
+    CLOUD = 82,
+    CASTLE = 83,
+    CLOUD_SMALL = 84,
+    TREE = 85,
+    LAVA = 86,
+
+    //99 is the finish pole
+    GOAL_POLE = 99,
+
+    //and... these were all the ids used in stagedate...
+    //the following IDs are used but they are useless or
+    //its purpose is unknown
+
+    STAGEDATE_97 = 97,
+    STAGEDATE_98 = 98,
+};
+
 // @note FIREBAR_CLOCKWISE and FIREBAR_COUNTERCLOCKWISE uses EnemySubType as their length
 enum class EEnemySubType
 {

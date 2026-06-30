@@ -367,7 +367,8 @@ extern int fxmax, fymax;
 
 
 //ステージ (Stage)
-extern byte stagedate[17][2001];
+// @attention +KZ: byte stagedate[17][2001] now is ELegacyStageDate stagedate[17][2001]
+extern ELegacyStageDate stagedate[17][2001];
 
 //画面黒 (Black screen)
 extern int blacktm, blackx;
