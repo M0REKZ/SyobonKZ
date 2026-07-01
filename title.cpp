@@ -132,7 +132,7 @@ void HandleTitleKeys()
         Lives = 2;
 
         fast = 0;
-        TrapDisplay = 0;
+        //TrapDisplay = 0;
         CurrentPlayerCheckpoint = 0;
     }
 }

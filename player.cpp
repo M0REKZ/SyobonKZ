@@ -1767,6 +1767,29 @@ void HandlePlayerWalls()
                         CurrentPlayerCheckpoint += 1;
                         GroundX[t] = -80000000;
                     }
+
+                    //Syobon Action 3
+                    if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                    {
+                        if(GroundType[t] == EObjectType::SA3_TRIGGER_FAST_SEAL_UP)
+                        {
+                            {
+                                if(GroundSubType[t] == EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_2_SEALS)
+                                {
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 3.25, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) + 0.75, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) + 0.75, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 3.25, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                }
+                                else
+                                {
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                }
+                                GroundX[t] = -800000000;
+                                PlaySound(Sounds[10]);
+                            }
+                        }
+                    }
                 }
 
                 if (GroundType[t] == EObjectType::TRIGGER_LAVA_SPAWNER)

@@ -98,6 +98,9 @@ void rpaint()
 
 		RenderLifts();
 
+		//+KZ: added in SyobonKZ
+		RenderObjectsBehind();
+
 		RenderPlayer();
 
 		mirror = 0;

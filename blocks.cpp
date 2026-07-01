@@ -327,7 +327,14 @@ void RenderWalls()
             // ステージトラップ (Stage Trap)
             if (TrapDisplay == 1)
             {
-                if (GroundType[t] >= EObjectType::TRIGGERS_START && GroundType[t] <= EObjectType::TRIGGERS_END)
+                if (
+                    (GroundType[t] >= EObjectType::TRIGGERS_START && GroundType[t] <= EObjectType::TRIGGERS_END) ||
+                    (currentGame == ESyobonActionGame::SYOBON_ACTION_3 ?
+                    GroundType[t] >= EObjectType::SA3_TRIGGER_START && GroundType[t] < EObjectType::SA3_TRIGGER_END
+                    :
+                    false
+                    )
+                )
                 {
                     if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY)
                         setc0();
@@ -359,6 +366,12 @@ void RenderWalls()
             {
                 drawimage(Sliced_GFX[20][4],
                           (GroundX[t] - fx) / 100, (GroundY[t] - fy) / 100);
+            }
+
+            //Syobon Action 3
+            if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+            {
+                //empty for now
             }
         }
     } // t
@@ -426,6 +439,30 @@ void RenderOverwritePipe()
             }
         }
     } // t
+}
+
+void RenderObjectsBehind()
+{
+    for (int ground_index = 0; ground_index < GROUND_MAX; ground_index++)
+    {
+        if (GroundX[ground_index] - fx + GroundSizeX[ground_index] >= -10 && GroundX[ground_index] - fx <= fxmax + 1100)
+        {
+            if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+            {
+                if (GroundType[ground_index] == EObjectType::SA3_FAKE_PIPE_BODY)
+                {
+                    setcolor(0, 230, 0);
+                    fillrect((GroundX[ground_index] - fx) / 100,
+                            (GroundY[ground_index] - fy) / 100,
+                            GroundSizeX[ground_index] / 100, GroundSizeY[ground_index] / 100);
+                    setc0();
+                    drawrect((GroundX[ground_index] - fx) / 100,
+                            (GroundY[ground_index] - fy) / 100,
+                            GroundSizeX[ground_index] / 100, GroundSizeY[ground_index] / 100);
+                }
+            }
+        }
+    }
 }
 
 int BlockCreate(double x, double y, EBlockType type, EBlockSubType subtype, int index)
@@ -512,8 +549,8 @@ int GroundCreate(double x, double y, double size_x, double size_y, EObjectType t
         GroundY[index] = (int)y;
         GroundType[index] = type;
         GroundSubType[index] = subtype;
-        GroundSizeX[index] = (int)(size_x * BLOCK_DEFAULT_SIZE);
-        GroundSizeY[index] = (int)(size_y * BLOCK_DEFAULT_SIZE);
+        GroundSizeX[index] = (int)(size_x * BLOCK_DEFAULT_SIZE * 100);
+        GroundSizeY[index] = (int)(size_y * BLOCK_DEFAULT_SIZE * 100);
 
         GroundAI[index] = 0;
         GroundVelY[index] = 0;

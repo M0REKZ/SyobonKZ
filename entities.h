@@ -28,6 +28,9 @@ int CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType 
 //+KZ: clear all entities from memory
 void ClearAllEntities();
 
+//+KZ: for new entities
+void HandleBlocksKZ();
+
 //敵キャラ (Enemy character)
 // @attention +KZ: void ayobi() is now void CreateEntity()
 // @attention +KZ: int xa is now int PosX

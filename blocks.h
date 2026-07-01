@@ -8,6 +8,9 @@ void RenderBlocks();
 void RenderWalls();
 void RenderOverwritePipe();
 
+//+KZ: added in SyobonKZ
+void RenderObjectsBehind();
+
 //+KZ: new functions for easy use.
 // use index -1 to let this function choose block index
 // returns the block index if its created successfully

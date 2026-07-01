@@ -214,14 +214,14 @@ int CreateExtraGraphic(double PosX, double PosY, double VelX, double VelY, doubl
     {
         ExtraGraphicX[index] = PosX;
         ExtraGraphicY[index] = PosY;
-        ExtraGraphicVelX[index] = VelX;
-        ExtraGraphicVelY[index] = VelY;
-        ExtraGraphicFrictionX[index] = FrictionX;
-        ExtraGraphicFrictionY[index] = FrictionY;
+        ExtraGraphicVelX[index] = (VelX * BLOCK_DEFAULT_SIZE * 100);
+        ExtraGraphicVelY[index] = (VelY * BLOCK_DEFAULT_SIZE * 100);
+        ExtraGraphicFrictionX[index] = (FrictionX * BLOCK_DEFAULT_SIZE * 100);
+        ExtraGraphicFrictionY[index] = (FrictionY * BLOCK_DEFAULT_SIZE * 100);
         ExtraGraphicType[index] = Type;
         ExtraGraphicTimer[index] = Timer;
-        ExtraGraphicSizeX[index] = SizeX;
-        ExtraGraphicSizeY[index] = SizeY;
+        ExtraGraphicSizeX[index] = (SizeX * BLOCK_DEFAULT_SIZE * 100);
+        ExtraGraphicSizeY[index] = (SizeY * BLOCK_DEFAULT_SIZE * 100);
     }
     else
     {

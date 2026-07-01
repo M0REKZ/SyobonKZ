@@ -179,6 +179,20 @@ enum class EEnemyType : int
     // The same as BALL but goes
     // right through the floor??
     BALL_NO_COLLISION = 200,
+
+    //end of legacy enemy types
+    //types below were added in SyobonKZ
+    //must NOT be created with a Legacy function or you may get
+    //memory access bugs
+    LAST_LEGACY_ENEMY = BALL_NO_COLLISION,
+
+    // -------------------------
+    // Syobon Action 3 EnemyTypes
+    // -------------------------
+
+    SA3_BIG_MUSHROOM_FALLING,
+    SA3_BIG_BALL_ROCKET,
+    SA3_SHARK
 };
 
 
@@ -275,6 +289,15 @@ enum class EObjectType : int
     GOAL_POLE = 300,
 
     CHECKPOINT = 500,
+
+    LAST_LEGACY_OBJECT = CHECKPOINT,
+
+    //Syobon Action 3
+    SA3_FAKE_PIPE_BODY,
+
+    SA3_TRIGGER_START,
+    SA3_TRIGGER_FAST_SEAL_UP = SA3_TRIGGER_START,
+    SA3_TRIGGER_END,
 };
 
 ///********************************************///
@@ -383,6 +406,7 @@ enum class EEnemySubType : int
 
     SEAL_UP = 0,
     SEAL_DOWN,
+    SEAL_SYOBONKZ_VERTICAL,
 
     BALL_SPIKY_NORMAL = 0,
     BALL_SPIKY_JUMPER = 1,
@@ -552,6 +576,10 @@ enum class EObjectSubType : int
     TRIGGER_MULTI_LASER_ACTIVE = 0, //does not work if subtype is not 0
 
     TRIGGER_PLATFORM_SPLIT_TIMER_END = 3, //it uses subtype as a timer, in 1-4 it starts on 0
+
+    //Syobon Action 3
+    SA3_TRIGGER_FAST_SEAL_UP_1_SEAL = 0,
+    SA3_TRIGGER_FAST_SEAL_UP_2_SEALS = 1,
 };
 
 #endif

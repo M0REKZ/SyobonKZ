@@ -402,6 +402,10 @@ extern long stimeZ;
 
 //misc useful defines
 #define BLOCK_DEFAULT_SIZE 29
+constexpr double GAME_X_POS_TO_DOUBLE(int x_axis) { return ((((double)x_axis) / 100) / BLOCK_DEFAULT_SIZE); }
+constexpr double GAME_Y_POS_TO_DOUBLE(int y_axis) { return ((((double)y_axis) / 100 + 12) / BLOCK_DEFAULT_SIZE); }
+constexpr int DOUBLE_TO_GAME_X_POS(double x_axis) { return ((int)(x_axis * BLOCK_DEFAULT_SIZE * 100)); }
+constexpr int DOUBLE_TO_GAME_Y_POS(double y_axis) { return ((int)((y_axis * BLOCK_DEFAULT_SIZE - 12) * 100)); }
 
 extern bool HelpFlagHandled; // --help cli flag
 extern bool StartFullScreenFlag;
@@ -415,7 +419,5 @@ enum class ESyobonActionGame
     LAST = SYOBON_ACTION_3,
 };
 extern ESyobonActionGame currentGame;
-extern bool SA3_Level1MushroomTriggered;
-extern int SA3_Level1MushroomTimer;
 
 #endif

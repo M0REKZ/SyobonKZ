@@ -4,6 +4,7 @@
 #include "levels.h"
 #include "main.h"
 #include "entities.h"
+#include "extra_graphics.h"
 
 void stagecls()
 {
@@ -6445,9 +6446,7 @@ void HandleSyobonActionThreeLevels()
     //has code from SA:All Stars (though i deleted and modified it a lot)
     if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
     {
-        scrollx = 80000;
-        ELegacyStageDate stagedatex21[17][1001];
-        memset(stagedatex21, NONE, sizeof(stagedatex21));
+        scrollx = 120000;
         bgmchange(Music[1]);
 
         //PlayerX = 1 * BLOCK_DEFAULT_SIZE * 100;
@@ -6495,12 +6494,40 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(16, 4.5, EBlockType::BRICK);
         BlockCreate(17, 4.5, EBlockType::BRICK);
         
+        //replace the copyright plant trap with a seal
+        GroundCreate(0.25, 8.75, 0.50, 5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
 
         CreateEntity(12.5, 7.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
         CreateEntity(6.5, 11.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::NONE);
+        CreateEntity(15.5, 3.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
 
-        //10 pipes start
+        CreateEntity(27.5, 8, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
 
+        CreateBackground(9, 10, EDecorationType::HILL);
+        CreateBackground(33.25, 12, EDecorationType::GRASS);
+
+        //pipes for each 4 blocks
+        for(int i = 0; i < 5; i++)
+        {
+            GroundCreate(27 + (i * 4), 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+            if(i == 0)
+            {
+                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+            }
+            else
+            {
+                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
+        
+                if(i != 4)
+                {
+                    CreateEntity(29 + (i * 4), 10, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
+                }
+                else
+                {
+                    GroundCreate(27.25 + (i * 4), 0, 1.5, 9, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_2_SEALS);
+                }
+            }
+        }
         
 
         int t_9 = GroundCount;
@@ -6510,18 +6537,15 @@ void HandleSyobonActionThreeLevels()
         GroundSizeY[t_9] = 3000; //n地面[t_9].d = 3000;
         GroundType[t_9] = EObjectType::FALLING_FLOOR; //n地面[t_9].type = 52;
         GroundCount++; //n地面co++;
-        for (int num34 = 0; num34 <= 1000; num34++)
-        {
-            for (int num35 = 0; num35 <= 16; num35++)
-            {
-                stagedate[num35][num34] = stagedatex21[num35][num34];
-            }
-        }
     }
 }
 
 void StageClear()
 {
+    memset(stagedate, NONE, sizeof(stagedate));
+
+    ClearAllBackgrounds();
+    ClearAllExtraGraphics();
     BlockClearAll();
     ClearAllEntities();
     GroundClearAll();
