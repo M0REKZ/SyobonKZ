@@ -265,12 +265,12 @@ void HandleEntities()
 
                     if (EnemyAITimer[t] == 100)
                     {
-                        CreateExtraGraphic(EnemyX[t] + 1200 -
+                        CreateExtraGraphicLegacy(EnemyX[t] + 1200 -
                                   1200,
                               EnemyY[t] + 3000 -
                                   10 * 3000 - 1500,
                               0, 0, 0, 0, 1000,
-                              10 * 3000 - 1200, 4, 20);
+                              10 * 3000 - 1200, EExtraGraphicType::GOAL_POLE, 20);
                         if (PlayerState == 300)
                         {
                             PlayerState = 0;
@@ -285,12 +285,12 @@ void HandleEntities()
                     }
                     if (EnemyAITimer[t] == 120)
                     {
-                        CreateExtraGraphic(EnemyX[t] + 1200 -
+                        CreateExtraGraphicLegacy(EnemyX[t] + 1200 -
                                   1200,
                               EnemyY[t] + 3000 -
                                   10 * 3000 - 1500,
                               600, -1200, 0,
-                              160, 1000, 10 * 3000 - 1200, 4, 240);
+                              160, 1000, 10 * 3000 - 1200, EExtraGraphicType::GOAL_POLE, 240);
                         EnemyLookingDirection[t] = LOOKING_RIGHT;
                     }
                     // mc=700;mkeytm=24;md=-1200;mb=xx[1]-1000-3000;amuki[t]=1;if (axtype[t]==1){mc=840;axtype[t]=0;}}
@@ -1532,25 +1532,25 @@ void HandleEntitiesBlocks()
 						{
 							PlaySound(Sounds[4]);
 							BlockType[tt] = EBlockType::ITEM_BLOCK_OPEN;
-							CreateExtraGraphic(BlockX[tt] + 10,
+							CreateExtraGraphicLegacy(BlockX[tt] + 10,
 								  BlockY[tt], 0, -800,
-								  0, 40, 3000, 3000, 0, 16);
+								  0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
 						}
 						else if (BlockType[tt] == EBlockType::BRICK)
 						{
 							PlaySound(Sounds[3]);
-							CreateExtraGraphic(BlockX[tt] + 1200,
+							CreateExtraGraphicLegacy(BlockX[tt] + 1200,
 								  BlockY[tt] + 1200,
-								  300, -1000, 0, 160, 1000, 1000, 1, 120);
-							CreateExtraGraphic(BlockX[tt] + 1200,
+								  300, -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+							CreateExtraGraphicLegacy(BlockX[tt] + 1200,
 								  BlockY[tt] + 1200,
-								  -300, -1000, 0, 160, 1000, 1000, 1, 120);
-							CreateExtraGraphic(BlockX[tt] + 1200,
+								  -300, -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+							CreateExtraGraphicLegacy(BlockX[tt] + 1200,
 								  BlockY[tt] + 1200,
-								  240, -1400, 0, 160, 1000, 1000, 1, 120);
-							CreateExtraGraphic(BlockX[tt] + 1200,
+								  240, -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+							CreateExtraGraphicLegacy(BlockX[tt] + 1200,
 								  BlockY[tt] + 1200,
-								  -240, -1400, 0, 160, 1000, 1000, 1, 120);
+								  -240, -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
 							BlockBreak(tt);
 						}
 					}
@@ -1561,14 +1561,14 @@ void HandleEntitiesBlocks()
 				if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[1] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] - fy < xx[9] + xx[1])
 				{
 					PlaySound(Sounds[3]);
-					CreateExtraGraphic(BlockX[tt] + 1200, BlockY[tt] + 1200, 300,
-						  -1000, 0, 160, 1000, 1000, 1, 120);
-					CreateExtraGraphic(BlockX[tt] + 1200, BlockY[tt] + 1200,
-						  -300, -1000, 0, 160, 1000, 1000, 1, 120);
-					CreateExtraGraphic(BlockX[tt] + 1200, BlockY[tt] + 1200, 240,
-						  -1400, 0, 160, 1000, 1000, 1, 120);
-					CreateExtraGraphic(BlockX[tt] + 1200, BlockY[tt] + 1200,
-						  -240, -1400, 0, 160, 1000, 1000, 1, 120);
+					CreateExtraGraphicLegacy(BlockX[tt] + 1200, BlockY[tt] + 1200, 300,
+						  -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+					CreateExtraGraphicLegacy(BlockX[tt] + 1200, BlockY[tt] + 1200,
+						  -300, -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+					CreateExtraGraphicLegacy(BlockX[tt] + 1200, BlockY[tt] + 1200, 240,
+						  -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+					CreateExtraGraphicLegacy(BlockX[tt] + 1200, BlockY[tt] + 1200,
+						  -240, -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
 					BlockBreak(tt);
 				}
 			} // 90
@@ -2015,13 +2015,13 @@ void HandleLifts()
                     if (LiftType[t] == ELiftType::BREAKING)
                     {
                         PlaySound(Sounds[3]);
-                        CreateExtraGraphic(LiftX[t] + 200,
+                        CreateExtraGraphicLegacy(LiftX[t] + 200,
                               LiftY[t] - 1000,
-                              -240, -1400, 0, 160, 4500, 4500, 2, 120);
-                        CreateExtraGraphic(LiftX[t] + 4500 -
+                              -240, -1400, 0, 160, 4500, 4500, EExtraGraphicType::LIFT_FRAGMENT_LEFT, 120);
+                        CreateExtraGraphicLegacy(LiftX[t] + 4500 -
                                   200,
                               LiftY[t] - 1000,
-                              240, -1400, 0, 160, 4500, 4500, 3, 120);
+                              240, -1400, 0, 160, 4500, 4500, EExtraGraphicType::LIFT_FRAGMENT_RIGHT, 120);
                         LiftX[t] = -70000000;
                     }
 

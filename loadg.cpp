@@ -194,7 +194,8 @@ void loadg(void)
 
     // 背景サイズ収得 (Background size acquisition)
     x1 = 4;
-    for (t = 0; t < 40; t++)
+    //+KZ: value is set but never used
+    /*for (t = 0; t < 40; t++)
     {
         if (Sliced_GFX[t][x1])
         {
@@ -208,7 +209,7 @@ void loadg(void)
             BackgroundWidth[t] = 0;
             BackgroundHeight[t] = 0;
         }
-    }
+    }*/
 
     /*
     anx[0]=30;any[0]=30;

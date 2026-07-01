@@ -136,7 +136,7 @@ int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
 int ExtraGraphicCount;
 int ExtraGraphicX[EXTRA_GRAPHIC_MAX], ExtraGraphicY[EXTRA_GRAPHIC_MAX], ExtraGraphicSizeX[EXTRA_GRAPHIC_MAX], ExtraGraphicSizeY[EXTRA_GRAPHIC_MAX], ExtraGraphicVelX[EXTRA_GRAPHIC_MAX], ExtraGraphicVelY[EXTRA_GRAPHIC_MAX];
 int ExtraGraphicFrictionX[EXTRA_GRAPHIC_MAX], ExtraGraphicFrictionY[EXTRA_GRAPHIC_MAX], ExtraGraphicTimer[EXTRA_GRAPHIC_MAX];
-int ExtraGraphicType[EXTRA_GRAPHIC_MAX];
+EExtraGraphicType ExtraGraphicType[EXTRA_GRAPHIC_MAX];
 
 
 
@@ -164,7 +164,8 @@ int bz[ENEMY_APPEAR_MAX];
 int BackgroundCount;
 int BackgroundX[BACKGROUND_MAX], BackgroundY[BACKGROUND_MAX];
 EDecorationType BackgroundType[BACKGROUND_MAX];
-int BackgroundWidth[BACKGROUND_MAX], BackgroundHeight[BACKGROUND_MAX];
+//+KZ: value is set but never used
+//int BackgroundWidth[BACKGROUND_MAX], BackgroundHeight[BACKGROUND_MAX];
 
 
 //リフト

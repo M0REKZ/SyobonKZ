@@ -245,8 +245,8 @@ extern int ExtraGraphicFrictionX[EXTRA_GRAPHIC_MAX];
 extern int ExtraGraphicFrictionY[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int etm[emax] is now int ExtraGraphicTimer[emax]
 extern int ExtraGraphicTimer[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int egtype[emax] is now int ExtraGraphicType[emax]
-extern int ExtraGraphicType[EXTRA_GRAPHIC_MAX];
+// @attention +KZ: int egtype[emax] is now EExtraGraphicType ExtraGraphicType[emax]
+extern EExtraGraphicType ExtraGraphicType[EXTRA_GRAPHIC_MAX];
 
 //敵キャラ (Enemy character)
 // @attention +KZ: amax is now ENEMY_MAX
@@ -323,9 +323,9 @@ extern int BackgroundY[BACKGROUND_MAX];
 // @attention +KZ: int ntype[nmax] is now int BackgroundType[nmax]
 extern EDecorationType BackgroundType[BACKGROUND_MAX];
 // @attention +KZ int ne[nmax] renamed to BackgroundWidth[nmax]
-extern int BackgroundWidth[BACKGROUND_MAX];
+//extern int BackgroundWidth[BACKGROUND_MAX]; //+KZ: value is set but never used
 // @attention +KZ int nf[nmax] renamed to BackgroundHeight[nmax]
-extern int BackgroundHeight[BACKGROUND_MAX];
+//extern int BackgroundHeight[BACKGROUND_MAX]; //+KZ: value is set but never used
 //extern int ng[nmax], nx[nmax]; //+KZ: unused
 
 

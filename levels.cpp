@@ -71,14 +71,14 @@ void stagecls()
 		ExtraGraphicY[t] = 1;
 		ExtraGraphicVelX[t] = 1;
 		ExtraGraphicVelY[t] = 1;
-		ExtraGraphicType[t] = 0;
+		ExtraGraphicType[t] = EExtraGraphicType::COIN;
 	}
 	for (t = 0; t < BACKGROUND_MAX; t++)
 	{
 		BackgroundX[t] = -9000000;
 		BackgroundY[t] = 1;
-		BackgroundWidth[t] = 1;
-		BackgroundHeight[t] = 1;
+		//BackgroundWidth[t] = 1;
+		//BackgroundHeight[t] = 1;
 		BackgroundType[t] = EDecorationType::HILL;
 	}
 	// for (t=0;t<cmax;t++){ca[t]=-9000000;cb[t]=1;contm[t]=0;ctype[t]=0;ce[t]=0;cf[t]=0;}

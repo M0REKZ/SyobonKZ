@@ -31,7 +31,7 @@ void HandleExtraGraphics()
 
 void RenderExtraGraphics()
 {
-    // グラ //+KZ: Seems this is about non-entitty graphics
+    // グラ //+KZ: Seems this is about non-entity graphics
     for (t = 0; t < EXTRA_GRAPHIC_MAX; t++)
     {
         xx[0] = ExtraGraphicX[t] - fx;
@@ -42,11 +42,11 @@ void RenderExtraGraphics()
         {
 
             // コイン (Coin)
-            if (ExtraGraphicType[t] == 0)
+            if (ExtraGraphicType[t] == EExtraGraphicType::COIN)
                 drawimage(Sliced_GFX[0][2], xx[0] / 100, xx[1] / 100);
 
             // ブロックの破片 (Block fragments)
-            if (ExtraGraphicType[t] == 1)
+            if (ExtraGraphicType[t] == EExtraGraphicType::BLOCK_FRAGMENT)
             {
                 if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY)
                     setcolor(9 * 16, 6 * 16, 3 * 16);
@@ -60,15 +60,16 @@ void RenderExtraGraphics()
                 drawarc(xx[0] / 100, xx[1] / 100, 7, 7);
             }
             // リフトの破片 (Lift fragments)
-            if (ExtraGraphicType[t] == 2 || ExtraGraphicType[t] == 3)
+            if (ExtraGraphicType[t] == EExtraGraphicType::LIFT_FRAGMENT_LEFT ||
+                ExtraGraphicType[t] == EExtraGraphicType::LIFT_FRAGMENT_RIGHT)
             {
-                if (ExtraGraphicType[t] == 3)
+                if (ExtraGraphicType[t] == EExtraGraphicType::LIFT_FRAGMENT_RIGHT)
                     mirror = 1;
                 drawimage(Sliced_GFX[0][5], xx[0] / 100, xx[1] / 100);
                 mirror = 0;
             }
             // ポール (pole)
-            if (ExtraGraphicType[t] == 4)
+            if (ExtraGraphicType[t] == EExtraGraphicType::GOAL_POLE)
             {
                 setc1();
                 fillrect((xx[0]) / 100 + 10, (xx[1]) / 100, 10, xx[3]);
@@ -91,7 +92,7 @@ void RenderBackground()
         xx[0] = BackgroundX[t] - fx;
         xx[1] = BackgroundY[t] - fy;
         //+KZ: added some checks because this gets out of bounds in level 1-4
-        //+KZ later: ....wait this code is useless, we set xx[2] and xx[3] just below this
+        //+KZ later: ....wait this code is useless, we set xx[2] and xx[3] just after this
         /*if (ntype[t] < nmax)
         {
             xx[2] = BackgroundWidth[ntype[t]] * 100;
@@ -150,8 +151,110 @@ void RenderBackground()
     } // t
 }
 
+int CreateBackground(double PosX, double PosY, EDecorationType Type, int index)
+{
+    PosX *= BLOCK_DEFAULT_SIZE;
+    PosY *= BLOCK_DEFAULT_SIZE;
+
+    PosY -= 12; //stage() does -12 to blocks, lets be consistent
+
+    //the game simulates floating point numbers
+    //by multiplying all positions by 100
+    PosX *= 100;
+    PosY *= 100;
+
+    if(index < 0)
+    {
+        //use BackgroundCount to keep compat with legacy background creation
+        index = BackgroundCount++;
+        if(BackgroundCount == BACKGROUND_MAX)
+            BackgroundCount = 0;
+    }
+
+    if(index >= 0 && index < BACKGROUND_MAX)
+    {
+        BackgroundX[index] = PosX;
+        BackgroundY[index] = PosY;
+        BackgroundType[index] = Type;
+    }
+    else
+    {
+        fprintf(stderr, "CreateBackground - Could not create extra graphic %d at %d %d! (index %d)", Type, (int)PosX, (int)PosY, index);
+    }
+
+    return index;
+}
+
+void ClearAllBackgrounds()
+{
+}
+
+int CreateExtraGraphic(double PosX, double PosY, double VelX, double VelY, double FrictionX, double FrictionY, double SizeX, double SizeY,
+    EExtraGraphicType Type, int Timer, int index)
+{
+    PosX *= BLOCK_DEFAULT_SIZE;
+    PosY *= BLOCK_DEFAULT_SIZE;
+
+    PosY -= 12; //stage() does -12 to blocks, lets be consistent
+
+    //the game simulates floating point numbers
+    //by multiplying all positions by 100
+    PosX *= 100;
+    PosY *= 100;
+
+    if(index < 0)
+    {
+        //use ExtraGraphicCount to keep compat with CreateExtraGraphicLegacy()
+        index = ExtraGraphicCount++;
+        if(ExtraGraphicCount == EXTRA_GRAPHIC_MAX)
+            ExtraGraphicCount = 0;
+    }
+
+    if(index >= 0 && index < EXTRA_GRAPHIC_MAX)
+    {
+        ExtraGraphicX[index] = PosX;
+        ExtraGraphicY[index] = PosY;
+        ExtraGraphicVelX[index] = VelX;
+        ExtraGraphicVelY[index] = VelY;
+        ExtraGraphicFrictionX[index] = FrictionX;
+        ExtraGraphicFrictionY[index] = FrictionY;
+        ExtraGraphicType[index] = Type;
+        ExtraGraphicTimer[index] = Timer;
+        ExtraGraphicSizeX[index] = SizeX;
+        ExtraGraphicSizeY[index] = SizeY;
+    }
+    else
+    {
+        fprintf(stderr, "CreateExtraGraphic - Could not create extra graphic %d at %d %d! (index %d)", Type, (int)PosX, (int)PosY, index);
+    }
+
+    return index;
+}
+
+void ClearAllExtraGraphics()
+{
+    for(int index = 0; index < EXTRA_GRAPHIC_MAX; index++)
+    {
+        ExtraGraphicX[index] = std::numeric_limits<int>::min();
+        ExtraGraphicY[index] = std::numeric_limits<int>::min();
+        ExtraGraphicVelX[index] = 0;
+        ExtraGraphicVelY[index] = 0;
+        ExtraGraphicFrictionX[index] = 0;
+        ExtraGraphicFrictionY[index] = 0;
+
+        //game wont render a invalid type
+        ExtraGraphicType[index] = (EExtraGraphicType)std::numeric_limits<int>::max();
+
+        ExtraGraphicTimer[index] = 0;
+        ExtraGraphicSizeX[index] = 0;
+        ExtraGraphicSizeY[index] = 0;
+    }
+
+    ExtraGraphicCount = 0;
+}
+
 // グラ作成 (Graphic creation)
-void CreateExtraGraphic(
+void CreateExtraGraphicLegacy(
     int PosX, //int xa
     int PosY, //int xb
     int VelX, //int xc
@@ -160,7 +263,7 @@ void CreateExtraGraphic(
     int FrictionY, //int xf
     int SizeX, //int xnobia
 	int SizeY, //int xnobib
-    int Type, //int xgtype
+    EExtraGraphicType Type, //int xgtype
     int Timer //int xtm
 )
 {

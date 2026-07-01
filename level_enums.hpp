@@ -360,6 +360,15 @@ enum ELegacyStageDate : unsigned char
     STAGEDATE_98 = 98,
 };
 
+enum class EExtraGraphicType : int
+{
+    COIN = 0,
+    BLOCK_FRAGMENT = 1, //color depends on StageColor
+    LIFT_FRAGMENT_LEFT = 2,
+    LIFT_FRAGMENT_RIGHT = 3,
+    GOAL_POLE = 4,
+};
+
 // @note FIREBAR_CLOCKWISE and FIREBAR_COUNTERCLOCKWISE uses EnemySubType as their length
 enum class EEnemySubType : int
 {
