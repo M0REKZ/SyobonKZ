@@ -230,29 +230,7 @@ void rpaint()
 	// タイトル (Title)
 	if (SyobonState == ESyobonState::TITLE)
 	{
-
-		setcolor(160, 180, 250);
-		fillrect(0, 0, fxmax, fymax);
-
-		//+KZ
-		setcolor(0, 0, 0);
-		str(PLUSKZ_EDITION_TEXT, 480 / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 10) / 2, 120);
-
-		drawimage(Main_GFX[30], 240 - 380 / 2, 60);
-
-		drawimage(Sliced_GFX[0][4], 12 * 30, 10 * 29 - 12);
-		drawimage(Sliced_GFX[1][4], 6 * 30, 12 * 29 - 12);
-
-		// プレイヤー
-		drawimage(Sliced_GFX[0][0], 2 * 30, 12 * 29 - 12 - 6);
-		for (t = 0; t <= 16; t++)
-		{
-			drawimage(Sliced_GFX[5][1], 29 * t, 13 * 29 - 12);
-			drawimage(Sliced_GFX[6][1], 29 * t, 14 * 29 - 12);
-		}
-
-		setcolor(0, 0, 0);
-		str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
+		RenderTitleScreen();
 	}
 	SyobonKZScreenFlip(screen);
 
@@ -281,7 +259,7 @@ void Mainprogram()
 			StageColor = ELevelType::OVERWORLD;
 			PlayerX = 5600;
 			PlayerY = 32000;
-			PlayerLookingDirection = 1;
+			PlayerLookingDirection = LOOKING_RIGHT;
 			Health = 1;
 			PlayerVelX = 0;
 			PlayerVelY = 0;
@@ -368,22 +346,56 @@ void Mainprogram()
 		// x
 		if (kscroll != 1 && kscroll != 2)
 		{
-			xx[2] = mascrollmax;
-			xx[3] = 0;
-			xx[1] = xx[2];
-			if (PlayerX > xx[1] && fzx < scrollx)
+			if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
 			{
-				xx[5] = PlayerX - xx[1];
-				PlayerX = xx[1];
-				fx += xx[5];
-				fzx += xx[5];
-				if (xx[1] <= 5000)
-					xx[3] = 1;
+				xx[2] = mascrollmax;
+				xx[3] = 0;
+				xx[1] = xx[2];
+				if (PlayerX > xx[1] && fzx < scrollx)
+				{
+					xx[5] = PlayerX - xx[1];
+					PlayerX = xx[1];
+					fx += xx[5];
+					fzx += xx[5];
+					//if (xx[1] <= 5000) //mascrollmax is never changed
+					//	xx[3] = 1;
+				}
 			}
-			// if (kscroll!=5){//戻りなし (No Return)
-			// xx[1]=xx[2]-500;if (ma<xx[1] && fzx>700){xx[5]=xx[1]-ma;ma=xx[1];fx-=xx[5];fzx-=xx[5];}
-			// }
-			// if (xx[3]==1){if (tyuukan==1)tyuukan=1;}
+			//SA3 camera can go back
+			else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+			{
+				xx[2] = mascrollmax;
+				xx[3] = 0;
+				xx[1] = xx[2];
+
+				xx[5] = PlayerX - mascrollmax;
+				if(PlayerX - mascrollmax > 0)
+				{
+					if((fzx < scrollx))
+					{
+						fx += PlayerX - mascrollmax;
+						fzx += PlayerX - mascrollmax;
+						PlayerX = mascrollmax;
+					}
+				}
+				else
+				{
+					if((fzx > 0))
+					{
+						fx += PlayerX - mascrollmax;
+						fzx += PlayerX - mascrollmax;
+						PlayerX = mascrollmax;
+					}
+				}
+
+				if(fx < 0)
+					fx = 0;
+				if(fzx < 0)
+					fzx = 0;
+					
+				if(PlayerX < 0)
+					PlayerX = 0;
+			}
 		} // kscroll
 
 	} // if (mainZ==1){

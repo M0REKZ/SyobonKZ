@@ -56,7 +56,7 @@ SDL_Surface *Sliced_GFX[161][8];
 SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
-SDL_Surface *Main_GFX_KZ[1]; //+KZ
+SDL_Surface *Main_GFX_KZ[2]; //+KZ
 SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 
 int mirror;
@@ -105,7 +105,9 @@ int PlayerVelX, PlayerVelY, atktm, PlayerWalkAnimTimer, PlayerWalkAnim;
 int Lives = 3;
 
 int PlayerState, PlayerSubState, PlayerAITimer, mzz;
-int PlayerGrounded, PlayerLookingDirection, mjumptm, mkeytm;
+int PlayerGrounded;
+ELookingDirection PlayerLookingDirection;
+int mjumptm, mkeytm;
 EPlayerGroundType PlayerGroundType;
 int mmutekitm, mmutekion;
 //+KZ: these are never set, but are read?
@@ -122,7 +124,7 @@ int mascrollmax = 21000;	//9000
 
 //ブロック
 int BlockCount;
-int BlockX[BLOCK_MAX], BlockY[BLOCK_MAX], thp[BLOCK_MAX];
+int BlockX[BLOCK_MAX], BlockY[BLOCK_MAX], BlockAITimer[BLOCK_MAX];
 EBlockType BlockType[BLOCK_MAX];
 int BlockItemCount[BLOCK_MAX];
 EBlockSubType BlockSubType[BLOCK_MAX];
@@ -145,8 +147,8 @@ int af[ENEMY_MAX], EnemyBlockAppearTimer[ENEMY_MAX];
 int aacta[ENEMY_MAX], aactb[ENEMY_MAX], azimentype[ENEMY_MAX], axzimen[ENEMY_MAX];
 EEnemyType EnemyType[ENEMY_MAX];
 EEnemySubType EnemySubType[ENEMY_MAX];
-int EnemyLookingDirection[ENEMY_MAX];
-int anotm[ENEMY_MAX], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
+ELookingDirection EnemyLookingDirection[ENEMY_MAX];
+int EnemyPlayerNoInteractTimer[ENEMY_MAX], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
 int EnemyAITimer[ENEMY_MAX];
 int EnemyMessageTimer[ENEMY_MAX], EnemyMessageType[ENEMY_MAX];
 

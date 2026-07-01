@@ -81,8 +81,8 @@ void HandleEntities()
         xx[2] = EnemySizeX[t];
         xx[3] = EnemySizeY[t];
         xx[14] = 12000 * 1;
-        if (anotm[t] >= 0)
-            anotm[t]--;
+        if (EnemyPlayerNoInteractTimer[t] >= 0)
+            EnemyPlayerNoInteractTimer[t]--;
         if (xx[0] + xx[2] >= -xx[14] && xx[0] <= fxmax + xx[14] && xx[1] + xx[3] >= -10 - 9000 && xx[1] <= fymax + 20000)
         {
             aacta[t] = 0;
@@ -227,7 +227,7 @@ void HandleEntities()
                             mkeytm = 24;
                             PlayerVelY = -1200;
                             PlayerY = xx[1] - 1000 - 3000;
-                            EnemyLookingDirection[t] = 1;
+                            EnemyLookingDirection[t] = LOOKING_RIGHT;
                             if (EnemySubType[t] == EEnemySubType::DEFRAG_GRAB_POLE)
                             {
                                 PlayerVelX = 840;
@@ -236,7 +236,7 @@ void HandleEntities()
                         }
                         if (EnemyAITimer[t] == 40)
                         {
-                            EnemyLookingDirection[t] = 0;
+                            EnemyLookingDirection[t] = LOOKING_LEFT;
                             EnemyAITimer[t] = 0;
                         }
                     }
@@ -291,19 +291,19 @@ void HandleEntities()
                                   10 * 3000 - 1500,
                               600, -1200, 0,
                               160, 1000, 10 * 3000 - 1200, 4, 240);
-                        EnemyLookingDirection[t] = 1;
+                        EnemyLookingDirection[t] = LOOKING_RIGHT;
                     }
                     // mc=700;mkeytm=24;md=-1200;mb=xx[1]-1000-3000;amuki[t]=1;if (axtype[t]==1){mc=840;axtype[t]=0;}}
                     if (EnemyAITimer[t] == 140)
                     {
-                        EnemyLookingDirection[t] = 0;
+                        EnemyLookingDirection[t] = LOOKING_LEFT;
                         EnemyAITimer[t] = 0;
                     }
                 }
                 if (EnemyAITimer[t] >= 220)
                 {
                     EnemyAITimer[t] = 0;
-                    EnemyLookingDirection[t] = 0;
+                    EnemyLookingDirection[t] = LOOKING_LEFT;
                 }
                 // 他の敵を投げる (Throw other enemies)
                 for (tt = 0; tt < ENEMY_MAX; tt++)
@@ -325,12 +325,12 @@ void HandleEntities()
                             EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[5] && EnemyY[t] + EnemySizeY[t] - fy < xx[9] + xx[1] * 3 + xx[12] + 1500)
                         {
                             // aa[tt]=-800000;
-                            EnemyLookingDirection[tt] = 1;
+                            EnemyLookingDirection[tt] = LOOKING_RIGHT;
                             EnemyX[tt] = EnemyX[t] + 300;
                             EnemyY[tt] = EnemyY[t] - 3000;
                             EnemyBlockAppearTimer[tt] = 120; // aa[tt]=0;
                             EnemyAITimer[t] = 200;
-                            EnemyLookingDirection[t] = 1;
+                            EnemyLookingDirection[t] = LOOKING_RIGHT;
                         }
                     }
                 }
@@ -516,17 +516,17 @@ void HandleEntities()
                 if (EnemySubType[t] == EEnemySubType::FAKE_POLE_STAY)
                 {
                     EnemySubType[t] = EEnemySubType::FAKE_POLE_TALKING;
-                    EnemyLookingDirection[t] = 1;
+                    EnemyLookingDirection[t] = LOOKING_RIGHT;
                 }
                 if (PlayerY >= 30000 && PlayerX >= EnemyX[t] - 3000 * 5 - fx && PlayerX <= EnemyX[t] - fx && EnemySubType[t] == EEnemySubType::FAKE_POLE_TALKING)
                 {
                     EnemySubType[t] = EEnemySubType::FAKE_POLE_MOVE;
-                    EnemyLookingDirection[t] = 0;
+                    EnemyLookingDirection[t] = LOOKING_LEFT;
                 }
                 if (PlayerY >= 24000 && PlayerX <= EnemyX[t] + 3000 * 8 - fx && PlayerX >= EnemyX[t] - fx && EnemySubType[t] == EEnemySubType::FAKE_POLE_TALKING)
                 {
                     EnemySubType[t] = EEnemySubType::FAKE_POLE_MOVE;
-                    EnemyLookingDirection[t] = 1;
+                    EnemyLookingDirection[t] = LOOKING_RIGHT;
                 }
                 if (EnemySubType[t] == EEnemySubType::FAKE_POLE_MOVE)
                     xx[10] = xx[23];
@@ -842,12 +842,12 @@ void HandleEntities()
                                     xx[8] + EnemySizeX[t] / 2 - xx[0] * 4)
                             {
                                 EnemySubType[t] = EEnemySubType::SHELL_MOVING;
-                                EnemyLookingDirection[t] = 1;
+                                EnemyLookingDirection[t] = LOOKING_RIGHT;
                             }
                             else
                             {
                                 EnemySubType[t] = EEnemySubType::SHELL_MOVING;
-                                EnemyLookingDirection[t] = 0;
+                                EnemyLookingDirection[t] = LOOKING_LEFT;
                             }
                         }
                     }
@@ -918,7 +918,7 @@ void HandleEntities()
                 xx[16] = -3200;
             if (EnemyType[t] == EEnemyType::FAKE_POLE)
                 xx[16] = -EnemySizeY[t] + 6000;
-            if (PlayerX + PlayerSizeX > xx[8] + xx[4] && PlayerX < xx[8] + EnemySizeX[t] - xx[4] && PlayerY < xx[9] + EnemySizeY[t] + xx[15] && PlayerY + PlayerSizeY > xx[9] + EnemySizeY[t] - xx[0] + xx[16] && anotm[t] <= 0 && EnemyBlockAppearTimer[t] <= 0)
+            if (PlayerX + PlayerSizeX > xx[8] + xx[4] && PlayerX < xx[8] + EnemySizeX[t] - xx[4] && PlayerY < xx[9] + EnemySizeY[t] + xx[15] && PlayerY + PlayerSizeY > xx[9] + EnemySizeY[t] - xx[0] + xx[16] && EnemyPlayerNoInteractTimer[t] <= 0 && EnemyBlockAppearTimer[t] <= 0)
             {
                 if (mmutekion == 1)
                 {
@@ -1040,14 +1040,14 @@ void HandleEntities()
                                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 && PlayerX < xx[8] + EnemySizeX[t] / 2 - xx[0] * 4)
                                 {
                                     EnemySubType[t] = EEnemySubType::SHELL_MOVING;
-                                    EnemyLookingDirection[t] = 1;
+                                    EnemyLookingDirection[t] = LOOKING_RIGHT;
                                     EnemyX[t] = PlayerX + PlayerSizeX + fx + PlayerVelX;
                                     mmutekitm = 5;
                                 }
                                 else
                                 {
                                     EnemySubType[t] = EEnemySubType::SHELL_MOVING;
-                                    EnemyLookingDirection[t] = 0;
+                                    EnemyLookingDirection[t] = LOOKING_LEFT;
                                     EnemyX[t] = PlayerX - EnemySizeX[t] + fx - PlayerVelX;
                                     mmutekitm = 5;
                                 }
@@ -1113,33 +1113,33 @@ void HandleEntities()
                             PlaySound(Sounds[4]);
 
                             // CreateEntity(aa[t]-6*3000+1000,-3*3000,0,0,0,110,0);
-                            CreateEntity(EnemyX[t] -
+                            CreateEntityLegacy(EnemyX[t] -
                                              8 * 3000 -
                                              1000,
                                          -4 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
-                            CreateEntity(EnemyX[t] -
+                            CreateEntityLegacy(EnemyX[t] -
                                              10 *
                                                  3000 +
                                              1000,
                                          -1 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
 
-                            CreateEntity(EnemyX[t] +
+                            CreateEntityLegacy(EnemyX[t] +
                                              4 * 3000 +
                                              1000,
                                          -2 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
-                            CreateEntity(EnemyX[t] +
+                            CreateEntityLegacy(EnemyX[t] +
                                              5 * 3000 -
                                              1000,
                                          -3 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
-                            CreateEntity(EnemyX[t] +
+                            CreateEntityLegacy(EnemyX[t] +
                                              6 * 3000 +
                                              1000,
                                          -4 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
-                            CreateEntity(EnemyX[t] +
+                            CreateEntityLegacy(EnemyX[t] +
                                              7 * 3000 -
                                              1000,
                                          -2 * 3000, 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
-                            CreateEntity(EnemyX[t] +
+                            CreateEntityLegacy(EnemyX[t] +
                                              8 * 3000 +
                                              1000,
                                          -2 * 3000 - 1000, 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
@@ -1207,13 +1207,13 @@ void PlaceEntities()
                 if (bz[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= fxmax + 2000 && EnemyAppearX[t] - fx < fxmax + 2000 + PlayerVelX && tt == 0)
                 {
                     local_xx_0 = 1;
-                    EnemyLookingDirection[EnemyCount] = 0;
+                    EnemyLookingDirection[EnemyCount] = LOOKING_LEFT;
                 } // && mmuki==1
                 if (bz[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= -400 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] + PlayerVelX && EnemyAppearX[t] - fx < -400 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] && tt == 1)
                 {
                     local_xx_0 = 1;
                     local_xx_1 = 1;
-                    EnemyLookingDirection[EnemyCount] = 1;
+                    EnemyLookingDirection[EnemyCount] = LOOKING_RIGHT;
                 } // && mmuki==0
                 if (bz[t] == 1 && EnemyAppearX[t] - fx >= 0 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] && EnemyAppearX[t] - fx <= fxmax + 4000 && EnemyAppearY[t] - fy >= -9000 && EnemyAppearY[t] - fy <= fymax + 4000 && EnemyAppearTimer[t] < 0)
                 {
@@ -1232,7 +1232,7 @@ void PlaceEntities()
                         EnemyAppearTimer[t] = 9999999;
                     }
                     // 10
-                    CreateEntity(EnemyAppearX[t], EnemyAppearY[t], 0, 0, 0, EnemyAppearType[t], EnemyAppearSubType[t]);
+                    CreateEntityLegacy(EnemyAppearX[t], EnemyAppearY[t], 0, 0, 0, EnemyAppearType[t], EnemyAppearSubType[t]);
                 }
 
             } // tt
@@ -1391,12 +1391,12 @@ void HandleEntitiesBlocks()
 			if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] - xx[0] && EnemyX[t] - fx < xx[8] + xx[2] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] * 3 / 4 && EnemyY[t] - fy < xx[9] + GroundSizeY[tt] - xx[2])
 			{
 				EnemyX[t] = xx[8] - xx[0] - EnemySizeX[t] + fx;
-				EnemyLookingDirection[t] = 0;
+				EnemyLookingDirection[t] = LOOKING_LEFT;
 			}
 			if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + GroundSizeX[tt] - xx[0] && EnemyX[t] - fx < xx[8] + GroundSizeX[tt] + xx[0] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] + xx[1] * 3 / 4 && EnemyY[t] - fy < xx[9] + GroundSizeY[tt] - xx[2])
 			{
 				EnemyX[t] = xx[8] + GroundSizeX[tt] + xx[0] + fx;
-				EnemyLookingDirection[t] = 1;
+				EnemyLookingDirection[t] = LOOKING_RIGHT;
 			}
 			// if (aa[t]+anobia[t]-fx>xx[8]+xx[0] && aa[t]-fx<xx[8]+sc[tt]-xx[0] && ab[t]+anobib[t]-fy>xx[9] && ab[t]+anobib[t]-fy<xx[9]+xx[1] && ad[t]>=-100){ab[t]=sb[tt]-fy-anobib[t]+100+fy;ad[t]=0;}//PlayerGrounded=1;}
 			if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + GroundSizeX[tt] - xx[0] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] + EnemySizeY[t] - fy < xx[9] + GroundSizeY[tt] - xx[1] && EnemyVelY[t] >= -100)
@@ -1494,7 +1494,7 @@ void HandleEntitiesBlocks()
                         {
                             EnemyX[t] = xx[8] - EnemySizeX[t] + fx;
                             EnemyVelX[t] = 0;
-                            EnemyLookingDirection[t] = 0;
+                            EnemyLookingDirection[t] = LOOKING_LEFT;
                             xx[27] = 1;
                         }
                         if (EnemyX[t] + EnemySizeX[t] - fx >
@@ -1503,7 +1503,7 @@ void HandleEntitiesBlocks()
                         {
                             EnemyX[t] = xx[8] + xx[1] + fx;
                             EnemyVelX[t] = 0;
-                            EnemyLookingDirection[t] = 1;
+                            EnemyLookingDirection[t] = LOOKING_RIGHT;
                             xx[27] = 1;
                         }
                     }
@@ -1512,7 +1512,7 @@ void HandleEntitiesBlocks()
 					{
 						EnemyX[t] = xx[8] - EnemySizeX[t] + fx;
 						EnemyVelX[t] = 0;
-						EnemyLookingDirection[t] = 0;
+						EnemyLookingDirection[t] = LOOKING_LEFT;
 						xx[27] = 1;
 					}
 					if (EnemyX[t] + EnemySizeX[t] - fx >
@@ -1521,7 +1521,7 @@ void HandleEntitiesBlocks()
 					{
 						EnemyX[t] = xx[8] + xx[1] + fx;
 						EnemyVelX[t] = 0;
-						EnemyLookingDirection[t] = 1;
+						EnemyLookingDirection[t] = LOOKING_RIGHT;
 						xx[27] = 1;
 					}
 					// こうらブレイク (Shell break)
@@ -2220,13 +2220,137 @@ void RenderLifts()
     } // t
 }
 
+void CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType EntityType,
+    EEnemySubType EntitySubType, ELookingDirection LookingDirection, int PlayerNoInteractTimer, int index)
+{
+    PosX *= BLOCK_DEFAULT_SIZE;
+    PosY *= BLOCK_DEFAULT_SIZE;
+
+    PosY -= 12; //stage() does -12
+
+    //the game simulates floating point numbers
+    //by multiplying all positions by 100
+    PosX *= 100;
+    PosY *= 100;
+
+    if(index < 0)
+    {
+        //search a empty space without replacing other enemies in the level
+        int CheckingIndex = 0;
+
+        while(index < 0)
+        {
+            if(
+                //check for enemies deleted the legacy way,
+                //deleted by enemies, player, etc
+                //(X position less or equal to -800000 (that was for blocks but should work here too xd))
+                EnemyX[CheckingIndex] <= -800000 ||
+
+                //check for blocks deleted by BlockClearAll()
+                EnemyType[CheckingIndex] == (EEnemyType)std::numeric_limits<int>::max()
+            )
+            {
+                index = CheckingIndex;
+            }
+            CheckingIndex++;
+            if(CheckingIndex >= ENEMY_MAX)
+                break;
+        }
+    }
+
+    if(index >= 0 && index < ENEMY_MAX)
+    {
+        EnemyX[index] = (int)PosX;
+        EnemyY[index] = (int)PosY;
+        EnemyVelX[index] = VelX * BLOCK_DEFAULT_SIZE * 100;
+        EnemyVelY[index] = VelY * BLOCK_DEFAULT_SIZE * 100;
+        EnemyType[index] = EntityType;
+        EnemySubType[index] = EntitySubType;
+
+        EnemyAITimer[index] = 0;
+
+        azimentype[index] = 1;
+
+        int Type = (int)EnemyType[index];
+
+        //avoid out of bounds memory access
+        if(
+            Type >= 0 &&
+            Type < (sizeof(EnemyDefaultSizeX) / sizeof(int)) &&
+            Type < (sizeof(EnemyDefaultSizeY) / sizeof(int))
+        )
+        {
+            EnemySizeX[index] = EnemyDefaultSizeX[Type];
+            EnemySizeY[index] = EnemyDefaultSizeY[Type];
+        }
+        else
+        {
+            EnemySizeX[index] = EnemySizeY[index] = 0;
+        }
+    }
+    else
+    {
+        fprintf(stderr, "CreateEntity - Could not create entity %d %d at %d %d! (index %d)", EntityType, EntitySubType, (int)PosX, (int)PosY, index);
+    }
+}
+
+void ClearAllEntities()
+{
+    for(int i = 0; i < ENEMY_MAX; ++i)
+    {
+        EnemyX[i] = std::numeric_limits<int>::min();
+        EnemyY[i] = std::numeric_limits<int>::min();
+        EnemySizeX[i] = 0;
+        EnemySizeY[i] = 0;
+        EnemyVelX[i] = 0;
+        EnemyVelY[i] = 0;
+
+        EnemyLookingDirection[i] = LOOKING_LEFT;
+
+        af[i] = 0;
+
+        aacta[i] = 0;
+        aactb[i] = 0;
+        azimentype[i] = 0;
+        axzimen[i] = 0;
+
+        //the player will ignore a extremely high block type
+        EnemyType[i] = EEnemyType::BALL;
+
+        EnemySubType[i] = EEnemySubType::NONE;
+
+        EnemyAITimer[i] = 0;
+        EnemyBlockAppearTimer[i] = 0;
+        EnemyPlayerNoInteractTimer[i] = 0;
+        EnemyMessageTimer[i] = 0;
+        EnemyMessageType[i] = 0;
+    }
+
+    for(int i = 0; i < ENEMY_APPEAR_MAX; ++i)
+    {
+        //the enemies will ignore blocks with a very low or high X position
+        EnemyAppearX[i] = std::numeric_limits<int>::min();
+        EnemyAppearY[i] = std::numeric_limits<int>::min();
+
+        //the player will ignore a extremely high block type
+        EnemyAppearTimer[i] = 0;
+
+        EnemyAppearType[i] = EEnemyType::BALL;
+        EnemyAppearSubType[i] = EEnemySubType::NONE;
+
+        bz[i] = 1;
+    }
+
+    EnemyCount = 0;
+}
+
 // 敵キャラ、アイテム作成 (Enemy character and item creation)
-void CreateEntity(
+void CreateEntityLegacy(
     int PosX, //int xa
     int PosY, //int xb
     int VelX, //int xc
     int VelY, //int xd
-    int xnotm,
+    int PlayerNoInteractTimer, //int xnotm,
     EEnemyType EntityType, // int xtype
     EEnemySubType EntitySubType // int xxtype
 )
@@ -2254,15 +2378,15 @@ void CreateEntity(
             if ((int)EntitySubType >= 0 && (int)EntitySubType <= 99100)
                 EnemySubType[EnemyCount] = EntitySubType; // ahp[aco]=iz[bxtype[t]];aytm[aco]=0;
             // if (xxtype==1)end();
-            anotm[EnemyCount] = xnotm;
+            EnemyPlayerNoInteractTimer[EnemyCount] = PlayerNoInteractTimer;
             if (EnemyX[EnemyCount] - fx <= PlayerX + PlayerSizeX / 2)
-                EnemyLookingDirection[EnemyCount] = 1;
+                EnemyLookingDirection[EnemyCount] = LOOKING_RIGHT;
             if (EnemyX[EnemyCount] - fx > PlayerX + PlayerSizeX / 2)
-                EnemyLookingDirection[EnemyCount] = 0;
+                EnemyLookingDirection[EnemyCount] = LOOKING_LEFT;
             if (EnemyBlockAppearTimer[EnemyCount] >= 1)
-                EnemyLookingDirection[EnemyCount] = 1;
+                EnemyLookingDirection[EnemyCount] = LOOKING_RIGHT;
             if (EnemyBlockAppearTimer[EnemyCount] == 20)
-                EnemyLookingDirection[EnemyCount] = 0;
+                EnemyLookingDirection[EnemyCount] = LOOKING_LEFT;
 
             EnemySizeX[EnemyCount] = EnemyDefaultSizeX[(int)EnemyType[EnemyCount]];
             EnemySizeY[EnemyCount] = EnemyDefaultSizeY[(int)EnemyType[EnemyCount]];

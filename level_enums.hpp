@@ -11,7 +11,7 @@
 // Level Types (stagecolor)
 // -------------------------
 
-enum class ELevelType
+enum class ELevelType : int
 {
     OVERWORLD = 1,
     UNDERGROUND = 2,
@@ -27,7 +27,7 @@ enum class ELevelType
 // Block Types (ttypes)
 // -------------------------
 
-enum class EBlockType
+enum class EBlockType : int
 {
     // Tiles 0–10 form the base set for a level type.
     // Adding multiples of 30 (up to +90) to these tile IDs switches to the
@@ -118,7 +118,7 @@ enum class EBlockType
 // Enemy Types (atypes)
 // -------------------------
 
-enum class EEnemyType
+enum class EEnemyType : int
 {
     BALL = 0,
     BALL_SHELLED = 1,
@@ -188,7 +188,7 @@ enum class EEnemyType
 // Decoration Types (ntypes)
 // -------------------------
 
-enum class EDecorationType
+enum class EDecorationType : int
 {
     HILL = 0,
     GRASS = 1,
@@ -210,7 +210,7 @@ enum class EDecorationType
 // Platform types (srtypes) //+KZ: it is srsp
 // -------------------------
 
-enum class ELiftType
+enum class ELiftType : int
 {
     YELLOW = 0,
     BREAKING = 1,
@@ -238,7 +238,7 @@ enum class ELiftType
 // object types (stypes)
 // -------------------------
 
-enum class EObjectType
+enum class EObjectType : int
 {
     // not sure what this is
     // +KZ: it is the same as PIPE_BODY :D
@@ -280,6 +280,13 @@ enum class EObjectType
 ///********************************************///
 /// Enums added by +KZ:
 ///********************************************///
+
+//less "0 and 1" confusion
+enum ELookingDirection : int
+{
+    LOOKING_LEFT = 0,
+    LOOKING_RIGHT = 1,
+};
 
 enum ELegacyStageDate : unsigned char
 {
@@ -354,7 +361,7 @@ enum ELegacyStageDate : unsigned char
 };
 
 // @note FIREBAR_CLOCKWISE and FIREBAR_COUNTERCLOCKWISE uses EnemySubType as their length
-enum class EEnemySubType
+enum class EEnemySubType : int
 {
     NONE = 0, //"none" wildcard for most enemy types
 
@@ -418,7 +425,7 @@ enum class EEnemySubType
 
 };
 
-enum class EBlockSubType
+enum class EBlockSubType : int
 {
     NONE = 0, //"none" wildcard for most block types
 
@@ -436,7 +443,7 @@ enum class EBlockSubType
     ITEM_BLOCK_MUSHROOM_DELICIOUS = 0,
     ITEM_BLOCK_MUSHROOM_GROW = 2,
     ITEM_BLOCK_MUSHROOM_POISONOUS_FASTER = 3,
-    ITEM_BLOCK_MUSHROOM_4 = 4, //added in SA:All Stars for SA3, unknown purpose since i didnt port it yet
+    ITEM_BLOCK_MUSHROOM_SA3_TRAP = 4, //added in SA:All Stars for SA3 for big mushroom trap
 
     ITEM_BLOCK_STAR_BRICK = 0,
     ITEM_BLOCK_STAR_NORMAL = 1,

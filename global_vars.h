@@ -9,7 +9,7 @@
 //main-10
 //タイトル-100
 
-enum class ESyobonState
+enum class ESyobonState : int
 {
     IN_GAME = 1,
     CREDITS = 2,
@@ -76,7 +76,7 @@ extern SDL_Surface *Sliced_GFX[161][8];
 extern SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
-extern SDL_Surface *Main_GFX_KZ[1]; //+KZ
+extern SDL_Surface *Main_GFX_KZ[2]; //+KZ
 extern SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
 
 //+KZ: mirrors the image drawn by drawimage()
@@ -175,8 +175,8 @@ enum class EPlayerGroundType
 };
 // @attention +KZ: int mrzimen is now EGroundType GroundType
 extern EPlayerGroundType PlayerGroundType;
-// @attention +KZ: int mmuki is now int PlayerLookingDirection
-extern int PlayerLookingDirection;
+// @attention +KZ: int mmuki is now ELookingDirection PlayerLookingDirection
+extern ELookingDirection PlayerLookingDirection;
 
 //+KZ: following player variables were unused:
 //  * mmukitm
@@ -209,7 +209,8 @@ extern int BlockX[BLOCK_MAX];
 // @attention +KZ: int tb[tmax] is now int BlockY[tmax]
 extern int BlockY[BLOCK_MAX];
 //extern int tc[tmax], td[tmax]; //+KZ: unused
-extern int thp[BLOCK_MAX];
+// @attention +KZ: int thp[tmax] is now int BlockAITimer[tmax]
+extern int BlockAITimer[BLOCK_MAX];
 // @attention +KZ: int ttype[tmax] is now EBlockType BlockType[tmax]
 extern EBlockType BlockType[BLOCK_MAX];
 //+KZ: titem[tmax] is specific for Block 112/113 (Coin mass production)
@@ -273,10 +274,11 @@ extern int aacta[ENEMY_MAX], aactb[ENEMY_MAX], azimentype[ENEMY_MAX], axzimen[EN
 extern EEnemyType EnemyType[ENEMY_MAX];
 // @attention +KZ: int axtype[amax] is now EEnemySubType EnemySubType[amax]
 extern EEnemySubType EnemySubType[ENEMY_MAX];
-// @attention +KZ: int amuki[amax] is now int EnemyLookingDirection[amax]
-extern int EnemyLookingDirection[ENEMY_MAX];
+// @attention +KZ: int amuki[amax] is now ELookingDirection EnemyLookingDirection[amax]
+extern ELookingDirection EnemyLookingDirection[ENEMY_MAX];
 //extern int ahp[amax]; //+KZ: unused
-extern int anotm[ENEMY_MAX]; //+KZ: it is a timer but not sure for what exactly
+// @attention +KZ: int anotm[amax] is now EnemyPlayerNoInteractTimer[amax]
+extern int EnemyPlayerNoInteractTimer[ENEMY_MAX];
 // @attention +KZ: int anx[160] is now int EnemyDefaultSizeX[160]
 extern int EnemyDefaultSizeX[160];
 // @attention +KZ: int any[160] is now int EnemyDefaultSizeY[160]
@@ -398,13 +400,19 @@ extern long stimeZ;
 //+KZ
 #define PLUSKZ_EDITION_TEXT "+KZ Edition"
 
+//misc useful defines
+#define BLOCK_DEFAULT_SIZE 29
+
 extern bool HelpFlagHandled; // --help cli flag
 extern bool StartFullScreenFlag;
 
 enum class ESyobonActionGame
 {
     SYOBON_ACTION_1_AND_2 = 0,
-    SYOBON_ACTION_3, // Extremely incomplete, dont allow to choose
+    SYOBON_ACTION_3,
+
+    FIRST = SYOBON_ACTION_1_AND_2,
+    LAST = SYOBON_ACTION_3,
 };
 extern ESyobonActionGame currentGame;
 extern bool SA3_Level1MushroomTriggered;

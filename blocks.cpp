@@ -426,9 +426,101 @@ void RenderOverwritePipe()
     } // t
 }
 
+void BlockCreate(double x, double y, EBlockType type, EBlockSubType subtype, int index)
+{
+    x *= BLOCK_DEFAULT_SIZE;
+    y *= BLOCK_DEFAULT_SIZE;
+
+    y -= 12; //stage() does -12
+
+    //the game simulates floating point numbers
+    //by multiplying all positions by 100
+    x *= 100;
+    y *= 100;
+
+    if(index < 0)
+    {
+        //search a empty space without replacing other blocks in the level
+        int CheckingIndex = 0;
+
+        while(index < 0)
+        {
+            if(
+                //check for blocks deleted the legacy way,
+                //deleted by enemies, player, brockbreak(), etc
+                //(X position less or equal to -800000)
+                BlockX[CheckingIndex] <= -800000 ||
+
+                //check for blocks deleted by BlockClearAll()
+                BlockType[CheckingIndex] == (EBlockType)std::numeric_limits<int>::max()
+            )
+            {
+                index = CheckingIndex;
+            }
+            CheckingIndex++;
+            if(CheckingIndex >= BLOCK_MAX)
+                break;
+        }
+    }
+
+    if(index >= 0 && index < BLOCK_MAX)
+    {
+        BlockX[index] = (int)x;
+        BlockY[index] = (int)y;
+        BlockType[index] = type;
+        BlockSubType[index] = subtype;
+
+        BlockAITimer[index] = 0;
+        BlockItemCount[index] = 0;
+    }
+    else
+    {
+        fprintf(stderr, "BlockCreate - Could not create block %d %d at %d %d! (index %d)", type, subtype, (int)x, (int)y, index);
+    }
+}
+
+void BlockClearAll()
+{
+    for(int i = 0; i < BLOCK_MAX; ++i)
+    {
+        //the enemies will ignore blocks with a very low or high X position
+        BlockX[i] = std::numeric_limits<int>::min();
+        BlockY[i] = std::numeric_limits<int>::min();
+
+        //the player will ignore a extremely high block type
+        BlockType[i] = (EBlockType)std::numeric_limits<int>::max();
+
+        BlockSubType[i] = EBlockSubType::NONE;
+
+        BlockAITimer[i] = 0;
+        BlockItemCount[i] = 0;
+    }
+
+    BlockCount = 0;
+}
+
+void GroundClearAll()
+{
+    for(int i = 0; i < GROUND_MAX; ++i)
+    {
+        GroundX[i] = std::numeric_limits<int>::min();
+        GroundY[i] = std::numeric_limits<int>::min();
+        GroundSizeX[i] = std::numeric_limits<int>::min();
+        GroundSizeY[i] = std::numeric_limits<int>::min();
+
+        GroundType[i] = EObjectType::VERTICAL_PIPE_BODY;
+        GroundSubType[i] = 0;
+
+        GroundVelY[i] = 0;
+        GroundAI[i] = 0;
+    }
+
+    GroundCount = 0;
+}
+
 // ブロック出現 (Block appears)
 
-void BlockCreate(int x, int y, EBlockType type)
+void BlockCreateLegacy(int x, int y, EBlockType type)
 {
 
 	BlockX[BlockCount] = x * 100;
