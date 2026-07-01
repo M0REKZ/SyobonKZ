@@ -1186,6 +1186,7 @@ void HandleEntities()
 }
 
 //+KZ: uhhh i realized about lines like EnemyDefaultSizeX[(int)EnemyAppearType[t]], i dont recommend using EnemyAppear things
+// but seems that EnemyAppear has more space than Enemy it self
 void PlaceEntities()
 {
     // 敵キャラの配置 (Enemy character placement)
@@ -2220,13 +2221,13 @@ void RenderLifts()
     } // t
 }
 
-void CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType EntityType,
+int CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType EntityType,
     EEnemySubType EntitySubType, ELookingDirection LookingDirection, int PlayerNoInteractTimer, int index)
 {
     PosX *= BLOCK_DEFAULT_SIZE;
     PosY *= BLOCK_DEFAULT_SIZE;
 
-    PosY -= 12; //stage() does -12
+    PosY -= 12; //stage() does -12 to blocks, lets be consistent
 
     //the game simulates floating point numbers
     //by multiplying all positions by 100
@@ -2235,27 +2236,10 @@ void CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType
 
     if(index < 0)
     {
-        //search a empty space without replacing other enemies in the level
-        int CheckingIndex = 0;
-
-        while(index < 0)
-        {
-            if(
-                //check for enemies deleted the legacy way,
-                //deleted by enemies, player, etc
-                //(X position less or equal to -800000 (that was for blocks but should work here too xd))
-                EnemyX[CheckingIndex] <= -800000 ||
-
-                //check for blocks deleted by BlockClearAll()
-                EnemyType[CheckingIndex] == (EEnemyType)std::numeric_limits<int>::max()
-            )
-            {
-                index = CheckingIndex;
-            }
-            CheckingIndex++;
-            if(CheckingIndex >= ENEMY_MAX)
-                break;
-        }
+        //use EnemyCount to keep compat with CreateEntityLegacy()
+        index = EnemyCount++;
+        if(EnemyCount == ENEMY_MAX)
+            EnemyCount = 0;
     }
 
     if(index >= 0 && index < ENEMY_MAX)
@@ -2292,6 +2276,8 @@ void CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType
     {
         fprintf(stderr, "CreateEntity - Could not create entity %d %d at %d %d! (index %d)", EntityType, EntitySubType, (int)PosX, (int)PosY, index);
     }
+
+    return index;
 }
 
 void ClearAllEntities()

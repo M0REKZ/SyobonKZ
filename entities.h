@@ -18,8 +18,11 @@ void RenderEnemiesTwo();
 void HandleLifts();
 void RenderLifts();
 
-//+KZ:
-void CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType EntityType,
+//+KZ: new functions for easy use.
+// use index -1 to let this function choose enemy index
+// returns the enemy index if its created successfully
+// NOTE: It does not use EnemyAppear!!
+int CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType EntityType,
 	   EEnemySubType EntitySubType, ELookingDirection LookingDirection = LOOKING_LEFT, int PlayerNoInteractTimer = 0, int index = -1);
 
 //+KZ: clear all entities from memory

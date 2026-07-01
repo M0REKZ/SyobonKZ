@@ -124,7 +124,7 @@ extern int GroundSizeY[GROUND_MAX];
 // @attention +KZ: int stype[smax] is now EObjectType GroundType[smax]
 extern EObjectType GroundType[GROUND_MAX];
 // @attention +KZ: int sxtype[smax] is now GroundSubType[smax]
-extern int GroundSubType[GROUND_MAX];
+extern EObjectSubType GroundSubType[GROUND_MAX];
 // @attention +KZ: int sr[smax] is now GroundVelY[smax]
 extern int GroundVelY[GROUND_MAX];
 // @attention +KZ: int sgtype[smax] is now GroundAI[smax]

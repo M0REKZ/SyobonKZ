@@ -92,8 +92,8 @@ double pai = 3.1415926535;
 int GroundCount;
 int GroundX[GROUND_MAX], GroundY[GROUND_MAX], GroundSizeX[GROUND_MAX], GroundSizeY[GROUND_MAX];
 EObjectType GroundType[GROUND_MAX];
-int GroundSubType[GROUND_MAX],
-    GroundVelY[GROUND_MAX];
+EObjectSubType GroundSubType[GROUND_MAX];
+int GroundVelY[GROUND_MAX];
 int GroundAI[GROUND_MAX];
 
 

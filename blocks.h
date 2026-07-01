@@ -9,13 +9,15 @@ void RenderWalls();
 void RenderOverwritePipe();
 
 //+KZ: new functions for easy use.
-// new BlockCreate function that searchs for empty spaces to create blocks
-// no guarantee it will work well with BlockCreateLegacy (tyobi)
 // use index -1 to let this function choose block index
-void BlockCreate(double x, double y, EBlockType type, EBlockSubType subtype = EBlockSubType::NONE, int index = -1);
+// returns the block index if its created successfully
+int BlockCreate(double x, double y, EBlockType type, EBlockSubType subtype = EBlockSubType::NONE, int index = -1);
 
 //+KZ: clear all blocks from memory
 void BlockClearAll();
+
+//+KZ: like BlockCreate but for Objects
+int GroundCreate(double x, double y, double size_x, double size_y, EObjectType type, EObjectSubType subtype, int index = -1);
 
 //+KZ: clear all objects from memory
 void GroundClearAll();

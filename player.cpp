@@ -1396,7 +1396,7 @@ void HandlePlayerWalls()
                             xx[8] + xx[0] + 3000 &&
                         PlayerX < xx[8] + GroundSizeX[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] + 3000 && GroundAI[t] == 0)
                     {
-                        if (GroundSubType[t] == 0)
+                        if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK)
                         {
                             GroundAI[t] = 1;
                             GroundVelY[t] = 0;
@@ -1406,28 +1406,28 @@ void HandlePlayerWalls()
                             xx[8] + xx[0] + 1000 &&
                         PlayerX < xx[8] + GroundSizeX[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] + 3000 && GroundAI[t] == 0)
                     {
-                        if ((GroundSubType[t] == 10) && GroundAI[t] == 0)
+                        if ((GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY) && GroundAI[t] == 0)
                         {
                             GroundAI[t] = 1;
                             GroundVelY[t] = 0;
                         }
                     }
 
-                    if ((GroundSubType[t] == 1) && GroundY[27] >= 25000 && GroundX[27] > PlayerX + PlayerSizeX && t != 27 && GroundAI[t] == 0)
+                    if ((GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK) && GroundY[27] >= 25000 && GroundX[27] > PlayerX + PlayerSizeX && t != 27 && GroundAI[t] == 0)
                     {
                         GroundAI[t] = 1;
                         GroundVelY[t] = 0;
                     }
-                    if (GroundSubType[t] == 2 && GroundY[28] >= 48000 && t != 28 && GroundAI[t] == 0 && Health >= 1)
+                    if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2 && GroundY[28] >= 48000 && t != 28 && GroundAI[t] == 0 && Health >= 1)
                     {
                         GroundAI[t] = 1;
                         GroundVelY[t] = 0;
                     }
-                    if ((GroundSubType[t] == 3 && PlayerY >= 30000 || GroundSubType[t] == 4 && PlayerY >= 25000) && GroundAI[t] == 0 && Health >= 1 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 3000 - 300 && PlayerX < xx[8] + GroundSizeX[t] - xx[0])
+                    if ((GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP && PlayerY >= 30000 || GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4 && PlayerY >= 25000) && GroundAI[t] == 0 && Health >= 1 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 3000 - 300 && PlayerX < xx[8] + GroundSizeX[t] - xx[0])
                     {
                         GroundAI[t] = 1;
                         GroundVelY[t] = 0;
-                        if (GroundSubType[t] == 4)
+                        if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4)
                             GroundVelY[t] = 100;
                     }
 
@@ -1502,39 +1502,39 @@ void HandlePlayerWalls()
                 {
                     if (PlayerX + PlayerSizeX > xx[8] + 2800 && PlayerX < xx[8] + GroundSizeX[t] - 3000 && PlayerY + PlayerSizeY > xx[9] - 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && actaon[3] == 1 && PlayerState == 0)
                     {
-                        // 飛び出し
-                        if (GroundSubType[t] == 0)
+                        // 飛び出し (Jumping out) //+KZ: ??
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_ROCKET)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 0;
                         }
-                        // 普通
-                        if (GroundSubType[t] == 1)
+                        // 普通 (Normal)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 1;
                         }
-                        // 普通
-                        if (GroundSubType[t] == 2)
+                        // 普通 (Normal)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_LAVA)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 2;
                         }
-                        if (GroundSubType[t] == 5)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 5;
                         }
-                        // ループ
-                        if (GroundSubType[t] == 6)
+                        // ループ (Loop) //+KZ: ????
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
@@ -1549,8 +1549,8 @@ void HandlePlayerWalls()
                 {
                     if (PlayerX + PlayerSizeX > xx[8] - 300 && PlayerX < xx[8] + GroundSizeX[t] - 1000 && PlayerY > xx[9] + 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && actaon[4] == 1 && PlayerState == 0)
                     { // end();
-                        // 飛び出し
-                        if (GroundSubType[t] == 0)
+                        // 飛び出し (Jumping out)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON)
                         {
                             PlayerState = 500;
                             PlayerAITimer = 0;
@@ -1559,15 +1559,15 @@ void HandlePlayerWalls()
                             PlayerSubState = 10;
                         }
 
-                        if (GroundSubType[t] == 2)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION)
                         {
                             PlayerSubState = 3;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]); // mxtype=1;
                             PlayerState = 100;
                         }
-                        // ループ
-                        if (GroundSubType[t] == 6)
+                        // ループ (Loop) //+KZ: ????????????
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_PLUS_10_SECTION)
                         {
                             PlayerState = 3;
                             PlayerAITimer = 0;
@@ -1584,7 +1584,7 @@ void HandlePlayerWalls()
                 {
                     if (GroundType[t] == EObjectType::TRIGGER_SEAL_UP)
                     {
-                        if (GroundSubType[t] == 0 || GroundSubType[t] == 1 && BlockType[1] != EBlockType::ITEM_BLOCK_OPEN)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_SEAL_UP_NORMAL || GroundSubType[t] == EObjectSubType::TRIGGER_SEAL_UP_LEVEL_1_2 && BlockType[1] != EBlockType::ITEM_BLOCK_OPEN)
                         {
                             CreateEntityLegacy(GroundX[t] + 1000, 32000, 0, 0, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
                             GroundX[t] = -800000000;
@@ -1599,7 +1599,7 @@ void HandlePlayerWalls()
                     }
                     if (GroundType[t] == EObjectType::TRIGGER_GENERIC_1)
                     {
-                        if (GroundSubType[t] == 0)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_4_BALLS)
                         {
                             for (t3 = 0; t3 <= 3; t3++)
                             {
@@ -1608,41 +1608,46 @@ void HandlePlayerWalls()
                                              -3000, 0, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
                             }
                         }
-                        if (GroundSubType[t] == 1 && PlayerY >= 16000)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP && PlayerY >= 16000)
                         {
                             CreateEntityLegacy(GroundX[t] +
                                              1500,
                                          44000, 0, -2000, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
                         }
-                        else if (GroundSubType[t] == 2)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_FIRST_KUMA)
                         {
                             CreateEntityLegacy(GroundX[t] +
                                              4500,
                                          30000, 0, -1600, 0, EEnemyType::KUMA, EEnemySubType::NONE);
                             PlaySound(Sounds[10]);
-                            GroundSubType[t] = 3;
+                            GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA;
                             GroundX[t] -= 12000;
                         }
-                        else if (GroundSubType[t] == 3)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA)
                         {
                             GroundX[t] += 12000;
-                            GroundSubType[t] = 4;
+                            GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA;
                         }
-                        else if (GroundSubType[t] == 4)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA)
                         {
                             CreateEntityLegacy(GroundX[t] +
                                              4500,
                                          30000, 0, -1600, 0, EEnemyType::KUMA, EEnemySubType::NONE);
                             PlaySound(Sounds[10]);
-                            GroundSubType[t] = 5;
-                            GroundSubType[t] = 0;
+                            //GroundSubType[t] = 5; //+KZ: xD? it is set to 0 just after
+
+                            //+KZ: setting this value here will go inside a if thats below everything,
+                            //which will teleport this trigger object out of bounds
+                            //
+                            //why chiku didnt just did that here like in other subtypes?
+                            GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_4_BALLS;
                         }
 
-                        else if (GroundSubType[t] == 7)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE)
                         {
                             mainmsgtype = 1;
                         }
-                        else if (GroundSubType[t] == 8)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THIRD_KUMA)
                         {
                             CreateEntityLegacy(GroundX[t] -
                                              5000 -
@@ -1650,7 +1655,7 @@ void HandlePlayerWalls()
                                          26000, 0, -1600, 0, EEnemyType::KUMA, EEnemySubType::NONE);
                             PlaySound(Sounds[10]);
                         }
-                        else if (GroundSubType[t] == 9)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THREE_SEALS)
                         {
                             for (t3 = 0; t3 <= 2; t3++)
                             {
@@ -1661,13 +1666,13 @@ void HandlePlayerWalls()
                                              48000, 0, -6000, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
                             }
                         }
-                        if (GroundSubType[t] == 10)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN)
                         {
                             GroundX[t] -= 5 * 30 * 100;
                             GroundType[t] = EObjectType::TRIGGER_SEAL_DOWN;
                         }
 
-                        if (GroundSubType[t] == 12)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA)
                         {
                             for (t3 = 1; t3 <= 3; t3++)
                             {
@@ -1678,13 +1683,13 @@ void HandlePlayerWalls()
                                              40000, 0, -2600, 0, EEnemyType::MAGMA, EEnemySubType::NONE);
                             }
                         }
-                        // スクロール消し
-                        if (GroundSubType[t] == 20)
+                        // スクロール消し (Scrolling off)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF)
                         {
                             scrollx = 0;
                         }
-                        // クリア
-                        if (GroundSubType[t] == 30)
+                        // クリア (Clear)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_CLEAR_GAME)
                         {
                             GroundX[t] = -80000000;
                             PlayerVelY = 0;
@@ -1694,7 +1699,9 @@ void HandlePlayerWalls()
                             PlaySound(Sounds[16]);
                         }
 
-                        if (GroundSubType[t] != 3 && GroundSubType[t] != 4 && GroundSubType[t] != 10)
+                        if (GroundSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA &&
+                            GroundSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA
+                            && GroundSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN)
                         {
                             GroundX[t] = -800000000;
                         }
@@ -1702,7 +1709,7 @@ void HandlePlayerWalls()
 
                     if (GroundType[t] == EObjectType::TRIGGER_LASER)
                     {
-                        if (GroundSubType[t] == 0)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_LASER_NORMAL)
                         {
                             EnemyMessageTimer[EnemyCount] = 10;
                             EnemyMessageType[EnemyCount] = 50;
@@ -1712,7 +1719,7 @@ void HandlePlayerWalls()
                             GroundX[t] = -800000000;
                         }
 
-                        if (GroundSubType[t] == 1 && (int)BlockType[6] <= 6)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_LASER_LEVEL_1_3 && (int)BlockType[6] <= 6)
                         {
                             EnemyMessageTimer[EnemyCount] = 10;
                             EnemyMessageType[EnemyCount] = 50;
@@ -1726,7 +1733,7 @@ void HandlePlayerWalls()
 
                     if (GroundType[t] == EObjectType::TRIGGER_MULTI_LASER)
                     {
-                        if (GroundSubType[t] == 0)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_MULTI_LASER_ACTIVE)
                         {
                             CreateEntityLegacy(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_HORIZONTAL);
                             CreateEntityLegacy(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_10_DEGREE_UP);
@@ -1741,8 +1748,8 @@ void HandlePlayerWalls()
                     {
                         BlockX[1] -= 1000;
                         BlockX[2] += 1000;
-                        GroundSubType[t]++;
-                        if (GroundSubType[t] >= 3)
+                        GroundSubType[t] = (EObjectSubType)((int)GroundSubType[t] + 1);
+                        if (GroundSubType[t] >= EObjectSubType::TRIGGER_PLATFORM_SPLIT_TIMER_END)
                             GroundX[t] = -8000000;
                     }
 
