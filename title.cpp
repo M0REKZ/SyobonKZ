@@ -3,6 +3,8 @@
 #include "title.h"
 #include "levels.h"
 #include "player.h"
+#include "entities.h"
+#include "extra_graphics.h"
 
 static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
 static std::string author = "";
@@ -193,11 +195,24 @@ void UpdateTitleScreen()
         stage();
     }
 
+    fast = 0;
+
     HandlePlayer();
+
+    actaon[0] = 0;
+    actaon[4] = 0;
+
+    HandleLifts();
+
+    HandleExtraGraphics();
+
+    PlaceEntities();
+    HandleEntities();
 }
 
 void RenderTitleScreen()
 {
+    int author_y = 30;
     if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
     {
         //setcolor(160, 180, 250);
@@ -209,17 +224,6 @@ void RenderTitleScreen()
 
         drawimage(Main_GFX[30], 240 - 380 / 2, 60);
 
-        drawimage(Sliced_GFX[0][4], 12 * 30, 10 * 29 - 12);
-        drawimage(Sliced_GFX[1][4], 6 * 30, 12 * 29 - 12);
-
-        /*// プレイヤー (Player)
-        drawimage(Sliced_GFX[0][0], 2 * 30, 12 * 29 - 12 - 6);
-        for (t = 0; t <= 16; t++)
-        {
-            drawimage(Sliced_GFX[5][1], 29 * t, 13 * 29 - 12);
-            drawimage(Sliced_GFX[6][1], 29 * t, 14 * 29 - 12);
-        }*/
-
         setcolor(0, 0, 0);
         str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
     }
@@ -228,21 +232,15 @@ void RenderTitleScreen()
         //setcolor(160, 180, 250);
         //fillrect(0, 0, fxmax, fymax);
 
-        drawimage(Main_GFX_KZ[1], 240 - Main_GFX_KZ[1]->w / 2, 60);
+        drawimage(Main_GFX_KZ[1], 240 - Main_GFX_KZ[1]->w / 2, 20);
 
         //+KZ
         setcolor(0, 0, 0);
         str(PLUSKZ_REMAKE_TEXT, 480 / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, 120);
 
-        /*//Player
-        drawimage(Sliced_GFX[0][0], 2 * 30, 12 * 29 - 12 - 6);
-        for (t = 0; t <= 16; t++)
-        {
-            drawimage(Sliced_GFX[5][1], 29 * t, 13 * 29 - 12);
-            drawimage(Sliced_GFX[6][1], 29 * t, 14 * 29 - 12);
-        }*/
+        author_y = 60;
     }
 
     setc0();
-    str(author, 480 / 2 - (author.length() * 9) / 2, 30);
+    str(author, 480 / 2 - (author.length() * 9) / 2, author_y);
 }

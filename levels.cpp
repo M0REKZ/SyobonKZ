@@ -291,6 +291,10 @@ void HandleSyobonActionOneLevels()
             BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
             BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
         }
+
+        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EDecorationType::GRASS);
+        CreateBackground(GAME_X_POS_TO_DOUBLE(12 * 30 * 100), 10, EDecorationType::HILL);
+
         return;
     }
     // 1-1
@@ -6462,11 +6466,42 @@ void HandleSyobonActionThreeLevels()
     {
         scrollx = 0;
 
+        PlayerX = (2 * 29) * 100 - 350;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
+
         for(int grounds = 0; grounds < 20; grounds++)
         {
             BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
             BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
         }
+
+        GroundCreate(3, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(3 + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 5, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
+
+        CreateBackground(3, 10, EDecorationType::HILL);
+        
+        //Poison mushroom
+        BlockCreate(9, 9, EBlockType::ITEM_BLOCK_OPEN);
+        int entity_index = CreateEntity(9, 9, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::NONE);
+        if(entity_index >= 0)
+            EnemyBlockAppearTimer[entity_index] = 16;
+
+        //here originally Syobon Action 3 hides the real player xd
+        BlockCreate(11, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(12, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(13, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(11, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(12, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(13, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(12, 10, EBlockType::HARD_BLOCK);
+
+        CreateBackground(14, 12, EDecorationType::GRASS);
+        CreateBackground(12, 10 - 5.724, EDecorationType::CLOUD);
+        CreateBackground(2, 3, EDecorationType::CLOUD);
+        CreateBackground(7, 2.5, EDecorationType::CLOUD_SMALL);
+        CreateBackground(15, 1.2, EDecorationType::CLOUD_SMALL);
+
+        return;
     }
     //has code from SA:All Stars (though i deleted and modified it a lot)
     else if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
@@ -6540,14 +6575,13 @@ void HandleSyobonActionThreeLevels()
         //pipes for each 4 blocks
         for(int i = 0; i < 5; i++)
         {
-            GroundCreate(27 + (i * 4), 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
             if(i == 0)
             {
-                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
             }
             else
             {
-                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
+                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
         
                 if(i != 4)
                 {
@@ -6555,9 +6589,11 @@ void HandleSyobonActionThreeLevels()
                 }
                 else
                 {
-                    GroundCreate(27.25 + (i * 4), 0, 1.5, 9, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS);
+                    GroundCreate(27.25 + (i * 4), 0, 1.5, 8.5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS);
                 }
             }
+
+            GroundCreate(27 + (i * 4), 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
         }
 
         //remaining code from all stars xd
