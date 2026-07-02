@@ -18,7 +18,7 @@
 
     SDL_Surface *SyobonKZZoomSurface(SDL_Surface *image, double zoomx, double zoomy, int smooth)
     {
-        SDL_Surface * zoomed = SDL_CreateSurface(image->w, image->h, SDL_PIXELFORMAT_RGBA8888);
+        SDL_Surface * zoomed = SDL_CreateSurface(SDL_abs(image->w * zoomx), SDL_abs(image->h * zoomy), SDL_PIXELFORMAT_RGBA8888);
 
         if(!zoomed)
         {
@@ -35,7 +35,7 @@
         destrect.w = SDL_abs(image->w * zoomx);
         destrect.h = SDL_abs(image->h * zoomy);
 
-        SDL_BlitSurface(image, &srcrect, zoomed, &destrect);
+        SDL_BlitSurfaceScaled(image, &srcrect, zoomed, &destrect, SDL_SCALEMODE_PIXELART);
         SDL_FlipSurface(zoomed,
             zoomx < 0 ? (zoomy < 0 ? SDL_FLIP_HORIZONTAL_AND_VERTICAL :
             SDL_FLIP_HORIZONTAL) : (zoomy < 0 ? SDL_FLIP_VERTICAL :

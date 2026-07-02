@@ -399,6 +399,7 @@ extern long stimeZ;
 
 //+KZ
 #define PLUSKZ_EDITION_TEXT "+KZ Edition"
+#define PLUSKZ_REMAKE_TEXT "+KZ Remake"
 
 //misc useful defines
 #define BLOCK_DEFAULT_SIZE 29

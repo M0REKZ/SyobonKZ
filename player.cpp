@@ -1078,6 +1078,15 @@ void HandlePlayerBlocks()
                             CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, EEnemySubType::MUSHROOM_GROW);
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_POISONOUS_FASTER)
                             CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::MUSHROOM_POISONOUS_FASTER);
+
+                        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                        {
+                            if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_SA3_TRAP)
+                            {
+                                CreateExtraGraphic(GAME_X_POS_TO_DOUBLE(BlockX[t]), GAME_Y_POS_TO_DOUBLE(BlockY[t]), 0, -0.5, 0, 0, 1, 1, EExtraGraphicType::SA3_MUSHROOM, 50);
+                                GroundCreate(22.5, 0, 4, 13, EObjectType::SA3_TRIGGER_BIG_MUSHROOM_FALL, EObjectSubType::NONE);
+                            }
+                        }
                     }
                 } // 102
 
@@ -1774,7 +1783,7 @@ void HandlePlayerWalls()
                         if(GroundType[t] == EObjectType::SA3_TRIGGER_FAST_SEAL_UP)
                         {
                             {
-                                if(GroundSubType[t] == EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_2_SEALS)
+                                if(GroundSubType[t] == EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS)
                                 {
                                     CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
                                     CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 3.25, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
@@ -1788,6 +1797,12 @@ void HandlePlayerWalls()
                                 GroundX[t] = -800000000;
                                 PlaySound(Sounds[10]);
                             }
+                        }
+                        else if(GroundType[t] == EObjectType::SA3_TRIGGER_BIG_MUSHROOM_FALL)
+                        {
+                            CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]), -4, 0, 1, EEnemyType::SA3_BIG_MUSHROOM_FALLING, EEnemySubType::NONE);
+                            
+                            GroundX[t] = -9999999;
                         }
                     }
                 }

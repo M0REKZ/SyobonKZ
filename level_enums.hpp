@@ -297,6 +297,7 @@ enum class EObjectType : int
 
     SA3_TRIGGER_START,
     SA3_TRIGGER_FAST_SEAL_UP = SA3_TRIGGER_START,
+    SA3_TRIGGER_BIG_MUSHROOM_FALL,
     SA3_TRIGGER_END,
 };
 
@@ -390,6 +391,9 @@ enum class EExtraGraphicType : int
     LIFT_FRAGMENT_LEFT = 2,
     LIFT_FRAGMENT_RIGHT = 3,
     GOAL_POLE = 4,
+
+    //Syobon Action 3
+    SA3_MUSHROOM,
 };
 
 // @note FIREBAR_CLOCKWISE and FIREBAR_COUNTERCLOCKWISE uses EnemySubType as their length
@@ -579,7 +583,7 @@ enum class EObjectSubType : int
 
     //Syobon Action 3
     SA3_TRIGGER_FAST_SEAL_UP_1_SEAL = 0,
-    SA3_TRIGGER_FAST_SEAL_UP_2_SEALS = 1,
+    SA3_TRIGGER_FAST_SEAL_UP_4_SEALS = 1,
 };
 
 #endif

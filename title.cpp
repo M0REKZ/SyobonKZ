@@ -139,6 +139,25 @@ void HandleTitleKeys()
 
 void RenderTitleScreen()
 {
+    static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
+    static std::string author = "";
+
+    if(prevGame != currentGame)
+    {
+        switch (currentGame)
+        {
+        case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+            author = "Originally by Chiku & Bluvel";
+            break;
+        
+        case ESyobonActionGame::SYOBON_ACTION_3:
+            author = "Originally by DakaArts";
+            break;
+        }
+
+        prevGame = currentGame;
+    }
+
     if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
     {
         setcolor(160, 180, 250);
@@ -146,7 +165,7 @@ void RenderTitleScreen()
 
         //+KZ
         setcolor(0, 0, 0);
-        str(PLUSKZ_EDITION_TEXT, 480 / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 10) / 2, 120);
+        str(PLUSKZ_EDITION_TEXT, 480 / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 120);
 
         drawimage(Main_GFX[30], 240 - 380 / 2, 60);
 
@@ -173,7 +192,7 @@ void RenderTitleScreen()
 
         //+KZ
         setcolor(0, 0, 0);
-        str(PLUSKZ_EDITION_TEXT, 480 / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 10) / 2, 120);
+        str(PLUSKZ_REMAKE_TEXT, 480 / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, 120);
 
         //Player
         drawimage(Sliced_GFX[0][0], 2 * 30, 12 * 29 - 12 - 6);
@@ -183,4 +202,7 @@ void RenderTitleScreen()
             drawimage(Sliced_GFX[6][1], 29 * t, 14 * 29 - 12);
         }
     }
+
+    setc0();
+    str(author, 480 / 2 - (author.length() * 9) / 2, 30);
 }

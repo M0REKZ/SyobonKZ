@@ -83,6 +83,50 @@ void HandleEntities()
         xx[14] = 12000 * 1;
         if (EnemyPlayerNoInteractTimer[t] >= 0)
             EnemyPlayerNoInteractTimer[t]--;
+
+        // Syobon Action 3
+        if (currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+        {
+            bool handled = false;
+            //update
+            switch (EnemyType[t])
+            {
+            case EEnemyType::SA3_BIG_MUSHROOM_FALLING:
+
+                if(EnemyX[t] <= -900000)
+                    break;
+
+                azimentype[t] = 5;
+                EnemyY[t] += EnemyVelY[t];
+                EnemySizeX[t] = EnemySizeY[t] = DOUBLE_TO_GAME_X_POS(4);
+
+                if(EnemyY[t] > DOUBLE_TO_GAME_Y_POS(20))
+                {
+                    EnemyX[t] = -999999;
+                }
+
+                handled = true;
+
+                break;
+            
+            default:
+                break;
+            }
+
+            int local_xx_14 = 12000;
+            if ((EnemyX[t] - fx) + EnemySizeX[t] >= -local_xx_14 && (EnemyX[t] - fx) <= fxmax + local_xx_14 &&
+                (EnemyY[t] - fy) + EnemySizeY[t] >= -10 - 9000 && (EnemyY[t] - fy) <= fymax + 20000)
+            {
+
+                if(EnemyType[t] > EEnemyType::LAST_LEGACY_ENEMY)
+                {
+                    HandleBlocksKZ();
+                }
+            }
+
+            if(handled)
+                continue;
+        }
         if (xx[0] + xx[2] >= -xx[14] && xx[0] <= fxmax + xx[14] && xx[1] + xx[3] >= -10 - 9000 && xx[1] <= fymax + 20000)
         {
             aacta[t] = 0;
@@ -93,12 +137,7 @@ void HandleEntities()
             switch (EnemyType[t])
             {
             //+KZ: These were not in the switch, however, since now they are a enum class, excluding them will give a warning
-            case EEnemyType::BURNING_FLOWER:
-            case EEnemyType::FALLING_BLOCK:
-            case EEnemyType::FALLING_BLOCK_2:
-            case EEnemyType::KUKURRU:
-            case EEnemyType::MYSTERY_BALL:
-            case EEnemyType::UNKNOWN_ID_50:
+            default:
                 break;
 
             case EEnemyType::BALL:
@@ -1607,6 +1646,14 @@ void RenderEnemies()
     // 敵キャラ (Enemy character)
     for (t = 0; t < ENEMY_MAX; t++)
     {
+        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+        {
+            if(EnemyType[t] == EEnemyType::SA3_BIG_MUSHROOM_FALLING && EnemyX[t] >= -900000)
+            {
+                SyobonKZDrawGraphScaled((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, 4, 4, Sliced_GFX[1][2]);
+                continue;
+            }
+        }
 
         xx[0] = EnemyX[t] - fx;
         xx[1] = EnemyY[t] - fy;
@@ -1855,33 +1902,6 @@ void RenderEnemiesTwo()
                 }
             }
         }
-
-        // Syobon Action 3
-        if (currentGame == ESyobonActionGame::SYOBON_ACTION_3)
-        {
-            int local_xx_14 = 12000 * 1;
-            if ((EnemyX[t] - fx) + EnemySizeX[t] >= -local_xx_14 && (EnemyX[t] - fx) <= fxmax + local_xx_14 &&
-                (EnemyY[t] - fy) + EnemySizeY[t] >= -10 - 9000 && (EnemyY[t] - fy) <= fymax + 20000)
-            {
-                //update
-                switch (EnemyType[t])
-                {
-                case EEnemyType::SA3_BIG_MUSHROOM_FALLING:
-                    
-                    EnemyY[t] += EnemyVelY[t];
-
-                    break;
-                
-                default:
-                    break;
-                }
-
-                if(EnemyType[t] > EEnemyType::LAST_LEGACY_ENEMY)
-                {
-                    HandleBlocksKZ();
-                }
-            }
-        }
     }
 }
 
@@ -1897,37 +1917,45 @@ void HandleBlocksKZ()
 		xx[9] = BlockY[block_index] - fy;
 		if (BlockX[block_index] - fx + xx[1] >= -12010 && BlockX[block_index] - fx <= fxmax + 12000)
 		{
-			//Above
-            if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + xx[1] - xx[0] * 1 && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] + EnemySizeY[t] - fy < xx[9] + xx[1] && EnemyVelY[t] >= -100)
+            //no need to check left right collision for this one
+            if(EnemyType[t] == EEnemyType::SA3_BIG_MUSHROOM_FALLING)
             {
-                if(EnemyType[t] == EEnemyType::SA3_BIG_MUSHROOM_FALLING)
+                if(
+                    EnemyX[t] + EnemySizeX[t] >= BlockX[block_index] && EnemyX[t] < BlockX[block_index] + xx[1] &&
+                    EnemyY[t] + EnemySizeY[t] >= BlockY[block_index] && EnemyY[t] < BlockY[block_index] + xx[1]
+                )
                 {
                     if(BlockType[block_index] != EBlockType::COIN)
                     {
                         PlaySound(Sounds[3]);
-                        CreateExtraGraphicLegacy(BlockX[tt] + 1200, BlockY[tt] + 1200, 300,
-                            -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                        CreateExtraGraphicLegacy(BlockX[tt] + 1200, BlockY[tt] + 1200,
-                            -300, -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                        CreateExtraGraphicLegacy(BlockX[tt] + 1200, BlockY[tt] + 1200, 240,
-                            -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                        CreateExtraGraphicLegacy(BlockX[tt] + 1200, BlockY[tt] + 1200,
-                            -240, -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                        BlockBreak(tt);
+
+                        CreateExtraGraphic(GAME_X_POS_TO_DOUBLE(BlockX[block_index] + 1200), GAME_Y_POS_TO_DOUBLE(BlockY[block_index] + 1200), GAME_X_POS_TO_DOUBLE(300), GAME_X_POS_TO_DOUBLE(-1000), 0, GAME_X_POS_TO_DOUBLE(160), GAME_X_POS_TO_DOUBLE(1000), GAME_X_POS_TO_DOUBLE(1000), EExtraGraphicType::BLOCK_FRAGMENT, 120);
+
+                        CreateExtraGraphic(GAME_X_POS_TO_DOUBLE(BlockX[block_index] + 1200), GAME_Y_POS_TO_DOUBLE(BlockY[block_index] + 1200), GAME_X_POS_TO_DOUBLE(-300), GAME_X_POS_TO_DOUBLE(-1000), 0, GAME_X_POS_TO_DOUBLE(160), GAME_X_POS_TO_DOUBLE(1000), GAME_X_POS_TO_DOUBLE(1000), EExtraGraphicType::BLOCK_FRAGMENT, 120);
+
+                        CreateExtraGraphic(GAME_X_POS_TO_DOUBLE(BlockX[block_index] + 1200), GAME_Y_POS_TO_DOUBLE(BlockY[block_index] + 1200), GAME_X_POS_TO_DOUBLE(240), GAME_X_POS_TO_DOUBLE(-1400), 0, GAME_X_POS_TO_DOUBLE(160), GAME_X_POS_TO_DOUBLE(1000), GAME_X_POS_TO_DOUBLE(1000), EExtraGraphicType::BLOCK_FRAGMENT, 120);
+
+                        CreateExtraGraphic(GAME_X_POS_TO_DOUBLE(BlockX[block_index] + 1200), GAME_Y_POS_TO_DOUBLE(BlockY[block_index] + 1200), GAME_X_POS_TO_DOUBLE(-240), GAME_X_POS_TO_DOUBLE(-1400), 0, GAME_X_POS_TO_DOUBLE(160), GAME_X_POS_TO_DOUBLE(1000), GAME_X_POS_TO_DOUBLE(1000), EExtraGraphicType::BLOCK_FRAGMENT, 120);
+
+                        BlockBreak(block_index);
                     }
                 }
-                else
+
+                continue;
+            }
+
+
+			//Above
+            if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + xx[1] - xx[0] * 1 && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] + EnemySizeY[t] - fy < xx[9] + xx[1] && EnemyVelY[t] >= -100)
+            {
+                EnemyY[t] = xx[9] - EnemySizeY[t] + 100 + fy;
+                EnemyVelY[t] = 0;
+                axzimen[t] = 1;
+                // ジャンプ台 (Ski jump)
+                if (BlockType[block_index] == EBlockType::TRAMPOLINE)
                 {
-                    EnemyY[t] = xx[9] - EnemySizeY[t] + 100 + fy;
-                    EnemyVelY[t] = 0;
-                    axzimen[t] = 1;
-                    // ジャンプ台 (Ski jump)
-                    if (BlockType[block_index] == EBlockType::TRAMPOLINE)
-                    {
-                        EnemyVelY[t] = -1600;
-                        azimentype[t] = 30;
-                    }
-                    //}
+                    EnemyVelY[t] = -1600;
+                    azimentype[t] = 30;
                 }
             }
 

@@ -80,6 +80,14 @@ void RenderExtraGraphics()
                 setc0();
                 drawarc((xx[0]) / 100 + 15 - 1, (xx[1]) / 100, 10, 10);
             } // 4
+
+            if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+            {
+                if (ExtraGraphicType[t] == EExtraGraphicType::SA3_MUSHROOM)
+                {
+                    drawimage(Sliced_GFX[1][2], (ExtraGraphicX[t] - fx) / 100, (ExtraGraphicY[t] - fy) / 100);
+                }
+            }
         }
     }
 }

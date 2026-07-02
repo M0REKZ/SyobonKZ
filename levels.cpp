@@ -6503,8 +6503,14 @@ void HandleSyobonActionThreeLevels()
 
         CreateEntity(27.5, 8, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
 
+        CreateBackground(1, 2.5, EDecorationType::CLOUD);
+        CreateBackground(10, 2.5, EDecorationType::CLOUD_SMALL);
         CreateBackground(9, 10, EDecorationType::HILL);
-        CreateBackground(33.25, 12, EDecorationType::GRASS);
+        CreateBackground(23, 1.5, EDecorationType::CLOUD);
+        CreateBackground(32, 2.5, EDecorationType::CLOUD_SMALL);
+        CreateBackground(33.24, 12, EDecorationType::GRASS);
+        CreateBackground(42, 2.5, EDecorationType::CLOUD_SMALL);
+        CreateBackground(44, 10, EDecorationType::HILL);
 
         //pipes for each 4 blocks
         for(int i = 0; i < 5; i++)
@@ -6524,7 +6530,7 @@ void HandleSyobonActionThreeLevels()
                 }
                 else
                 {
-                    GroundCreate(27.25 + (i * 4), 0, 1.5, 9, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_2_SEALS);
+                    GroundCreate(27.25 + (i * 4), 0, 1.5, 9, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS);
                 }
             }
         }
