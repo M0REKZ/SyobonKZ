@@ -96,7 +96,7 @@ void HandleEntities()
                 if(EnemyX[t] <= -900000)
                     break;
 
-                azimentype[t] = 5;
+                EnemyMovementType[t] = 5;
                 EnemyY[t] += EnemyVelY[t];
                 EnemySizeX[t] = EnemySizeY[t] = DOUBLE_TO_GAME_X_POS(4);
 
@@ -129,8 +129,8 @@ void HandleEntities()
         }
         if (xx[0] + xx[2] >= -xx[14] && xx[0] <= fxmax + xx[14] && xx[1] + xx[3] >= -10 - 9000 && xx[1] <= fymax + 20000)
         {
-            aacta[t] = 0;
-            aactb[t] = 0;
+            EnemyActionX[t] = 0;
+            EnemyActionY[t] = 0;
 
             xx[10] = 0;
 
@@ -199,7 +199,7 @@ void HandleEntities()
 
                 // あらまき
             case EEnemyType::SEAL:
-                azimentype[t] = 0; // end();
+                EnemyMovementType[t] = 0; // end();
                 if (EnemySubType[t] == EEnemySubType::SEAL_UP)
                 {
                     EnemyY[t] -= 800;
@@ -231,7 +231,7 @@ void HandleEntities()
                            xx[0] * 2) < 3000*/
                     && PlayerVelY <= -600 && EnemyAITimer[t] <= 0)
                 {
-                    if (EnemySubType[t] == EEnemySubType::BALL_SPIKY_JUMPER && PlayerGrounded == 0 && axzimen[t] == 1)
+                    if (EnemySubType[t] == EEnemySubType::BALL_SPIKY_JUMPER && PlayerGrounded == 0 && EnemyGrounded[t] == 1)
                     {
                         EnemyVelY[t] = -1600;
                         EnemyAITimer[t] = 40;
@@ -248,7 +248,7 @@ void HandleEntities()
 
                 // デフラグさん (Defrag-san)
             case EEnemyType::DEFRAG:
-                if (azimentype[t] == 30)
+                if (EnemyMovementType[t] == 30)
                 {
                     EnemyVelY[t] = -1600;
                     EnemyY[t] += EnemyVelY[t];
@@ -301,7 +301,7 @@ void HandleEntities()
                                 EnemyX[t] >=
                                     GroundX[tt] +
                                         2000 &&
-                                EnemyX[t] <= GroundX[tt] + 3600 && axzimen[t] == 1)
+                                EnemyX[t] <= GroundX[tt] + 3600 && EnemyGrounded[t] == 1)
                             {
                                 GroundX[tt] = -800000;
                                 EnemyAITimer[t] = 100;
@@ -385,7 +385,7 @@ void HandleEntities()
 
                 // ジエン大砲
             case EEnemyType::BALL_ROCKET:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
                 if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_0)
@@ -400,37 +400,37 @@ void HandleEntities()
 
                 // スーパーブーン (Super Boon) //+KZ: xD??
             case EEnemyType::SUPER_BOON:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 xx[22] = 20;
                 if (EnemyAITimer[t] == 0)
                 {
-                    af[t] += xx[22];
+                    EnemyFloatingTimer[t] += xx[22];
                     EnemyVelY[t] += xx[22];
                 }
                 if (EnemyAITimer[t] == 1)
                 {
-                    af[t] -= xx[22];
+                    EnemyFloatingTimer[t] -= xx[22];
                     EnemyVelY[t] -= xx[22];
                 }
                 if (EnemyVelY[t] > 300)
                     EnemyVelY[t] = 300;
                 if (EnemyVelY[t] < -300)
                     EnemyVelY[t] = -300;
-                if (af[t] >= 1200)
+                if (EnemyFloatingTimer[t] >= 1200)
                     EnemyAITimer[t] = 1;
-                if (af[t] < -0)
+                if (EnemyFloatingTimer[t] < -0)
                     EnemyAITimer[t] = 0;
                 EnemyY[t] += EnemyVelY[t];
                 // atype[t]=151;
                 break;
                 // ノーマルブーン (Normal Boon)
             case EEnemyType::NORMAL_BOON:
-                azimentype[t] = 2;
+                EnemyMovementType[t] = 2;
                 break;
 
                 // ファイアー玉 (Fireball)
             case EEnemyType::MAGMA:
-                azimentype[t] = 5;
+                EnemyMovementType[t] = 5;
                 EnemyY[t] += EnemyVelY[t];
                 EnemyVelY[t] += 100;
                 if (EnemyY[t] >= fymax + 1000)
@@ -446,7 +446,7 @@ void HandleEntities()
 
                 // ファイアー (Fire)
             case EEnemyType::FLAME:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
                 if (EnemySubType[t] == EEnemySubType::FLAME_0)
@@ -506,7 +506,7 @@ void HandleEntities()
                 }
                 if (EnemySubType[t] == EEnemySubType::MOLALLA_DEAD)
                 {
-                    azimentype[t] = 0;
+                    EnemyMovementType[t] = 0;
                     EnemyY[t] += EnemyVelY[t];
                     EnemyVelY[t] += 120;
                 }
@@ -514,7 +514,7 @@ void HandleEntities()
 
                 // レーザー (Laser)
             case EEnemyType::LASER:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 xx[10] = 1600;
                 if (EnemySubType[t] == EEnemySubType::LASER_10_DEGREE_UP)
                 {
@@ -540,21 +540,21 @@ void HandleEntities()
 
                 // 雲の敵 (Enemy of the Clouds)
             case EEnemyType::EVIL_CLOUD:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 // xx[10]=100;
                 break;
             case EEnemyType::EVIL_CLOUD_TOUCHED:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 break;
             case EEnemyType::SPIKY_BLOCK:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 break;
             case EEnemyType::SPIKY_BLOCK_TOUCHED:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 break;
 
             case EEnemyType::LAVA_FROM_PIPE:
-                azimentype[t] = 2;
+                EnemyMovementType[t] = 2;
                 break;
 
             case EEnemyType::FAKE_POLE:
@@ -579,7 +579,7 @@ void HandleEntities()
                 break;
 
             case EEnemyType::FALLING_CAT:
-                azimentype[t] = 4;
+                EnemyMovementType[t] = 4;
                 xx[23] = 1000;
                 if (PlayerX >= EnemyX[t] - fx - PlayerSizeX - xx[26] && PlayerX <= EnemyX[t] - fx + EnemySizeX[t] + xx[26])
                 {
@@ -593,7 +593,7 @@ void HandleEntities()
 
                 // ファイアバー (Fire Bar)
             case EEnemyType::FIREBAR_CLOCKWISE:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 if (EnemyX[t] % 10 != 1)
                     EnemyAITimer[t] += 6;
                 else
@@ -629,7 +629,7 @@ void HandleEntities()
 
                 //+KZ: Syobon Action 2 inverted Fire Bar
             case EEnemyType::FIREBAR_COUNTERCLOCKWISE:
-                azimentype[t] = 0;
+                EnemyMovementType[t] = 0;
                 if (EnemyX[t] % 10 != 1)
                     EnemyAITimer[t] += 6;
                 else
@@ -670,7 +670,7 @@ void HandleEntities()
 
                 // おいしいキノコ (Delicious mushrooms)
             case EEnemyType::MUSHROOM:
-                azimentype[t] = 1;
+                EnemyMovementType[t] = 1;
                 xx[10] = 100;
 
                 // ほかの敵を巨大化 (Enlarge other enemies)
@@ -724,7 +724,7 @@ void HandleEntities()
 
                 // 毒キノコ (Poisonous mushrooms)
             case EEnemyType::MUSHROOM_POISONOUS:
-                azimentype[t] = 1;
+                EnemyMovementType[t] = 1;
                 xx[10] = 100;
                 if (EnemySubType[t] == EEnemySubType::MUSHROOM_POISONOUS_FASTER)
                     xx[10] = 200;
@@ -732,9 +732,9 @@ void HandleEntities()
 
                 // 悪スター (Bad Star)
             case EEnemyType::BAD_STAR:
-                azimentype[t] = 1;
+                EnemyMovementType[t] = 1;
                 xx[10] = 200;
-                if (axzimen[t] == 1)
+                if (EnemyGrounded[t] == 1)
                 {
                     EnemyY[t] -= 1200;
                     EnemyVelY[t] = -1400;
@@ -742,7 +742,7 @@ void HandleEntities()
                 break;
 
             case EEnemyType::BALL_NO_COLLISION:
-                azimentype[t] = 1;
+                EnemyMovementType[t] = 1;
                 xx[10] = 100;
                 break;
 
@@ -756,9 +756,9 @@ void HandleEntities()
                 xx[10] = 0;
 
             if (EnemyLookingDirection[t] == 0)
-                aacta[t] -= xx[10];
+                EnemyActionX[t] -= xx[10];
             if (EnemyLookingDirection[t] == 1)
-                aacta[t] += xx[10];
+                EnemyActionX[t] += xx[10];
 
             // 最大値 (Maximum value)
             xx[0] = 850;
@@ -766,26 +766,26 @@ void HandleEntities()
 
             // if (mc>xx[0]){mc=xx[0];}
             // if (mc<-xx[0]){mc=-xx[0];}
-            if (EnemyVelY[t] > xx[1] && azimentype[t] != 5)
+            if (EnemyVelY[t] > xx[1] && EnemyMovementType[t] != 5)
             {
                 EnemyVelY[t] = xx[1];
             }
             // 行動 (Action)
-            EnemyX[t] += aacta[t]; // ab[t]+=aactb[t];
+            EnemyX[t] += EnemyActionX[t]; // ab[t]+=aactb[t];
 
-            if ((azimentype[t] >= 1 || azimentype[t] == -1) && EnemyBlockAppearTimer[t] <= 0)
+            if ((EnemyMovementType[t] >= 1 || EnemyMovementType[t] == -1) && EnemyBlockAppearTimer[t] <= 0)
             {
                 // if (atype[t]==4)end();
 
                 // 移動 (Move)
                 EnemyX[t] += EnemyVelX[t];
-                if (azimentype[t] >= 1 && azimentype[t] <= 3)
+                if (EnemyMovementType[t] >= 1 && EnemyMovementType[t] <= 3)
                 {
                     EnemyY[t] += EnemyVelY[t];
                     EnemyVelY[t] += 120;
                 } // ad[t]+=180;
 
-                if (axzimen[t] == 1)
+                if (EnemyGrounded[t] == 1)
                 {
                     xx[0] = 100;
                     if (EnemyVelX[t] >= 200)
@@ -802,10 +802,10 @@ void HandleEntities()
                     }
                 }
 
-                axzimen[t] = 0;
+                EnemyGrounded[t] = 0;
 
                 // 地面判定 (Ground judgment)
-                if (azimentype[t] != 2)
+                if (EnemyMovementType[t] != 2)
                 {
                     HandleEntitiesBlocks();
                 }
@@ -1259,21 +1259,21 @@ void PlaceEntities()
                 int local_xx_0 = 0; // xx[0] = 0;
                 int local_xx_1 = 0; // xx[1] = 0;
 
-                if (bz[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= fxmax + 2000 && EnemyAppearX[t] - fx < fxmax + 2000 + PlayerVelX && tt == 0)
+                if (EnemyAppearMustPlace[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= fxmax + 2000 && EnemyAppearX[t] - fx < fxmax + 2000 + PlayerVelX && tt == 0)
                 {
                     local_xx_0 = 1;
                     EnemyLookingDirection[EnemyCount] = LOOKING_LEFT;
                 } // && mmuki==1
-                if (bz[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= -400 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] + PlayerVelX && EnemyAppearX[t] - fx < -400 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] && tt == 1)
+                if (EnemyAppearMustPlace[t] == 0 && EnemyAppearTimer[t] < 0 && EnemyAppearX[t] - fx >= -400 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] + PlayerVelX && EnemyAppearX[t] - fx < -400 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] && tt == 1)
                 {
                     local_xx_0 = 1;
                     local_xx_1 = 1;
                     EnemyLookingDirection[EnemyCount] = LOOKING_RIGHT;
                 } // && mmuki==0
-                if (bz[t] == 1 && EnemyAppearX[t] - fx >= 0 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] && EnemyAppearX[t] - fx <= fxmax + 4000 && EnemyAppearY[t] - fy >= -9000 && EnemyAppearY[t] - fy <= fymax + 4000 && EnemyAppearTimer[t] < 0)
+                if (EnemyAppearMustPlace[t] == 1 && EnemyAppearX[t] - fx >= 0 - EnemyDefaultSizeX[(int)EnemyAppearType[t]] && EnemyAppearX[t] - fx <= fxmax + 4000 && EnemyAppearY[t] - fy >= -9000 && EnemyAppearY[t] - fy <= fymax + 4000 && EnemyAppearTimer[t] < 0)
                 {
                     local_xx_0 = 1;
-                    bz[t] = 0;
+                    EnemyAppearMustPlace[t] = 0;
                 } // && xza<=5000// && tyuukan!=1
                 // if (bz[t]==2){local_xx_0=0;local_xx_1=0;}
                 // if (btype[t]>=100){bz[t]=2;}
@@ -1458,7 +1458,7 @@ void HandleEntitiesBlocks()
 			{
 				EnemyY[t] = GroundY[tt] - fy - EnemySizeY[t] + 100 + fy;
 				EnemyVelY[t] = 0;
-				axzimen[t] = 1;
+				EnemyGrounded[t] = 1;
 			}
 
 			if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] + xx[0] && EnemyX[t] - fx < xx[8] + GroundSizeX[tt] - xx[0] && EnemyY[t] - fy > xx[9] + GroundSizeY[tt] - xx[1] && EnemyY[t] - fy < xx[9] + GroundSizeY[tt] + xx[0])
@@ -1496,12 +1496,12 @@ void HandleEntitiesBlocks()
 						{
 							EnemyY[t] = xx[9] - EnemySizeY[t] + 100 + fy;
 							EnemyVelY[t] = 0;
-							axzimen[t] = 1;
+							EnemyGrounded[t] = 1;
 							// ジャンプ台 (Ski jump)
 							if (BlockType[tt] == EBlockType::TRAMPOLINE)
 							{
 								EnemyVelY[t] = -1600;
-								azimentype[t] = 30;
+								EnemyMovementType[t] = 30;
 							}
 							//}
 						}
@@ -1950,12 +1950,12 @@ void HandleBlocksKZ()
             {
                 EnemyY[t] = xx[9] - EnemySizeY[t] + 100 + fy;
                 EnemyVelY[t] = 0;
-                axzimen[t] = 1;
+                EnemyGrounded[t] = 1;
                 // ジャンプ台 (Ski jump)
                 if (BlockType[block_index] == EBlockType::TRAMPOLINE)
                 {
                     EnemyVelY[t] = -1600;
-                    azimentype[t] = 30;
+                    EnemyMovementType[t] = 30;
                 }
             }
 
@@ -2280,13 +2280,13 @@ void HandleLifts()
             // 敵キャラ適用 (Applies to enemy characters)
             for (tt = 0; tt < ENEMY_MAX; tt++)
             {
-                if (azimentype[tt] == 1)
+                if (EnemyMovementType[tt] == 1)
                 {
                     if (EnemyX[tt] + EnemySizeX[tt] - fx > xx[8] + xx[0] && EnemyX[tt] - fx < xx[8] + xx[12] - xx[0] && EnemyY[tt] + EnemySizeY[tt] > xx[11] - 100 && EnemyY[tt] + EnemySizeY[tt] < xx[11] + xx[1] + 500 && EnemyVelY[tt] >= -100)
                     {
                         EnemyY[tt] = xx[9] - EnemySizeY[tt] + 100;
                         EnemyVelY[tt] = 0;
-                        axzimen[tt] = 1;
+                        EnemyGrounded[tt] = 1;
                     }
                 }
             }
@@ -2407,7 +2407,7 @@ int CreateEntity(double PosX, double PosY, double VelX, double VelY, EEnemyType 
 
         EnemyAITimer[index] = 0;
 
-        azimentype[index] = 1;
+        EnemyMovementType[index] = 1;
 
         int Type = (int)EnemyType[index];
 
@@ -2447,12 +2447,12 @@ void ClearAllEntities()
 
         EnemyLookingDirection[i] = LOOKING_LEFT;
 
-        af[i] = 0;
+        EnemyFloatingTimer[i] = 0;
 
-        aacta[i] = 0;
-        aactb[i] = 0;
-        azimentype[i] = 0;
-        axzimen[i] = 0;
+        EnemyActionX[i] = 0;
+        EnemyActionY[i] = 0;
+        EnemyMovementType[i] = 0;
+        EnemyGrounded[i] = 0;
 
         //the player will ignore a extremely high block type
         EnemyType[i] = EEnemyType::BALL;
@@ -2478,7 +2478,7 @@ void ClearAllEntities()
         EnemyAppearType[i] = EEnemyType::BALL;
         EnemyAppearSubType[i] = EEnemySubType::NONE;
 
-        bz[i] = 1;
+        EnemyAppearMustPlace[i] = 1;
     }
 
     EnemyCount = 0;
@@ -2542,7 +2542,7 @@ void CreateEntityLegacy(
                 PlaySound(Sounds[18]);
             }
 
-            azimentype[EnemyCount] = 1;
+            EnemyMovementType[EnemyCount] = 1;
 
             // if (atype[aco]<=30 && atype[aco]!=4)atm[aco]=20;
 

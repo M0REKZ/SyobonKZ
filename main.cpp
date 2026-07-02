@@ -90,7 +90,7 @@ void rpaint()
 	//: Clear screen
 	FillScreen();
 
-	if (SyobonState == ESyobonState::IN_GAME && zxon >= 1)
+	if ((SyobonState == ESyobonState::IN_GAME && InGameInitialized >= 1) || SyobonState == ESyobonState::TITLE)
 	{
 		RenderBackground();
 
@@ -163,10 +163,10 @@ void rpaint()
 		} // tmsgtm
 
 		// メッセージ (Message)
-		if (mainmsgtype >= 1) //+KZ: 1-2 Warp zone
+		if (WarpZoneMessageState >= 1) //+KZ: 1-2 Warp zone
 		{
 			setfont(20, 4);
-			if (mainmsgtype == 1)
+			if (WarpZoneMessageState == 1)
 			{
 				DrawGraphZ(126, 100, apGlobalTexts["WELCOME TO OWATA ZONE"]);
 				for (t2 = 0; t2 <= 2; t2++)
@@ -184,7 +184,7 @@ void rpaint()
 			{
 				if (blackx == 1)
 				{
-					zxon = 0;
+					InGameInitialized = 0;
 				}
 			}
 
@@ -254,10 +254,10 @@ void Mainprogram()
 	{
 
 		//+KZ: Init
-		if (zxon == 0)
+		if (InGameInitialized == 0)
 		{
-			zxon = 1;
-			mainmsgtype = 0;
+			InGameInitialized = 1;
+			WarpZoneMessageState = 0;
 
 			StageColor = ELevelType::OVERWORLD;
 			PlayerX = 5600;
@@ -490,7 +490,7 @@ void Mainprogram()
 		{
 			SyobonStateTimer = 0;
 			SyobonState = ESyobonState::IN_GAME;
-			zxon = 0;
+			InGameInitialized = 0;
 		}
 	} // if (mainZ==10){
 
@@ -499,6 +499,7 @@ void Mainprogram()
 	if (SyobonState == ESyobonState::TITLE)
 	{
 		HandleTitleKeys();
+		UpdateTitleScreen();
 	} // 100
 
 	// 描画 (Drawing)

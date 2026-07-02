@@ -36,7 +36,8 @@ void DestroyPlayerMessageCache()
 
 void HandlePlayer()
 {
-    HandlePlayerInput();
+    if(SyobonState != ESyobonState::TITLE)
+        HandlePlayerInput();
 
     // 加速による移動 (Movement due to acceleration)
     xx[0] = 40;
@@ -194,8 +195,9 @@ void HandlePlayer()
         }
         if (PlayerAITimer >= 100 || fast == 1)
         {
-            zxon = 0;
-            SyobonState = ESyobonState::LIVES_SPLASH;
+            InGameInitialized = 0;
+            if(SyobonState != ESyobonState::TITLE)
+                SyobonState = ESyobonState::LIVES_SPLASH;
             PlayerAITimer = 0;
             mkeytm = 0;
             Lives--;
@@ -238,7 +240,8 @@ void HandlePlayer()
     {
         PlayerAITimer++;
 
-        // 普通の土管
+        // 普通の土管 (ordinary drainpipe)
+        //+KZ: did google translated it wrong? anyways this is where all pipes are handled
         if (PlayerState == 100)
         {
             if (PlayerSubState == 0)
@@ -249,7 +252,7 @@ void HandlePlayer()
                 if (PlayerAITimer <= 16)
                 {
                     PlayerY += 240;
-                    mzz = 100;
+                    PlayerRocketPipeTrapVelY = 100;
                 }
                 if (PlayerAITimer == 17)
                 {
@@ -282,10 +285,10 @@ void HandlePlayer()
                 }
                 if (PlayerAITimer >= 110)
                 {
-                    GroundY[t] -= mzz;
-                    mzz += 80;
-                    if (mzz > 1600)
-                        mzz = 1600;
+                    GroundY[t] -= PlayerRocketPipeTrapVelY;
+                    PlayerRocketPipeTrapVelY += 80;
+                    if (PlayerRocketPipeTrapVelY > 1600)
+                        PlayerRocketPipeTrapVelY = 1600;
                 }
                 if (PlayerAITimer == 160)
                 {
@@ -405,15 +408,16 @@ void HandlePlayer()
                     SyobonLevel = 0;
                     SyobonSection = 0;
                     CurrentPlayerCheckpoint = 0;
-                    zxon = 0;
+                    InGameInitialized = 0;
                 }
                 else
                 {
                     SyobonLevel++;
                     SyobonSection = 0;
-                    zxon = 0;
+                    InGameInitialized = 0;
                     CurrentPlayerCheckpoint = 0;
-                    SyobonState = ESyobonState::LIVES_SPLASH;
+                    if(SyobonState != ESyobonState::TITLE)
+                        SyobonState = ESyobonState::LIVES_SPLASH;
                     SyobonStateTimer = 0;
                 }
             }
@@ -501,9 +505,10 @@ void HandlePlayer()
                     SyobonWorld++;
                     SyobonLevel = 1;
                     SyobonSection = 0;
-                    zxon = 0;
+                    InGameInitialized = 0;
                     CurrentPlayerCheckpoint = 0;
-                    SyobonState = ESyobonState::LIVES_SPLASH;
+                    if(SyobonState != ESyobonState::TITLE)
+                        SyobonState = ESyobonState::LIVES_SPLASH;
                     SyobonStateTimer = 0;
                 }
             }
@@ -666,6 +671,7 @@ void HandlePlayerInput()
     if (CheckHitKey(KEY_INPUT_F1) == 1)
     {
         SyobonState = ESyobonState::TITLE;
+        InGameInitialized = 0; //+KZ
     }
     // if (CheckHitKey(KEY_INPUT_Q)==1){mkeytm=0;}
     if (CheckHitKey(KEY_INPUT_O) == 1)
@@ -1654,7 +1660,7 @@ void HandlePlayerWalls()
 
                         else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE)
                         {
-                            mainmsgtype = 1;
+                            WarpZoneMessageState = 1;
                         }
                         else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THIRD_KUMA)
                         {

@@ -1,5 +1,11 @@
 #include "global_vars.h"
 #include "main.h"
+#include "title.h"
+#include "levels.h"
+#include "player.h"
+
+static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
+static std::string author = "";
 
 void HandleTitleKeys()
 {
@@ -127,7 +133,7 @@ void HandleTitleKeys()
     if (xx[0] == 1)
     {
         SyobonState = ESyobonState::LIVES_SPLASH;
-        zxon = 0;
+        InGameInitialized = 0;
         SyobonStateTimer = 0;
         Lives = 2;
 
@@ -137,10 +143,11 @@ void HandleTitleKeys()
     }
 }
 
-void RenderTitleScreen()
+void UpdateTitleScreen()
 {
-    static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
-    static std::string author = "";
+    //HandleTitleKeys() may have changed the state
+    if(SyobonState != ESyobonState::TITLE)
+        return;
 
     if(prevGame != currentGame)
     {
@@ -156,12 +163,45 @@ void RenderTitleScreen()
         }
 
         prevGame = currentGame;
+
+        InGameInitialized = 0;
     }
 
+    if (InGameInitialized == 0)
+    {
+        InGameInitialized = 1;
+        WarpZoneMessageState = 0;
+
+        StageColor = ELevelType::OVERWORLD;
+        PlayerX = 5600;
+        PlayerY = 32000;
+        PlayerLookingDirection = LOOKING_RIGHT;
+        Health = 1;
+        PlayerVelX = 0;
+        PlayerVelY = 0;
+        PlayerSizeX = 3000;
+        PlayerSizeY = 3600;
+
+        PlayerState = 0;
+
+        fx = 0;
+        fy = 0;
+        fzx = 0;
+        stageonoff = 0;
+
+        StageClear();
+        stage();
+    }
+
+    HandlePlayer();
+}
+
+void RenderTitleScreen()
+{
     if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
     {
-        setcolor(160, 180, 250);
-        fillrect(0, 0, fxmax, fymax);
+        //setcolor(160, 180, 250);
+        //fillrect(0, 0, fxmax, fymax);
 
         //+KZ
         setcolor(0, 0, 0);
@@ -172,21 +212,21 @@ void RenderTitleScreen()
         drawimage(Sliced_GFX[0][4], 12 * 30, 10 * 29 - 12);
         drawimage(Sliced_GFX[1][4], 6 * 30, 12 * 29 - 12);
 
-        // プレイヤー (Player)
+        /*// プレイヤー (Player)
         drawimage(Sliced_GFX[0][0], 2 * 30, 12 * 29 - 12 - 6);
         for (t = 0; t <= 16; t++)
         {
             drawimage(Sliced_GFX[5][1], 29 * t, 13 * 29 - 12);
             drawimage(Sliced_GFX[6][1], 29 * t, 14 * 29 - 12);
-        }
+        }*/
 
         setcolor(0, 0, 0);
         str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
     }
     else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
     {
-        setcolor(160, 180, 250);
-        fillrect(0, 0, fxmax, fymax);
+        //setcolor(160, 180, 250);
+        //fillrect(0, 0, fxmax, fymax);
 
         drawimage(Main_GFX_KZ[1], 240 - Main_GFX_KZ[1]->w / 2, 60);
 
@@ -194,13 +234,13 @@ void RenderTitleScreen()
         setcolor(0, 0, 0);
         str(PLUSKZ_REMAKE_TEXT, 480 / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, 120);
 
-        //Player
+        /*//Player
         drawimage(Sliced_GFX[0][0], 2 * 30, 12 * 29 - 12 - 6);
         for (t = 0; t <= 16; t++)
         {
             drawimage(Sliced_GFX[5][1], 29 * t, 13 * 29 - 12);
             drawimage(Sliced_GFX[6][1], 29 * t, 14 * 29 - 12);
-        }
+        }*/
     }
 
     setc0();

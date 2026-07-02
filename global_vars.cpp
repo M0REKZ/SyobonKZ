@@ -79,10 +79,10 @@ int t, tt, t1, t2, t3, t4;
 
 
 //初期化
-int zxon;//, zzxon; //+KZ: zzxon is unused
+int InGameInitialized;//, zzxon; //+KZ: zzxon is unused
 
 //キーコンフィグ
-int key;//, keytm; //+KZ: keytm is useless
+//int key;//, keytm; //+KZ: keytm is useless... no wait both are useless/unused
 
 //三角関数
 double pai = 3.1415926535;
@@ -99,12 +99,12 @@ int GroundAI[GROUND_MAX];
 
 
 //プレイヤー
-int mainmsgtype;
+int WarpZoneMessageState;
 int PlayerX, PlayerY, PlayerSizeX, PlayerSizeY, Health;
 int PlayerVelX, PlayerVelY, atktm, PlayerWalkAnimTimer, PlayerWalkAnim;
 int Lives = 3;
 
-int PlayerState, PlayerSubState, PlayerAITimer, mzz;
+int PlayerState, PlayerSubState, PlayerAITimer, PlayerRocketPipeTrapVelY;
 int PlayerGrounded;
 ELookingDirection PlayerLookingDirection;
 int mjumptm, mkeytm;
@@ -143,8 +143,8 @@ EExtraGraphicType ExtraGraphicType[EXTRA_GRAPHIC_MAX];
 //敵キャラ
 int EnemyCount;
 int EnemyX[ENEMY_MAX], EnemyY[ENEMY_MAX], EnemySizeX[ENEMY_MAX], EnemySizeY[ENEMY_MAX], EnemyVelX[ENEMY_MAX], EnemyVelY[ENEMY_MAX];
-int af[ENEMY_MAX], EnemyBlockAppearTimer[ENEMY_MAX];
-int aacta[ENEMY_MAX], aactb[ENEMY_MAX], azimentype[ENEMY_MAX], axzimen[ENEMY_MAX];
+int EnemyFloatingTimer[ENEMY_MAX], EnemyBlockAppearTimer[ENEMY_MAX];
+int EnemyActionX[ENEMY_MAX], EnemyActionY[ENEMY_MAX], EnemyMovementType[ENEMY_MAX], EnemyGrounded[ENEMY_MAX];
 EEnemyType EnemyType[ENEMY_MAX];
 EEnemySubType EnemySubType[ENEMY_MAX];
 ELookingDirection EnemyLookingDirection[ENEMY_MAX];
@@ -157,7 +157,7 @@ int EnemyAppearCount;
 int EnemyAppearX[ENEMY_APPEAR_MAX], EnemyAppearY[ENEMY_APPEAR_MAX], EnemyAppearTimer[ENEMY_APPEAR_MAX];
 EEnemyType EnemyAppearType[ENEMY_APPEAR_MAX];
 EEnemySubType EnemyAppearSubType[ENEMY_APPEAR_MAX];
-int bz[ENEMY_APPEAR_MAX];
+int EnemyAppearMustPlace[ENEMY_APPEAR_MAX];
 
 
 //背景

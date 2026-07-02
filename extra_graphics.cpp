@@ -195,6 +195,16 @@ int CreateBackground(double PosX, double PosY, EDecorationType Type, int index)
 
 void ClearAllBackgrounds()
 {
+    for(int index = 0; index < BACKGROUND_MAX; index++)
+    {
+        BackgroundX[index] = std::numeric_limits<int>::min();
+        BackgroundY[index] = std::numeric_limits<int>::min();
+        
+        //game wont render a invalid type
+        BackgroundType[index] = (EDecorationType)std::numeric_limits<int>::max();
+    }
+
+    BackgroundCount = 0;
 }
 
 int CreateExtraGraphic(double PosX, double PosY, double VelX, double VelY, double FrictionX, double FrictionY, double SizeX, double SizeY,

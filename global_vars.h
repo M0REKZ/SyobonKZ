@@ -92,16 +92,12 @@ extern SyobonKZChunk *Sounds[19];
 //10-ステージ前 (10-Before Stage)
 //
 
-//ループ (Loop)
-//+KZ: these should be local variables in many places inside main.cpp
-extern int t, tt, t1, t2, t3, t4;
-
 
 //初期化 (Initialization)
-extern int zxon;//, zzxon; //+KZ: zzxon is unused
+extern int InGameInitialized;//, zzxon; //+KZ: zzxon is unused
 
 //キーコンフィグ (Key Configuration)
-extern int key;//, keytm; //+KZ: keytm is useless
+//extern int key;//, keytm; //+KZ: keytm is useless... no wait both are useless/unused
 
 //三角関数 (Trigonometric functions)
 extern double pai;
@@ -130,10 +126,11 @@ extern int GroundVelY[GROUND_MAX];
 // @attention +KZ: int sgtype[smax] is now GroundAI[smax]
 extern int GroundAI[GROUND_MAX];
 
-
+//@attention +KZ: int mainmsgtype is now int WarpZoneMessageState
+extern int WarpZoneMessageState;
 
 //プレイヤー (Player)
-extern int mainmsgtype;
+// mainmsgtype is not really player related, moved above (and renamed)
 // @attention +KZ: int ma is now int PlayerX
 extern int PlayerX;
 // @attention +KZ: int mb is now int PlayerY
@@ -165,7 +162,9 @@ extern int PlayerState;
 extern int PlayerSubState;
 // @attention +KZ: int mactp is now int PlayerAITimer
 extern int PlayerAITimer;
-extern int mzz;
+// @attention +KZ int mzz is now int PlayerRocketPipeTrapVelY
+// This variable is specific for the rocket pipe trap from 1-1
+extern int PlayerRocketPipeTrapVelY;
 // @attention +KZ: int mzimen is now int PlayerGrounded
 extern int PlayerGrounded;
 enum class EPlayerGroundType
@@ -266,10 +265,22 @@ extern int EnemyVelX[ENEMY_MAX];
 // @attention +KZ: int ad[amax] is now int EnemyVelY[amax]
 extern int EnemyVelY[ENEMY_MAX];
 //extern int ae[amax]; //+KZ: unused, always set to 0
-extern int af[ENEMY_MAX]; //+KZ: for what is this one?
+// @attention +KZ: int af[amax] is now int EnemyFloatingTimer[amax]
+// in Syobon Action 1 & 2 it is only used in SUPER_BOON
+extern int EnemyFloatingTimer[ENEMY_MAX];
 // @attention +KZ: int abrocktm[amax] is now int EnemyBlockAppearTimer[amax]
 extern int EnemyBlockAppearTimer[ENEMY_MAX];
-extern int aacta[ENEMY_MAX], aactb[ENEMY_MAX], azimentype[ENEMY_MAX], axzimen[ENEMY_MAX];
+// @attention +KZ: int aacta[amax] is now int EnemyActionX[amax]
+// it works like a Second kind of VelX, it is set depending of the looking direction by the enemy itself
+extern int EnemyActionX[ENEMY_MAX];
+// @attention +KZ: int aactb[amax] is now int EnemyActionY[amax]
+// unused, seems like the Y axis version of EnemyActionX
+extern int EnemyActionY[ENEMY_MAX];
+// @attention +KZ: int azimentype[amax] is now int EnemyMovementType[amax]
+// affects enemy movement and gravity, if your enemy is floating try using "EnemyMovementType = 1"
+extern int EnemyMovementType[ENEMY_MAX];
+// @attention +KZ int axzimen[amax] is now int EnemyGrounded[amax]
+extern int EnemyGrounded[ENEMY_MAX];
 // @attention +KZ: int atype[amax] is now EEnemyType EnemyType[amax]
 extern EEnemyType EnemyType[ENEMY_MAX];
 // @attention +KZ: int axtype[amax] is now EEnemySubType EnemySubType[amax]
@@ -306,7 +317,8 @@ extern int EnemyAppearTimer[ENEMY_APPEAR_MAX];
 extern EEnemyType EnemyAppearType[ENEMY_APPEAR_MAX];
 // @attention +KZ: int bxtype[bmax] is now EEnemySubType EnemyAppearSubType[bmax]
 extern EEnemySubType EnemyAppearSubType[ENEMY_APPEAR_MAX];
-extern int bz[ENEMY_APPEAR_MAX]; //+KZ: seems like a init indicator
+// @attention +KZ: int bz[bmax] is now int EnemyAppearMustPlace[bmax]
+extern int EnemyAppearMustPlace[ENEMY_APPEAR_MAX];
 
 
 //背景 (Background)
@@ -359,7 +371,10 @@ extern int srsok[LIFT_MAX], srmovep[LIFT_MAX], srmove[LIFT_MAX];
 
 
 //スクロール範囲 (Scroll range)
-extern int fx, fy, fzx, fzy, scrollx, scrolly;
+//+KZ: i still dont rename some of these since i dont understand the purpose of fzx
+extern int fx, fy, fzx, scrollx;
+extern int scrolly; //+KZ: used but never initialized!
+extern int fzy; //+KZ: unused, but i may want to give it a use in the future
 //全体のポイント (Overall points)
 
 //Open Syobon Action: "fma" already exists, so call it something else and add a define
@@ -384,13 +399,15 @@ extern int blacktm, blackx;
 
 
 
-//自由な値 (Free value)
 //+KZ: these should be just local variables in many places
 //  but we can not replace them in a crazy way, make sure
 //  it wont break anything in the game.
+//自由な値 (Free value)
 extern int xx[91];
 extern double xd[11];
 extern std::string xs[31];
+//ループ (Loop)
+extern int t, tt, t1, t2, t3, t4;
 
 
 //タイマー測定 (Timer measurement)

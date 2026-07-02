@@ -50,10 +50,10 @@ void stagecls()
 		EnemyY[t] = 1;
 		EnemyVelX[t] = 0;
 		EnemyVelY[t] = 1;
-		azimentype[t] = 0;
+		EnemyMovementType[t] = 0;
 		EnemyType[t] = EEnemyType::BALL;
 		EnemySubType[t] = EEnemySubType::NONE;
-		af[t] = 0;
+		EnemyFloatingTimer[t] = 0;
 		EnemyAITimer[t] = 0;
 		EnemyBlockAppearTimer[t] = 0;
 		EnemyMessageTimer[t] = 0;
@@ -62,7 +62,7 @@ void stagecls()
 	{
 		EnemyAppearX[t] = -9000000;
 		EnemyAppearY[t] = 1;
-		bz[t] = 1;
+		EnemyAppearMustPlace[t] = 1;
 		EnemyAppearTimer[t] = 0;
 		EnemyAppearSubType[t] = EEnemySubType::NONE;
 	}
@@ -279,6 +279,20 @@ void stagep()
 
 void HandleSyobonActionOneLevels()
 {
+    if(SyobonState == ESyobonState::TITLE)
+    {
+        scrollx = 0;
+
+        PlayerX = (2 * 30) * 100;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
+
+        for(int grounds = 0; grounds < 20; grounds++)
+        {
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
+        }
+        return;
+    }
     // 1-1
     if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
     {
@@ -6443,31 +6457,42 @@ void HandleSyobonActionThreeLevels()
 {
     StageClear();
 
-    //has code from SA:All Stars (though i deleted and modified it a lot)
-    if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
+    //SA3 Title Screen
+    if(SyobonState == ESyobonState::TITLE)
     {
-        scrollx = 120000;
+        scrollx = 0;
+
+        for(int grounds = 0; grounds < 20; grounds++)
+        {
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
+        }
+    }
+    //has code from SA:All Stars (though i deleted and modified it a lot)
+    else if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
+    {
+        scrollx = 240000;
         bgmchange(Music[1]);
-
-        //PlayerX = 1 * BLOCK_DEFAULT_SIZE * 100;
-
-
-        //BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_MUSHROOM_4; //nブロック[nブロックco].xtype = 4;
-        //BlockCreateLegacy(348, 249, EBlockType::ITEM_BLOCK_MUSHROOM);
 
         //Create all the ground
         for(int grounds = 0; grounds < 100; grounds++)
         {
             //holes
             if(
-                grounds == 3 ||
-                grounds == 4 ||
-                grounds == 5 ||
-                grounds == 6
+                (grounds >= 3 && grounds <= 6)
             )
             {
                 BlockCreate(grounds, 7.5, EBlockType::ITEM_BLOCK_HIDDEN);
                 BlockCreate(grounds, 13, EBlockType::ITEM_BLOCK_HIDDEN);
+                continue;
+            }
+
+            if(
+                (grounds >= 50 && grounds <= 54) ||
+                (grounds >= 69 && grounds <= 77) ||
+                (grounds >= 83 && grounds <= 93)
+            )
+            {
                 continue;
             }
 
@@ -6534,8 +6559,8 @@ void HandleSyobonActionThreeLevels()
                 }
             }
         }
-        
 
+        //remaining code from all stars xd
         int t_9 = GroundCount;
         GroundX[t_9] = 8700; //n地面[t_9].a = 8700;
         GroundY[t_9] = 36500; //n地面[t_9].b = 36500;
@@ -6543,6 +6568,35 @@ void HandleSyobonActionThreeLevels()
         GroundSizeY[t_9] = 3000; //n地面[t_9].d = 3000;
         GroundType[t_9] = EObjectType::FALLING_FLOOR; //n地面[t_9].type = 52;
         GroundCount++; //n地面co++;
+
+
+
+        //after the pipes
+
+        BlockCreate(51, 8.5, EBlockType::HARD_BLOCK);
+        BlockCreate(53, 4.5, EBlockType::HARD_BLOCK);
+
+        //spikes trap
+        for(int i = 6; i <= 12; i++)
+        {
+            BlockCreate(55, i, EBlockType::ITEM_BLOCK_OPEN);
+            BlockCreate(64, i + 7, EBlockType::ITEM_BLOCK_OPEN);
+        }
+
+        GroundCreate(65, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(65 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(67, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(67 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+
+
+        BlockCreate(69, 5, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        for(int i = 72; i <= 76; ++i)
+        {
+            BlockCreate(i, 6.5, EBlockType::BRICK);
+        }
+
+        BlockCreate(81, 12, EBlockType::TRAMPOLINE, EBlockSubType::TRAMPOLINE_VISIBLE);
     }
 }
 
