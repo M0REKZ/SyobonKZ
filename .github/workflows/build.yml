@@ -100,7 +100,41 @@ jobs:
         with:
           name: SyobonKZ-windows
           path: build/SyobonKZ-Windows
+  build-macos:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+        
+      - name: Prepare badOS
+        run: |
+          brew install cmake sdl3
 
+      - name: Build SyobonKZ
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          make
+
+      - name: Prepare artifact
+        run: |
+          cd build
+          mkdir SyobonKZ-macOS
+          mv ./SyobonAction ./SyobonKZ-macOS/
+          mv ./res ./SyobonKZ-macOS/
+          mv ./BGM ./SyobonKZ-macOS/
+          mv ./SE ./SyobonKZ-macOS/
+          mv ./text ./SyobonKZ-macOS/
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SyobonKZ-macOS-14
+          path: build/SyobonKZ-macOS
+          
   build-android:
     runs-on: ubuntu-22.04
     steps:
