@@ -2,6 +2,9 @@
 cmake_minimum_required(VERSION 3.20)
 project(SyobonKZ)
 
+set(CMAKE_CXX_STANDARD 11)
+
+
 # Set the name of the executable
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
     set(EXECUTABLE_NAME main)
