@@ -965,6 +965,17 @@ void HandlePlayerBlocks()
                                         }
                                     }
                                 }
+
+                                if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                                {
+                                    if((BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT && xx[16] && PlayerX < xx[8]) ||
+                                    (BlockType[t] == EBlockType::SA3_GRAY_SPIKE_RIGHT && xx[16] && PlayerX + PlayerSizeX > xx[8] + xx[1]))
+                                    {
+                                        PlayerMessageTimer = 30;
+                                        PlayerMessageType = 3;
+                                        Health--;
+                                    }
+                                }
                             }
 
                         } // t3
@@ -1810,6 +1821,11 @@ void HandlePlayerWalls()
                             
                             GroundX[t] = -9999999;
                         }
+                        else if(GroundType[t] == EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1 &&
+                            GroundSubType[t] == EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING)
+                        {
+                            GroundSubType[t] = EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE;
+                        }
                     }
                 }
 
@@ -1822,6 +1838,87 @@ void HandlePlayerWalls()
                         CreateEntityLegacy(GroundX[t], 30000,
                                      SyobonRand(600) - 300,
                                      -1600 - SyobonRand(900), 0, EEnemyType::LAVA_FROM_PIPE, EEnemySubType::NONE);
+                    }
+                }
+
+                if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                {
+                    if(Health > 0 && GroundType[t] == EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1 &&
+                        GroundSubType[t] == EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE)
+                    {
+                        //GroundAI should be the first trap wall block
+                        //GroundAI + 1 should be the second trap wall block
+                        if(GroundAI[t] >= 0 && GroundAI[t] < BLOCK_MAX - 1)
+                        {
+                            if(BlockY[GroundAI[t] + 1] > DOUBLE_TO_GAME_Y_POS(6))
+                            {
+                                GroundVelY[t] = -1;
+                                BlockY[GroundAI[t] + 1] -= DOUBLE_TO_GAME_X_POS(0.75);
+                                if(BlockY[GroundAI[t] + 1] < DOUBLE_TO_GAME_Y_POS(6))
+                                    BlockY[GroundAI[t] + 1] = DOUBLE_TO_GAME_Y_POS(6);
+                                
+                                for(int block_id_offset = 3; block_id_offset <= 14; block_id_offset += 2)
+                                {
+                                    int id = GroundAI[t] + block_id_offset;
+                                    if(id >= BLOCK_MAX)
+                                        id -= BLOCK_MAX;
+                                    BlockY[id] = BlockY[GroundAI[t] + 1] + DOUBLE_TO_GAME_X_POS(((block_id_offset - 3) / 2) + 1);
+                                }
+                            }
+                            else
+                            {
+                                if(GroundVelY[t] < 0 || GroundVelY[t] >= BLOCK_MAX)
+                                {
+                                    for(int i = 6; i <= 12; i++)
+                                    {
+                                        if(i == 6)
+                                        {
+                                            GroundVelY[t] = BlockCreate(56, i, EBlockType::SA3_GRAY_SPIKE_RIGHT);
+                                        }
+                                        else
+                                        {
+                                            BlockCreate(56, i, EBlockType::SA3_GRAY_SPIKE_RIGHT);
+                                        }
+                                        BlockCreate(63, i, EBlockType::SA3_GRAY_SPIKE_LEFT);
+                                    }
+                                }
+                                else
+                                {
+                                    int scnd = GroundVelY[t] + 1;
+                                    if(scnd >= BLOCK_MAX)
+                                        scnd -= BLOCK_MAX;
+
+                                    if(BlockX[GroundVelY[t]] >= BlockX[scnd])
+                                    {
+                                        GroundSubType[t] = EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_FINISHED;
+                                    }
+                                    else
+                                    {                                    
+                                        for(int spike_offset = 0; spike_offset < 14; spike_offset++)
+                                        {
+                                            int id = GroundVelY[t] + spike_offset;
+                                            if(id >= BLOCK_MAX)
+                                                id -= BLOCK_MAX;
+
+                                            int id2 = GroundAI[t] + spike_offset;
+                                            if(id2 >= BLOCK_MAX)
+                                                id2 -= BLOCK_MAX;
+
+                                            if(spike_offset % 2)
+                                            {
+                                                BlockX[id] -= DOUBLE_TO_GAME_X_POS(0.10);
+                                                BlockX[id2] -= DOUBLE_TO_GAME_X_POS(0.10);
+                                            }
+                                            else
+                                            {
+                                                BlockX[id] += DOUBLE_TO_GAME_X_POS(0.10);
+                                                BlockX[id2] += DOUBLE_TO_GAME_X_POS(0.10);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

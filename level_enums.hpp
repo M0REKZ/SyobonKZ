@@ -109,6 +109,12 @@ enum class EBlockType : int
     MESSAGE_BLOCK_BREAKABLE = 301,
     PSWITCH = 400,
     COIN = 800,
+
+    //end of legacy blocks
+
+    //Syobon Action 3
+    SA3_GRAY_SPIKE_LEFT,
+    SA3_GRAY_SPIKE_RIGHT,
 };
 
 
@@ -298,6 +304,7 @@ enum class EObjectType : int
     SA3_TRIGGER_START,
     SA3_TRIGGER_FAST_SEAL_UP = SA3_TRIGGER_START,
     SA3_TRIGGER_BIG_MUSHROOM_FALL,
+    SA3_TRIGGER_SPIKES_LEVEL_1_1,
     SA3_TRIGGER_END,
 };
 
@@ -584,6 +591,10 @@ enum class EObjectSubType : int
     //Syobon Action 3
     SA3_TRIGGER_FAST_SEAL_UP_1_SEAL = 0,
     SA3_TRIGGER_FAST_SEAL_UP_4_SEALS = 1,
+
+    SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING = 0,
+    SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE = 1,
+    SA3_TRIGGER_SPIKES_LEVEL_1_1_FINISHED = 2,
 };
 
 #endif

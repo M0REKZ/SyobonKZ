@@ -6615,7 +6615,17 @@ void HandleSyobonActionThreeLevels()
         //spikes trap
         for(int i = 6; i <= 12; i++)
         {
-            BlockCreate(55, i, EBlockType::ITEM_BLOCK_OPEN);
+            if(i == 6)
+            {
+                //save first block index for the trap
+                int trap_index = GroundCreate(56, 12.5, 7.5, 0.5, EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1, EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING);
+                if(trap_index >= 0)
+                    GroundAI[trap_index] = BlockCreate(55, i, EBlockType::ITEM_BLOCK_OPEN);
+            }
+            else
+            {
+                BlockCreate(55, i, EBlockType::ITEM_BLOCK_OPEN);
+            }
             BlockCreate(64, i + 7, EBlockType::ITEM_BLOCK_OPEN);
         }
 

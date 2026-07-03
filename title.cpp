@@ -238,7 +238,7 @@ void RenderTitleScreen()
         setcolor(0, 0, 0);
         str(PLUSKZ_REMAKE_TEXT, 480 / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, 120);
 
-        author_y = 60;
+        author_y = 100;
     }
 
     setc0();

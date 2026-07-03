@@ -115,6 +115,22 @@ void RenderBlocks()
                 drawimage(Sliced_GFX[0][2], xx[0] / 100 + 2,
                           xx[1] / 100 + 1);
             }
+
+            if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+            {
+                if(BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT ||
+                    BlockType[t] == EBlockType::SA3_GRAY_SPIKE_RIGHT)
+                {
+                    if(BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT)
+                    {
+                        DrawTurnGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[2]);
+                    }
+                    else
+                    {
+                        DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[2]);
+                    }
+                }
+            }
         }
     }
 }

@@ -54,6 +54,7 @@ void loadg(void)
     // Added by +KZ:
     Main_GFX_KZ[0] = LoadGraph("res/decoration_kz.png");
     Main_GFX_KZ[1] = LoadGraph("res/sa3/title.png", false);
+    Main_GFX_KZ[2] = LoadGraph("res/sa3/spike.png", false);
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
     Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);

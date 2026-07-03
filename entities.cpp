@@ -84,8 +84,11 @@ void HandleEntities()
         if (EnemyPlayerNoInteractTimer[t] >= 0)
             EnemyPlayerNoInteractTimer[t]--;
 
+        int player_pos_x = PlayerX + fx;
+        int player_pos_y = PlayerY + fy;
+
         // Syobon Action 3
-        if (currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+        if (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
         {
             bool handled = false;
             //update
@@ -96,13 +99,19 @@ void HandleEntities()
                 if(EnemyX[t] <= -900000)
                     break;
 
-                EnemyMovementType[t] = 5;
+                EnemyMovementType[t] = 0;
                 EnemyY[t] += EnemyVelY[t];
                 EnemySizeX[t] = EnemySizeY[t] = DOUBLE_TO_GAME_X_POS(4);
 
                 if(EnemyY[t] > DOUBLE_TO_GAME_Y_POS(20))
                 {
                     EnemyX[t] = -999999;
+                }
+
+                if(player_pos_x + PlayerSizeX >= EnemyX[t] && player_pos_x <= EnemyX[t] + EnemySizeX[t] &&
+                    player_pos_y + PlayerSizeY >= EnemyY[t] && player_pos_y <= EnemyY[t] + EnemySizeY[t])
+                {
+                    Health--;
                 }
 
                 handled = true;

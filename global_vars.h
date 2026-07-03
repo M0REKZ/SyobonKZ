@@ -76,8 +76,10 @@ extern SDL_Surface *Sliced_GFX[161][8];
 extern SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
-extern SDL_Surface *Main_GFX_KZ[2]; //+KZ
-extern SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
+#define MAIN_GFX_KZ_MAX 3
+#define SLICED_GFX_KZ_MAX 2
+extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
+extern SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
 
 //+KZ: mirrors the image drawn by drawimage()
 extern int mirror;
