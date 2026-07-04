@@ -262,7 +262,8 @@ void RenderWalls()
             } // 51
 
             // 落ちるやつ (The one that falls)
-            if (GroundType[t] == EObjectType::FALLING_FLOOR)
+            if (GroundType[t] == EObjectType::FALLING_FLOOR || 
+                (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && GroundType[t] == EObjectType::SA3_FALLING_FLOOR))
             {
                 xx[29] = 0;
                 if (StageColor == ELevelType::UNDERGROUND)

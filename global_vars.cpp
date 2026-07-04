@@ -22,10 +22,10 @@ int SyobonLevel;
 int SyobonSection;
 
 //クイック
-int fast = 1;
+int fast = 0;
 
 //トラップ表示
-int TrapDisplay = 1;
+int TrapDisplay = 0;
 
 //中間ゲート
 int CurrentPlayerCheckpoint = 0;

@@ -289,6 +289,8 @@ void parseArgs(int argc, char *argv[])
             printf("    -h, --help               Shows this screen\n");
             printf("    -nosound, --nosound      Muted game\n");
             printf("    --fullscreen             Start in full screen\n");
+            printf("    --trap-display           Show trap triggers (for testing)\n");
+            printf("    --fast-death             Skip death animation\n");
 
             HelpFlagHandled = true;
         }
@@ -299,6 +301,22 @@ void parseArgs(int argc, char *argv[])
         )
         {
             StartFullScreenFlag = true;
+        }
+
+        //TrapDisplay
+        if(
+            !memcmp(argv[i], "--trap-display", sizeof("--trap-display"))
+        )
+        {
+            TrapDisplay = true;
+        }
+
+        //fast death
+        if(
+            !memcmp(argv[i], "--fast-death", sizeof("--fast-death"))
+        )
+        {
+            fast = true;
         }
     }
 }

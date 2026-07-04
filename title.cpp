@@ -139,7 +139,7 @@ void HandleTitleKeys()
         SyobonStateTimer = 0;
         Lives = 2;
 
-        fast = 0;
+        //fast = 0;
         //TrapDisplay = 0;
         CurrentPlayerCheckpoint = 0;
     }
@@ -194,8 +194,6 @@ void UpdateTitleScreen()
         StageClear();
         stage();
     }
-
-    fast = 0;
 
     HandlePlayer();
 

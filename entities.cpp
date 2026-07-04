@@ -228,7 +228,8 @@ void HandleEntities()
 
                 // スーパージエン
             case EEnemyType::BALL_SPIKY:
-                xx[10] = 120;
+                //+KZ: Spiky ball is slower in SA3
+                xx[10] = currentGame != ESyobonActionGame::SYOBON_ACTION_3 ? 120 : 100;
                 xx[0] = 250;
                 xx[8] = EnemyX[t] - fx;
                 xx[9] = EnemyY[t] - fy;

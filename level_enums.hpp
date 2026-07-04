@@ -300,6 +300,7 @@ enum class EObjectType : int
 
     //Syobon Action 3
     SA3_FAKE_PIPE_BODY,
+    SA3_FALLING_FLOOR, //requires player vel y > 0 to activate
 
     SA3_TRIGGER_START,
     SA3_TRIGGER_FAST_SEAL_UP = SA3_TRIGGER_START,

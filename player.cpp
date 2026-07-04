@@ -8,6 +8,10 @@
 
 std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 
+//+KZ for SA3 falling floor
+int prev_player_vel_y = 0;
+int prev_player_grounded = 0;
+
 void CreatePlayerMessageCache()
 {
     Uint32 temp_color = GetColor(255, 255, 255);
@@ -38,6 +42,9 @@ void HandlePlayer()
 {
     if(SyobonState != ESyobonState::TITLE)
         HandlePlayerInput();
+
+    prev_player_vel_y = PlayerVelY;
+    prev_player_grounded = PlayerGrounded;
 
     // 加速による移動 (Movement due to acceleration)
     xx[0] = 40;
@@ -846,7 +853,13 @@ void HandlePlayerBlocks()
                     {
                         xx[21] = 0;
                         xx[22] = 1; // xx[12]=0;
-                        if (PlayerGrounded == 1 || mjumptm >= 10)
+                        if (
+                            /*
+                                +KZ: seems to be some weird logic to avoid checking for roof collision if we are grounded and just started jumping?
+                                    Ill disable it for SA3 for now since this breaks some hidden block traps
+                            */
+                           (currentGame != ESyobonActionGame::SYOBON_ACTION_3) ?
+                            (PlayerGrounded == 1 || mjumptm >= 10) : (PlayerGrounded == 1))
                         {
                             xx[21] = 3;
                             xx[22] = 0;
@@ -1411,8 +1424,22 @@ void HandlePlayerWalls()
 
             xx[8] = GroundX[t] - fx;
             xx[9] = GroundY[t] - fy;
-            if ((GroundType[t] < EObjectType::TRIGGERS_START /* +KZ: it was <= 99 */ ||
-                GroundType[t] == EObjectType::CASTLE_BRICKS) && PlayerState < 10)
+            if ((
+                currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 ?
+                (
+                    //+KZ: allow more objects in other games
+                    GroundType[t] < EObjectType::TRIGGERS_START ||
+                    GroundType[t] == EObjectType::CASTLE_BRICKS ||
+                    (GroundType[t] > EObjectType::LAST_LEGACY_OBJECT &&
+                        !(GroundType[t] >= EObjectType::SA3_TRIGGER_START &&
+                            GroundType[t] <= EObjectType::SA3_TRIGGER_END) &&
+                        GroundType[t] != EObjectType::SA3_FAKE_PIPE_BODY
+                    )
+                )
+                :
+                (GroundType[t] < EObjectType::TRIGGERS_START /* +KZ: it was <= 99 */ ||
+                GroundType[t] == EObjectType::CASTLE_BRICKS)
+             ) && PlayerState < 10)
             {
 
                 // おちるブロック (Falling blocks)
@@ -1473,7 +1500,9 @@ void HandlePlayerWalls()
                     }
                 }
                 // おちるブロック2 (Falling Block 2)
-                if (GroundType[t] == EObjectType::FALLING_FLOOR)
+                if (GroundType[t] == EObjectType::FALLING_FLOOR ||
+                    (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && GroundType[t] == EObjectType::SA3_FALLING_FLOOR && ((prev_player_vel_y > 0 && prev_player_grounded == 0) || GroundAI[t] != 0))
+                )
                 {
                     if (GroundAI[t] == 0 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 2000 && PlayerX < xx[8] + GroundSizeX[t] - xx[0] - 2500 && PlayerY + PlayerSizeY > xx[9] - 3000)
                     {
