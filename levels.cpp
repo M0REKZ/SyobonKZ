@@ -6525,7 +6525,8 @@ void HandleSyobonActionThreeLevels()
             if(
                 (grounds >= 50 && grounds <= 54) ||
                 (grounds >= 69 && grounds <= 77) ||
-                (grounds >= 83 && grounds <= 94)
+                (grounds >= 83 && grounds <= 94) ||
+                (grounds >= 132 && grounds < 140)
             )
             {
                 continue;
@@ -6635,7 +6636,7 @@ void HandleSyobonActionThreeLevels()
         GroundCreate(67 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
 
 
-        BlockCreate(69, 5, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(69, 4.75, EBlockType::ITEM_BLOCK_HIDDEN);
 
         for(int i = 72; i <= 76; ++i)
         {
@@ -6664,6 +6665,7 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(103, 11.5, EBlockType::HARD_BLOCK);
         BlockCreate(103, 10.5, EBlockType::HARD_BLOCK);
         BlockCreate(103, 9.5, EBlockType::HARD_BLOCK);
+        int first_wall_block = -1;
         for(int x_pos = 104; x_pos <= 125; x_pos++)
         {
             if(
@@ -6742,14 +6744,64 @@ void HandleSyobonActionThreeLevels()
             {
                 for(double y_pos = -2.5; y_pos < 3; y_pos++)
                 {
-                    BlockCreate(x_pos, y_pos, EBlockType::ITEM_BLOCK_OPEN);
+                    if(y_pos < -2.0)
+                    {
+                        first_wall_block = BlockCreate(x_pos, y_pos, EBlockType::ITEM_BLOCK_OPEN);
+                    }
+                    else
+                    {
+                        BlockCreate(x_pos, y_pos, EBlockType::ITEM_BLOCK_OPEN);
+                    }
                 }
             }
         }
 
         CreateBackground(114, 1.5, EDecorationType::CLOUD);
 
-        CurrentPlayerCheckpoint = 1;
+        int ind = GroundCreate(117, 1, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
+        GroundAI[ind] = first_wall_block;
+        ind = GroundCreate(121, 10.5, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
+        GroundAI[ind] = -1;
+
+        GroundCreate(130, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(130 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+
+        BlockCreate(132, 5.5, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        for(int x_coin = 132; x_coin < 140; x_coin++)
+        {
+            BlockCreate(x_coin, 11.5, EBlockType::COIN);
+        }
+        //TODO: you should not be able to even touch this floor
+        GroundCreate(132, 13, 8, 2, EObjectType::FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
+
+        GroundCreate(140, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(140 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(140, 0, 2, 11, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
+
+        //plant
+        BlockCreate(148, 12, EBlockType::HARD_BLOCK);
+
+        BlockCreate(149, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(149, 11, EBlockType::HARD_BLOCK);
+
+        BlockCreate(150, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(150, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(150, 10, EBlockType::HARD_BLOCK);
+
+        BlockCreate(151, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(151, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(151, 10, EBlockType::HARD_BLOCK);
+        BlockCreate(151, 9, EBlockType::HARD_BLOCK);
+
+        GroundCreate(152, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(152 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+
+
+
+        //REMOVEMEEE
+        GroundCreate(129, 11, 1, 2, EObjectType::CHECKPOINT, EObjectSubType::NONE);
+        CurrentPlayerCheckpoint = 2;
     }
 }
 

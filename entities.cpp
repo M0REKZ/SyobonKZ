@@ -118,6 +118,40 @@ void HandleEntities()
 
                 break;
             
+            case EEnemyType::SA3_BIG_STONE:
+
+                if(EnemyX[t] <= -900000)
+                    break;
+
+                EnemyMovementType[t] = 0;
+                EnemyX[t] += EnemyVelX[t];
+                EnemySizeX[t] = EnemySizeY[t] = 16000;
+
+                if(player_pos_x + PlayerSizeX >= EnemyX[t] && player_pos_x <= EnemyX[t] + EnemySizeX[t] &&
+                    player_pos_y + PlayerSizeY >= EnemyY[t] && player_pos_y <= EnemyY[t] + EnemySizeY[t])
+                {
+                    Health--;
+                }
+
+                handled = true;
+
+                break;
+
+            case EEnemyType::SEAL:
+                //fast seals some times wont kill the player
+                if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                {
+                    if(player_pos_x + PlayerSizeX >= EnemyX[t] && player_pos_x <= EnemyX[t] + EnemySizeX[t] &&
+                        player_pos_y + PlayerSizeY >= EnemyY[t] && player_pos_y <= EnemyY[t] + EnemySizeY[t])
+                    {
+                        Health--;
+
+                        //set his message ("zzz")
+                        EnemyMessageTimer[t] = 60;
+                        EnemyMessageType[t] = 20;
+                    }
+                }
+            
             default:
                 break;
             }
@@ -1663,6 +1697,12 @@ void RenderEnemies()
                 SyobonKZDrawGraphScaled((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, 4, 4, Sliced_GFX[1][2]);
                 continue;
             }
+            else if(EnemyType[t] == EEnemyType::SA3_BIG_STONE)
+            {
+                int frame = ((int)(EnemyX[t] / 4.f)) % 6;
+                DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[3 + frame]);
+                continue;
+            }
         }
 
         xx[0] = EnemyX[t] - fx;
@@ -1928,7 +1968,8 @@ void HandleBlocksKZ()
 		if (BlockX[block_index] - fx + xx[1] >= -12010 && BlockX[block_index] - fx <= fxmax + 12000)
 		{
             //no need to check left right collision for this one
-            if(EnemyType[t] == EEnemyType::SA3_BIG_MUSHROOM_FALLING)
+            if(EnemyType[t] == EEnemyType::SA3_BIG_MUSHROOM_FALLING ||
+                EnemyType[t] == EEnemyType::SA3_BIG_STONE)
             {
                 if(
                     EnemyX[t] + EnemySizeX[t] >= BlockX[block_index] && EnemyX[t] < BlockX[block_index] + xx[1] &&

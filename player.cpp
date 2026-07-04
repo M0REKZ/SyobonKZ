@@ -1824,7 +1824,7 @@ void HandlePlayerWalls()
                     }
 
                     //Syobon Action 3
-                    if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                    if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
                     {
                         if(GroundType[t] == EObjectType::SA3_TRIGGER_FAST_SEAL_UP)
                         {
@@ -1838,7 +1838,7 @@ void HandlePlayerWalls()
                                 }
                                 else
                                 {
-                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t] + GroundSizeX[t] / 2) - 0.5, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
                                 }
                                 GroundX[t] = -800000000;
                                 PlaySound(Sounds[10]);
@@ -1854,6 +1854,19 @@ void HandlePlayerWalls()
                             GroundSubType[t] == EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING)
                         {
                             GroundSubType[t] = EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE;
+                        }
+                        else if(GroundType[t] == EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1 && Health > 0)
+                        {
+                            CreateEntity(126, 1, -0.2, 0, EEnemyType::SA3_BIG_STONE, EEnemySubType::NONE);
+                            CreateEntity(126, 7, -0.2, 0, EEnemyType::SA3_BIG_STONE, EEnemySubType::NONE);
+                            
+                            GroundX[t] = DOUBLE_TO_GAME_X_POS(108);
+                            GroundType[t] = EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1;
+                        }
+                        else if(GroundType[t] == EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1 &&
+                            GroundSubType[t] == EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_WAITING)
+                        {
+                            GroundSubType[t] = EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_ACTIVE;
                         }
                     }
                 }
@@ -1935,18 +1948,49 @@ void HandlePlayerWalls()
 
                                             if(spike_offset % 2)
                                             {
-                                                BlockX[id] -= DOUBLE_TO_GAME_X_POS(0.10);
-                                                BlockX[id2] -= DOUBLE_TO_GAME_X_POS(0.10);
+                                                BlockX[id] -= DOUBLE_TO_GAME_X_POS(0.02);
+                                                BlockX[id2] -= DOUBLE_TO_GAME_X_POS(0.02);
                                             }
                                             else
                                             {
-                                                BlockX[id] += DOUBLE_TO_GAME_X_POS(0.10);
-                                                BlockX[id2] += DOUBLE_TO_GAME_X_POS(0.10);
+                                                BlockX[id] += DOUBLE_TO_GAME_X_POS(0.02);
+                                                BlockX[id2] += DOUBLE_TO_GAME_X_POS(0.02);
                                             }
                                         }
                                     }
                                 }
                             }
+                        }
+                    }
+                    else if(GroundType[t] == EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1 &&
+                        GroundSubType[t] == EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_ACTIVE)
+                    {
+                        if(GroundAI[t] >= 0 && GroundAI[t] < BLOCK_MAX - 6)
+                        {
+                            for(int wall_offset = 0; wall_offset < 6; wall_offset++)
+                            {
+                                int id = GroundAI[t] + wall_offset;
+                                if(id >= BLOCK_MAX)
+                                    id -= BLOCK_MAX;
+
+                                BlockY[id] += DOUBLE_TO_GAME_X_POS(0.5);
+                            }
+                            if(BlockY[GroundAI[t]] > DOUBLE_TO_GAME_X_POS(-0.6))
+                            {
+                                GroundSubType[t] = EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_FINISHED;
+                                for(int wall_offset = 0; wall_offset < 6; wall_offset++)
+                                {
+                                    int id = GroundAI[t] + wall_offset;
+                                    if(id >= BLOCK_MAX)
+                                        id -= BLOCK_MAX;
+
+                                    BlockY[id] = DOUBLE_TO_GAME_Y_POS(-0.5 + wall_offset);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            GroundSubType[t] = EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_FINISHED;
                         }
                     }
                 }

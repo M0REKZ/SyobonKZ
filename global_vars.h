@@ -76,7 +76,7 @@ extern SDL_Surface *Sliced_GFX[161][8];
 extern SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
-#define MAIN_GFX_KZ_MAX 3
+#define MAIN_GFX_KZ_MAX 11
 #define SLICED_GFX_KZ_MAX 2
 extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
 extern SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ

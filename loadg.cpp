@@ -55,6 +55,14 @@ void loadg(void)
     Main_GFX_KZ[0] = LoadGraph("res/decoration_kz.png");
     Main_GFX_KZ[1] = LoadGraph("res/sa3/title.png", false);
     Main_GFX_KZ[2] = LoadGraph("res/sa3/spike.png", false);
+    Main_GFX_KZ[3] = LoadGraph("res/sa3/big_stone_ball_1.png", false);
+    Main_GFX_KZ[4] = LoadGraph("res/sa3/big_stone_ball_2.png", false);
+    Main_GFX_KZ[5] = LoadGraph("res/sa3/big_stone_ball_3.png", false);
+    Main_GFX_KZ[6] = LoadGraph("res/sa3/big_stone_ball_4.png", false);
+    Main_GFX_KZ[7] = LoadGraph("res/sa3/big_stone_ball_5.png", false);
+    Main_GFX_KZ[8] = LoadGraph("res/sa3/big_stone_ball_6.png", false);
+    Main_GFX_KZ[9] = LoadGraph("res/sa3/jumpscare_plant_1.png", false);
+    Main_GFX_KZ[10] = LoadGraph("res/sa3/jumpscare_plant_2.png", false);
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
     Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);
