@@ -260,7 +260,7 @@ void HandleEntities()
                 // xx[10]=100;
                 break;
 
-                // スーパージエン
+                // スーパージエン (Super Jien)
             case EEnemyType::BALL_SPIKY:
                 //+KZ: Spiky ball is slower in SA3
                 xx[10] = currentGame != ESyobonActionGame::SYOBON_ACTION_3 ? 120 : 100;
@@ -1718,7 +1718,8 @@ void RenderEnemies()
                 mirror = 1;
             }
             if (EnemyType[t] == EEnemyType::SEAL && (EnemySubType[t] == EEnemySubType::SEAL_DOWN) ||
-                (currentGame != ESyobonActionGame::SYOBON_ACTION_3 && EnemySubType[t] == EEnemySubType::SEAL_SYOBONKZ_VERTICAL &&
+                (currentGame != ESyobonActionGame::SYOBON_ACTION_3 && EnemyType[t] == EEnemyType::SEAL &&
+                    EnemySubType[t] == EEnemySubType::SEAL_SYOBONKZ_VERTICAL &&
                     EnemyVelY[t] > 0)
             )
             {

@@ -6799,9 +6799,6 @@ void HandleSyobonActionThreeLevels()
 
 
 
-        //REMOVEMEEE
-        GroundCreate(129, 11, 1, 2, EObjectType::CHECKPOINT, EObjectSubType::NONE);
-        CurrentPlayerCheckpoint = 2;
     }
 }
 
