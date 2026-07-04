@@ -23,7 +23,7 @@ Supported platforms:
 * [x] Linux
 * [x] macOS
 * [x] Android
-* [x] [Web Browsers (with Emscripten)](https://m0rekz.github.io/SyobonKZ/)
+* [x] [Web Browsers (with Emscripten)](https://m0rekz.github.io/SyobonKZ/game.html)
 
 About the license
 -----
