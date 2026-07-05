@@ -100,7 +100,7 @@ Building
 > 
 >    You need the MinGW-w64 toolchain to build this, you can install it by using MSYS2
 >
->    Also make sure you are using *MinGW cmake and make* and NOT other one, otherwise you will get building errors, also when doing the cmake step use ```-G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++``` to make sure it will be built using MinGW
+>    Also make sure you are using *MinGW cmake and make* and NOT other one, otherwise you will get building errors, also when doing the cmake step add ```-G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++``` to make sure it will be built using MinGW
 >
 >    It *could* work by using another toolchain but MinGW-w64 is the only one tested
 
