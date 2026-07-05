@@ -1,5 +1,6 @@
 [![SyobonKZ](https://m0rekz.github.io/SyobonKZ/logo.png)](https://m0rekz.github.io/SyobonKZ/)
 ==================
+[Website](https://m0rekz.github.io/SyobonKZ/)
 ###### Original games developers: 
 * ###### Chiku (ちく) for Syobon Action
 * ###### Bluvel (大川和樹) for Syobon Action 2
