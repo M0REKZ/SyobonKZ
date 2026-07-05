@@ -299,6 +299,8 @@ void parseArgs(int argc, char *argv[])
             printf("    --fullscreen             Start in full screen\n");
             printf("    --trap-display           Show trap triggers (for testing)\n");
             printf("    --fast-death             Skip death animation\n");
+            printf("\n");
+            printf("    --dev-sa3                Enable SA3 (unfinished)\n");
 
             HelpFlagHandled = true;
         }
@@ -325,6 +327,14 @@ void parseArgs(int argc, char *argv[])
         )
         {
             fast = true;
+        }
+
+        //SA3 (for now)
+        if(
+            !memcmp(argv[i], "--dev-sa3", sizeof("--dev-sa3"))
+        )
+        {
+            SA3Enabled = true;
         }
     }
 }

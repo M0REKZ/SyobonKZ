@@ -108,6 +108,8 @@ void HandleTitleKeys()
         if(!change_game_key_pressed)
         {
             currentGame = (ESyobonActionGame)((int)currentGame - 1);
+            if(!SA3Enabled)
+                currentGame = ESyobonActionGame::SYOBON_ACTION_1_AND_2;
             if(currentGame < ESyobonActionGame::FIRST)
             {
                 currentGame = ESyobonActionGame::LAST;
@@ -120,6 +122,8 @@ void HandleTitleKeys()
         if(!change_game_key_pressed)
         {
             currentGame = (ESyobonActionGame)((int)currentGame + 1);
+            if(!SA3Enabled)
+                currentGame = ESyobonActionGame::SYOBON_ACTION_1_AND_2;
             if(currentGame > ESyobonActionGame::LAST)
             {
                 currentGame = ESyobonActionGame::FIRST;

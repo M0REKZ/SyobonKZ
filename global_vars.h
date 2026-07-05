@@ -439,5 +439,6 @@ enum class ESyobonActionGame
     LAST = SYOBON_ACTION_3,
 };
 extern ESyobonActionGame currentGame;
+extern bool SA3Enabled;
 
 #endif
