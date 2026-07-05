@@ -95,6 +95,15 @@ Command Line Arguments
 
 Building
 ------------
+> [!NOTE]
+> **For Windows users:**
+> 
+>    You need the MinGW-w64 toolchain to build this, you can install it by using MSYS2
+>
+>    Also make sure you are using *MinGW cmake and make* and NOT other one, otherwise you will get building errors, also when doing the cmake step use ```-G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++``` to make sure it will be built using MinGW
+>
+>    It *could* work by using another toolchain but MinGW-w64 is the only one tested
+
 This project requires the following SDL3 libraries, they are included in this repository as submodules and they will be compiled when building SyobonKZ:
 
 * CMake
@@ -104,8 +113,8 @@ This project requires the following SDL3 libraries, they are included in this re
 * SDL3_ttf
 * SDL3_gfx
 
-Alternatively you can build SyobonKZ using SDL 1.2 (for old platforms), but note that SDL 1.2 itself
-is NOT included in this repository:
+Alternatively you can build SyobonKZ using SDL 1.2 (for old platforms), **but note that SDL 1.2 itself
+is NOT included in this repository**:
 
 * CMake
 * SDL 1.2 (or sdl12-compat with SDL2)
