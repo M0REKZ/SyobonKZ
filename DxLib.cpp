@@ -357,6 +357,27 @@ bool GetKeyState(Uint32 key)
     }
 }
 
+void SyobonKZDrawGraphScaled(int x, int y, int scale_x, int scale_y, SDL_Surface * psurface)
+{
+    if(psurface)
+    {
+        SDL_Rect srcrect;
+        srcrect.x = srcrect.y = 0;
+        srcrect.w = psurface->w * scale_x;
+        srcrect.h = psurface->h * scale_y;
+
+        SDL_Rect offset;
+        offset.x = x;
+        offset.y = y;
+
+        SDL_Surface *flipped = SyobonKZZoomSurface(psurface, scale_x, scale_y, 0);
+        SyobonKZSetColorKey(flipped,
+                        SYOBON_COLOR_KEY(flipped->format));
+        SDL_BlitSurface(flipped, &srcrect, screen, &offset);
+        SyobonKZFreeImage(flipped);
+    }
+}
+
 byte ProcessMessage()
 {
     return DxLibExit;

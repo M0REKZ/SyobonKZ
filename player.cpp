@@ -8,6 +8,10 @@
 
 std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 
+//+KZ for SA3 falling floor
+int prev_player_vel_y = 0;
+int prev_player_grounded = 0;
+
 void CreatePlayerMessageCache()
 {
     Uint32 temp_color = GetColor(255, 255, 255);
@@ -36,7 +40,11 @@ void DestroyPlayerMessageCache()
 
 void HandlePlayer()
 {
-    HandlePlayerInput();
+    if(SyobonState != ESyobonState::TITLE)
+        HandlePlayerInput();
+
+    prev_player_vel_y = PlayerVelY;
+    prev_player_grounded = PlayerGrounded;
 
     // 加速による移動 (Movement due to acceleration)
     xx[0] = 40;
@@ -194,8 +202,9 @@ void HandlePlayer()
         }
         if (PlayerAITimer >= 100 || fast == 1)
         {
-            zxon = 0;
-            SyobonState = ESyobonState::LIVES_SPLASH;
+            InGameInitialized = 0;
+            if(SyobonState != ESyobonState::TITLE)
+                SyobonState = ESyobonState::LIVES_SPLASH;
             PlayerAITimer = 0;
             mkeytm = 0;
             Lives--;
@@ -238,7 +247,8 @@ void HandlePlayer()
     {
         PlayerAITimer++;
 
-        // 普通の土管
+        // 普通の土管 (ordinary drainpipe)
+        //+KZ: did google translated it wrong? anyways this is where all pipes are handled
         if (PlayerState == 100)
         {
             if (PlayerSubState == 0)
@@ -249,7 +259,7 @@ void HandlePlayer()
                 if (PlayerAITimer <= 16)
                 {
                     PlayerY += 240;
-                    mzz = 100;
+                    PlayerRocketPipeTrapVelY = 100;
                 }
                 if (PlayerAITimer == 17)
                 {
@@ -282,10 +292,10 @@ void HandlePlayer()
                 }
                 if (PlayerAITimer >= 110)
                 {
-                    GroundY[t] -= mzz;
-                    mzz += 80;
-                    if (mzz > 1600)
-                        mzz = 1600;
+                    GroundY[t] -= PlayerRocketPipeTrapVelY;
+                    PlayerRocketPipeTrapVelY += 80;
+                    if (PlayerRocketPipeTrapVelY > 1600)
+                        PlayerRocketPipeTrapVelY = 1600;
                 }
                 if (PlayerAITimer == 160)
                 {
@@ -310,7 +320,7 @@ void HandlePlayer()
                 if (PlayerAITimer >= 24)
                 {
                     PlayerX -= 2000;
-                    PlayerLookingDirection = 0;
+                    PlayerLookingDirection = LOOKING_LEFT;
                 }
                 if (PlayerAITimer >= 48)
                 {
@@ -376,7 +386,7 @@ void HandlePlayer()
             if (PlayerAITimer >= 2 && PlayerAITimer <= 42)
             {
                 PlayerVelY = 600;
-                PlayerLookingDirection = 1;
+                PlayerLookingDirection = LOOKING_RIGHT;
             }
             if (PlayerAITimer > 43 && PlayerAITimer <= 108)
             {
@@ -405,15 +415,16 @@ void HandlePlayer()
                     SyobonLevel = 0;
                     SyobonSection = 0;
                     CurrentPlayerCheckpoint = 0;
-                    zxon = 0;
+                    InGameInitialized = 0;
                 }
                 else
                 {
                     SyobonLevel++;
                     SyobonSection = 0;
-                    zxon = 0;
+                    InGameInitialized = 0;
                     CurrentPlayerCheckpoint = 0;
-                    SyobonState = ESyobonState::LIVES_SPLASH;
+                    if(SyobonState != ESyobonState::TITLE)
+                        SyobonState = ESyobonState::LIVES_SPLASH;
                     SyobonStateTimer = 0;
                 }
             }
@@ -451,7 +462,7 @@ void HandlePlayer()
             )
             {
                 PlayerVelX = 250;
-                PlayerLookingDirection = 1;
+                PlayerLookingDirection = LOOKING_RIGHT;
             }
 
             if (PlayerAITimer == 200)
@@ -501,9 +512,10 @@ void HandlePlayer()
                     SyobonWorld++;
                     SyobonLevel = 1;
                     SyobonSection = 0;
-                    zxon = 0;
+                    InGameInitialized = 0;
                     CurrentPlayerCheckpoint = 0;
-                    SyobonState = ESyobonState::LIVES_SPLASH;
+                    if(SyobonState != ESyobonState::TITLE)
+                        SyobonState = ESyobonState::LIVES_SPLASH;
                     SyobonStateTimer = 0;
                 }
             }
@@ -648,13 +660,13 @@ void HandlePlayerInput()
         if (CheckHitKey(KEY_INPUT_LEFT))
         {
             actaon[0] = -1;
-            PlayerLookingDirection = 0;
+            PlayerLookingDirection = LOOKING_LEFT;
             actaon[4] = -1;
         }
         if (CheckHitKey(KEY_INPUT_RIGHT))
         {
             actaon[0] = 1;
-            PlayerLookingDirection = 1;
+            PlayerLookingDirection = LOOKING_RIGHT;
             actaon[4] = 1;
         }
         if (CheckHitKey(KEY_INPUT_DOWN))
@@ -666,6 +678,7 @@ void HandlePlayerInput()
     if (CheckHitKey(KEY_INPUT_F1) == 1)
     {
         SyobonState = ESyobonState::TITLE;
+        InGameInitialized = 0; //+KZ
     }
     // if (CheckHitKey(KEY_INPUT_Q)==1){mkeytm=0;}
     if (CheckHitKey(KEY_INPUT_O) == 1)
@@ -773,22 +786,22 @@ void HandlePlayerBlocks()
                                 else if (BlockType[t] == EBlockType::BRICK_BRITTLE)
                                 {
                                     PlaySound(Sounds[3]);
-                                    CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
+                                    CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                           300,
                                           -1000,
-                                          0, 160, 1000, 1000, 1, 120);
-                                    CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
+                                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                                    CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                           -300,
                                           -1000,
-                                          0, 160, 1000, 1000, 1, 120);
-                                    CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
+                                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                                    CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                           240,
                                           -1400,
-                                          0, 160, 1000, 1000, 1, 120);
-                                    CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
+                                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                                    CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                           -240,
                                           -1400,
-                                          0, 160, 1000, 1000, 1, 120);
+                                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
                                     BlockBreak(t);
                                 }
                                 // Pスイッチ (P switch)
@@ -840,7 +853,13 @@ void HandlePlayerBlocks()
                     {
                         xx[21] = 0;
                         xx[22] = 1; // xx[12]=0;
-                        if (PlayerGrounded == 1 || mjumptm >= 10)
+                        if (
+                            /*
+                                +KZ: seems to be some weird logic to avoid checking for roof collision if we are grounded and just started jumping?
+                                    Ill disable it for SA3 for now since this breaks some hidden block traps
+                            */
+                           (currentGame != ESyobonActionGame::SYOBON_ACTION_3) ?
+                            (PlayerGrounded == 1 || mjumptm >= 10) : (PlayerGrounded == 1))
                         {
                             xx[21] = 3;
                             xx[22] = 0;
@@ -864,54 +883,54 @@ void HandlePlayerBlocks()
                                     if (BlockType[t] == EBlockType::BRICK && PlayerGrounded == 0)
                                     {
                                         PlaySound(Sounds[3]);
-                                        CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
+                                        CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                               300,
                                               -1000,
                                               0,
-                                              160, 1000, 1000, 1, 120);
-                                        CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
+                                              160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                                        CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                               -300,
                                               -1000,
                                               0,
-                                              160, 1000, 1000, 1, 120);
-                                        CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
+                                              160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                                        CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                               240,
                                               -1400,
                                               0,
-                                              160, 1000, 1000, 1, 120);
-                                        CreateExtraGraphic(BlockX[t] + 1200, BlockY[t] + 1200,
+                                              160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                                        CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                               -240,
                                               -1400,
                                               0,
-                                              160, 1000, 1000, 1, 120);
+                                              160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
                                         BlockBreak(t);
                                     }
                                     // コイン (Coin)
                                     if (BlockType[t] == EBlockType::ITEM_BLOCK_COIN && PlayerGrounded == 0)
                                     {
                                         PlaySound(Sounds[4]);
-                                        CreateExtraGraphic(BlockX[t] +
+                                        CreateExtraGraphicLegacy(BlockX[t] +
                                                   10,
                                               BlockY
                                                   [t],
                                               0,
                                               -800,
                                               0,
-                                              40, 3000, 3000, 0, 16);
+                                              40, 3000, 3000, EExtraGraphicType::COIN, 16);
                                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                                     }
                                     // 隠し (Hidden)
                                     if (BlockType[t] == EBlockType::ITEM_BLOCK_HIDDEN)
                                     {
                                         PlaySound(Sounds[4]);
-                                        CreateExtraGraphic(BlockX[t] +
+                                        CreateExtraGraphicLegacy(BlockX[t] +
                                                   10,
                                               BlockY
                                                   [t],
                                               0,
                                               -800,
                                               0,
-                                              40, 3000, 3000, 0, 16);
+                                              40, 3000, 3000, EExtraGraphicType::COIN, 16);
                                         PlayerY = xx[9] + xx[1] + xx[0];
                                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                                         if (PlayerVelY < 0)
@@ -957,6 +976,17 @@ void HandlePlayerBlocks()
                                                             // if (ttype[t]==4){ma=xx[8]+xx[1];mc=-mc*4/4;}
                                             }
                                         }
+                                    }
+                                }
+
+                                if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                                {
+                                    if((BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT && xx[16] && PlayerX < xx[8]) ||
+                                    (BlockType[t] == EBlockType::SA3_GRAY_SPIKE_RIGHT && xx[16] && PlayerX + PlayerSizeX > xx[8] + xx[1]))
+                                    {
+                                        PlayerMessageTimer = 30;
+                                        PlayerMessageType = 3;
+                                        Health--;
                                     }
                                 }
                             }
@@ -1034,8 +1064,8 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1 && BlockSubType[t] == EBlockSubType::ITEM_BLOCK_DODGE_VERTICAL)
                     {
                         PlaySound(Sounds[4]);
-                        CreateExtraGraphic(BlockX[t] + 10, BlockY[t],
-                              0, -800, 0, 40, 3000, 3000, 0, 16);
+                        CreateExtraGraphicLegacy(BlockX[t] + 10, BlockY[t],
+                              0, -800, 0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                     }
                 } // 100
@@ -1049,15 +1079,15 @@ void HandlePlayerBlocks()
                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_BALL_NORMAL)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+                            CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_BALL_SPIKY_NORMAL)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+                            CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_BURNING_FLOWER || BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_BURNING_FLOWER_10)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BURNING_FLOWER, EEnemySubType::NONE);
+                            CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BURNING_FLOWER, EEnemySubType::NONE);
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_DEFRAG_NORMAL)
                         {
                             EnemyBlockAppearTimer[EnemyCount] = 20;
-                            CreateEntity(BlockX[t] -
+                            CreateEntityLegacy(BlockX[t] -
                                              400,
                                          BlockY[t] - 1600, 0, 0, 0, EEnemyType::DEFRAG, EEnemySubType::DEFRAG_NORMAL);
                         }
@@ -1073,11 +1103,20 @@ void HandlePlayerBlocks()
                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_DELICIOUS)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, EEnemySubType::MUSHROOM_DELICIOUS);
+                            CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, EEnemySubType::MUSHROOM_DELICIOUS);
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_GROW)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, EEnemySubType::MUSHROOM_GROW);
+                            CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, EEnemySubType::MUSHROOM_GROW);
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_POISONOUS_FASTER)
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::MUSHROOM_POISONOUS_FASTER);
+                            CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::MUSHROOM_POISONOUS_FASTER);
+
+                        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                        {
+                            if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_SA3_TRAP)
+                            {
+                                CreateExtraGraphic(GAME_X_POS_TO_DOUBLE(BlockX[t]), GAME_Y_POS_TO_DOUBLE(BlockY[t]), 0, -0.5, 0, 0, 1, 1, EExtraGraphicType::SA3_MUSHROOM, 50);
+                                GroundCreate(22.5, 0, 4, 13, EObjectType::SA3_TRIGGER_BIG_MUSHROOM_FALL, EObjectSubType::NONE);
+                            }
+                        }
                     }
                 } // 102
 
@@ -1089,7 +1128,7 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[8]);
                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
-                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, EEnemySubType::MUSHROOM_NOT_POISONOUS);
+                        CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM, EEnemySubType::MUSHROOM_NOT_POISONOUS);
                     }
                 } // 103
 
@@ -1101,7 +1140,7 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[8]);
                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
-                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
+                        CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BAD_STAR, EEnemySubType::NONE);
                     }
                 } // 104
 
@@ -1111,18 +1150,18 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1)
                     {
                         BlockType[t] = EBlockType::ITEM_BLOCK_POISON_OPEN;
-                        thp[t] = 999;
+                        BlockAITimer[t] = 999;
                     }
                 } // 110
                 if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_OPEN && BlockX[t] - fx >= 0)
                 {
-                    thp[t]++;
-                    if (thp[t] >= 16)
+                    BlockAITimer[t]++;
+                    if (BlockAITimer[t] >= 16)
                     {
-                        thp[t] = 0;
+                        BlockAITimer[t] = 0;
                         PlaySound(Sounds[8]);
                         EnemyBlockAppearTimer[EnemyCount] = 16;
-                        CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::MUSHROOM_POISONOUS_FASTER);
+                        CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::MUSHROOM_POISONOUS_FASTER);
                     }
                 }
                 // コイン量産 (Coin mass production)
@@ -1131,21 +1170,21 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1)
                     {
                         BlockType[t] = EBlockType::ITEM_BLOCK_COINS_OPEN;
-                        thp[t] = 999;
+                        BlockAITimer[t] = 999;
                         BlockItemCount[t] = 0;
                     }
                 } // 110
                 if (BlockType[t] == EBlockType::ITEM_BLOCK_COINS_OPEN && BlockX[t] - fx >= 0)
                 {
                     if (BlockItemCount[t] <= 19)
-                        thp[t]++;
-                    if (thp[t] >= 3)
+                        BlockAITimer[t]++;
+                    if (BlockAITimer[t] >= 3)
                     {
-                        thp[t] = 0;
+                        BlockAITimer[t] = 0;
                         BlockItemCount[t]++;
                         PlaySound(Sounds[4]);
-                        CreateExtraGraphic(BlockX[t] + 10, BlockY[t],
-                              0, -800, 0, 40, 3000, 3000, 0, 16);
+                        CreateExtraGraphicLegacy(BlockX[t] + 10, BlockY[t],
+                              0, -800, 0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
                         // ttype[t]=3;
                     }
                 }
@@ -1159,15 +1198,15 @@ void HandlePlayerBlocks()
                             PlaySound(Sounds[8]);
                             BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                             EnemyBlockAppearTimer[EnemyCount] = 16;
-                            CreateEntity(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::MUSHROOM_POISONOUS_FASTER);
+                            CreateEntityLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::MUSHROOM_POISONOUS_FASTER);
                         }
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_BRITTLE)
                         {
                             PlaySound(Sounds[4]);
-                            CreateExtraGraphic(BlockX[t] +
+                            CreateExtraGraphicLegacy(BlockX[t] +
                                       10,
                                   BlockY[t],
-                                  0, -800, 0, 40, 3000, 3000, 0, 16);
+                                  0, -800, 0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
                             BlockType[t] = EBlockType::BRICK_BRITTLE;
                             BlockSubType[t] = EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN;
                         }
@@ -1193,12 +1232,12 @@ void HandlePlayerBlocks()
                             else
                             {
                                 PlaySound(Sounds[4]);
-                                CreateExtraGraphic(BlockX[t] +
+                                CreateExtraGraphicLegacy(BlockX[t] +
                                           10,
                                       BlockY
                                           [t],
                                       0,
-                                      -800, 0, 40, 3000, 3000, 0, 16);
+                                      -800, 0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
                                 BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                             }
                         }
@@ -1219,7 +1258,7 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[8]);
                         // PlaySound(Sounds[13]);
                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN; // abrocktm[aco]=18;CreateEntity(ta[t],tb[t],0,0,0,104,1);
-                        BlockCreate(BlockX[t] / 100, (BlockY[t] / 100) - 29, EBlockType::PSWITCH);
+                        BlockCreateLegacy(BlockX[t] / 100, (BlockY[t] / 100) - 29, EBlockType::PSWITCH);
                     }
                 } // 116
 
@@ -1305,18 +1344,18 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[3]);
-                        CreateExtraGraphic(BlockX[t] + 1200,
+                        CreateExtraGraphicLegacy(BlockX[t] + 1200,
                               BlockY[t] + 1200, 300,
-                              -1000, 0, 160, 1000, 1000, 1, 120);
-                        CreateExtraGraphic(BlockX[t] + 1200,
+                              -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                        CreateExtraGraphicLegacy(BlockX[t] + 1200,
                               BlockY[t] + 1200,
-                              -300, -1000, 0, 160, 1000, 1000, 1, 120);
-                        CreateExtraGraphic(BlockX[t] + 1200,
+                              -300, -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                        CreateExtraGraphicLegacy(BlockX[t] + 1200,
                               BlockY[t] + 1200, 240,
-                              -1400, 0, 160, 1000, 1000, 1, 120);
-                        CreateExtraGraphic(BlockX[t] + 1200,
+                              -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                        CreateExtraGraphicLegacy(BlockX[t] + 1200,
                               BlockY[t] + 1200,
-                              -240, -1400, 0, 160, 1000, 1000, 1, 120);
+                              -240, -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
                         BlockBreak(t);
                     }
                 } // 300
@@ -1327,18 +1366,18 @@ void HandlePlayerBlocks()
                 {
 
                     PlaySound(Sounds[3]);
-                    CreateExtraGraphic(BlockX[t] + 1200,
+                    CreateExtraGraphicLegacy(BlockX[t] + 1200,
                           BlockY[t] + 1200, 300, -1000,
-                          0, 160, 1000, 1000, 1, 120);
-                    CreateExtraGraphic(BlockX[t] + 1200,
+                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                    CreateExtraGraphicLegacy(BlockX[t] + 1200,
                           BlockY[t] + 1200, -300, -1000,
-                          0, 160, 1000, 1000, 1, 120);
-                    CreateExtraGraphic(BlockX[t] + 1200,
+                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                    CreateExtraGraphicLegacy(BlockX[t] + 1200,
                           BlockY[t] + 1200, 240, -1400,
-                          0, 160, 1000, 1000, 1, 120);
-                    CreateExtraGraphic(BlockX[t] + 1200,
+                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                    CreateExtraGraphicLegacy(BlockX[t] + 1200,
                           BlockY[t] + 1200, -240, -1400,
-                          0, 160, 1000, 1000, 1, 120);
+                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
                     BlockBreak(t);
                 }
             }
@@ -1385,8 +1424,22 @@ void HandlePlayerWalls()
 
             xx[8] = GroundX[t] - fx;
             xx[9] = GroundY[t] - fy;
-            if ((GroundType[t] < EObjectType::TRIGGERS_START /* +KZ: it was <= 99 */ ||
-                GroundType[t] == EObjectType::CASTLE_BRICKS) && PlayerState < 10)
+            if ((
+                currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 ?
+                (
+                    //+KZ: allow more objects in other games
+                    GroundType[t] < EObjectType::TRIGGERS_START ||
+                    GroundType[t] == EObjectType::CASTLE_BRICKS ||
+                    (GroundType[t] > EObjectType::LAST_LEGACY_OBJECT &&
+                        !(GroundType[t] >= EObjectType::SA3_TRIGGER_START &&
+                            GroundType[t] <= EObjectType::SA3_TRIGGER_END) &&
+                        GroundType[t] != EObjectType::SA3_FAKE_PIPE_BODY
+                    )
+                )
+                :
+                (GroundType[t] < EObjectType::TRIGGERS_START /* +KZ: it was <= 99 */ ||
+                GroundType[t] == EObjectType::CASTLE_BRICKS)
+             ) && PlayerState < 10)
             {
 
                 // おちるブロック (Falling blocks)
@@ -1396,7 +1449,7 @@ void HandlePlayerWalls()
                             xx[8] + xx[0] + 3000 &&
                         PlayerX < xx[8] + GroundSizeX[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] + 3000 && GroundAI[t] == 0)
                     {
-                        if (GroundSubType[t] == 0)
+                        if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK)
                         {
                             GroundAI[t] = 1;
                             GroundVelY[t] = 0;
@@ -1406,28 +1459,28 @@ void HandlePlayerWalls()
                             xx[8] + xx[0] + 1000 &&
                         PlayerX < xx[8] + GroundSizeX[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] + 3000 && GroundAI[t] == 0)
                     {
-                        if ((GroundSubType[t] == 10) && GroundAI[t] == 0)
+                        if ((GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY) && GroundAI[t] == 0)
                         {
                             GroundAI[t] = 1;
                             GroundVelY[t] = 0;
                         }
                     }
 
-                    if ((GroundSubType[t] == 1) && GroundY[27] >= 25000 && GroundX[27] > PlayerX + PlayerSizeX && t != 27 && GroundAI[t] == 0)
+                    if ((GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK) && GroundY[27] >= 25000 && GroundX[27] > PlayerX + PlayerSizeX && t != 27 && GroundAI[t] == 0)
                     {
                         GroundAI[t] = 1;
                         GroundVelY[t] = 0;
                     }
-                    if (GroundSubType[t] == 2 && GroundY[28] >= 48000 && t != 28 && GroundAI[t] == 0 && Health >= 1)
+                    if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2 && GroundY[28] >= 48000 && t != 28 && GroundAI[t] == 0 && Health >= 1)
                     {
                         GroundAI[t] = 1;
                         GroundVelY[t] = 0;
                     }
-                    if ((GroundSubType[t] == 3 && PlayerY >= 30000 || GroundSubType[t] == 4 && PlayerY >= 25000) && GroundAI[t] == 0 && Health >= 1 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 3000 - 300 && PlayerX < xx[8] + GroundSizeX[t] - xx[0])
+                    if ((GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP && PlayerY >= 30000 || GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4 && PlayerY >= 25000) && GroundAI[t] == 0 && Health >= 1 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 3000 - 300 && PlayerX < xx[8] + GroundSizeX[t] - xx[0])
                     {
                         GroundAI[t] = 1;
                         GroundVelY[t] = 0;
-                        if (GroundSubType[t] == 4)
+                        if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4)
                             GroundVelY[t] = 100;
                     }
 
@@ -1447,7 +1500,9 @@ void HandlePlayerWalls()
                     }
                 }
                 // おちるブロック2 (Falling Block 2)
-                if (GroundType[t] == EObjectType::FALLING_FLOOR)
+                if (GroundType[t] == EObjectType::FALLING_FLOOR ||
+                    (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && GroundType[t] == EObjectType::SA3_FALLING_FLOOR && ((prev_player_vel_y > 0 && prev_player_grounded == 0) || GroundAI[t] != 0))
+                )
                 {
                     if (GroundAI[t] == 0 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 2000 && PlayerX < xx[8] + GroundSizeX[t] - xx[0] - 2500 && PlayerY + PlayerSizeY > xx[9] - 3000)
                     {
@@ -1502,39 +1557,39 @@ void HandlePlayerWalls()
                 {
                     if (PlayerX + PlayerSizeX > xx[8] + 2800 && PlayerX < xx[8] + GroundSizeX[t] - 3000 && PlayerY + PlayerSizeY > xx[9] - 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && actaon[3] == 1 && PlayerState == 0)
                     {
-                        // 飛び出し
-                        if (GroundSubType[t] == 0)
+                        // 飛び出し (Jumping out) //+KZ: ??
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_ROCKET)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 0;
                         }
-                        // 普通
-                        if (GroundSubType[t] == 1)
+                        // 普通 (Normal)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 1;
                         }
-                        // 普通
-                        if (GroundSubType[t] == 2)
+                        // 普通 (Normal)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_LAVA)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 2;
                         }
-                        if (GroundSubType[t] == 5)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 5;
                         }
-                        // ループ
-                        if (GroundSubType[t] == 6)
+                        // ループ (Loop) //+KZ: ????
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION)
                         {
                             PlayerState = 100;
                             PlayerAITimer = 0;
@@ -1549,8 +1604,8 @@ void HandlePlayerWalls()
                 {
                     if (PlayerX + PlayerSizeX > xx[8] - 300 && PlayerX < xx[8] + GroundSizeX[t] - 1000 && PlayerY > xx[9] + 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && actaon[4] == 1 && PlayerState == 0)
                     { // end();
-                        // 飛び出し
-                        if (GroundSubType[t] == 0)
+                        // 飛び出し (Jumping out)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON)
                         {
                             PlayerState = 500;
                             PlayerAITimer = 0;
@@ -1559,15 +1614,15 @@ void HandlePlayerWalls()
                             PlayerSubState = 10;
                         }
 
-                        if (GroundSubType[t] == 2)
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION)
                         {
                             PlayerSubState = 3;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]); // mxtype=1;
                             PlayerState = 100;
                         }
-                        // ループ
-                        if (GroundSubType[t] == 6)
+                        // ループ (Loop) //+KZ: ????????????
+                        if (GroundSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_PLUS_10_SECTION)
                         {
                             PlayerState = 3;
                             PlayerAITimer = 0;
@@ -1584,107 +1639,112 @@ void HandlePlayerWalls()
                 {
                     if (GroundType[t] == EObjectType::TRIGGER_SEAL_UP)
                     {
-                        if (GroundSubType[t] == 0 || GroundSubType[t] == 1 && BlockType[1] != EBlockType::ITEM_BLOCK_OPEN)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_SEAL_UP_NORMAL || GroundSubType[t] == EObjectSubType::TRIGGER_SEAL_UP_LEVEL_1_2 && BlockType[1] != EBlockType::ITEM_BLOCK_OPEN)
                         {
-                            CreateEntity(GroundX[t] + 1000, 32000, 0, 0, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
+                            CreateEntityLegacy(GroundX[t] + 1000, 32000, 0, 0, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
                             GroundX[t] = -800000000;
                             PlaySound(Sounds[10]);
                         }
                     }
                     if (GroundType[t] == EObjectType::TRIGGER_SEAL_DOWN)
                     {
-                        CreateEntity(GroundX[t] + 6000, -4000, 0, 0, 0, EEnemyType::SEAL, EEnemySubType::SEAL_DOWN);
+                        CreateEntityLegacy(GroundX[t] + 6000, -4000, 0, 0, 0, EEnemyType::SEAL, EEnemySubType::SEAL_DOWN);
                         GroundX[t] = -800000000;
                         PlaySound(Sounds[10]);
                     }
                     if (GroundType[t] == EObjectType::TRIGGER_GENERIC_1)
                     {
-                        if (GroundSubType[t] == 0)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_4_BALLS)
                         {
                             for (t3 = 0; t3 <= 3; t3++)
                             {
-                                CreateEntity(GroundX[t] +
+                                CreateEntityLegacy(GroundX[t] +
                                                  t3 * 3000,
                                              -3000, 0, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
                             }
                         }
-                        if (GroundSubType[t] == 1 && PlayerY >= 16000)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP && PlayerY >= 16000)
                         {
-                            CreateEntity(GroundX[t] +
+                            CreateEntityLegacy(GroundX[t] +
                                              1500,
                                          44000, 0, -2000, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
                         }
-                        else if (GroundSubType[t] == 2)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_FIRST_KUMA)
                         {
-                            CreateEntity(GroundX[t] +
+                            CreateEntityLegacy(GroundX[t] +
                                              4500,
                                          30000, 0, -1600, 0, EEnemyType::KUMA, EEnemySubType::NONE);
                             PlaySound(Sounds[10]);
-                            GroundSubType[t] = 3;
+                            GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA;
                             GroundX[t] -= 12000;
                         }
-                        else if (GroundSubType[t] == 3)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA)
                         {
                             GroundX[t] += 12000;
-                            GroundSubType[t] = 4;
+                            GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA;
                         }
-                        else if (GroundSubType[t] == 4)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA)
                         {
-                            CreateEntity(GroundX[t] +
+                            CreateEntityLegacy(GroundX[t] +
                                              4500,
                                          30000, 0, -1600, 0, EEnemyType::KUMA, EEnemySubType::NONE);
                             PlaySound(Sounds[10]);
-                            GroundSubType[t] = 5;
-                            GroundSubType[t] = 0;
+                            //GroundSubType[t] = 5; //+KZ: xD? it is set to 0 just after
+
+                            //+KZ: setting this value here will go inside a if thats below everything,
+                            //which will teleport this trigger object out of bounds
+                            //
+                            //why chiku didnt just did that here like in other subtypes?
+                            GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_4_BALLS;
                         }
 
-                        else if (GroundSubType[t] == 7)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE)
                         {
-                            mainmsgtype = 1;
+                            WarpZoneMessageState = 1;
                         }
-                        else if (GroundSubType[t] == 8)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THIRD_KUMA)
                         {
-                            CreateEntity(GroundX[t] -
+                            CreateEntityLegacy(GroundX[t] -
                                              5000 -
                                              3000 * 1,
                                          26000, 0, -1600, 0, EEnemyType::KUMA, EEnemySubType::NONE);
                             PlaySound(Sounds[10]);
                         }
-                        else if (GroundSubType[t] == 9)
+                        else if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THREE_SEALS)
                         {
                             for (t3 = 0; t3 <= 2; t3++)
                             {
-                                CreateEntity(GroundX[t] +
+                                CreateEntityLegacy(GroundX[t] +
                                                  t3 *
                                                      3000 +
                                                  3000,
                                              48000, 0, -6000, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
                             }
                         }
-                        if (GroundSubType[t] == 10)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN)
                         {
                             GroundX[t] -= 5 * 30 * 100;
                             GroundType[t] = EObjectType::TRIGGER_SEAL_DOWN;
                         }
 
-                        if (GroundSubType[t] == 12)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA)
                         {
                             for (t3 = 1; t3 <= 3; t3++)
                             {
-                                CreateEntity(GroundX[t] +
+                                CreateEntityLegacy(GroundX[t] +
                                                  t3 *
                                                      3000 -
                                                  1000,
                                              40000, 0, -2600, 0, EEnemyType::MAGMA, EEnemySubType::NONE);
                             }
                         }
-                        // スクロール消し
-                        if (GroundSubType[t] == 20)
+                        // スクロール消し (Scrolling off)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF)
                         {
                             scrollx = 0;
                         }
-                        // クリア
-                        if (GroundSubType[t] == 30)
+                        // クリア (Clear)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_CLEAR_GAME)
                         {
                             GroundX[t] = -80000000;
                             PlayerVelY = 0;
@@ -1694,7 +1754,9 @@ void HandlePlayerWalls()
                             PlaySound(Sounds[16]);
                         }
 
-                        if (GroundSubType[t] != 3 && GroundSubType[t] != 4 && GroundSubType[t] != 10)
+                        if (GroundSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA &&
+                            GroundSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA
+                            && GroundSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN)
                         {
                             GroundX[t] = -800000000;
                         }
@@ -1702,21 +1764,21 @@ void HandlePlayerWalls()
 
                     if (GroundType[t] == EObjectType::TRIGGER_LASER)
                     {
-                        if (GroundSubType[t] == 0)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_LASER_NORMAL)
                         {
                             EnemyMessageTimer[EnemyCount] = 10;
                             EnemyMessageType[EnemyCount] = 50;
-                            CreateEntity(GroundX[t] +
+                            CreateEntityLegacy(GroundX[t] +
                                              9000,
                                          GroundY[t] + 2000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_HORIZONTAL);
                             GroundX[t] = -800000000;
                         }
 
-                        if (GroundSubType[t] == 1 && (int)BlockType[6] <= 6)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_LASER_LEVEL_1_3 && (int)BlockType[6] <= 6)
                         {
                             EnemyMessageTimer[EnemyCount] = 10;
                             EnemyMessageType[EnemyCount] = 50;
-                            CreateEntity(GroundX[t] -
+                            CreateEntityLegacy(GroundX[t] -
                                              12000,
                                          GroundY[t] + 2000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_HORIZONTAL);
                             GroundX[t] = -800000000;
@@ -1726,13 +1788,13 @@ void HandlePlayerWalls()
 
                     if (GroundType[t] == EObjectType::TRIGGER_MULTI_LASER)
                     {
-                        if (GroundSubType[t] == 0)
+                        if (GroundSubType[t] == EObjectSubType::TRIGGER_MULTI_LASER_ACTIVE)
                         {
-                            CreateEntity(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_HORIZONTAL);
-                            CreateEntity(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_10_DEGREE_UP);
-                            CreateEntity(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_10_DEGREE_DOWN);
-                            CreateEntity(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_33_DEGREE_UP);
-                            CreateEntity(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_33_DEGREE_DOWN);
+                            CreateEntityLegacy(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_HORIZONTAL);
+                            CreateEntityLegacy(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_10_DEGREE_UP);
+                            CreateEntityLegacy(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_10_DEGREE_DOWN);
+                            CreateEntityLegacy(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_33_DEGREE_UP);
+                            CreateEntityLegacy(GroundX[t] + 12000, GroundY[t] + 2000 + 3000, 0, 0, 0, EEnemyType::LASER, EEnemySubType::LASER_33_DEGREE_DOWN);
                             GroundX[t] = -800000000;
                         }
                     }
@@ -1741,8 +1803,8 @@ void HandlePlayerWalls()
                     {
                         BlockX[1] -= 1000;
                         BlockX[2] += 1000;
-                        GroundSubType[t]++;
-                        if (GroundSubType[t] >= 3)
+                        GroundSubType[t] = (EObjectSubType)((int)GroundSubType[t] + 1);
+                        if (GroundSubType[t] >= EObjectSubType::TRIGGER_PLATFORM_SPLIT_TIMER_END)
                             GroundX[t] = -8000000;
                     }
 
@@ -1760,6 +1822,53 @@ void HandlePlayerWalls()
                         CurrentPlayerCheckpoint += 1;
                         GroundX[t] = -80000000;
                     }
+
+                    //Syobon Action 3
+                    if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                    {
+                        if(GroundType[t] == EObjectType::SA3_TRIGGER_FAST_SEAL_UP)
+                        {
+                            {
+                                if(GroundSubType[t] == EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS)
+                                {
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 3.25, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) + 0.75, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]) + 0.75, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 3.25, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                }
+                                else
+                                {
+                                    CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t] + GroundSizeX[t] / 2) - 0.5, GAME_X_POS_TO_DOUBLE(GroundY[t] + GroundSizeY[t]) + 1, 0, -1, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                }
+                                GroundX[t] = -800000000;
+                                PlaySound(Sounds[10]);
+                            }
+                        }
+                        else if(GroundType[t] == EObjectType::SA3_TRIGGER_BIG_MUSHROOM_FALL)
+                        {
+                            CreateEntity(GAME_X_POS_TO_DOUBLE(GroundX[t]), -4, 0, 1, EEnemyType::SA3_BIG_MUSHROOM_FALLING, EEnemySubType::NONE);
+                            
+                            GroundX[t] = -9999999;
+                        }
+                        else if(GroundType[t] == EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1 &&
+                            GroundSubType[t] == EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING)
+                        {
+                            GroundSubType[t] = EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE;
+                        }
+                        else if(GroundType[t] == EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1 && Health > 0)
+                        {
+                            CreateEntity(126, 1, -0.2, 0, EEnemyType::SA3_BIG_STONE, EEnemySubType::NONE);
+                            CreateEntity(126, 7, -0.2, 0, EEnemyType::SA3_BIG_STONE, EEnemySubType::NONE);
+                            
+                            GroundX[t] = DOUBLE_TO_GAME_X_POS(108);
+                            GroundType[t] = EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1;
+                        }
+                        else if(GroundType[t] == EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1 &&
+                            GroundSubType[t] == EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_WAITING)
+                        {
+                            GroundSubType[t] = EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_ACTIVE;
+                        }
+                    }
                 }
 
                 if (GroundType[t] == EObjectType::TRIGGER_LAVA_SPAWNER)
@@ -1768,9 +1877,121 @@ void HandlePlayerWalls()
                     if (GroundVelY[t] >= GroundAI[t])
                     {
                         GroundVelY[t] = 0;
-                        CreateEntity(GroundX[t], 30000,
+                        CreateEntityLegacy(GroundX[t], 30000,
                                      SyobonRand(600) - 300,
                                      -1600 - SyobonRand(900), 0, EEnemyType::LAVA_FROM_PIPE, EEnemySubType::NONE);
+                    }
+                }
+
+                if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                {
+                    if(Health > 0 && GroundType[t] == EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1 &&
+                        GroundSubType[t] == EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE)
+                    {
+                        //GroundAI should be the first trap wall block
+                        //GroundAI + 1 should be the second trap wall block
+                        if(GroundAI[t] >= 0 && GroundAI[t] < BLOCK_MAX - 1)
+                        {
+                            if(BlockY[GroundAI[t] + 1] > DOUBLE_TO_GAME_Y_POS(6))
+                            {
+                                GroundVelY[t] = -1;
+                                BlockY[GroundAI[t] + 1] -= DOUBLE_TO_GAME_X_POS(0.75);
+                                if(BlockY[GroundAI[t] + 1] < DOUBLE_TO_GAME_Y_POS(6))
+                                    BlockY[GroundAI[t] + 1] = DOUBLE_TO_GAME_Y_POS(6);
+                                
+                                for(int block_id_offset = 3; block_id_offset <= 14; block_id_offset += 2)
+                                {
+                                    int id = GroundAI[t] + block_id_offset;
+                                    if(id >= BLOCK_MAX)
+                                        id -= BLOCK_MAX;
+                                    BlockY[id] = BlockY[GroundAI[t] + 1] + DOUBLE_TO_GAME_X_POS(((block_id_offset - 3) / 2) + 1);
+                                }
+                            }
+                            else
+                            {
+                                if(GroundVelY[t] < 0 || GroundVelY[t] >= BLOCK_MAX)
+                                {
+                                    for(int i = 6; i <= 12; i++)
+                                    {
+                                        if(i == 6)
+                                        {
+                                            GroundVelY[t] = BlockCreate(56, i, EBlockType::SA3_GRAY_SPIKE_RIGHT);
+                                        }
+                                        else
+                                        {
+                                            BlockCreate(56, i, EBlockType::SA3_GRAY_SPIKE_RIGHT);
+                                        }
+                                        BlockCreate(63, i, EBlockType::SA3_GRAY_SPIKE_LEFT);
+                                    }
+                                }
+                                else
+                                {
+                                    int scnd = GroundVelY[t] + 1;
+                                    if(scnd >= BLOCK_MAX)
+                                        scnd -= BLOCK_MAX;
+
+                                    if(BlockX[GroundVelY[t]] >= BlockX[scnd])
+                                    {
+                                        GroundSubType[t] = EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_FINISHED;
+                                    }
+                                    else
+                                    {                                    
+                                        for(int spike_offset = 0; spike_offset < 14; spike_offset++)
+                                        {
+                                            int id = GroundVelY[t] + spike_offset;
+                                            if(id >= BLOCK_MAX)
+                                                id -= BLOCK_MAX;
+
+                                            int id2 = GroundAI[t] + spike_offset;
+                                            if(id2 >= BLOCK_MAX)
+                                                id2 -= BLOCK_MAX;
+
+                                            if(spike_offset % 2)
+                                            {
+                                                BlockX[id] -= DOUBLE_TO_GAME_X_POS(0.02);
+                                                BlockX[id2] -= DOUBLE_TO_GAME_X_POS(0.02);
+                                            }
+                                            else
+                                            {
+                                                BlockX[id] += DOUBLE_TO_GAME_X_POS(0.02);
+                                                BlockX[id2] += DOUBLE_TO_GAME_X_POS(0.02);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if(GroundType[t] == EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1 &&
+                        GroundSubType[t] == EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_ACTIVE)
+                    {
+                        if(GroundAI[t] >= 0 && GroundAI[t] < BLOCK_MAX - 6)
+                        {
+                            for(int wall_offset = 0; wall_offset < 6; wall_offset++)
+                            {
+                                int id = GroundAI[t] + wall_offset;
+                                if(id >= BLOCK_MAX)
+                                    id -= BLOCK_MAX;
+
+                                BlockY[id] += DOUBLE_TO_GAME_X_POS(0.5);
+                            }
+                            if(BlockY[GroundAI[t]] > DOUBLE_TO_GAME_X_POS(-0.6))
+                            {
+                                GroundSubType[t] = EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_FINISHED;
+                                for(int wall_offset = 0; wall_offset < 6; wall_offset++)
+                                {
+                                    int id = GroundAI[t] + wall_offset;
+                                    if(id >= BLOCK_MAX)
+                                        id -= BLOCK_MAX;
+
+                                    BlockY[id] = DOUBLE_TO_GAME_Y_POS(-0.5 + wall_offset);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            GroundSubType[t] = EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_FINISHED;
+                        }
                     }
                 }
             }

@@ -13,4 +13,7 @@ void HandleSyobonActionTwoLevels();
 //Syobon Action 3
 void HandleSyobonActionThreeLevels();
 
+//+KZ
+void StageClear();
+
 #endif

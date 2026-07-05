@@ -11,7 +11,7 @@
 // Level Types (stagecolor)
 // -------------------------
 
-enum class ELevelType
+enum class ELevelType : int
 {
     OVERWORLD = 1,
     UNDERGROUND = 2,
@@ -27,7 +27,7 @@ enum class ELevelType
 // Block Types (ttypes)
 // -------------------------
 
-enum class EBlockType
+enum class EBlockType : int
 {
     // Tiles 0–10 form the base set for a level type.
     // Adding multiples of 30 (up to +90) to these tile IDs switches to the
@@ -109,6 +109,12 @@ enum class EBlockType
     MESSAGE_BLOCK_BREAKABLE = 301,
     PSWITCH = 400,
     COIN = 800,
+
+    //end of legacy blocks
+
+    //Syobon Action 3
+    SA3_GRAY_SPIKE_LEFT,
+    SA3_GRAY_SPIKE_RIGHT,
 };
 
 
@@ -118,7 +124,7 @@ enum class EBlockType
 // Enemy Types (atypes)
 // -------------------------
 
-enum class EEnemyType
+enum class EEnemyType : int
 {
     BALL = 0,
     BALL_SHELLED = 1,
@@ -179,6 +185,22 @@ enum class EEnemyType
     // The same as BALL but goes
     // right through the floor??
     BALL_NO_COLLISION = 200,
+
+    //end of legacy enemy types
+    //types below were added in SyobonKZ
+    //must NOT be created with a Legacy function or you may get
+    //memory access bugs
+    LAST_LEGACY_ENEMY = BALL_NO_COLLISION,
+
+    // -------------------------
+    // Syobon Action 3 EnemyTypes
+    // -------------------------
+
+    SA3_BIG_MUSHROOM_FALLING,
+    SA3_BIG_BALL_ROCKET,
+    SA3_SHARK,
+    SA3_BIG_STONE,
+    SA3_JUMPSCARE_PLANT,
 };
 
 
@@ -188,7 +210,7 @@ enum class EEnemyType
 // Decoration Types (ntypes)
 // -------------------------
 
-enum class EDecorationType
+enum class EDecorationType : int
 {
     HILL = 0,
     GRASS = 1,
@@ -210,7 +232,7 @@ enum class EDecorationType
 // Platform types (srtypes) //+KZ: it is srsp
 // -------------------------
 
-enum class ELiftType
+enum class ELiftType : int
 {
     YELLOW = 0,
     BREAKING = 1,
@@ -238,7 +260,7 @@ enum class ELiftType
 // object types (stypes)
 // -------------------------
 
-enum class EObjectType
+enum class EObjectType : int
 {
     // not sure what this is
     // +KZ: it is the same as PIPE_BODY :D
@@ -275,11 +297,32 @@ enum class EObjectType
     GOAL_POLE = 300,
 
     CHECKPOINT = 500,
+
+    LAST_LEGACY_OBJECT = CHECKPOINT,
+
+    //Syobon Action 3
+    SA3_FAKE_PIPE_BODY,
+    SA3_FALLING_FLOOR, //requires player vel y > 0 to activate
+
+    SA3_TRIGGER_START,
+    SA3_TRIGGER_FAST_SEAL_UP = SA3_TRIGGER_START,
+    SA3_TRIGGER_BIG_MUSHROOM_FALL,
+    SA3_TRIGGER_SPIKES_LEVEL_1_1,
+    SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1,
+    SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1,
+    SA3_TRIGGER_END,
 };
 
 ///********************************************///
 /// Enums added by +KZ:
 ///********************************************///
+
+//less "0 and 1" confusion
+enum ELookingDirection : int
+{
+    LOOKING_LEFT = 0,
+    LOOKING_RIGHT = 1,
+};
 
 enum ELegacyStageDate : unsigned char
 {
@@ -353,8 +396,20 @@ enum ELegacyStageDate : unsigned char
     STAGEDATE_98 = 98,
 };
 
+enum class EExtraGraphicType : int
+{
+    COIN = 0,
+    BLOCK_FRAGMENT = 1, //color depends on StageColor
+    LIFT_FRAGMENT_LEFT = 2,
+    LIFT_FRAGMENT_RIGHT = 3,
+    GOAL_POLE = 4,
+
+    //Syobon Action 3
+    SA3_MUSHROOM,
+};
+
 // @note FIREBAR_CLOCKWISE and FIREBAR_COUNTERCLOCKWISE uses EnemySubType as their length
-enum class EEnemySubType
+enum class EEnemySubType : int
 {
     NONE = 0, //"none" wildcard for most enemy types
 
@@ -367,6 +422,7 @@ enum class EEnemySubType
 
     SEAL_UP = 0,
     SEAL_DOWN,
+    SEAL_SYOBONKZ_VERTICAL,
 
     BALL_SPIKY_NORMAL = 0,
     BALL_SPIKY_JUMPER = 1,
@@ -418,7 +474,7 @@ enum class EEnemySubType
 
 };
 
-enum class EBlockSubType
+enum class EBlockSubType : int
 {
     NONE = 0, //"none" wildcard for most block types
 
@@ -436,7 +492,7 @@ enum class EBlockSubType
     ITEM_BLOCK_MUSHROOM_DELICIOUS = 0,
     ITEM_BLOCK_MUSHROOM_GROW = 2,
     ITEM_BLOCK_MUSHROOM_POISONOUS_FASTER = 3,
-    ITEM_BLOCK_MUSHROOM_4 = 4, //added in SA:All Stars for SA3, unknown purpose since i didnt port it yet
+    ITEM_BLOCK_MUSHROOM_SA3_TRAP = 4, //added in SA:All Stars for SA3 for big mushroom trap
 
     ITEM_BLOCK_STAR_BRICK = 0,
     ITEM_BLOCK_STAR_NORMAL = 1,
@@ -485,6 +541,69 @@ enum class EBlockSubType
     MESSAGE_BLOCK_1_3_0_4_WAIT_START = 500,
     MESSAGE_BLOCK_1_3_0_4_WAIT_END = 540,
     MESSAGE_BLOCK_1_3_0_4_SHOW_MESSAGE = 541,
+};
+
+enum class EObjectSubType : int
+{
+    NONE = 0, //"none" wildcard for most ground types
+
+    //these seems to be very level specific
+    FALLING_BLOCKS_OVERWORLD_BRICK = 0,
+    FALLING_BLOCKS_UNDERGROUND_BRICK,
+    FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2, //1-2 third falling blocks
+    FALLING_BLOCKS_CASTLE_GROUND_TOP,
+    FALLING_BLOCKS_CASTLE_GROUND_TOP_4, //unused, has different behavior
+    FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY = 10, //does not draw in Y Size
+
+    FALLING_FLOOR_GROUND_TOP_BOTTOM = 0, //draws GROUND_BOTTOM below, but that is not solid
+    FALLING_FLOOR_BRICK = 1,
+    FALLING_FLOOR_GROUND_TOP = 2,
+
+    ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_ROCKET = 0, //1-1 rocket pipe trap
+    ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION, //1-2 1-3 pipe entrace from above, go to next section
+    ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_LAVA, //1-2 lava pipe, shows player message 51 on death
+    ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE = 5, //1-2 warp zone trap pipe, shows player message 52 on death
+    ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION, //2-4 go back trap pipe
+
+    ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON = 0, //1-2 cannon pipe trap
+    ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION = 2, //1-2 2-4 pipe entrace from left, go to next section
+    ENTRACE_HORIZONTAL_PIPE_HEAD_PLUS_10_SECTION = 6, //unused, same behavior as 2-4 go back trap pipe but horizontal
+
+    //Triggers
+    TRIGGER_SEAL_UP_NORMAL = 0,
+    TRIGGER_SEAL_UP_LEVEL_1_2, //does not appear if the poison mushroom block is open
+
+    TRIGGER_GENERIC_1_SUBTYPE_4_BALLS = 0, //1-1 4 balls trap
+    TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP, //1-2 spiky ball jumps from the hole
+    TRIGGER_GENERIC_1_SUBTYPE_FIRST_KUMA, //1-2 first kuma appear, will become next type after triggering
+    TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA, //1-2 enables the second kuma trigger
+    TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA, //1-2 second kuma appear
+    TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE = 7, //1-2 appears WARP ZONE message
+    TRIGGER_GENERIC_1_SUBTYPE_THIRD_KUMA, //1-2 overworld kuma
+    TRIGGER_GENERIC_1_SUBTYPE_THREE_SEALS, //??? is this unused?
+    TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN, //appears a falling seal
+    TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA = 12, //1-4 surprise magma
+    TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF = 20, //turn off scrolling by setting scrollx to 0
+    TRIGGER_GENERIC_1_SUBTYPE_CLEAR_GAME = 30, //1-4 finish the game (get the melon)
+
+    TRIGGER_LASER_NORMAL = 0,
+    TRIGGER_LASER_LEVEL_1_3, //the laser that appears after hitting the message block
+
+    TRIGGER_MULTI_LASER_ACTIVE = 0, //does not work if subtype is not 0
+
+    TRIGGER_PLATFORM_SPLIT_TIMER_END = 3, //it uses subtype as a timer, in 1-4 it starts on 0
+
+    //Syobon Action 3
+    SA3_TRIGGER_FAST_SEAL_UP_1_SEAL = 0,
+    SA3_TRIGGER_FAST_SEAL_UP_4_SEALS = 1,
+
+    SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING = 0,
+    SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE = 1,
+    SA3_TRIGGER_SPIKES_LEVEL_1_1_FINISHED = 2,
+
+    SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_WAITING = 0,
+    SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_ACTIVE = 1,
+    SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_FINISHED = 2,
 };
 
 #endif

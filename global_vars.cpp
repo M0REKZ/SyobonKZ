@@ -22,10 +22,10 @@ int SyobonLevel;
 int SyobonSection;
 
 //クイック
-int fast = 1;
+int fast = 0;
 
 //トラップ表示
-int TrapDisplay = 1;
+int TrapDisplay = 0;
 
 //中間ゲート
 int CurrentPlayerCheckpoint = 0;
@@ -56,8 +56,8 @@ SDL_Surface *Sliced_GFX[161][8];
 SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
-SDL_Surface *Main_GFX_KZ[1]; //+KZ
-SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
+SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
+SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
 
 int mirror;
 
@@ -79,10 +79,10 @@ int t, tt, t1, t2, t3, t4;
 
 
 //初期化
-int zxon;//, zzxon; //+KZ: zzxon is unused
+int InGameInitialized;//, zzxon; //+KZ: zzxon is unused
 
 //キーコンフィグ
-int key;//, keytm; //+KZ: keytm is useless
+//int key;//, keytm; //+KZ: keytm is useless... no wait both are useless/unused
 
 //三角関数
 double pai = 3.1415926535;
@@ -92,20 +92,22 @@ double pai = 3.1415926535;
 int GroundCount;
 int GroundX[GROUND_MAX], GroundY[GROUND_MAX], GroundSizeX[GROUND_MAX], GroundSizeY[GROUND_MAX];
 EObjectType GroundType[GROUND_MAX];
-int GroundSubType[GROUND_MAX],
-    GroundVelY[GROUND_MAX];
+EObjectSubType GroundSubType[GROUND_MAX];
+int GroundVelY[GROUND_MAX];
 int GroundAI[GROUND_MAX];
 
 
 
 //プレイヤー
-int mainmsgtype;
+int WarpZoneMessageState;
 int PlayerX, PlayerY, PlayerSizeX, PlayerSizeY, Health;
 int PlayerVelX, PlayerVelY, atktm, PlayerWalkAnimTimer, PlayerWalkAnim;
 int Lives = 3;
 
-int PlayerState, PlayerSubState, PlayerAITimer, mzz;
-int PlayerGrounded, PlayerLookingDirection, mjumptm, mkeytm;
+int PlayerState, PlayerSubState, PlayerAITimer, PlayerRocketPipeTrapVelY;
+int PlayerGrounded;
+ELookingDirection PlayerLookingDirection;
+int mjumptm, mkeytm;
 EPlayerGroundType PlayerGroundType;
 int mmutekitm, mmutekion;
 //+KZ: these are never set, but are read?
@@ -122,7 +124,7 @@ int mascrollmax = 21000;	//9000
 
 //ブロック
 int BlockCount;
-int BlockX[BLOCK_MAX], BlockY[BLOCK_MAX], thp[BLOCK_MAX];
+int BlockX[BLOCK_MAX], BlockY[BLOCK_MAX], BlockAITimer[BLOCK_MAX];
 EBlockType BlockType[BLOCK_MAX];
 int BlockItemCount[BLOCK_MAX];
 EBlockSubType BlockSubType[BLOCK_MAX];
@@ -134,19 +136,19 @@ int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
 int ExtraGraphicCount;
 int ExtraGraphicX[EXTRA_GRAPHIC_MAX], ExtraGraphicY[EXTRA_GRAPHIC_MAX], ExtraGraphicSizeX[EXTRA_GRAPHIC_MAX], ExtraGraphicSizeY[EXTRA_GRAPHIC_MAX], ExtraGraphicVelX[EXTRA_GRAPHIC_MAX], ExtraGraphicVelY[EXTRA_GRAPHIC_MAX];
 int ExtraGraphicFrictionX[EXTRA_GRAPHIC_MAX], ExtraGraphicFrictionY[EXTRA_GRAPHIC_MAX], ExtraGraphicTimer[EXTRA_GRAPHIC_MAX];
-int ExtraGraphicType[EXTRA_GRAPHIC_MAX];
+EExtraGraphicType ExtraGraphicType[EXTRA_GRAPHIC_MAX];
 
 
 
 //敵キャラ
 int EnemyCount;
 int EnemyX[ENEMY_MAX], EnemyY[ENEMY_MAX], EnemySizeX[ENEMY_MAX], EnemySizeY[ENEMY_MAX], EnemyVelX[ENEMY_MAX], EnemyVelY[ENEMY_MAX];
-int af[ENEMY_MAX], EnemyBlockAppearTimer[ENEMY_MAX];
-int aacta[ENEMY_MAX], aactb[ENEMY_MAX], azimentype[ENEMY_MAX], axzimen[ENEMY_MAX];
+int EnemyFloatingTimer[ENEMY_MAX], EnemyBlockAppearTimer[ENEMY_MAX];
+int EnemyActionX[ENEMY_MAX], EnemyActionY[ENEMY_MAX], EnemyMovementType[ENEMY_MAX], EnemyGrounded[ENEMY_MAX];
 EEnemyType EnemyType[ENEMY_MAX];
 EEnemySubType EnemySubType[ENEMY_MAX];
-int EnemyLookingDirection[ENEMY_MAX];
-int anotm[ENEMY_MAX], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
+ELookingDirection EnemyLookingDirection[ENEMY_MAX];
+int EnemyPlayerNoInteractTimer[ENEMY_MAX], EnemyDefaultSizeX[160], EnemyDefaultSizeY[160];
 int EnemyAITimer[ENEMY_MAX];
 int EnemyMessageTimer[ENEMY_MAX], EnemyMessageType[ENEMY_MAX];
 
@@ -155,14 +157,15 @@ int EnemyAppearCount;
 int EnemyAppearX[ENEMY_APPEAR_MAX], EnemyAppearY[ENEMY_APPEAR_MAX], EnemyAppearTimer[ENEMY_APPEAR_MAX];
 EEnemyType EnemyAppearType[ENEMY_APPEAR_MAX];
 EEnemySubType EnemyAppearSubType[ENEMY_APPEAR_MAX];
-int bz[ENEMY_APPEAR_MAX];
+int EnemyAppearMustPlace[ENEMY_APPEAR_MAX];
 
 
 //背景
 int BackgroundCount;
 int BackgroundX[BACKGROUND_MAX], BackgroundY[BACKGROUND_MAX];
 EDecorationType BackgroundType[BACKGROUND_MAX];
-int BackgroundWidth[BACKGROUND_MAX], BackgroundHeight[BACKGROUND_MAX];
+//+KZ: value is set but never used
+//int BackgroundWidth[BACKGROUND_MAX], BackgroundHeight[BACKGROUND_MAX];
 
 
 //リフト
@@ -213,7 +216,4 @@ long stimeZ;
 ESyobonActionGame currentGame = ESyobonActionGame::SYOBON_ACTION_1_AND_2;
 bool HelpFlagHandled = false;
 bool StartFullScreenFlag = false;
-
-//Syobon Action 3
-bool SA3_Level1MushroomTriggered = false;
-int SA3_Level1MushroomTimer = 0;
+bool SA3Enabled = false;

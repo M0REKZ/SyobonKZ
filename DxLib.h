@@ -81,4 +81,7 @@ extern bool DxLibExit;
 //moved here to be used in other places
 extern bool sound;
 
+//+KZ custom
+void SyobonKZDrawGraphScaled(int x, int y, int scale_x, int scale_y, SDL_Surface * psurface);
+
 #endif

@@ -3,6 +3,8 @@
 #include "blocks.h"
 #include "levels.h"
 #include "main.h"
+#include "entities.h"
+#include "extra_graphics.h"
 
 void stagecls()
 {
@@ -14,7 +16,7 @@ void stagecls()
 		GroundSizeY[t] = 1;
 		GroundAI[t] = 0;
 		GroundType[t] = EObjectType::VERTICAL_PIPE_BODY;
-		GroundSubType[t] = 0;
+		GroundSubType[t] = EObjectSubType::NONE;
 	}
 	// for (t=0;t<spmax;t++){spa[t]=-9000000;szyunni[t]=t;spb[t]=1;spc[t]=1;spd[t]=1;sptype[t]=0;spgtype[t]=0;}
 	for (t = 0; t < BLOCK_MAX; t++)
@@ -48,10 +50,10 @@ void stagecls()
 		EnemyY[t] = 1;
 		EnemyVelX[t] = 0;
 		EnemyVelY[t] = 1;
-		azimentype[t] = 0;
+		EnemyMovementType[t] = 0;
 		EnemyType[t] = EEnemyType::BALL;
 		EnemySubType[t] = EEnemySubType::NONE;
-		af[t] = 0;
+		EnemyFloatingTimer[t] = 0;
 		EnemyAITimer[t] = 0;
 		EnemyBlockAppearTimer[t] = 0;
 		EnemyMessageTimer[t] = 0;
@@ -60,7 +62,7 @@ void stagecls()
 	{
 		EnemyAppearX[t] = -9000000;
 		EnemyAppearY[t] = 1;
-		bz[t] = 1;
+		EnemyAppearMustPlace[t] = 1;
 		EnemyAppearTimer[t] = 0;
 		EnemyAppearSubType[t] = EEnemySubType::NONE;
 	}
@@ -70,14 +72,14 @@ void stagecls()
 		ExtraGraphicY[t] = 1;
 		ExtraGraphicVelX[t] = 1;
 		ExtraGraphicVelY[t] = 1;
-		ExtraGraphicType[t] = 0;
+		ExtraGraphicType[t] = EExtraGraphicType::COIN;
 	}
 	for (t = 0; t < BACKGROUND_MAX; t++)
 	{
 		BackgroundX[t] = -9000000;
 		BackgroundY[t] = 1;
-		BackgroundWidth[t] = 1;
-		BackgroundHeight[t] = 1;
+		//BackgroundWidth[t] = 1;
+		//BackgroundHeight[t] = 1;
 		BackgroundType[t] = EDecorationType::HILL;
 	}
 	// for (t=0;t<cmax;t++){ca[t]=-9000000;cb[t]=1;contm[t]=0;ctype[t]=0;ce[t]=0;cf[t]=0;}
@@ -119,7 +121,7 @@ void stage()
 			xx[23] = xx[10];
 			if (xx[10] >= 1 && xx[10] <= 19 && xx[10] != 9)
 			{
-				BlockCreate(tt * 29, t * 29 - 12, (EBlockType)xx[10]);
+				BlockCreateLegacy(tt * 29, t * 29 - 12, (EBlockType)xx[10]);
 			}
 			if (xx[10] >= 20 && xx[10] <= 29)
 			{
@@ -210,7 +212,7 @@ void stage()
 			// コイン (Coin)
 			if (xx[10] == 9)
 			{
-				BlockCreate(tt * 29, t * 29 - 12, EBlockType::COIN);
+				BlockCreateLegacy(tt * 29, t * 29 - 12, EBlockType::COIN);
 			}
 			if (xx[10] == 99)
 			{
@@ -277,6 +279,24 @@ void stagep()
 
 void HandleSyobonActionOneLevels()
 {
+    if(SyobonState == ESyobonState::TITLE)
+    {
+        scrollx = 0;
+
+        PlayerX = (2 * 30) * 100;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
+
+        for(int grounds = 0; grounds < 20; grounds++)
+        {
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
+        }
+
+        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EDecorationType::GRASS);
+        CreateBackground(GAME_X_POS_TO_DOUBLE(12 * 30 * 100), 10, EDecorationType::HILL);
+
+        return;
+    }
     // 1-1
     if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
     {
@@ -556,15 +576,15 @@ void HandleSyobonActionOneLevels()
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE}};
 
         // 追加情報
-        BlockCreate(8 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_DODGE);
+        BlockCreateLegacy(8 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_DODGE);
         //BlockSubType[BlockCount] = 2; //+KZ: In Syobon Action by Chiku this block gives a useless mushroom
-        BlockCreate(13 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
+        BlockCreateLegacy(13 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_BALL_NORMAL;
-        BlockCreate(14 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
-        BlockCreate(35 * 29, 8 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
-        BlockCreate(47 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM_2);
-        BlockCreate(59 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_COINS);
-        BlockCreate(67 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_STAR);
+        BlockCreateLegacy(14 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
+        BlockCreateLegacy(35 * 29, 8 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(47 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM_2);
+        BlockCreateLegacy(59 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_COINS);
+        BlockCreateLegacy(67 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_STAR);
 
         GroundCount = 0;
         t = GroundCount;
@@ -917,11 +937,11 @@ void HandleSyobonActionOneLevels()
         BlockCount = 0;
         // ヒント1
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_1_2_0;
-        BlockCreate(4 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(4 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         // BlockCreate(7*29,9*29-12,300);
 
         // 毒1
-        BlockCreate(13 * 29, 8 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
+        BlockCreateLegacy(13 * 29, 8 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
 
         // t=28;
         GroundCount = 0;
@@ -931,7 +951,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = 1;
+        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 12 * 29 * 100;
@@ -939,7 +959,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 6000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[t] = 0;
+        GroundSubType[t] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 14 * 29 * 100 + 1000;
@@ -947,7 +967,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 5000;
         GroundSizeY[t] = 70000;
         GroundType[t] = EObjectType::TRIGGER_SEAL_UP;
-        GroundSubType[t] = 1;
+        GroundSubType[t] = EObjectSubType::TRIGGER_SEAL_UP_LEVEL_1_2;
         GroundCount++;
 
         // ブロックもどき
@@ -1307,21 +1327,21 @@ void HandleSyobonActionOneLevels()
 
         BlockCount = 0;
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_MUSHROOM_GROW;
-        BlockCreate(7 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
-        BlockCreate(10 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
+        BlockCreateLegacy(7 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
+        BlockCreateLegacy(10 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
 
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_BRITTLE;
-        BlockCreate(49 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
+        BlockCreateLegacy(49 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
 
         for (t = 0; t >= -7; t--)
         {
-            BlockCreate(53 * 29, t * 29 - 12, EBlockType::BRICK);
+            BlockCreateLegacy(53 * 29, t * 29 - 12, EBlockType::BRICK);
         }
 
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_STAR_NORMAL;
-        BlockCreate(80 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_STAR);
+        BlockCreateLegacy(80 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_STAR);
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_MUSHROOM_GROW;
-        BlockCreate(78 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
+        BlockCreateLegacy(78 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
 
         // txtype[tco]=1;BlockCreate(11*29,9*29-12,114);//毒1
 
@@ -1347,7 +1367,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
         GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = 1;
+        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 53 * 29 * 100 + 500;
@@ -1355,7 +1375,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
         GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = 2;
+        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_FIRST_KUMA;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 129 * 29 * 100;
@@ -1363,7 +1383,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 6000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[t] = 2;
+        GroundSubType[t] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 154 * 29 * 100;
@@ -1371,7 +1391,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 9000;
         GroundSizeY[t] = 3000;
         GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = 7;
+        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE;
         GroundCount++;
 
         // ブロックもどき
@@ -1382,7 +1402,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 9000 * 2 - 1;
         GroundSizeY[t] = 3000;
         GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = 0;
+        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK;
         GroundAI[t] = 0;
         GroundCount++;
         t = 28;
@@ -1391,7 +1411,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 9000 - 1;
         GroundSizeY[t] = 3000;
         GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = 1;
+        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK;
         GroundAI[t] = 0;
         GroundCount++;
         t = 29;
@@ -1400,7 +1420,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 9000 * 3 - 1;
         GroundSizeY[t] = 3000;
         GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = 2;
+        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2;
         GroundAI[t] = 0;
         GroundCount++;
 
@@ -1411,7 +1431,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 3000;
         GroundType[t] = EObjectType::TRIGGER_LAVA_SPAWNER;
-        GroundSubType[t] = 0;
+        GroundSubType[t] = EObjectSubType::NONE;
         GroundVelY[t] = 0;
         GroundAI[t] = 48;
         GroundCount++;
@@ -1421,7 +1441,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = 2;
+        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_LAVA;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 123 * 29 * 100;
@@ -1429,7 +1449,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000 * 5 - 1;
         GroundSizeY[t] = 3000 * 5;
         GroundType[t] = EObjectType::FALLING_FLOOR;
-        GroundSubType[t] = 1;
+        GroundSubType[t] = EObjectSubType::FALLING_FLOOR_BRICK;
         GroundCount++;
 
         t = GroundCount;
@@ -1438,7 +1458,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 4700;
         GroundSizeY[t] = 3000 * 8 - 700;
         GroundType[t] = EObjectType::VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = 0;
+        GroundSubType[t] = EObjectSubType::NONE;
         GroundCount++;
 
         // t=sco;sa[t]=44*29*100;sb[t]=-6000;sc[t]=9000;sd[t]=70000;stype[t]=102;sco++;
@@ -1450,7 +1470,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = 5;
+        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 148 * 29 * 100;
@@ -1458,7 +1478,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = 5;
+        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 153 * 29 * 100;
@@ -1466,7 +1486,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 12000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = 5;
+        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
         GroundCount++;
 
         EnemyAppearCount = 0;
@@ -2020,7 +2040,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
         GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = 8;
+        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THIRD_KUMA;
         GroundCount++;
         // 空飛ぶ土管
         t = 28;
@@ -2512,41 +2532,41 @@ void HandleSyobonActionOneLevels()
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE}};
 
         BlockCount = 0;
-        BlockCreate(22 * 29, 3 * 29 - 12, EBlockType::BRICK);
+        BlockCreateLegacy(22 * 29, 3 * 29 - 12, EBlockType::BRICK);
         // 毒1
-        BlockCreate(54 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_PSWITCH);
+        BlockCreateLegacy(54 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_PSWITCH);
         // 音符+ (Musical note+)
-        BlockCreate(18 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
-        BlockCreate(19 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
-        BlockCreate(20 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
+        BlockCreateLegacy(18 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
+        BlockCreateLegacy(19 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
+        BlockCreateLegacy(20 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_BALL_SPIKY_NORMAL;
-        BlockCreate(61 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY); // 5
-        BlockCreate(74 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_HIDDEN);   // 6
+        BlockCreateLegacy(61 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY); // 5
+        BlockCreateLegacy(74 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_HIDDEN);   // 6
 
         // ヒント2 (Hint 2)
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_1_3_0_1;
-        BlockCreate(28 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK); // 7
+        BlockCreateLegacy(28 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK); // 7
         // ファイア
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_BURNING_FLOWER;
-        BlockCreate(7 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
+        BlockCreateLegacy(7 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
         // ヒント3
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_1_3_0_2;
-        BlockCreate(70 * 29, 8 * 29 - 12, EBlockType::MESSAGE_BLOCK); // 9
+        BlockCreateLegacy(70 * 29, 8 * 29 - 12, EBlockType::MESSAGE_BLOCK); // 9
 
         // もろいぶろっく×３
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(58 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(58 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(59 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(59 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(60 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(60 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
 
         // ヒントブレイク (Hint Break)
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(111 * 29, 6 * 29 - 12, EBlockType::MESSAGE_BLOCK_BREAKABLE);
+        BlockCreateLegacy(111 * 29, 6 * 29 - 12, EBlockType::MESSAGE_BLOCK_BREAKABLE);
         // ジャンプ
         BlockSubType[BlockCount] = EBlockSubType::TRAMPOLINE_VISIBLE;
-        BlockCreate(114 * 29, 9 * 29 - 12, EBlockType::TRAMPOLINE);
+        BlockCreateLegacy(114 * 29, 9 * 29 - 12, EBlockType::TRAMPOLINE);
 
         // ファイア
         // BlockCreate(7*29,9*29-12,101);
@@ -2581,7 +2601,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 9000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = 1;
+        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
         GroundCount++;
         // t=28;sa[t]=65*29*100;sb[t]=(10*29-12)*100;sc[t]=6000;sd[t]=9000-200;stype[t]=50;sco++;
 
@@ -2592,7 +2612,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 3000;
         GroundType[t] = EObjectType::TRIGGER_LASER;
-        GroundSubType[t] = 1;
+        GroundSubType[t] = EObjectSubType::TRIGGER_LASER_LEVEL_1_3;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 96 * 29 * 100 - 3000;
@@ -2600,7 +2620,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 9000;
         GroundSizeY[t] = 70000;
         GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = 10;
+        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN;
         GroundCount++;
         // ポール砲
         t = GroundCount;
@@ -3302,16 +3322,16 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 6000;
         GroundSizeY[t] = 15000 - 200;
         GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = 1;
+        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
         GroundCount++;
         // t=sco;sa[t]=12*29*100;sb[t]=(11*29-12)*100;sc[t]=3000;sd[t]=6000-200;stype[t]=40;sxtype[t]=0;sco++;
         // t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
 
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(12 * 29, 4 * 29 - 12, EBlockType::ITEM_BLOCK_COINS);
+        BlockCreateLegacy(12 * 29, 4 * 29 - 12, EBlockType::ITEM_BLOCK_COINS);
         // ヒント3
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_1_3_5;
-        BlockCreate(12 * 29, 8 * 29 - 12, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(12 * 29, 8 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         // txtype[tco]=0;BlockCreate(13*29,4*29-12,110);
 
         // stc=0;
@@ -3709,7 +3729,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 9000 - 1;
         GroundSizeY[t] = 3000 * 1 - 1;
         GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = 3;
+        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP;
         GroundAI[t] = 0;
         GroundCount++;
         t = GroundCount;
@@ -3727,7 +3747,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 30 * 6 * 100 - 1 + 0;
         GroundSizeY[t] = 3000 - 200;
         GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = 10;
+        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY;
         GroundCount++;
         // スクロール消し
         t = GroundCount;
@@ -3736,7 +3756,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000 * 1 - 1;
         GroundSizeY[t] = 300000;
         GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = 20;
+        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 148 * 29 * 100 + 1000;
@@ -3744,7 +3764,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000 * 1 - 1;
         GroundSizeY[t] = 300000;
         GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = 30;
+        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_CLEAR_GAME;
         GroundCount++;
 
         // 3連星
@@ -3754,7 +3774,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000;
         GroundSizeY[t] = 70000;
         GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = 12;
+        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA;
         GroundCount++;
 
         // 地面1
@@ -3764,7 +3784,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000 * 7 - 1;
         GroundSizeY[t] = 3000 * 5 - 1;
         GroundType[t] = EObjectType::CASTLE_BRICKS;
-        GroundSubType[t] = 0;
+        GroundSubType[t] = EObjectSubType::NONE;
         GroundCount++;
         t = GroundCount;
         GroundX[t] = 11 * 29 * 100;
@@ -3772,7 +3792,7 @@ void HandleSyobonActionOneLevels()
         GroundSizeX[t] = 3000 * 8 - 1;
         GroundSizeY[t] = 3000 * 4 - 1;
         GroundType[t] = EObjectType::CASTLE_BRICKS;
-        GroundSubType[t] = 0;
+        GroundSubType[t] = EObjectSubType::NONE;
         GroundCount++;
 
         EnemyAppearCount = 0;
@@ -3872,53 +3892,53 @@ void HandleSyobonActionOneLevels()
         BlockCount = 0;
         // ON-OFFブロック
         BlockSubType[BlockCount] = EBlockSubType::ON_BLOCK_LOCKED;
-        BlockCreate(29 * 29, 3 * 29 - 12, EBlockType::ON_BLOCK);
+        BlockCreateLegacy(29 * 29, 3 * 29 - 12, EBlockType::ON_BLOCK);
         // 1-2
-        BlockCreate(34 * 29, 9 * 29 - 12, EBlockType::GROUND_TOP);
-        BlockCreate(35 * 29, 9 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(34 * 29, 9 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(35 * 29, 9 * 29 - 12, EBlockType::GROUND_TOP);
         // 隠し
-        BlockCreate(55 * 29 + 15, 6 * 29 - 12, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreateLegacy(55 * 29 + 15, 6 * 29 - 12, EBlockType::ITEM_BLOCK_HIDDEN);
         // BlockCreate(62*29,9*29-12,2);
         // 隠しON-OFF
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_FIREBAR_SWITCH;
-        BlockCreate(50 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
+        BlockCreateLegacy(50 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
         // ヒント3
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_1_4_0;
-        BlockCreate(1 * 29, 5 * 29 - 12, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(1 * 29, 5 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         // ファイア
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_BURNING_FLOWER;
-        BlockCreate(86 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
+        BlockCreateLegacy(86 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
         // キノコなし　普通
         // txtype[tco]=2;BlockCreate(81*29,1*29-12,5);
         // 音符
         BlockSubType[BlockCount] = EBlockSubType::NOTE_BLOCK_WHITE_HIDDEN;
-        BlockCreate(86 * 29, 6 * 29 - 12, EBlockType::NOTE_BLOCK);
+        BlockCreateLegacy(86 * 29, 6 * 29 - 12, EBlockType::NOTE_BLOCK);
 
         // もろいぶろっく×３ (Fragile Block x 3)
         for (t = 0; t <= 2; t++)
         {
             BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK_3;
-            BlockCreate((79 + t) * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+            BlockCreateLegacy((79 + t) * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         }
 
         // ジャンプ (Jump)
         BlockSubType[BlockCount] = EBlockSubType::TRAMPOLINE_VISIBLE_3;
-        BlockCreate(105 * 29, 11 * 29 - 12, EBlockType::TRAMPOLINE);
+        BlockCreateLegacy(105 * 29, 11 * 29 - 12, EBlockType::TRAMPOLINE);
         // 毒1
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_MUSHROOM_POISONOUS_FASTER;
-        BlockCreate(109 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
+        BlockCreateLegacy(109 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
         // デフラグ (Defrag)
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_DEFRAG_NORMAL;
-        BlockCreate(111 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
+        BlockCreateLegacy(111 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
         // 剣 (Sword)
-        BlockCreate(132 * 29, 8 * 29 - 12 - 3, EBlockType::SWORD);
-        BlockCreate(131 * 29, 9 * 29 - 12, EBlockType::BRIDGE_ROPE);
+        BlockCreateLegacy(132 * 29, 8 * 29 - 12 - 3, EBlockType::SWORD);
+        BlockCreateLegacy(131 * 29, 9 * 29 - 12, EBlockType::BRIDGE_ROPE);
         // メロン (Melon)
         //+KZ: wait what, google translates it as "melon" but everyone thinks it is a artichoke? xDDDD
         //  It does not even look like a artichoke... I can't trust people anymore
-        BlockCreate(161 * 29, 12 * 29 - 12, EBlockType::MELON);
+        BlockCreateLegacy(161 * 29, 12 * 29 - 12, EBlockType::MELON);
         // ファイアバー強化 (Fire Bar Enhancement)
-        BlockCreate(66 * 29, 4 * 29 - 12, EBlockType::FIREBAR_GROW);
+        BlockCreateLegacy(66 * 29, 4 * 29 - 12, EBlockType::FIREBAR_GROW);
 
         // リフト (Lift)
         LiftCount = 0;
@@ -4197,28 +4217,28 @@ void HandleSyobonActionTwoLevels()
         BlockCount = 0;
         //
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_2_1_0_1;
-        BlockCreate(1 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(1 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(40 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(40 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_2_1_0_2;
-        BlockCreate(79 * 29, 7 * 29 - 12, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(79 * 29, 7 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_MUSHROOM_GROW;
-        BlockCreate(83 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
+        BlockCreateLegacy(83 * 29, 7 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_NORMAL;
-        BlockCreate(83 * 29, 2 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
+        BlockCreateLegacy(83 * 29, 2 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
         BlockCount += 1;
         //
         for (int i = -1; i > -7; i -= 1)
         {
-            BlockCreate(85 * 29, i * 29 - 12, EBlockType::HARD_BLOCK);
+            BlockCreateLegacy(85 * 29, i * 29 - 12, EBlockType::HARD_BLOCK);
             BlockCount += 1;
         }
         //
@@ -4228,7 +4248,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 12000 - 1;
         GroundSizeY[GroundCount] = 3000;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 51 * 29 * 100;
@@ -4236,7 +4256,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000;
         GroundType[GroundCount] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 84 * 29 * 100;
@@ -4244,7 +4264,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 105 * 29 * 100;
@@ -4252,7 +4272,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 15000 - 1;
         GroundSizeY[GroundCount] = 3000;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
         GroundCount += 1;
         //
         EnemyAppearCount = 0;
@@ -4354,10 +4374,10 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 12000 - 200;
         GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = 1;
+        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
         GroundCount += 1;
         //
-        BlockCreate(6 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(6 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -4728,7 +4748,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 300000 - 6001;
         GroundSizeY[GroundCount] = 3000;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 3 * 29 * 100;
@@ -4736,7 +4756,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 3000;
         GroundSizeY[GroundCount] = 3000;
         GroundType[GroundCount] = EObjectType::TRIGGER_PLATFORM_SPLIT;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = (EObjectSubType)0; //this is a timer
         GroundCount += 1;
         //
         GroundX[GroundCount] = 107 * 29 * 100;
@@ -4744,7 +4764,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 24000;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 1;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_BRICK;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 111 * 29 * 100;
@@ -4752,7 +4772,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 3000;
         GroundSizeY[GroundCount] = 6000 - 200;
         GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 113 * 29 * 100 + 1100;
@@ -4760,7 +4780,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 4700;
         GroundSizeY[GroundCount] = 27000 - 1000;
         GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::NONE;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 128 * 29 * 100;
@@ -4768,7 +4788,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 24000;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 1;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_BRICK;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 131 * 29 * 100;
@@ -4776,7 +4796,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 3000;
         GroundSizeY[GroundCount] = 6000 - 200;
         GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = 2;
+        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 133 * 29 * 100 + 1100;
@@ -4784,53 +4804,53 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 4700;
         GroundSizeY[GroundCount] = 32000;
         GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::NONE;
         GroundCount += 1;
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(0 * 29, 0 * 29 - 12, EBlockType::HARD_BLOCK);
+        BlockCreateLegacy(0 * 29, 0 * 29 - 12, EBlockType::HARD_BLOCK);
         BlockCount = 1;
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(2 * 29, 9 * 29 - 12, EBlockType::HARD_BLOCK);
+        BlockCreateLegacy(2 * 29, 9 * 29 - 12, EBlockType::HARD_BLOCK);
         BlockCount = 2;
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(3 * 29, 9 * 29 - 12, EBlockType::HARD_BLOCK);
+        BlockCreateLegacy(3 * 29, 9 * 29 - 12, EBlockType::HARD_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(5 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(5 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(6 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
-        BlockCount += 1;
-        //
-        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(5 * 29, 10 * 29 - 12, EBlockType::BRICK_BRITTLE);
-        BlockCount += 1;
-        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(6 * 29, 10 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(6 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(5 * 29, 11 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(5 * 29, 10 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(6 * 29, 11 * 29 - 12, EBlockType::BRICK_BRITTLE);
-        BlockCount += 1;
-        //
-        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(5 * 29, 12 * 29 - 12, EBlockType::BRICK_BRITTLE);
-        BlockCount += 1;
-        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(6 * 29, 12 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(6 * 29, 10 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(70 * 29, 7 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(5 * 29, 11 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(71 * 29, 7 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(6 * 29, 11 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCount += 1;
+        //
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(5 * 29, 12 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCount += 1;
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(6 * 29, 12 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCount += 1;
+        //
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(70 * 29, 7 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCount += 1;
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(71 * 29, 7 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -5049,9 +5069,9 @@ void HandleSyobonActionTwoLevels()
              NONE, NONE,
              NONE, HARD_BLOCK, HARD_BLOCK,
              HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-             NONE, BRICK, NONE,
+             NONE, NONE, NONE,
              NONE, NONE,
-             BRICK, NONE, NONE, NONE, NONE, NONE, CLOUD, NONE, HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
+             NONE, NONE, NONE, NONE, NONE, NONE, CLOUD, NONE, HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE,
              NONE, NONE, NONE,
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
@@ -5271,28 +5291,28 @@ void HandleSyobonActionTwoLevels()
         BlockSubType[BlockCount] = EBlockSubType::NONE;
         for (int i = -1; i > -7; i -= 1)
         {
-            BlockCreate(55 * 29, i * 29 - 12, EBlockType::HARD_BLOCK);
+            BlockCreateLegacy(55 * 29, i * 29 - 12, EBlockType::HARD_BLOCK);
             BlockCount += 1;
         }
         //
         BlockSubType[BlockCount] = EBlockSubType::TRAMPOLINE_VISIBLE;
-        BlockCreate(64 * 29, 12 * 29 - 12, EBlockType::TRAMPOLINE);
+        BlockCreateLegacy(64 * 29, 12 * 29 - 12, EBlockType::TRAMPOLINE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(66 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(66 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(67 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(67 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(68 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(68 * 29, 3 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_2_3_0;
-        BlockCreate(60 * 29, 6 * 29 - 12, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(60 * 29, 6 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         
         EnemyAppearCount = 1;
@@ -5450,23 +5470,23 @@ void HandleSyobonActionTwoLevels()
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(0 * 29, -1 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(0 * 29, -1 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(4 * 29, -1 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(4 * 29, -1 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(1 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(1 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(6 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(6 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(7 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(7 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         EnemyAppearCount = 0;
@@ -5488,7 +5508,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 21000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 2;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 27 * 29 * 100;
@@ -5496,7 +5516,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 6000;
         GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = 6;
+        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 34 * 29 * 100;
@@ -5504,7 +5524,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 30000;
         GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = 1;
+        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
         GroundCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -5552,15 +5572,15 @@ void HandleSyobonActionTwoLevels()
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(12 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(12 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(13 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(13 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(14 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(14 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         GroundCount = 0;
@@ -5569,7 +5589,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 18000 - 1;
         GroundSizeY[GroundCount] = 6000 - 1;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 12 * 29 * 100;
@@ -5577,7 +5597,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 2;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 15 * 29 * 100;
@@ -5585,7 +5605,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 3000;
         GroundSizeY[GroundCount] = 6000;
         GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = 2;
+        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 17 * 29 * 100 + 1100;
@@ -5593,7 +5613,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 4700;
         GroundSizeY[GroundCount] = 38000;
         GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::NONE;
         GroundCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
@@ -5876,35 +5896,35 @@ void HandleSyobonActionTwoLevels()
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(1 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(1 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(2 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(2 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_2_4_2;
-        BlockCreate(3 * 29, 4 * 29 - 12, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(3 * 29, 4 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(32 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(32 * 29, 9 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(76 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
+        BlockCreateLegacy(76 * 29, 14 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(108 * 29, 11 * 29 - 12, EBlockType::BRIDGE_ROPE);
+        BlockCreateLegacy(108 * 29, 11 * 29 - 12, EBlockType::BRIDGE_ROPE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(109 * 29, 10 * 29 - 12 - 3, EBlockType::SWORD);
+        BlockCreateLegacy(109 * 29, 10 * 29 - 12 - 3, EBlockType::SWORD);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::NONE;
-        BlockCreate(121 * 29, 10 * 29 - 12, EBlockType::MELON);
+        BlockCreateLegacy(121 * 29, 10 * 29 - 12, EBlockType::MELON);
         BlockCount += 1;
         //
         EnemyAppearCount = 0;
@@ -6016,7 +6036,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 33000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 2;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 13 * 29 * 100;
@@ -6024,7 +6044,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 33000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
         GroundType[GroundCount] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[GroundCount] = 3;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 10 * 29 * 100;
@@ -6032,7 +6052,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 6000;
         GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = 6;
+        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 46 * 29 * 100;
@@ -6040,7 +6060,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000 - 1;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 2;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 58 * 29 * 100;
@@ -6048,7 +6068,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 6000;
         GroundSizeY[GroundCount] = 6000;
         GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = 6;
+        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 101 * 29 * 100 - 1500;
@@ -6056,7 +6076,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 12000;
         GroundSizeY[GroundCount] = 12000;
         GroundType[GroundCount] = EObjectType::TRIGGER_MULTI_LASER;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::TRIGGER_MULTI_LASER_ACTIVE;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 102 * 29 * 100 + 3000;
@@ -6064,7 +6084,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 3000 - 1;
         GroundSizeY[GroundCount] = 300000;
         GroundType[GroundCount] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[GroundCount] = 20;
+        GroundSubType[GroundCount] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF;
         GroundCount += 1;
         //
         LiftCount = 0;
@@ -6350,15 +6370,15 @@ void HandleSyobonActionTwoLevels()
         BlockCount = 0;
         //
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_3_1_0;
-        BlockCreate(2 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(2 * 29, 9 * 29 - 12, EBlockType::MESSAGE_BLOCK);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(63 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(63 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
-        BlockCreate(64 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(64 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
         GroundCount = 0;
@@ -6367,7 +6387,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
         GroundCount += 1;
         //
         GroundX[GroundCount] = 84 * 29 * 100;
@@ -6375,7 +6395,7 @@ void HandleSyobonActionTwoLevels()
         GroundSizeX[GroundCount] = 9000 - 1;
         GroundSizeY[GroundCount] = 3000;
         GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = 0;
+        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
         GroundCount += 1;
         //
         EnemyAppearCount = 0;
@@ -6436,307 +6456,148 @@ void HandleSyobonActionTwoLevels()
     }
 }
 
-// Extremely incomplete
+// WIP
 void HandleSyobonActionThreeLevels()
 {
-    if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
+    StageClear();
+
+    //SA3 Title Screen
+    if(SyobonState == ESyobonState::TITLE)
     {
-        scrollx = 1000000;
-        ELegacyStageDate stagedatex21[17][1001];
+        scrollx = 0;
 
-        memset(stagedatex21[0], 0, sizeof(stagedatex21[0]));
+        PlayerX = (2 * 29) * 100 - 350;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
 
-        memset(stagedatex21[1], 0, sizeof(stagedatex21[1]));
-        stagedatex21[1][64] = CLOUD;
-
+        for(int grounds = 0; grounds < 20; grounds++)
         {
-            const ELegacyStageDate Data[134] = {
-                    NONE, CLOUD, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    CLOUD_SMALL, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, CLOUD, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, STAGEDATE_98, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, GOAL_POLE, NONE, NONE, NONE, NONE, NONE, NONE,
-                    NONE, NONE, NONE, NONE
-                };
-            
-            memset(stagedatex21[2], 0, sizeof(stagedatex21[2]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[2][i] = Data[i];
-            }
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
         }
 
-        memset(stagedatex21[3], 0, sizeof(stagedatex21[3]));
-        stagedatex21[3][52] = VERTICAL_PIPE_HEAD;
+        GroundCreate(3, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(3 + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 5, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
 
-        memset(stagedatex21[4], 0, sizeof(stagedatex21[4]));
-        stagedatex21[4][16] = VERTICAL_PIPE_HEAD;
+        CreateBackground(3, 10, EDecorationType::HILL);
+        
+        //Poison mushroom
+        BlockCreate(9, 9, EBlockType::ITEM_BLOCK_OPEN);
+        int entity_index = CreateEntity(9, 9, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::NONE);
+        if(entity_index >= 0)
+            EnemyBlockAppearTimer[entity_index] = 16;
 
+        //here originally Syobon Action 3 hides the real player xd
+        BlockCreate(11, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(12, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(13, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(11, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(12, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(13, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(12, 10, EBlockType::HARD_BLOCK);
+
+        CreateBackground(14, 12, EDecorationType::GRASS);
+        CreateBackground(12, 10 - 5.724, EDecorationType::CLOUD);
+        CreateBackground(2, 3, EDecorationType::CLOUD);
+        CreateBackground(7, 2.5, EDecorationType::CLOUD_SMALL);
+        CreateBackground(15, 1.2, EDecorationType::CLOUD_SMALL);
+
+        return;
+    }
+    //has code from SA:All Stars (though i deleted and modified it a lot)
+    else if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
+    {
+        scrollx = 500000;
+        bgmchange(Music[1]);
+
+        //Create all the ground
+        for(int grounds = 0; grounds < 180; grounds++)
         {
-            const ELegacyStageDate Data[134] = {
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, HARD_BLOCK, BRICK, BRICK, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, STAGEDATE_98,
-				STAGEDATE_98, STAGEDATE_98, BRICK, BRICK, NONE, NONE, NONE, BRICK, BRICK, BRICK,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, ITEM_BLOCK_COIN, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, STAGEDATE_98, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[5], 0, sizeof(stagedatex21[5]));
-            for(int i = 0; i < sizeof(Data); ++i)
+            //holes
+            if(
+                (grounds >= 3 && grounds <= 6)
+            )
             {
-                stagedatex21[5][i] = Data[i];
+                BlockCreate(grounds, 7.5, EBlockType::ITEM_BLOCK_HIDDEN);
+                BlockCreate(grounds, 13, EBlockType::ITEM_BLOCK_HIDDEN);
+                continue;
             }
+
+            if(
+                (grounds >= 50 && grounds <= 54) ||
+                (grounds >= 69 && grounds <= 77) ||
+                (grounds >= 83 && grounds <= 94) ||
+                (grounds >= 132 && grounds < 140)
+            )
+            {
+                continue;
+            }
+
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
         }
 
+        //the first blocks in Syobon Action 3 have a weird 0.5 Y offset
+        BlockCreate(0, 8.5, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(1, 8.5, EBlockType::HARD_BLOCK);
+        BlockCreate(2, 8.5, EBlockType::BRICK);
+
+        BlockCreate(6, 9.5, EBlockType::HARD_BLOCK);
+        BlockCreate(6, 10.5, EBlockType::HARD_BLOCK);
+
+        BlockCreate(9, 8.5, EBlockType::BRICK);
+        BlockCreate(10, 8.5, EBlockType::ITEM_BLOCK_COIN);
+        BlockCreate(11, 8.5, EBlockType::BRICK);
+        BlockCreate(12, 8.5, EBlockType::ITEM_BLOCK_MUSHROOM, EBlockSubType::ITEM_BLOCK_MUSHROOM_SA3_TRAP);
+        BlockCreate(13, 8.5, EBlockType::BRICK);
+        BlockCreate(14, 8.5, EBlockType::BRICK);
+
+        BlockCreate(15, 4.5, EBlockType::HARD_BLOCK);
+        BlockCreate(16, 4.5, EBlockType::BRICK);
+        BlockCreate(17, 4.5, EBlockType::BRICK);
+        
+        //replace the copyright plant trap with a seal
+        GroundCreate(0.25, 8.75, 0.50, 5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
+
+        CreateEntity(12.5, 7.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
+        CreateEntity(6.5, 11.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::NONE);
+        CreateEntity(15.5, 3.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
+
+        CreateEntity(27.5, 8, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
+
+        CreateBackground(1, 2.5, EDecorationType::CLOUD);
+        CreateBackground(10, 2.5, EDecorationType::CLOUD_SMALL);
+        CreateBackground(9, 10, EDecorationType::HILL);
+        CreateBackground(23, 1.5, EDecorationType::CLOUD);
+        CreateBackground(32, 2.5, EDecorationType::CLOUD_SMALL);
+        CreateBackground(33.24, 12, EDecorationType::GRASS);
+        CreateBackground(42, 2.5, EDecorationType::CLOUD_SMALL);
+        CreateBackground(44, 10, EDecorationType::HILL);
+
+        //pipes for each 4 blocks
+        for(int i = 0; i < 5; i++)
         {
-            const ELegacyStageDate Data[134] = {
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, ITEM_BLOCK_HIDDEN,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[6], 0, sizeof(stagedatex21[6]));
-            for(int i = 0; i < sizeof(Data); ++i)
+            if(i == 0)
             {
-                stagedatex21[6][i] = Data[i];
+                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
             }
+            else
+            {
+                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
+        
+                if(i != 4)
+                {
+                    CreateEntity(29 + (i * 4), 10, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
+                }
+                else
+                {
+                    GroundCreate(27.25 + (i * 4), 0, 1.5, 8.5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS);
+                }
+            }
+
+            GroundCreate(27 + (i * 4), 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
         }
 
-        {
-            const ELegacyStageDate Data[134] = {
-				NONE, NONE, NONE, NONE, NONE, NONE, ITEM_BLOCK_HIDDEN, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, BALL, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, CHECKPOINT, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[7], 0, sizeof(stagedatex21[7]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[7][i] = Data[i];
-            }
-        }
-
-        {
-            const ELegacyStageDate Data[134] = {
-				NONE, NONE, NONE, ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, NONE, NONE, NONE, NONE,
-				NONE, NONE, BALL, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, STAGEDATE_98, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[8], 0, sizeof(stagedatex21[8]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[8][i] = Data[i];
-            }
-        }
-
-        {
-            const ELegacyStageDate Data[135] = {
-				ITEM_BLOCK_HIDDEN, HARD_BLOCK, BRICK, NONE, NONE, NONE, NONE, NONE, NONE, BRICK,
-				ITEM_BLOCK_COIN, BRICK, NONE, BRICK, BRICK, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				ITEM_BLOCK_HIDDEN, NONE, NONE, NONE, NONE, NONE, BRICK, STAGEDATE_98, BRICK, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, STAGEDATE_98,
-				NONE, NONE, NONE, NONE, NONE, NONE, BRICK, STAGEDATE_98, NONE, NONE,
-				NONE, ITEM_BLOCK_COIN, NONE, NONE, ITEM_BLOCK_COIN, NONE, NONE, ITEM_BLOCK_COIN, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, BRICK,
-				BRICK, ITEM_BLOCK_COIN, BRICK, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[9], 0, sizeof(stagedatex21[9]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[9][i] = Data[i];
-            }
-        }
-
-        {
-            const ELegacyStageDate Data[134] = {
-				NONE, NONE, NONE, NONE, NONE, NONE, HARD_BLOCK, NONE, NONE, HILL,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, HILL, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, HARD_BLOCK, NONE, NONE, NONE, HARD_BLOCK, NONE,
-				ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, VERTICAL_PIPE_HEAD, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, CASTLE, NONE,
-				NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[10], 0, sizeof(stagedatex21[10]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[10][i] = Data[i];
-            }
-        }
-
-        {
-            const ELegacyStageDate Data[134] = {
-				NONE, NONE, NONE, NONE, BALL_SPIKY, NONE, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK,
-				NONE, NONE, NONE, NONE, NONE, HORIZONTAL_PIPE_BODY, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, VERTICAL_PIPE_HEAD, NONE, NONE, HARD_BLOCK,
-				HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[11], 0, sizeof(stagedatex21[11]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[11][i] = Data[i];
-            }
-        }
-
-        {
-            const ELegacyStageDate Data[135] = {
-				NONE, NONE, NONE, ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, ITEM_BLOCK_HIDDEN, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, GRASS, STAGEDATE_98, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, GRASS, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-				NONE, BALL, NONE, BALL, NONE, NONE, BALL_SHELLED, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, GRASS, NONE,
-				NONE, NONE, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK,
-				NONE, NONE, NONE, NONE, NONE, HORIZONTAL_PIPE_BODY, NONE, NONE, NONE, NONE,
-				NONE, BALL, NONE, BALL, NONE, NONE, HORIZONTAL_PIPE_BODY, NONE, HARD_BLOCK, HARD_BLOCK,
-				HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE,
-				NONE, NONE, NONE, HARD_BLOCK, GRASS, NONE, NONE, NONE, NONE, NONE,
-				NONE, NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[12], 0, sizeof(stagedatex21[12]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[12][i] = Data[i];
-            }
-        }
-
-        {
-            const ELegacyStageDate Data[145] = {
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, NONE, NONE, NONE, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				NONE, NONE, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, NONE, NONE, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, NONE, NONE, NONE, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, NONE, GROUND_TOP, GROUND_TOP,
-				GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP
-			};
-            
-            memset(stagedatex21[13], 0, sizeof(stagedatex21[13]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[13][i] = Data[i];
-            }
-        }
-
-        {
-            const ELegacyStageDate Data[150] = {
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, NONE, NONE, NONE, NONE, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				NONE, NONE, NONE, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, NONE, NONE, NONE, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, NONE, NONE, NONE, NONE, NONE, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, NONE, NONE, NONE, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, NONE, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, NONE, GROUND_BOTTOM, GROUND_BOTTOM,
-				GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, NONE, NONE, NONE, NONE
-			};
-            
-            memset(stagedatex21[14], 0, sizeof(stagedatex21[14]));
-            for(int i = 0; i < sizeof(Data); ++i)
-            {
-                stagedatex21[14][i] = Data[i];
-            }
-        }
-
-        memset(stagedatex21[15], 0, sizeof(stagedatex21[15]));
-
-
-        BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_MUSHROOM_4; //nブロック[nブロックco].xtype = 4;
-        BlockCreate(348, 249, EBlockType::ITEM_BLOCK_MUSHROOM);
+        //remaining code from all stars xd
         int t_9 = GroundCount;
         GroundX[t_9] = 8700; //n地面[t_9].a = 8700;
         GroundY[t_9] = 36500; //n地面[t_9].b = 36500;
@@ -6744,12 +6605,210 @@ void HandleSyobonActionThreeLevels()
         GroundSizeY[t_9] = 3000; //n地面[t_9].d = 3000;
         GroundType[t_9] = EObjectType::FALLING_FLOOR; //n地面[t_9].type = 52;
         GroundCount++; //n地面co++;
-        for (int num34 = 0; num34 <= 1000; num34++)
+
+
+
+        //after the pipes
+
+        BlockCreate(51, 8.5, EBlockType::HARD_BLOCK);
+        BlockCreate(53, 4.5, EBlockType::HARD_BLOCK);
+
+        //spikes trap
+        for(int i = 6; i <= 12; i++)
         {
-            for (int num35 = 0; num35 <= 16; num35++)
+            if(i == 6)
             {
-                stagedate[num35][num34] = stagedatex21[num35][num34];
+                //save first block index for the trap
+                int trap_index = GroundCreate(56, 12.5, 7.5, 0.5, EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1, EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING);
+                if(trap_index >= 0)
+                    GroundAI[trap_index] = BlockCreate(55, i, EBlockType::ITEM_BLOCK_OPEN);
+            }
+            else
+            {
+                BlockCreate(55, i, EBlockType::ITEM_BLOCK_OPEN);
+            }
+            BlockCreate(64, i + 7, EBlockType::ITEM_BLOCK_OPEN);
+        }
+
+        GroundCreate(65, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(65 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(67, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(67 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+
+
+        BlockCreate(69, 4.75, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        for(int i = 72; i <= 76; ++i)
+        {
+            BlockCreate(i, 6, EBlockType::BRICK);
+        }
+
+        CreateEntity(75.5, 5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+
+        BlockCreate(80.9, 12, EBlockType::TRAMPOLINE, EBlockSubType::TRAMPOLINE_VISIBLE);
+
+        BlockCreate(83, 9, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(84, 6, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        BlockCreate(85, 3.5, EBlockType::BRICK);
+        BlockCreate(86, 3.5, EBlockType::BRICK);
+        BlockCreate(87, 3.5, EBlockType::BRICK);
+
+        GroundCreate(91, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
+        BlockCreate(91, 13, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(92, 13, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(93, 13, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(94, 13, EBlockType::ITEM_BLOCK_HIDDEN);
+        GroundCreate(98, 11, 1, 2, EObjectType::CHECKPOINT, EObjectSubType::NONE);
+
+        // tunnel thing
+        BlockCreate(103, 11.5, EBlockType::HARD_BLOCK);
+        BlockCreate(103, 10.5, EBlockType::HARD_BLOCK);
+        BlockCreate(103, 9.5, EBlockType::HARD_BLOCK);
+        int first_wall_block = -1;
+        for(int x_pos = 104; x_pos <= 125; x_pos++)
+        {
+            if(
+                (
+                    x_pos % 2 &&
+                    (
+                        x_pos >= 105 && x_pos <= 111
+                    )
+                )
+                ||
+                (
+                    x_pos == 114 || x_pos == 115
+                )
+                ||
+                (
+                    x_pos == 122
+                )
+            )
+            {
+                BlockCreate(x_pos, 9.5, EBlockType::ITEM_BLOCK_COIN);
+            }
+            else if(x_pos == 119)
+            {
+                BlockCreate(x_pos, 9.5, EBlockType::ITEM_BLOCK_HIDDEN);
+            }
+            else if(x_pos != 125)
+            {
+                BlockCreate(x_pos, 9.5, EBlockType::HARD_BLOCK);
+            }
+
+            if(x_pos >= 107 && (x_pos % 2) && x_pos <= 119)
+            {
+                if(x_pos == 107 || x_pos == 111 || x_pos == 113 || x_pos == 117)
+                {
+                    CreateEntity(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+                }
+                else
+                {
+                    CreateEntity(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+                }
+            }
+
+            if(x_pos == 122)
+            {
+                CreateEntity(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+            }
+            else if(x_pos == 124)
+            {
+                CreateEntity(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+            }
+
+            if(x_pos >= 106)
+            {
+                BlockCreate(x_pos, 5.5, EBlockType::HARD_BLOCK);
+
+                if(!(x_pos % 2) && (x_pos >= 108))
+                {
+                    BlockCreate(x_pos - 0.2, 4.5, EBlockType::COIN);
+                }
+
+                if(x_pos > 107)
+                {
+                    BlockCreate(x_pos, 0.5, EBlockType::ITEM_BLOCK_HIDDEN);
+                    if(x_pos == 111 || x_pos == 116 || x_pos == 120 || x_pos == 123)
+                    {
+                        BlockCreate(x_pos, 2.5, EBlockType::ITEM_BLOCK_COIN);
+                    }
+                    else
+                    {
+                        BlockCreate(x_pos, 2.5, EBlockType::BRICK);
+                    }
+                }
+            }
+
+            if(x_pos == 107)
+            {
+                for(double y_pos = -2.5; y_pos < 3; y_pos++)
+                {
+                    if(y_pos < -2.0)
+                    {
+                        first_wall_block = BlockCreate(x_pos, y_pos, EBlockType::ITEM_BLOCK_OPEN);
+                    }
+                    else
+                    {
+                        BlockCreate(x_pos, y_pos, EBlockType::ITEM_BLOCK_OPEN);
+                    }
+                }
             }
         }
+
+        CreateBackground(114, 1.5, EDecorationType::CLOUD);
+
+        int ind = GroundCreate(117, 1, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
+        GroundAI[ind] = first_wall_block;
+        ind = GroundCreate(121, 10.5, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
+        GroundAI[ind] = -1;
+
+        GroundCreate(130, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(130 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+
+        BlockCreate(132, 5.5, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        for(int x_coin = 132; x_coin < 140; x_coin++)
+        {
+            BlockCreate(x_coin, 11.5, EBlockType::COIN);
+        }
+        //TODO: you should not be able to even touch this floor
+        GroundCreate(132, 13, 8, 2, EObjectType::FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
+
+        GroundCreate(140, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(140 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(140, 0, 2, 11, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
+
+        //plant
+        BlockCreate(148, 12, EBlockType::HARD_BLOCK);
+
+        BlockCreate(149, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(149, 11, EBlockType::HARD_BLOCK);
+
+        BlockCreate(150, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(150, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(150, 10, EBlockType::HARD_BLOCK);
+
+        BlockCreate(151, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(151, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(151, 10, EBlockType::HARD_BLOCK);
+        BlockCreate(151, 9, EBlockType::HARD_BLOCK);
+
+        GroundCreate(152, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        GroundCreate(152 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+
+
+
     }
+}
+
+void StageClear()
+{
+    memset(stagedate, NONE, sizeof(stagedate));
+
+    ClearAllBackgrounds();
+    ClearAllExtraGraphics();
+    BlockClearAll();
+    ClearAllEntities();
+    GroundClearAll();
 }

@@ -18,6 +18,17 @@ It is also known as:
 * Cat MeOUCHio
 * *and other names.....*
 
+Included games:
+-----
+SyobonKZ includes the following game remakes/ports:
+
+* Shobon Action (Original):
+    * The original game made by Chiku, here is packed as the same game along Bluvel's modification.
+* Shobon Action (Modified by Bluvel):
+    * The "World 2" expansion made by Bluvel, also the most played and popular Syobon Action version thanks to OpenSyobonAction.
+* Syobon Action 3
+    * Custom sequel made by DakaArts (Daka256xr), now remade with original Syobon Action code and physics!
+
 Supported platforms:
 -----
 * [x] Windows

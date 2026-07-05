@@ -9,7 +9,7 @@
 //main-10
 //タイトル-100
 
-enum class ESyobonState
+enum class ESyobonState : int
 {
     IN_GAME = 1,
     CREDITS = 2,
@@ -76,8 +76,10 @@ extern SDL_Surface *Sliced_GFX[161][8];
 extern SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
-extern SDL_Surface *Main_GFX_KZ[1]; //+KZ
-extern SDL_Surface *Sliced_GFX_KZ[2]; //+KZ
+#define MAIN_GFX_KZ_MAX 11
+#define SLICED_GFX_KZ_MAX 2
+extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
+extern SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
 
 //+KZ: mirrors the image drawn by drawimage()
 extern int mirror;
@@ -92,16 +94,12 @@ extern SyobonKZChunk *Sounds[19];
 //10-ステージ前 (10-Before Stage)
 //
 
-//ループ (Loop)
-//+KZ: these should be local variables in many places inside main.cpp
-extern int t, tt, t1, t2, t3, t4;
-
 
 //初期化 (Initialization)
-extern int zxon;//, zzxon; //+KZ: zzxon is unused
+extern int InGameInitialized;//, zzxon; //+KZ: zzxon is unused
 
 //キーコンフィグ (Key Configuration)
-extern int key;//, keytm; //+KZ: keytm is useless
+//extern int key;//, keytm; //+KZ: keytm is useless... no wait both are useless/unused
 
 //三角関数 (Trigonometric functions)
 extern double pai;
@@ -124,16 +122,17 @@ extern int GroundSizeY[GROUND_MAX];
 // @attention +KZ: int stype[smax] is now EObjectType GroundType[smax]
 extern EObjectType GroundType[GROUND_MAX];
 // @attention +KZ: int sxtype[smax] is now GroundSubType[smax]
-extern int GroundSubType[GROUND_MAX];
+extern EObjectSubType GroundSubType[GROUND_MAX];
 // @attention +KZ: int sr[smax] is now GroundVelY[smax]
 extern int GroundVelY[GROUND_MAX];
 // @attention +KZ: int sgtype[smax] is now GroundAI[smax]
 extern int GroundAI[GROUND_MAX];
 
-
+//@attention +KZ: int mainmsgtype is now int WarpZoneMessageState
+extern int WarpZoneMessageState;
 
 //プレイヤー (Player)
-extern int mainmsgtype;
+// mainmsgtype is not really player related, moved above (and renamed)
 // @attention +KZ: int ma is now int PlayerX
 extern int PlayerX;
 // @attention +KZ: int mb is now int PlayerY
@@ -165,7 +164,9 @@ extern int PlayerState;
 extern int PlayerSubState;
 // @attention +KZ: int mactp is now int PlayerAITimer
 extern int PlayerAITimer;
-extern int mzz;
+// @attention +KZ int mzz is now int PlayerRocketPipeTrapVelY
+// This variable is specific for the rocket pipe trap from 1-1
+extern int PlayerRocketPipeTrapVelY;
 // @attention +KZ: int mzimen is now int PlayerGrounded
 extern int PlayerGrounded;
 enum class EPlayerGroundType
@@ -175,8 +176,8 @@ enum class EPlayerGroundType
 };
 // @attention +KZ: int mrzimen is now EGroundType GroundType
 extern EPlayerGroundType PlayerGroundType;
-// @attention +KZ: int mmuki is now int PlayerLookingDirection
-extern int PlayerLookingDirection;
+// @attention +KZ: int mmuki is now ELookingDirection PlayerLookingDirection
+extern ELookingDirection PlayerLookingDirection;
 
 //+KZ: following player variables were unused:
 //  * mmukitm
@@ -209,7 +210,8 @@ extern int BlockX[BLOCK_MAX];
 // @attention +KZ: int tb[tmax] is now int BlockY[tmax]
 extern int BlockY[BLOCK_MAX];
 //extern int tc[tmax], td[tmax]; //+KZ: unused
-extern int thp[BLOCK_MAX];
+// @attention +KZ: int thp[tmax] is now int BlockAITimer[tmax]
+extern int BlockAITimer[BLOCK_MAX];
 // @attention +KZ: int ttype[tmax] is now EBlockType BlockType[tmax]
 extern EBlockType BlockType[BLOCK_MAX];
 //+KZ: titem[tmax] is specific for Block 112/113 (Coin mass production)
@@ -244,8 +246,8 @@ extern int ExtraGraphicFrictionX[EXTRA_GRAPHIC_MAX];
 extern int ExtraGraphicFrictionY[EXTRA_GRAPHIC_MAX];
 // @attention +KZ: int etm[emax] is now int ExtraGraphicTimer[emax]
 extern int ExtraGraphicTimer[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int egtype[emax] is now int ExtraGraphicType[emax]
-extern int ExtraGraphicType[EXTRA_GRAPHIC_MAX];
+// @attention +KZ: int egtype[emax] is now EExtraGraphicType ExtraGraphicType[emax]
+extern EExtraGraphicType ExtraGraphicType[EXTRA_GRAPHIC_MAX];
 
 //敵キャラ (Enemy character)
 // @attention +KZ: amax is now ENEMY_MAX
@@ -265,18 +267,31 @@ extern int EnemyVelX[ENEMY_MAX];
 // @attention +KZ: int ad[amax] is now int EnemyVelY[amax]
 extern int EnemyVelY[ENEMY_MAX];
 //extern int ae[amax]; //+KZ: unused, always set to 0
-extern int af[ENEMY_MAX]; //+KZ: for what is this one?
+// @attention +KZ: int af[amax] is now int EnemyFloatingTimer[amax]
+// in Syobon Action 1 & 2 it is only used in SUPER_BOON
+extern int EnemyFloatingTimer[ENEMY_MAX];
 // @attention +KZ: int abrocktm[amax] is now int EnemyBlockAppearTimer[amax]
 extern int EnemyBlockAppearTimer[ENEMY_MAX];
-extern int aacta[ENEMY_MAX], aactb[ENEMY_MAX], azimentype[ENEMY_MAX], axzimen[ENEMY_MAX];
+// @attention +KZ: int aacta[amax] is now int EnemyActionX[amax]
+// it works like a Second kind of VelX, it is set depending of the looking direction by the enemy itself
+extern int EnemyActionX[ENEMY_MAX];
+// @attention +KZ: int aactb[amax] is now int EnemyActionY[amax]
+// unused, seems like the Y axis version of EnemyActionX
+extern int EnemyActionY[ENEMY_MAX];
+// @attention +KZ: int azimentype[amax] is now int EnemyMovementType[amax]
+// affects enemy movement and gravity, if your enemy is floating try using "EnemyMovementType = 1"
+extern int EnemyMovementType[ENEMY_MAX];
+// @attention +KZ int axzimen[amax] is now int EnemyGrounded[amax]
+extern int EnemyGrounded[ENEMY_MAX];
 // @attention +KZ: int atype[amax] is now EEnemyType EnemyType[amax]
 extern EEnemyType EnemyType[ENEMY_MAX];
 // @attention +KZ: int axtype[amax] is now EEnemySubType EnemySubType[amax]
 extern EEnemySubType EnemySubType[ENEMY_MAX];
-// @attention +KZ: int amuki[amax] is now int EnemyLookingDirection[amax]
-extern int EnemyLookingDirection[ENEMY_MAX];
+// @attention +KZ: int amuki[amax] is now ELookingDirection EnemyLookingDirection[amax]
+extern ELookingDirection EnemyLookingDirection[ENEMY_MAX];
 //extern int ahp[amax]; //+KZ: unused
-extern int anotm[ENEMY_MAX]; //+KZ: it is a timer but not sure for what exactly
+// @attention +KZ: int anotm[amax] is now EnemyPlayerNoInteractTimer[amax]
+extern int EnemyPlayerNoInteractTimer[ENEMY_MAX];
 // @attention +KZ: int anx[160] is now int EnemyDefaultSizeX[160]
 extern int EnemyDefaultSizeX[160];
 // @attention +KZ: int any[160] is now int EnemyDefaultSizeY[160]
@@ -304,7 +319,8 @@ extern int EnemyAppearTimer[ENEMY_APPEAR_MAX];
 extern EEnemyType EnemyAppearType[ENEMY_APPEAR_MAX];
 // @attention +KZ: int bxtype[bmax] is now EEnemySubType EnemyAppearSubType[bmax]
 extern EEnemySubType EnemyAppearSubType[ENEMY_APPEAR_MAX];
-extern int bz[ENEMY_APPEAR_MAX]; //+KZ: seems like a init indicator
+// @attention +KZ: int bz[bmax] is now int EnemyAppearMustPlace[bmax]
+extern int EnemyAppearMustPlace[ENEMY_APPEAR_MAX];
 
 
 //背景 (Background)
@@ -321,9 +337,9 @@ extern int BackgroundY[BACKGROUND_MAX];
 // @attention +KZ: int ntype[nmax] is now int BackgroundType[nmax]
 extern EDecorationType BackgroundType[BACKGROUND_MAX];
 // @attention +KZ int ne[nmax] renamed to BackgroundWidth[nmax]
-extern int BackgroundWidth[BACKGROUND_MAX];
+//extern int BackgroundWidth[BACKGROUND_MAX]; //+KZ: value is set but never used
 // @attention +KZ int nf[nmax] renamed to BackgroundHeight[nmax]
-extern int BackgroundHeight[BACKGROUND_MAX];
+//extern int BackgroundHeight[BACKGROUND_MAX]; //+KZ: value is set but never used
 //extern int ng[nmax], nx[nmax]; //+KZ: unused
 
 
@@ -357,7 +373,10 @@ extern int srsok[LIFT_MAX], srmovep[LIFT_MAX], srmove[LIFT_MAX];
 
 
 //スクロール範囲 (Scroll range)
-extern int fx, fy, fzx, fzy, scrollx, scrolly;
+//+KZ: i still dont rename some of these since i dont understand the purpose of fzx
+extern int fx, fy, fzx, scrollx;
+extern int scrolly; //+KZ: used but never initialized!
+extern int fzy; //+KZ: unused, but i may want to give it a use in the future
 //全体のポイント (Overall points)
 
 //Open Syobon Action: "fma" already exists, so call it something else and add a define
@@ -382,13 +401,15 @@ extern int blacktm, blackx;
 
 
 
-//自由な値 (Free value)
 //+KZ: these should be just local variables in many places
 //  but we can not replace them in a crazy way, make sure
 //  it wont break anything in the game.
+//自由な値 (Free value)
 extern int xx[91];
 extern double xd[11];
 extern std::string xs[31];
+//ループ (Loop)
+extern int t, tt, t1, t2, t3, t4;
 
 
 //タイマー測定 (Timer measurement)
@@ -397,6 +418,14 @@ extern long stimeZ;
 
 //+KZ
 #define PLUSKZ_EDITION_TEXT "+KZ Edition"
+#define PLUSKZ_REMAKE_TEXT "+KZ Remake"
+
+//misc useful defines
+#define BLOCK_DEFAULT_SIZE 29
+constexpr double GAME_X_POS_TO_DOUBLE(int x_axis) { return ((((double)x_axis) / 100) / BLOCK_DEFAULT_SIZE); }
+constexpr double GAME_Y_POS_TO_DOUBLE(int y_axis) { return ((((double)y_axis) / 100 + 12) / BLOCK_DEFAULT_SIZE); }
+constexpr int DOUBLE_TO_GAME_X_POS(double x_axis) { return ((int)(x_axis * BLOCK_DEFAULT_SIZE * 100)); }
+constexpr int DOUBLE_TO_GAME_Y_POS(double y_axis) { return ((int)((y_axis * BLOCK_DEFAULT_SIZE - 12) * 100)); }
 
 extern bool HelpFlagHandled; // --help cli flag
 extern bool StartFullScreenFlag;
@@ -404,10 +433,12 @@ extern bool StartFullScreenFlag;
 enum class ESyobonActionGame
 {
     SYOBON_ACTION_1_AND_2 = 0,
-    SYOBON_ACTION_3, // Extremely incomplete, dont allow to choose
+    SYOBON_ACTION_3,
+
+    FIRST = SYOBON_ACTION_1_AND_2,
+    LAST = SYOBON_ACTION_3,
 };
 extern ESyobonActionGame currentGame;
-extern bool SA3_Level1MushroomTriggered;
-extern int SA3_Level1MushroomTimer;
+extern bool SA3Enabled;
 
 #endif

@@ -115,6 +115,22 @@ void RenderBlocks()
                 drawimage(Sliced_GFX[0][2], xx[0] / 100 + 2,
                           xx[1] / 100 + 1);
             }
+
+            if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+            {
+                if(BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT ||
+                    BlockType[t] == EBlockType::SA3_GRAY_SPIKE_RIGHT)
+                {
+                    if(BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT)
+                    {
+                        DrawTurnGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[2]);
+                    }
+                    else
+                    {
+                        DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[2]);
+                    }
+                }
+            }
         }
     }
 }
@@ -191,7 +207,7 @@ void RenderWalls()
             // 落ちてくるブロック (Falling blocks)
             if (GroundType[t] == EObjectType::FALLING_BLOCKS)
             {
-                if (GroundSubType[t] == 0)
+                if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK)
                 {
                     for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
                     {
@@ -201,7 +217,8 @@ void RenderWalls()
                                   (GroundY[t] - fy) / 100);
                     }
                 }
-                if (GroundSubType[t] == 1 || GroundSubType[t] == 2)
+                if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK ||
+                    GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2)
                 {
                     for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
                     {
@@ -211,7 +228,8 @@ void RenderWalls()
                                   (GroundY[t] - fy) / 100);
                     }
                 }
-                if (GroundSubType[t] == 3 || GroundSubType[t] == 4)
+                if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP ||
+                    GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4)
                 {
                     for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
                     {
@@ -230,7 +248,7 @@ void RenderWalls()
                     }
                 }
 
-                if (GroundSubType[t] == 10)
+                if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY)
                 {
                     for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
                     {
@@ -244,7 +262,8 @@ void RenderWalls()
             } // 51
 
             // 落ちるやつ (The one that falls)
-            if (GroundType[t] == EObjectType::FALLING_FLOOR)
+            if (GroundType[t] == EObjectType::FALLING_FLOOR || 
+                (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && GroundType[t] == EObjectType::SA3_FALLING_FLOOR))
             {
                 xx[29] = 0;
                 if (StageColor == ELevelType::UNDERGROUND)
@@ -262,7 +281,7 @@ void RenderWalls()
 
                 for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
                 {
-                    if (GroundSubType[t] == 0)
+                    if (GroundSubType[t] == EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM)
                     {
                         drawimage(Sliced_GFX[5 + xx[29]][1],
                                   (GroundX[t] -
@@ -291,7 +310,7 @@ void RenderWalls()
                                               100 + 29);
                         }
                     }
-                    if (GroundSubType[t] == 1)
+                    if (GroundSubType[t] == EObjectSubType::FALLING_FLOOR_BRICK)
                     {
                         for (t2 = 0; t2 <= GroundSizeY[t] / 3000; t2++)
                         {
@@ -306,7 +325,7 @@ void RenderWalls()
                         }
                     }
 
-                    if (GroundSubType[t] == 2)
+                    if (GroundSubType[t] == EObjectSubType::FALLING_FLOOR_GROUND_TOP)
                     {
                         for (t2 = 0; t2 <= GroundSizeY[t] / 3000; t2++)
                         {
@@ -325,7 +344,14 @@ void RenderWalls()
             // ステージトラップ (Stage Trap)
             if (TrapDisplay == 1)
             {
-                if (GroundType[t] >= EObjectType::TRIGGERS_START && GroundType[t] <= EObjectType::TRIGGERS_END)
+                if (
+                    (GroundType[t] >= EObjectType::TRIGGERS_START && GroundType[t] <= EObjectType::TRIGGERS_END) ||
+                    (currentGame == ESyobonActionGame::SYOBON_ACTION_3 ?
+                    GroundType[t] >= EObjectType::SA3_TRIGGER_START && GroundType[t] < EObjectType::SA3_TRIGGER_END
+                    :
+                    false
+                    )
+                )
                 {
                     if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY)
                         setc0();
@@ -357,6 +383,12 @@ void RenderWalls()
             {
                 drawimage(Sliced_GFX[20][4],
                           (GroundX[t] - fx) / 100, (GroundY[t] - fy) / 100);
+            }
+
+            //Syobon Action 3
+            if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+            {
+                //empty for now
             }
         }
     } // t
@@ -426,9 +458,150 @@ void RenderOverwritePipe()
     } // t
 }
 
+void RenderObjectsBehind()
+{
+    for (int ground_index = 0; ground_index < GROUND_MAX; ground_index++)
+    {
+        if (GroundX[ground_index] - fx + GroundSizeX[ground_index] >= -10 && GroundX[ground_index] - fx <= fxmax + 1100)
+        {
+            if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+            {
+                if (GroundType[ground_index] == EObjectType::SA3_FAKE_PIPE_BODY)
+                {
+                    setcolor(0, 230, 0);
+                    fillrect((GroundX[ground_index] - fx) / 100,
+                            (GroundY[ground_index] - fy) / 100,
+                            GroundSizeX[ground_index] / 100, GroundSizeY[ground_index] / 100);
+                    setc0();
+                    drawrect((GroundX[ground_index] - fx) / 100,
+                            (GroundY[ground_index] - fy) / 100,
+                            GroundSizeX[ground_index] / 100, GroundSizeY[ground_index] / 100);
+                }
+            }
+        }
+    }
+}
+
+int BlockCreate(double x, double y, EBlockType type, EBlockSubType subtype, int index)
+{
+    x *= BLOCK_DEFAULT_SIZE;
+    y *= BLOCK_DEFAULT_SIZE;
+
+    y -= 12; //stage() does -12
+
+    //the game simulates floating point numbers
+    //by multiplying all positions by 100
+    x *= 100;
+    y *= 100;
+
+    if(index < 0)
+    {
+        //use BlockCount to keep compat with BlockCreateLegacy()
+        index = BlockCount++;
+        if(BlockCount == BLOCK_MAX)
+            BlockCount = 0;
+    }
+
+    if(index >= 0 && index < BLOCK_MAX)
+    {
+        BlockX[index] = (int)x;
+        BlockY[index] = (int)y;
+        BlockType[index] = type;
+        BlockSubType[index] = subtype;
+
+        BlockAITimer[index] = 0;
+        BlockItemCount[index] = 0;
+    }
+    else
+    {
+        fprintf(stderr, "BlockCreate - Could not create block %d %d at %d %d! (index %d)", type, subtype, (int)x, (int)y, index);
+    }
+
+    return index;
+}
+
+void BlockClearAll()
+{
+    for(int i = 0; i < BLOCK_MAX; ++i)
+    {
+        //the enemies will ignore blocks with a very low or high X position
+        BlockX[i] = std::numeric_limits<int>::min();
+        BlockY[i] = std::numeric_limits<int>::min();
+
+        //the player will ignore a extremely high block type
+        BlockType[i] = (EBlockType)std::numeric_limits<int>::max();
+
+        BlockSubType[i] = EBlockSubType::NONE;
+
+        BlockAITimer[i] = 0;
+        BlockItemCount[i] = 0;
+    }
+
+    BlockCount = 0;
+}
+
+int GroundCreate(double x, double y, double size_x, double size_y, EObjectType type, EObjectSubType subtype, int index)
+{
+    x *= BLOCK_DEFAULT_SIZE;
+    y *= BLOCK_DEFAULT_SIZE;
+
+    y -= 12; //stage() does -12 to blocks, lets be consistent
+
+    //the game simulates floating point numbers
+    //by multiplying all positions by 100
+    x *= 100;
+    y *= 100;
+
+    if(index < 0)
+    {
+        //use BlockCount to keep compat with BlockCreateLegacy()
+        index = GroundCount++;
+        if(GroundCount == GROUND_MAX)
+            GroundCount = 0;
+    }
+
+    if(index >= 0 && index < GROUND_MAX)
+    {
+        GroundX[index] = (int)x;
+        GroundY[index] = (int)y;
+        GroundType[index] = type;
+        GroundSubType[index] = subtype;
+        GroundSizeX[index] = (int)(size_x * BLOCK_DEFAULT_SIZE * 100);
+        GroundSizeY[index] = (int)(size_y * BLOCK_DEFAULT_SIZE * 100);
+
+        GroundAI[index] = 0;
+        GroundVelY[index] = 0;
+    }
+    else
+    {
+        fprintf(stderr, "GroundCreate - Could not create object %d %d at %d %d! (index %d)", type, subtype, (int)x, (int)y, index);
+    }
+
+    return index;
+}
+
+void GroundClearAll()
+{
+    for(int i = 0; i < GROUND_MAX; ++i)
+    {
+        GroundX[i] = std::numeric_limits<int>::min();
+        GroundY[i] = std::numeric_limits<int>::min();
+        GroundSizeX[i] = std::numeric_limits<int>::min();
+        GroundSizeY[i] = std::numeric_limits<int>::min();
+
+        GroundType[i] = EObjectType::VERTICAL_PIPE_BODY;
+        GroundSubType[i] = EObjectSubType::NONE;
+
+        GroundVelY[i] = 0;
+        GroundAI[i] = 0;
+    }
+
+    GroundCount = 0;
+}
+
 // ブロック出現 (Block appears)
 
-void BlockCreate(int x, int y, EBlockType type)
+void BlockCreateLegacy(int x, int y, EBlockType type)
 {
 
 	BlockX[BlockCount] = x * 100;
