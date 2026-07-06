@@ -14,7 +14,7 @@
     #include <emscripten.h>
 
     //+KZ: Dont use SDL_Delay, emscripten handles FPS by itself
-    #define wait(i)
+    #define SyobonWait(i)
 
     //+KZ: Emscripten needs a custom WaitKey, otherwise the website will freeze
     void Emscripten_WaitKey();
@@ -40,11 +40,12 @@
         void HandleTouchInput(SDL_Event * event);
     #endif
 
-    #define wait(i) SDL_Delay(i)
+    #define SyobonWait(i) SDL_Delay(i)
 
     void MainLoop();
 #endif
 
 void UpdateKeys();
+const char * GetSavePath();
 
 #endif

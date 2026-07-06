@@ -6,6 +6,7 @@
 #include "extra_graphics.h"
 #include "blocks.h"
 #include "title.h"
+#include "config.h"
 
 std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 
@@ -400,6 +401,12 @@ void HandlePlayer()
             }
             if (PlayerAITimer == 250)
             {
+                //+KZ: save progress
+                {
+                    SyobonGlobalConfig.LevelsFinished.push_back({currentGame, SyobonWorld, SyobonLevel});
+                    SaveConfig();
+                }
+
                 //+KZ: patch for level 3-1 finish
                 // so we dont get stuck in a invalid level (3-2 does not exist)
                 if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 &&
@@ -504,6 +511,10 @@ void HandlePlayer()
 
             if (PlayerAITimer == 440)
             {
+                //+KZ: Save progress
+                SyobonGlobalConfig.LevelsFinished.push_back({currentGame, SyobonWorld, SyobonLevel});
+                SaveConfig();
+
                 if (PlayerState == 301)
                 {
                     ending = 1;

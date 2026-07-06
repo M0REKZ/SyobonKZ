@@ -24,7 +24,6 @@ void rpaint();
 void wait2(long starttime, long endtime, int FLAME_TIME);
 // @attention +KZ: int rand() is now int SyobonRand()
 int SyobonRand(int Rand);
-#define end() exit(0)
 
 //描画 (Drawing)
 void setfont(int a);

@@ -8,6 +8,7 @@
 #include "blocks.h"
 #include "extra_graphics.h"
 #include "pause.h"
+#include "config.h"
 
 std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
 
@@ -54,6 +55,8 @@ int main(int argc, char *argv[])
 	DrawString(200, 200, "Loading...", GetColor(255, 255, 255));
 	SyobonKZScreenFlip(screen);
 
+	LoadConfig();
+
 	//+KZ: init things that are too CPU consuming
 	CreateEntityMessageCache();
 	CreatePlayerMessageCache();
@@ -62,7 +65,7 @@ int main(int argc, char *argv[])
 	MainLoop(); //+KZ
 
 	// ＤＸライブラリ使用の終了処理
-	end();
+	exit(0);
 }
 
 // メイン描画 (Main rendering)
@@ -418,7 +421,7 @@ void Mainprogram()
 		xx[7] = 46;
 		if (CheckHitKey(KEY_INPUT_1) == 1)
 		{
-			end();
+			exit(0);
 		}
 		if (CheckHitKey(KEY_INPUT_SPACE) == 1)
 		{
@@ -527,7 +530,7 @@ void Mainprogram()
 	//+KZ: on emscripten FPS is done differently and this line is useless, check MainloopEmscripten()
 	wait2(stimeZ, long(GetNowCount()), 1000 / xx[0]);
 
-	// wait(20);
+	// SyobonWait(20);
 
 	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1)
 	{
@@ -548,7 +551,7 @@ void Mainprogram()
 void wait2(long starttime, long endtime, int FLAME_TIME)
 {
 	if (endtime - starttime < FLAME_TIME)
-		wait(FLAME_TIME - (endtime - starttime));
+		SyobonWait(FLAME_TIME - (endtime - starttime));
 }
 
 // 乱数作成 (Random number generation)
@@ -564,6 +567,8 @@ void deinit()
 	FillScreen();
 	DrawString(200, 200, "EXITING...", GetColor(255, 255, 255));
 	SyobonKZScreenFlip(screen);
+
+	SaveConfig();
 
 	// SURFACES
 	for (t = 0; t < 51; t++)

@@ -433,7 +433,7 @@ constexpr int DOUBLE_TO_GAME_Y_POS(double y_axis) { return ((int)((y_axis * BLOC
 extern bool HelpFlagHandled; // --help cli flag
 extern bool StartFullScreenFlag;
 
-enum class ESyobonActionGame
+enum class ESyobonActionGame : int
 {
     SYOBON_ACTION_1_AND_2 = 0,
     SYOBON_ACTION_3,

@@ -5,6 +5,7 @@ enum class EPauseState : int
 {
     PAUSE = 0,
     OPTIONS,
+    LEVEL_SELECT,
 };
 
 void HandlePauseKeys();

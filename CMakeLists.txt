@@ -155,6 +155,8 @@ set(SOURCE_FILES_SYOBON
     # files added by +KZ to split the code
     blocks.h
     blocks.cpp
+    config.h
+    config.cpp
     entities.h
     entities.cpp
     extra_graphics.h

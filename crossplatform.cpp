@@ -415,3 +415,12 @@ void UpdateKeys()
         }
     }
 }
+
+const char *GetSavePath()
+{
+    #ifdef SYOBONKZ_USE_SDL3
+        return SDL_GetPrefPath("m0rekz.github.io","SyobonKZ");
+    #else
+        return nullptr;
+    #endif
+}

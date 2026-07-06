@@ -3,6 +3,7 @@
 #include "main.h"
 #include "pause.h"
 #include "title.h"
+#include "config.h"
 
 const char *pPauseLabels[] = {
     "Resume",
@@ -21,7 +22,7 @@ const char *pTitleLabels[] = {
 
 const char *pOptionsLabels[] = {
     "Toggle fullscreen",
-    "Return",
+    "Save changes",
     nullptr,
 };
 
@@ -143,8 +144,10 @@ void HandlePauseState()
                 {
                     SyobonQuit = 3;
                 }
-                else if(SELECTED_LABEL("Resume") || SELECTED_LABEL("Return"))
+                else if(SELECTED_LABEL("Resume") || SELECTED_LABEL("Save changes"))
                 {
+                    if(SELECTED_LABEL("Save changes"))
+                        SaveConfig();
                     TogglePauseState(EPauseState::PAUSE);
                     TitleWaitToReleaseKey();
                 }
@@ -161,8 +164,10 @@ void HandlePauseState()
             }
             else if(PauseState == EPauseState::OPTIONS)
             {
-                if(SELECTED_LABEL("Return"))
+                if(SELECTED_LABEL("Return") || SELECTED_LABEL("Save changes"))
                 {
+                    if(SELECTED_LABEL("Save changes"))
+                        SaveConfig();
                     PauseState = EPauseState::PAUSE;
                 }
                 else if(SELECTED_LABEL("Toggle fullscreen"))
