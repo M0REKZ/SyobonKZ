@@ -102,7 +102,8 @@ bool PauseMenuKeyPressed = false;
 
 static ESyobonState prevSyobonState = (ESyobonState)-1;
 
-#define PAUSE_MAX_RENDER_OPTIONS 6
+#define PAUSE_MAX_RENDER_OPTIONS 12
+#define LEVEL_SELECT_MAX_RENDER_OPTIONS 6
 
 EPauseState PauseState = EPauseState::PAUSE;
 
@@ -210,6 +211,8 @@ const char ** GetCurrentLabels()
 int GetCurrentMaxRenderOptions()
 {
     //for now just PAUSE_MAX_RENDER_OPTIONS
+    if(PauseState == EPauseState::LEVEL_SELECT)
+        return LEVEL_SELECT_MAX_RENDER_OPTIONS;
     return PAUSE_MAX_RENDER_OPTIONS;
 }
 
@@ -263,7 +266,7 @@ void ChangeToPauseState(EPauseState newstate)
                     if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
                     {
                         OptionsAvailable[lvl] = true;
-                        ShowLevelAsFinished[lvl] = true;
+                        ShowLevelAsFinished[lvl - 1] = true;
                     }
                 }
 
@@ -273,7 +276,7 @@ void ChangeToPauseState(EPauseState newstate)
                     if(finishedlevel.World == 2 && finishedlevel.Level == lvl)
                     {
                         OptionsAvailable[lvl + 4] = true;
-                        ShowLevelAsFinished[lvl + 4] = true;
+                        ShowLevelAsFinished[lvl + 3] = true;
                     }
                 }
 
@@ -382,7 +385,12 @@ void HandlePauseState()
                     }
                     else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
                     {
-
+                        if(CurrentSelection >= 0 && CurrentSelection < 5)
+                        {
+                            SyobonWorld = 1;
+                            SyobonLevel = CurrentSelection + 1;
+                            SyobonSection = 0;
+                        }
                     }
 
                     startgame = true;
@@ -404,15 +412,30 @@ void RenderPauseState()
     SyobonKZFillRect(screen, 0, 0);
     setc1();
 
-    DrawString(480 / 2 - ((sizeof("Paused") - 1) * 9) / 2, 50, "Paused", color);
+    if(PauseState == EPauseState::LEVEL_SELECT)
+        DrawString(480 / 2 - ((sizeof("Select level:") - 1) * 9) / 2, 30, "Select level:", color);
+    else
+        DrawString(480 / 2 - ((sizeof("Paused") - 1) * 9) / 2, 50, "Paused", color);
 
     const char ** pcurrent_labels = GetCurrentLabels();
     if(pcurrent_labels)
     {
+        int optionYsize = 30;
+
+        if(PauseState == EPauseState::LEVEL_SELECT)
+            optionYsize = 50;
+
+        if(Offset)
+            DrawString(480 / 2 - (9) / 2, 100 - (optionYsize - 5), "Λ", color);
+
+        bool drawdownarrow = true;
         for(int i = Offset; i < Offset + GetCurrentMaxRenderOptions(); i++)
         {
             if(!pcurrent_labels[i]) // nullptr
+            {
+                drawdownarrow = false;
                 break;
+            }
 
             if(!pcurrent_labels[i][0]) // '\0'
                 continue;
@@ -428,12 +451,32 @@ void RenderPauseState()
 
             int ypos = i - Offset;
 
-            DrawString(480 / 2 - (strlen(pcurrent_labels[i]) * 9) / 2, 100 + (ypos * 30), pcurrent_labels[i], color);
-            if(CurrentSelection == i)
+            DrawString(480 / 2 - (strlen(pcurrent_labels[i]) * 9) / 2, 100 + (ypos * optionYsize), pcurrent_labels[i], color);
+            if(PauseState == EPauseState::LEVEL_SELECT)
             {
-                DrawString(480 / 2 - ((strlen(pcurrent_labels[i]) + 5) * 9) / 2, 100 + (ypos * 30), "->", color);
-                DrawString(480 / 2 + ((strlen(pcurrent_labels[i])) * 9) / 2, 100 + (ypos * 30), "<-", color);
+                int x = -10;
+                int y = (100 - optionYsize / 3) + (ypos * optionYsize);
+                if(CurrentSelection == i)
+                    SyobonKZRectangleColor(screen, x, y, x + 500, y + optionYsize, color);
+
+                SDL_Surface * psurf = Sliced_GFX_KZ[4];
+                if(ShowLevelAsFinished[i])
+                    psurf = Sliced_GFX_KZ[2];
+                else if(OptionsAvailable[i])
+                    psurf = Sliced_GFX_KZ[3];
+
+                SyobonKZDrawGraphScaled(30, y + (optionYsize/2 - psurf->h), 2, 2, psurf);
+            }
+            else
+            {
+                if(CurrentSelection == i)
+                {
+                    DrawString(480 / 2 - ((strlen(pcurrent_labels[i]) + 5) * 9) / 2, 100 + (ypos * optionYsize), "->", color);
+                    DrawString(480 / 2 + ((strlen(pcurrent_labels[i])) * 9) / 2, 100 + (ypos * optionYsize), "<-", color);
+                }
             }
         }
+        if(drawdownarrow && pcurrent_labels[(Offset + GetCurrentMaxRenderOptions())])
+            DrawString(480 / 2 - (9) / 2, 100 + (GetCurrentMaxRenderOptions() * optionYsize - 5), "V", color);
     }
 }
