@@ -5,6 +5,7 @@
 #include "entities.h"
 #include "extra_graphics.h"
 #include "blocks.h"
+#include "title.h"
 
 std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 
@@ -677,8 +678,7 @@ void HandlePlayerInput()
     // if (CheckHitKey(KEY_INPUT_F1)==1){end();}
     if (CheckHitKey(KEY_INPUT_F1) == 1)
     {
-        SyobonState = ESyobonState::TITLE;
-        InGameInitialized = 0; //+KZ
+        GoToTitleScreen();
     }
     // if (CheckHitKey(KEY_INPUT_Q)==1){mkeytm=0;}
     if (CheckHitKey(KEY_INPUT_O) == 1)

@@ -163,6 +163,8 @@ set(SOURCE_FILES_SYOBON
     global_vars.cpp
     levels.h
     levels.cpp
+    pause.h
+    pause.cpp
     player.h
     player.cpp
     title.h

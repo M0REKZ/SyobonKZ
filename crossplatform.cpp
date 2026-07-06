@@ -298,7 +298,7 @@ void Emscripten_WaitKey()
 
 void MainLoop()
 {
-    while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
+    while (ProcessMessage() == 0)
     {
         #ifdef __ANDROID__
             UpdateTouchControls();

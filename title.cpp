@@ -9,6 +9,8 @@
 static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
 static std::string author = "";
 
+bool MustWaitReleaseKey = false;
+
 void HandleTitleKeys()
 {
     SyobonStateTimer++;
@@ -20,6 +22,14 @@ void HandleTitleKeys()
         SyobonLevel = 1;
         SyobonSection = 0;
         SyobonRandomMode = 0;
+    }
+
+    if(MustWaitReleaseKey)
+    {
+        if(CheckHitKey(KEY_INPUT_Z) || CheckHitKey(KEY_INPUT_RETURN))
+            return;
+        else
+            MustWaitReleaseKey = false;
     }
 
     switch (currentGame)
@@ -245,4 +255,15 @@ void RenderTitleScreen()
 
     setc0();
     str(author, 480 / 2 - (author.length() * 9) / 2, author_y);
+}
+
+void TitleWaitToReleaseKey()
+{
+    MustWaitReleaseKey = true;
+}
+
+void GoToTitleScreen()
+{
+    SyobonState = ESyobonState::TITLE;
+    InGameInitialized = 0;
 }

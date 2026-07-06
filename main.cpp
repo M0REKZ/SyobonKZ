@@ -7,8 +7,11 @@
 #include "player.h"
 #include "blocks.h"
 #include "extra_graphics.h"
+#include "pause.h"
 
 std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
+
+bool pauseKeyPressed = false;
 
 // プログラムは WinMain から始まります
 // Changed to ansi c++ main()
@@ -234,6 +237,10 @@ void rpaint()
 	if (SyobonState == ESyobonState::TITLE)
 	{
 		RenderTitleScreen();
+	}
+	if(SyobonState == ESyobonState::PAUSE)
+	{
+		RenderPauseState();
 	}
 	SyobonKZScreenFlip(screen);
 
@@ -472,7 +479,8 @@ void Mainprogram()
 		}
 		if (xx[30] <= -400)
 		{
-			SyobonState = ESyobonState::TITLE;
+			//SyobonState = ESyobonState::TITLE;
+			GoToTitleScreen(); //+KZ
 			Lives = 2;
 			SyobonStateTimer = 0;
 			ending = 0;
@@ -502,6 +510,11 @@ void Mainprogram()
 		UpdateTitleScreen();
 	} // 100
 
+	if(SyobonState == ESyobonState::PAUSE)
+	{
+		HandlePauseState();
+	}	
+
 	// 描画 (Drawing)
 	rpaint();
 
@@ -515,6 +528,19 @@ void Mainprogram()
 	wait2(stimeZ, long(GetNowCount()), 1000 / xx[0]);
 
 	// wait(20);
+
+	if (CheckHitKey(KEY_INPUT_ESCAPE) == 1)
+	{
+		if(!pauseKeyPressed)
+		{
+			TogglePauseState(EPauseState::PAUSE);
+		}
+		pauseKeyPressed = true;
+	}
+	else
+	{
+		pauseKeyPressed = false;
+	}
 
 } // Mainprogram()
 

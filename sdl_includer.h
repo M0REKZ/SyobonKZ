@@ -19,6 +19,8 @@
 
     #define SyobonKZSDLInit(flags) (SDL_Init(flags) == false ? -1 : 0)
 
+    #define SyobonKZToggleFullscreen() SDL_SetWindowFullscreen(pWindow, !(SDL_GetWindowFlags(pWindow) & (SDL_WINDOW_FULLSCREEN | SDL_WINDOW_BORDERLESS)))
+
     #define SyobonKZChunk MIX_Audio
     #define SyobonKZMusic MIX_Audio
 
@@ -204,6 +206,8 @@
 	#include <SDL_ttf.h>
 
     #define SyobonKZSDLInit(flags) SDL_Init(flags)
+
+    #define SyobonKZToggleFullscreen() SDL_WM_ToggleFullScreen(screen)
 
     #define SyobonKZChunk Mix_Chunk
     #define SyobonKZMusic Mix_Music

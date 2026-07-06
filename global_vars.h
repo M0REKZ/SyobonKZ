@@ -15,6 +15,9 @@ enum class ESyobonState : int
     CREDITS = 2,
     LIVES_SPLASH = 10,
     TITLE = 100,
+
+    //+KZ
+    PAUSE, //ONLY SET THIS ONE WITH TogglePauseState()!!!!
 };
 //Open Syobon Action:
 // This is unexcusable. How could someone in their right mind define

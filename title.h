@@ -6,4 +6,7 @@ void UpdateTitleScreen();
 void HandleTitleKeys();
 void RenderTitleScreen();
 
+void TitleWaitToReleaseKey();
+void GoToTitleScreen();
+
 #endif
