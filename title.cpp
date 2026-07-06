@@ -266,4 +266,5 @@ void GoToTitleScreen()
 {
     SyobonState = ESyobonState::TITLE;
     InGameInitialized = 0;
+    SyobonKZHaltMusic();
 }

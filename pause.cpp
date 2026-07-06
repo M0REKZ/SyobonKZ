@@ -167,7 +167,6 @@ void HandlePauseState()
                 }
                 else if(SELECTED_LABEL("Toggle fullscreen"))
                 {
-                    printf("HEELLLooo\n");
                     SyobonKZToggleFullscreen();
                 }
             }

@@ -131,7 +131,7 @@ void Emscripten_WaitKey()
         }
     }
 
-    SDL_Rect LeftButton, RightButton, DownButton, JumpButton;
+    SDL_Rect LeftButton, RightButton, UpButton, DownButton, JumpButton, PauseButton;
 
     void UpdateTouchControls()
     {
@@ -150,6 +150,11 @@ void Emscripten_WaitKey()
         LeftButton = {ButtonsStartX, ButtonsStartY, ButtonsSizeY + ButtonsSizeY/2, ButtonsSizeY};
         RightButton = {LeftButton.x + LeftButton.w + 6, ButtonsStartY, ButtonsSizeY + ButtonsSizeY/2, ButtonsSizeY};
         DownButton = {LeftButton.x + (LeftButton.w + 6 * 2) / 2, ButtonsStartY + ButtonsSizeY + 6, ButtonsSizeY + ButtonsSizeY/2 + 3 * 2, ButtonsSizeY / 3 * 2};
+        UpButton = DownButton;
+        UpButton.y = LeftButton.y - (UpButton.h + 6);
+
+        //UpRight
+        PauseButton = {w - (ButtonsSizeY + ButtonsStartX), Landscape ? 50 : 125, ButtonsSizeY, ButtonsSizeY};
 
         //Right
         JumpButton = {w - (int)(ButtonsSizeY * 1.5f + ButtonsStartX), ButtonsStartY, (int)(ButtonsSizeY * 1.5f), (int)(ButtonsSizeY * 1.5f)};
@@ -173,24 +178,30 @@ void Emscripten_WaitKey()
             SetKeyState(KEY_INPUT_LEFT, false); 
             SetKeyState(KEY_INPUT_RIGHT, false);
             SetKeyState(KEY_INPUT_DOWN, false);
+            SetKeyState(KEY_INPUT_UP, false);
             SetKeyState(KEY_INPUT_Z, false); //Jump, Start
+            SetKeyState(KEY_INPUT_ESCAPE, false);
 
             int count = 0;
             SDL_Finger **fingers = SDL_GetTouchFingers(touchids[j], &count);
 
             for(int i = 0; i < count; i ++)
             {
-                const bool PressState = true;
                 SDL_Point TouchedPos = {(int)(fingers[i]->x * w), (int)(fingers[i]->y * h)};
 
                 if(SDL_PointInRect(&TouchedPos, &LeftButton))
-                    SetKeyState(KEY_INPUT_LEFT, PressState); 
+                    SetKeyState(KEY_INPUT_LEFT, true); 
                 else if(SDL_PointInRect(&TouchedPos, &RightButton))
-                    SetKeyState(KEY_INPUT_RIGHT, PressState);
+                    SetKeyState(KEY_INPUT_RIGHT, true);
                 else if(SDL_PointInRect(&TouchedPos, &DownButton))
-                    SetKeyState(KEY_INPUT_DOWN, PressState); 
+                    SetKeyState(KEY_INPUT_DOWN, true); 
+                else if(SDL_PointInRect(&TouchedPos, &UpButton))
+                    SetKeyState(KEY_INPUT_UP, true); 
                 else if(SDL_PointInRect(&TouchedPos, &JumpButton))
-                    SetKeyState(KEY_INPUT_Z, PressState);
+                    SetKeyState(KEY_INPUT_Z, true);
+                else if(SDL_PointInRect(&TouchedPos, &PauseButton))
+                    SetKeyState(KEY_INPUT_ESCAPE, true);
+
             }
         }
     }
@@ -244,26 +255,43 @@ void Emscripten_WaitKey()
         SDL_ClearSurface(pDrawControlsSurface, 0, 0, 0, 0);
 
         Uint32 buttoncolor;
+
         if(GetKeyState(KEY_INPUT_LEFT))
             buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
         else
             buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
         SDL_FillSurfaceRect(pDrawControlsSurface, &LeftButton, buttoncolor);
+        
         if(GetKeyState(KEY_INPUT_RIGHT))
             buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
         else
             buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
         SDL_FillSurfaceRect(pDrawControlsSurface, &RightButton, buttoncolor);
+
         if(GetKeyState(KEY_INPUT_DOWN))
             buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
         else
             buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
         SDL_FillSurfaceRect(pDrawControlsSurface, &DownButton, buttoncolor);
+
+        if(GetKeyState(KEY_INPUT_UP))
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
+        else
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pDrawControlsSurface, &UpButton, buttoncolor);
+
         if(GetKeyState(KEY_INPUT_Z))
             buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
         else
             buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
         SDL_FillSurfaceRect(pDrawControlsSurface, &JumpButton, buttoncolor);
+
+        if(GetKeyState(KEY_INPUT_ESCAPE))
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 150, 150, 150, 100);
+        else
+            buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 255, 255, 255, 100);
+        SDL_FillSurfaceRect(pDrawControlsSurface, &PauseButton, buttoncolor);
+
         buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 0, 0, 0, 100);
 
         //MOAHAHAHAHAHAA
@@ -283,10 +311,20 @@ void Emscripten_WaitKey()
             SDL_FillSurfaceRect(surface, &tempthing, color);    \
         }
 
+        //Normal buttons
         SyobonKZEvilRectangleColor(pDrawControlsSurface, LeftButton, buttoncolor);
         SyobonKZEvilRectangleColor(pDrawControlsSurface, RightButton, buttoncolor);
         SyobonKZEvilRectangleColor(pDrawControlsSurface, DownButton, buttoncolor);
+        SyobonKZEvilRectangleColor(pDrawControlsSurface, UpButton, buttoncolor);
         SyobonKZEvilRectangleColor(pDrawControlsSurface, JumpButton, buttoncolor);
+
+        //Pause button
+        SyobonKZEvilRectangleColor(pDrawControlsSurface, PauseButton, buttoncolor);
+        buttoncolor = SDL_MapSurfaceRGBA(pDrawControlsSurface, 100, 100, 100, 100);
+        SDL_Rect Decoration = {(PauseButton.x + PauseButton.w / 3) - (PauseButton.w / 6 + (PauseButton.w / 12)), PauseButton.y + PauseButton.h / 6, PauseButton.w / 3, (PauseButton.h / 3) * 2};
+        SDL_FillSurfaceRect(pDrawControlsSurface, &Decoration, buttoncolor);
+        Decoration.x = (PauseButton.x + ((PauseButton.w / 3) * 2) - (PauseButton.w / 6)) + (PauseButton.w / 12);
+        SDL_FillSurfaceRect(pDrawControlsSurface, &Decoration, buttoncolor);
 
         SDL_UpdateTexture(pDrawControlsTexture, nullptr, pDrawControlsSurface->pixels, pDrawControlsSurface->pitch);
         SDL_RenderTexture(pWindowRenderer, pDrawControlsTexture, nullptr, nullptr);
