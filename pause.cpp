@@ -26,6 +26,75 @@ const char *pOptionsLabels[] = {
     nullptr,
 };
 
+const char *pLevelSelectSA_1_AND_2[] = {
+    "Level 1-1",
+    "Level 1-2",
+    "Level 1-3",
+    "Level 1-4",
+    "Level 2-1",
+    "Level 2-2",
+    "Level 2-3",
+    "Level 2-4",
+    "Special Level 9",
+    nullptr,
+};
+
+const char *pLevelSelectSA_3[] = {
+    "Level 1",
+    "Level 2",
+    "Level 3",
+    "Level 4",
+    "Level 5",
+    nullptr,
+};
+
+
+bool OptionsAvailable[] = {
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+};
+
+bool ShowLevelAsFinished[] = {
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+};
+
 int Offset = 0;
 int CurrentSelection = 0;
 bool Selected = false;
@@ -58,6 +127,7 @@ void HandlePauseKeys()
                         CurrentSelection--;
                 }
             }
+            AdjustOffset();
         }
         PauseMenuKeyPressed = true;
     }
@@ -71,6 +141,7 @@ void HandlePauseKeys()
             {
                 CurrentSelection = 0;
             }
+            AdjustOffset();
         }
         PauseMenuKeyPressed = true;
     }
@@ -89,6 +160,25 @@ void HandlePauseKeys()
     }
 }
 
+void AdjustOffset()
+{
+    if(CurrentSelection < Offset)
+    {
+        Offset = CurrentSelection;
+    }
+    else if(CurrentSelection >= Offset + GetCurrentMaxRenderOptions())
+    {
+        Offset = CurrentSelection - (GetCurrentMaxRenderOptions() - 1);
+    }
+}
+
+void ResetSelection()
+{
+    Selected = false;
+    CurrentSelection = 0;
+    Offset = 0;
+}
+
 const char ** GetCurrentLabels()
 {
     if(PauseState == EPauseState::PAUSE)
@@ -101,6 +191,18 @@ const char ** GetCurrentLabels()
     else if(PauseState == EPauseState::OPTIONS)
     {
         return pOptionsLabels;
+    }
+    else if(PauseState == EPauseState::LEVEL_SELECT)
+    {
+        switch (currentGame)
+        {
+        case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+            return pLevelSelectSA_1_AND_2;
+            break;
+        case ESyobonActionGame::SYOBON_ACTION_3:
+            return pLevelSelectSA_3;
+            break;
+        }
     }
     return nullptr;
 }
@@ -117,12 +219,85 @@ void TogglePauseState(EPauseState state)
     {
         prevSyobonState = SyobonState;
         SyobonState = ESyobonState::PAUSE;
-        PauseState = state;
-        CurrentSelection = 0;
+        PauseMenuKeyPressed = true;
+        ChangeToPauseState(state);
     }
     else
     {
         SyobonState = prevSyobonState;
+    }
+}
+
+void ChangeToPauseState(EPauseState newstate)
+{
+    PauseState = newstate;
+    ResetSelection();
+
+    switch (newstate)
+    {
+    case EPauseState::LEVEL_SELECT:
+        for(auto &showasfinished : ShowLevelAsFinished)
+        {
+            showasfinished = false;
+        }
+        for(auto &optionavailable : OptionsAvailable)
+        {
+            optionavailable = false;
+        }
+
+        //level 1 is always available
+        OptionsAvailable[0] = true;
+        OptionsAvailable[8] = currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? true : false;
+
+        //check for finished levels
+        for(auto finishedlevel : SyobonGlobalConfig.LevelsFinished)
+        {
+            if(finishedlevel.Game != currentGame)
+                continue;
+            
+            if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+            {
+                //Syobon Action 1
+                for(int lvl = 1; lvl < 5; lvl++)
+                {
+                    if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
+                    {
+                        OptionsAvailable[lvl] = true;
+                        ShowLevelAsFinished[lvl] = true;
+                    }
+                }
+
+                //Syobon Action 2
+                for(int lvl = 1; lvl < 4; lvl++)
+                {
+                    if(finishedlevel.World == 2 && finishedlevel.Level == lvl)
+                    {
+                        OptionsAvailable[lvl + 4] = true;
+                        ShowLevelAsFinished[lvl + 4] = true;
+                    }
+                }
+
+                // Syobon Action 2 level 9
+                if(finishedlevel.World == 3 && finishedlevel.Level == 1)
+                {
+                    OptionsAvailable[8] = true;
+                    ShowLevelAsFinished[8] = true;
+                }
+            }
+            else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+            {
+
+            }
+        }
+
+        break;
+    
+    default:
+        for(auto &optionavailable : OptionsAvailable)
+        {
+            optionavailable = true;
+        }
+        break;
     }
 }
 
@@ -160,6 +335,7 @@ void HandlePauseState()
                 else if(SELECTED_LABEL("Options"))
                 {
                     PauseState = EPauseState::OPTIONS;
+                    ResetSelection();
                 }
             }
             else if(PauseState == EPauseState::OPTIONS)
@@ -169,10 +345,54 @@ void HandlePauseState()
                     if(SELECTED_LABEL("Save changes"))
                         SaveConfig();
                     PauseState = EPauseState::PAUSE;
+                    ResetSelection();
                 }
                 else if(SELECTED_LABEL("Toggle fullscreen"))
                 {
                     SyobonKZToggleFullscreen();
+                }
+            }
+            else if(PauseState == EPauseState::LEVEL_SELECT)
+            {
+                bool startgame = false;
+
+                if(OptionsAvailable[CurrentSelection])
+                {
+                    //get level from selection
+                    if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                    {
+                        if(CurrentSelection >= 0 && CurrentSelection < 4)
+                        {
+                            SyobonWorld = 1;
+                            SyobonLevel = CurrentSelection + 1;
+                            SyobonSection = 0;
+                        }
+                        else if(CurrentSelection >= 4 && CurrentSelection < 8)
+                        {
+                            SyobonWorld = 2;
+                            SyobonLevel = CurrentSelection - 3;
+                            SyobonSection = 0;
+                        }
+                        else if(CurrentSelection == 8)
+                        {
+                            SyobonWorld = 3;
+                            SyobonLevel = 1;
+                            SyobonSection = 0;
+                        }
+                    }
+                    else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                    {
+
+                    }
+
+                    startgame = true;
+                }
+
+                if(startgame)
+                {
+                    SyobonStartGame = true;
+                    TogglePauseState(EPauseState::PAUSE);
+                    TitleWaitToReleaseKey();
                 }
             }
         }
@@ -197,11 +417,22 @@ void RenderPauseState()
             if(!pcurrent_labels[i][0]) // '\0'
                 continue;
 
-            DrawString(480 / 2 - (strlen(pcurrent_labels[i]) * 9) / 2, 100 + (i * 30), pcurrent_labels[i], color);
+            if(!OptionsAvailable[i])
+            {
+                setcolor(100,100,100);
+            }
+            else
+            {
+                setc1();
+            }
+
+            int ypos = i - Offset;
+
+            DrawString(480 / 2 - (strlen(pcurrent_labels[i]) * 9) / 2, 100 + (ypos * 30), pcurrent_labels[i], color);
             if(CurrentSelection == i)
             {
-                DrawString(480 / 2 - ((strlen(pcurrent_labels[i]) + 5) * 9) / 2, 100 + (i * 30), "->", color);
-                DrawString(480 / 2 + ((strlen(pcurrent_labels[i])) * 9) / 2, 100 + (i * 30), "<-", color);
+                DrawString(480 / 2 - ((strlen(pcurrent_labels[i]) + 5) * 9) / 2, 100 + (ypos * 30), "->", color);
+                DrawString(480 / 2 + ((strlen(pcurrent_labels[i])) * 9) / 2, 100 + (ypos * 30), "<-", color);
             }
         }
     }

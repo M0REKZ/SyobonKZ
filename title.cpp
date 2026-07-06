@@ -5,6 +5,7 @@
 #include "player.h"
 #include "entities.h"
 #include "extra_graphics.h"
+#include "pause.h"
 
 static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
 static std::string author = "";
@@ -93,6 +94,7 @@ void HandleTitleKeys()
         {
             xx[0] = 1;
             SyobonRandomMode = 1;
+            SyobonStartGame = true; //+KZ
         }
         break;
         
@@ -104,12 +106,14 @@ void HandleTitleKeys()
     // if (CheckHitKeyAll() == 0){end();}
     if (CheckHitKey(KEY_INPUT_RETURN) == 1)
     {
-        xx[0] = 1;
+        //xx[0] = 1; replaced by togglepausestate
+        TogglePauseState(EPauseState::LEVEL_SELECT);
     }
     // if (CheckHitKey(KEY_INPUT_SPACE)==1){xx[0]=1;}
     if (CheckHitKey(KEY_INPUT_Z) == 1)
     {
-        xx[0] = 1;
+        //xx[0] = 1; replaced by togglepausestate
+        TogglePauseState(EPauseState::LEVEL_SELECT);
     }
 
     static bool change_game_key_pressed = false;
@@ -146,7 +150,8 @@ void HandleTitleKeys()
         change_game_key_pressed = false;
     }
 
-    if (xx[0] == 1)
+    //+KZ: before it checked for xx[0], replaced with SyobonStartGame for new menu
+    if (SyobonStartGame)
     {
         SyobonState = ESyobonState::LIVES_SPLASH;
         InGameInitialized = 0;
@@ -156,6 +161,8 @@ void HandleTitleKeys()
         //fast = 0;
         //TrapDisplay = 0;
         CurrentPlayerCheckpoint = 0;
+
+        SyobonStartGame = false;
     }
 }
 

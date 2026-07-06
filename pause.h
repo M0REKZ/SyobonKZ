@@ -10,10 +10,14 @@ enum class EPauseState : int
 
 void HandlePauseKeys();
 
+void AdjustOffset();
+void ResetSelection();
+
 const char ** GetCurrentLabels();
 int GetCurrentMaxRenderOptions();
 
 void TogglePauseState(EPauseState state);
+void ChangeToPauseState(EPauseState newstate);
 
 void HandlePauseState();
 void RenderPauseState();
