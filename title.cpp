@@ -271,7 +271,7 @@ void RenderTitleScreen()
 
         drawimage(Main_GFX_KZ[12], 240 - Main_GFX_KZ[12]->w / 2, 20);
 
-        setcolor(0, 0, 0);
+        setcolor(170, 0, 0);
         str("Prece Enter For Hell.", 240 - 8 * 20 / 2, 250);
 
         author_y = 100;
