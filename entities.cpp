@@ -195,6 +195,18 @@ void HandleEntities()
                         EnemyMessageType[t] = 20;
                     }
                 }
+                break;
+
+            case EEnemyType::BALL_SPIKY:
+                if(EnemySubType[t] == EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES)
+                {
+                    if(player_pos_x + PlayerSizeX >= EnemyX[t] && player_pos_x <= EnemyX[t] + EnemySizeX[t] &&
+                        player_pos_y + PlayerSizeY >= EnemyY[t] && player_pos_y <= EnemyY[t] + EnemySizeY[t])
+                    {
+                        EnemySubType[t] = EEnemySubType::BALL_SPIKY_NORMAL;
+                    }
+                }
+                break;
             
             default:
                 break;
@@ -1227,6 +1239,12 @@ void HandleEntities()
                         PlayerState = 1;
                         Health = 50000000;
                     }
+                    if (EnemyType[t] == EEnemyType::MUSHROOM && EnemySubType[t] == EEnemySubType::MUSHROOM_SA3_1UP)
+                    {
+                        PlayerMessageTimer = 30;
+                        PlayerMessageType = 1;
+                        PlaySound(Sounds_KZ[1]);
+                    }
 
                     if (EnemyType[t] == EEnemyType::BURNING_FLOWER)
                     {
@@ -1523,7 +1541,16 @@ void HandleEntitiesBlocks()
 	// 壁 (Wall)
 	for (tt = 0; tt < GROUND_MAX; tt++)
 	{
-		if (GroundX[tt] - fx + GroundSizeX[tt] >= -12010 && GroundX[tt] - fx <= fxmax + 12100 && (int)GroundType[tt] <= 99)
+        if(((int)GroundType[tt] > 99) ||
+            (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 &&
+                GroundType[tt] > EObjectType::LAST_LEGACY_OBJECT &&
+                !(
+                    GroundType[tt] >= EObjectType::SA3_TRIGGER_START &&
+                    GroundType[tt] <= EObjectType::SA3_TRIGGER_END
+                )
+            ))
+            continue;
+		if (GroundX[tt] - fx + GroundSizeX[tt] >= -12010 && GroundX[tt] - fx <= fxmax + 12100)
 		{
 			xx[0] = 200;
 			xx[2] = 1000;
@@ -1563,6 +1590,13 @@ void HandleEntitiesBlocks()
 	// ブロック (Block)
 	for (tt = 0; tt < BLOCK_MAX; tt++)
 	{
+
+        //skip untouchable blocks
+        if((BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL) && currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && BlockSubType[tt] == EBlockSubType::ITEM_BLOCK_HIDDEN_SA3_NO_SHELL)
+        {
+            continue;
+        }
+
 		xx[0] = 200;
 		xx[1] = 3000;
 		xx[2] = 1000;
@@ -1612,7 +1646,11 @@ void HandleEntitiesBlocks()
 				}
 				// 左右 (Left and right)
 				xx[27] = 0;
-				if (((int)EnemyType[t] >= 100 || (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN || BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL)) && BlockType[tt] != EBlockType::NOTE_BLOCK)
+				if (((int)EnemyType[t] >= 100 ||
+                (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN ||
+                    (BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL)
+                ))
+                && BlockType[tt] != EBlockType::NOTE_BLOCK)
 				{
 
                     //+KZ: Syobon Action has broken physics, which makes 2-3 be inconsistent when trying to hit
@@ -1757,6 +1795,12 @@ void RenderEnemies()
                 {
                     DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[10]);
                 }
+                continue;
+            }
+            else if(EnemyType[t] == EEnemyType::MUSHROOM && EnemySubType[t] == EEnemySubType::MUSHROOM_SA3_1UP)
+            {
+                DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Sliced_GFX_KZ[5]);
+                continue;
             }
         }
 
@@ -1796,8 +1840,17 @@ void RenderEnemies()
             {
                 if (!((EnemyType[t] == EEnemyType::EVIL_CLOUD || EnemyType[t] == EEnemyType::EVIL_CLOUD_TOUCHED) && EnemySubType[t] == EEnemySubType::EVIL_CLOUD_HIDDEN))
                 {
-                    drawimage(Sliced_GFX[(int)EnemyType[t]][3],
-                              xx[0] / 100, xx[1] / 100);
+                    //+KZ for SA3 spiky ball
+                    if(EnemyType[t] == EEnemyType::BALL_SPIKY && EnemySubType[t] == EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES)
+                    {
+                        drawimage(Sliced_GFX[0][3],
+                                xx[0] / 100, (xx[1] / 100) + 6);
+                    }
+                    else //Syobon Action
+                    {
+                        drawimage(Sliced_GFX[(int)EnemyType[t]][3],
+                                xx[0] / 100, xx[1] / 100);
+                    }
                 }
             }
             // デフラグさん (Defrag-san)

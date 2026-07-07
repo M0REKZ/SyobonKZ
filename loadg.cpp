@@ -70,6 +70,7 @@ void loadg(void)
     Sliced_GFX_KZ[2] = DerivationGraph(0, 0, 19, 19, Main_GFX_KZ[11]);
     Sliced_GFX_KZ[3] = DerivationGraph(19, 0, 19, 19, Main_GFX_KZ[11]);
     Sliced_GFX_KZ[4] = DerivationGraph(38, 0, 19, 19, Main_GFX_KZ[11]);
+    Sliced_GFX_KZ[5] = DerivationGraph(32, 35, 30, 30, Main_GFX[2]);
 
     // プレイヤー読み込み (Player loading)
     Sliced_GFX[40][0] = DerivationGraph(0, 0, 30, 36, Main_GFX[0]);
@@ -264,6 +265,7 @@ void loadg(void)
 
     //+KZ
     Sounds_KZ[0] = LoadSoundMem("SE/sa3/so_piranhaeat.wav");
+    Sounds_KZ[1] = LoadSoundMem("SE/sa3/so_1up.wav");
 
     //}catch( int num){end();}
 

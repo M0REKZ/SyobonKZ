@@ -1260,6 +1260,17 @@ void HandlePlayerBlocks()
                                 BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                             }
                         }
+                        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                        {
+                            if(BlockSubType[t] == EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_SA3_1UP)
+                            {
+                                PlaySound(Sounds[8]);
+                                BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
+                                int ind = CreateEntity(GAME_X_POS_TO_DOUBLE(BlockX[t]), GAME_Y_POS_TO_DOUBLE(BlockY[t]), 0, 0, EEnemyType::MUSHROOM, EEnemySubType::MUSHROOM_SA3_1UP);
+                                if(ind >= 0)
+                                    EnemyBlockAppearTimer[ind] = 16;
+                            }
+                        }
                     }
                 } // 114
 

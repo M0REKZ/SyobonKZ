@@ -80,8 +80,8 @@ extern SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
 #define MAIN_GFX_KZ_MAX 12
-#define SLICED_GFX_KZ_MAX 5
-#define SOUNDS_KZ_MAX 1
+#define SLICED_GFX_KZ_MAX 6
+#define SOUNDS_KZ_MAX 2
 extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
 extern SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
 extern SyobonKZChunk *Sounds_KZ[SOUNDS_KZ_MAX]; //+KZ
@@ -112,7 +112,9 @@ extern double pai;
 
 //地面 (Ground)
 // @attention +KZ: smax is now GROUND_MAX
-#define GROUND_MAX 31
+// +KZ: had to increase it to support SA3
+#define LEGACY_GROUND_MAX 31
+#define GROUND_MAX 64
 //extern int sx; //+KZ: unused
 // @attention +KZ: int sco is now GroundCount
 extern int GroundCount;
