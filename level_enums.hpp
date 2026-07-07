@@ -18,6 +18,7 @@ enum class ELevelType : int
     SKY = 3,
     CASTLE = 4,
     ICY = 5,
+    KAIZO_SYOBON_UNKNOWN = 6,
 };
 
 
@@ -541,6 +542,12 @@ enum class EBlockSubType : int
     MESSAGE_BLOCK_2_4_2 = 9,
     MESSAGE_BLOCK_3_1_0 = 10,
     MESSAGE_BLOCK_1_3_0_3 = 80, //appears after mystery ball is taken
+
+    //Kaizo Syobon
+    MESSAGE_BLOCK_KAIZO_SYOBON_1 = 12,
+    MESSAGE_BLOCK_KAIZO_SYOBON_2 = 17,
+    MESSAGE_BLOCK_KAIZO_SYOBON_3 = 13,
+
     MESSAGE_BLOCK_MAX = 100, //seems to be a "MAX" ids value
 
     //animation after firing laser in 1-3

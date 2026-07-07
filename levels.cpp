@@ -6607,7 +6607,7 @@ void HandleSyobonActionThreeLevels()
         ObjectSizeX[t_9] = 11999; //n地面[t_9].c = 11999;
         ObjectSizeY[t_9] = 3000; //n地面[t_9].d = 3000;
         ObjectType[t_9] = EObjectType::FALLING_FLOOR; //n地面[t_9].type = 52;
-        ObjectCount++; //n地面co++;
+        ObjectCount++; //ObjectCount++;
 
 
 
@@ -6903,6 +6903,289 @@ void HandleSyobonActionThreeLevels()
         ObjectCreate(149, 1, 0, 0, EObjectType::CHECKPOINT, EObjectSubType::NONE);
         CurrentPlayerCheckpoint = 2;
         printf("enemy count %d\n",EnemyCount);
+    }
+}
+
+void HandleKaizoSyobonLevels()
+{
+    if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
+    {
+        MapList.Map stagedatexKaizo = MapList.stagedatexKaizo1;
+        bgmchange(Music[1]);
+        PlayerGroundType = EPlayerGroundType::NORMAL;
+        BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_1;
+        BlockCreateLegacy(58, 249, EBlockType::MESSAGE_BLOCK);
+        BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_2;
+        BlockCreateLegacy(870, 191, EBlockType::MESSAGE_BLOCK);
+        for (int num143 = 0; num143 <= 1000; num143++)
+        {
+            for (int num144 = 0; num144 <= 16; num144++)
+            {
+                stagedate[num144][num143] = stagedatexKaizo[num144][num143];
+            }
+        }
+    }
+    if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 0)
+    {
+        bgmchange(Music[2]);
+        PlayerGroundType = EPlayerGroundType::NORMAL;
+        StageColor = ELevelType::UNDERGROUND;
+        scrollx = 408000;
+        MapList.Map stagedatexKaizo2 = MapList.stagedatexKaizo2;
+        BlockCount = 0;
+        BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_3;
+        BlockCreateLegacy(0, 249, EBlockType::MESSAGE_BLOCK);
+        ObjectCount = 0;
+        int num145 = ObjectCount;
+        ObjectX[num145] = 40600;
+        ObjectY[num145] = 24900;
+        ObjectSizeX[num145] = 6000;
+        ObjectSizeY[num145] = 11800;
+        ObjectType[num145] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[num145] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount++;
+        for (int num146 = 0; num146 <= 1000; num146++)
+        {
+            for (int num147 = 0; num147 <= 16; num147++)
+            {
+                stagedate[num147][num146] = stagedatexKaizo2[num147][num146];
+            }
+        }
+    }
+    if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 1)
+    {
+        bgmchange(Music[2]);
+        PlayerGroundType = EPlayerGroundType::NORMAL;
+        scrollx = 0;
+        PlayerX = 6000;
+        PlayerY = 3000;
+        StageColor = ELevelType::UNDERGROUND;
+        MapList.Map stagedatexKaizo3 = MapList.stagedatexKaizo3;
+        for (int num148 = 0; num148 <= 1000; num148++)
+        {
+            for (int num149 = 0; num149 <= 16; num149++)
+            {
+                stagedate[num149][num148] = stagedatexKaizo3[num149][num148];
+            }
+        }
+    }
+    if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 6)
+    {
+        SyobonSection = 0;
+    }
+    if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 0)
+    {
+        PlayerGroundType = EPlayerGroundType::SLIP;
+        bgmchange(Music[1]);
+        StageColor = ELevelType::KAIZO_SYOBON_UNKNOWN;
+        scrollx = 390000;
+        PlayerY = 33720;
+        MapList.Map stagedatexKaizo4 = MapList.stagedatexKaizo5;
+        BlockCount = 0;
+        BlockSubType[BlockCount] = 14;
+        BlockCreateLegacy(0, 220, 300);
+        BlockCreateLegacy(1566, 278, 110);
+        BlockCreateLegacy(1450, 278, 110);
+        BlockCreateLegacy(1624, 278, 110);
+        BlockCreateLegacy(1450, 191, 110);
+        BlockCreateLegacy(1508, 191, 110);
+        BlockCreateLegacy(1566, 191, 110);
+        BlockCreateLegacy(1450, 104, 110);
+        BlockCreateLegacy(1508, 104, 110);
+        BlockCreateLegacy(1566, 104, 110);
+        BlockCreateLegacy(1624, 104, 110);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(1711, 133, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(1740, 133, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(1856, 75, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(1885, 75, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(2001, 133, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(2059, 133, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(2146, 104, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(2175, 104, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(2291, 104, 115);
+        BlockSubType[BlockCount] = 1;
+        BlockCreateLegacy(2349, 104, 115);
+        BlockCreateLegacy(2639, 307, 105);
+        LiftCount = 0;
+        LiftX[LiftCount] = 5800;
+        LiftY[LiftCount] = 7500;
+        LiftSizeX[LiftCount] = 18000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 1;
+        LiftVelY[LiftCount] = 0;
+        LiftType[LiftCount] = 13;
+        LiftY[LiftCount] = false;
+        LiftCount++;
+        LiftX[LiftCount] = 29000;
+        LiftY[LiftCount] = 13300;
+        LiftSizeX[LiftCount] = 15000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        LiftType[LiftCount] = 12;
+        LiftY[LiftCount] = false;
+        LiftCount++;
+        LiftX[LiftCount] = 52200;
+        LiftY[LiftCount] = 16200;
+        LiftSizeX[LiftCount] = 18000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        LiftType[LiftCount] = 13;
+        LiftY[LiftCount] = false;
+        LiftCount++;
+        LiftX[LiftCount] = 75400;
+        LiftY[LiftCount] = 19100;
+        LiftSizeX[LiftCount] = 9000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        LiftType[LiftCount] = 1;
+        LiftCount++;
+        LiftX[LiftCount] = 90800;
+        LiftY[LiftCount] = 13300;
+        LiftSizeX[LiftCount] = 9000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        LiftType[LiftCount] = 1;
+        LiftCount++;
+        LiftX[LiftCount] = 108200;
+        LiftY[LiftCount] = 1700;
+        LiftSizeX[LiftCount] = 9000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        LiftType[LiftCount] = 1;
+        LiftCount++;
+        LiftX[LiftCount] = 275500;
+        LiftY[LiftCount] = 16200;
+        LiftSizeX[LiftCount] = 19000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        LiftType[LiftCount] = 13;
+        LiftY[LiftCount] = false;
+        LiftCount++;
+        LiftX[LiftCount] = 304500;
+        LiftY[LiftCount] = 24900;
+        LiftSizeX[LiftCount] = 39000;
+        srtype[LiftCount] = 0;
+        sracttype[LiftCount] = 0;
+        LiftVelY[LiftCount] = 0;
+        LiftType[LiftCount] = 13;
+        LiftY[LiftCount] = false;
+        LiftCount++;
+        BlockCreateLegacy(522, 394, 117);
+        BlockCreateLegacy(551, 394, 117);
+        BlockCreateLegacy(580, 394, 117);
+        BlockCreateLegacy(2146, 249, 7);
+        int num150 = ObjectCount;
+        ObjectX[num150] = 26100;
+        ObjectY[num150] = 36500;
+        ObjectSizeX[num150] = 8999;
+        ObjectSizeY[num150] = 3000;
+        ObjectType[num150] = 52;
+        ObjectCount++;
+        num150 = ObjectCount;
+        ObjectX[num150] = 378400;
+        ObjectY[num150] = -1300;
+        ObjectSizeX[num150] = 15000;
+        ObjectSizeY[num150] = 14000;
+        ObjectType[num150] = 104;
+        ObjectCount++;
+        EnemyAppearCount = 0;
+        EnemyAppearX[EnemyAppearCount] = 258100;
+        EnemyAppearY[EnemyAppearCount] = 30700;
+        EnemyAppearType[EnemyAppearCount] = 82;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount++;
+        EnemyAppearX[EnemyAppearCount] = 300;
+        EnemyAppearY[EnemyAppearCount] = 4600;
+        EnemyAppearType[EnemyAppearCount] = 80;
+        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearCount++;
+        if (stagepoint)
+        {
+            stagepoint = false;
+            PlayerX = 4500;
+            PlayerY = -3000;
+            CurrentPlayerCheckpoint = 0;
+        }
+        for (int num151 = 0; num151 <= 1000; num151++)
+        {
+            for (int num152 = 0; num152 <= 16; num152++)
+            {
+                stagedate[num152][num151] = stagedatexKaizo4[num152][num151];
+            }
+        }
+    }
+    if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 5)
+    {
+        StageColor = ELevelType::KAIZO_SYOBON_UNKNOWN;
+        PlayerGroundType = EPlayerGroundType::SLIP;
+        bgmchange(Music[3]);
+        scrollx = 0;
+        PlayerX = 3000;
+        PlayerY = 33000;
+        stagepoint = true;
+        MapList.Map stagedatexKaizo5 = MapList.stagedatexKaizo7;
+        ObjectCount = 0;
+        int num153 = ObjectCount;
+        ObjectX[num153] = 40595;
+        ObjectY[num153] = 30700;
+        ObjectSizeX[num153] = 6000;
+        ObjectSizeY[num153] = 14800;
+        ObjectType[num153] = 50;
+        ObjectSubType[num153] = 1;
+        ObjectCount++;
+        BlockSubType[BlockCount] = 0;
+        BlockCreateLegacy(377, 75, 112);
+        BlockSubType[BlockCount] = 15;
+        BlockCreateLegacy(377, -12, 300);
+        for (int num154 = 0; num154 <= 1000; num154++)
+        {
+            for (int num155 = 0; num155 <= 16; num155++)
+            {
+                stagedate[num155][num154] = stagedatexKaizo5[num155][num154];
+            }
+        }
+    }
+    if (SyobonWorld == 1 && SyobonLevel == 4 && SyobonSection == 0)
+    {
+        bgmchange(Music[6]);
+        scrollx = 440000;
+        PlayerX = 12000;
+        PlayerY = 6000;
+        StageColor = 4;
+        MapList.Map stagedatexKaizo6 = MapList.stagedatexKaizo8;
+        ObjectCount = 0;
+        int num156 = ObjectCount;
+        BlockSubType[BlockCount] = 16;
+        BlockCreateLegacy(58, 46, 300);
+        EnemyAppearCount = 0;
+        EnemyAppearX[EnemyAppearCount] = 8700;
+        EnemyAppearY[EnemyAppearCount] = 7500;
+        EnemyAppearType[EnemyAppearCount] = 80;
+        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearCount++;
+        SyobonSection = 0;
+        for (int num157 = 0; num157 <= 1000; num157++)
+        {
+            for (num156 = 0; num156 <= 16; num156++)
+            {
+                stagedate[num156][num157] = stagedatexKaizo6[num156][num157];
+            }
+        }
     }
 }
 

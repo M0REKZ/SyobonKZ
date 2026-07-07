@@ -13,6 +13,9 @@ void HandleSyobonActionTwoLevels();
 //Syobon Action 3
 void HandleSyobonActionThreeLevels();
 
+//Kaizo Syobon
+void HandleKaizoSyobonLevels();
+
 //+KZ
 void StageClear();
 
