@@ -181,7 +181,15 @@ void HandlePlayer()
         Health = -20;
         PlayerState = 200;
         PlayerAITimer = 0;
-        SyobonKZHaltChannel(-1);
+        //SyobonKZHaltChannel(-1);
+        //+KZ: halt all channels except some sounds
+        for(int ch = 0; ch < SYOBONKZ_MIX_CHANNELS; ch++)
+        {
+            SyobonKZChunk * snd = GetLastSoundInChannel(ch);
+            if(snd != Sounds_KZ[0])
+                SyobonKZHaltChannel(ch);
+        }
+
         SyobonKZHaltMusic();
         PlaySound(Sounds[12]);
         StopSoundMem(Sounds[16]);

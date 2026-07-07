@@ -58,6 +58,7 @@ SDL_Surface *Main_GFX[51];
 // +KZ: i added these
 SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
 SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
+SyobonKZChunk *Sounds_KZ[SOUNDS_KZ_MAX]; //+KZ
 
 int mirror;
 

@@ -94,6 +94,50 @@ void HandleEntities()
             //update
             switch (EnemyType[t])
             {
+            case EEnemyType::SA3_JUMPSCARE_PLANT:
+
+                EnemySizeX[t] = DOUBLE_TO_GAME_X_POS(1);
+                EnemySizeY[t] = DOUBLE_TO_GAME_X_POS(1.5);
+
+                if(EnemyAITimer[t] == 0)
+                {
+                    if(player_pos_x + PlayerSizeX >= EnemyX[t] && player_pos_x <= EnemyX[t] + EnemySizeX[t] &&
+                    player_pos_y + PlayerSizeY >= EnemyY[t] - EnemySizeY[t] && player_pos_y <= EnemyY[t])
+                    {
+                        EnemyAITimer[t] = 1;
+                        EnemyFloatingTimer[t] = EnemyY[t];
+                        PlaySound(Sounds_KZ[0]);
+                    }
+                }
+                else if(EnemyAITimer[t] != 3)
+                {
+                    if(player_pos_x + PlayerSizeX >= EnemyX[t] && player_pos_x <= EnemyX[t] + EnemySizeX[t] &&
+                        player_pos_y + PlayerSizeY >= EnemyY[t] && player_pos_y <= EnemyY[t] + EnemySizeY[t])
+                    {
+                        Health--;
+                    }
+                }
+
+                if(EnemyAITimer[t] == 1)
+                {
+                    EnemyY[t] -= DOUBLE_TO_GAME_X_POS(0.5);
+                    if(EnemyY[t] < EnemyFloatingTimer[t] - EnemySizeY[t])
+                    {
+                        EnemyY[t] = EnemyFloatingTimer[t] - EnemySizeY[t];
+                        EnemyAITimer[t] = 2;
+                    }
+                }
+                else if(EnemyAITimer[t] == 2)
+                {
+                    EnemyY[t] += DOUBLE_TO_GAME_X_POS(0.5);
+                    if(EnemyY[t] > EnemyFloatingTimer[t])
+                    {
+                        EnemyY[t] = EnemyFloatingTimer[t];
+                        EnemyAITimer[t] = 3;
+                    }
+                }
+                handled = true;
+                break;
             case EEnemyType::SA3_BIG_MUSHROOM_FALLING:
 
                 if(EnemyX[t] <= -900000)
@@ -1702,6 +1746,17 @@ void RenderEnemies()
                 int frame = ((int)(EnemyX[t] / 4.f)) % 6;
                 DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[3 + frame]);
                 continue;
+            }
+            else if(EnemyType[t] == EEnemyType::SA3_JUMPSCARE_PLANT)
+            {
+                if(EnemyAITimer[t] == 1)
+                {
+                    DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[9]);
+                }
+                else if(EnemyAITimer[t] == 2)
+                {
+                    DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[10]);
+                }
             }
         }
 

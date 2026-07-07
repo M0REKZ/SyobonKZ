@@ -81,8 +81,10 @@ extern SDL_Surface *Main_GFX[51];
 // +KZ: i added these
 #define MAIN_GFX_KZ_MAX 12
 #define SLICED_GFX_KZ_MAX 5
+#define SOUNDS_KZ_MAX 1
 extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
 extern SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
+extern SyobonKZChunk *Sounds_KZ[SOUNDS_KZ_MAX]; //+KZ
 
 //+KZ: mirrors the image drawn by drawimage()
 extern int mirror;

@@ -6794,11 +6794,12 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(151, 10, EBlockType::HARD_BLOCK);
         BlockCreate(151, 9, EBlockType::HARD_BLOCK);
 
+        CreateEntity(152.5, 9, 0, 0, EEnemyType::SA3_JUMPSCARE_PLANT, EEnemySubType::NONE);
         GroundCreate(152, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
         GroundCreate(152 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
 
-
-
+        GroundCreate(149, 1, 0, 0, EObjectType::CHECKPOINT, EObjectSubType::NONE);
+        CurrentPlayerCheckpoint = 2;
     }
 }
 

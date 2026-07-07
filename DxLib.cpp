@@ -483,16 +483,21 @@ SDL_Surface *LoadGraph(const char *filename, bool fix)
     exit(1);
 }
 
+struct ChannelState {
+    SyobonKZChunk* sound = nullptr;
+    Uint32 StartTime = 0;
+};
+static ChannelState channels[SYOBONKZ_MIX_CHANNELS];
+
+SyobonKZChunk *GetLastSoundInChannel(int channel)
+{
+    return channel >= 0 && channel < SYOBONKZ_MIX_CHANNELS ? channels[channel].sound : nullptr;
+}
+
 void PlaySoundMem(SyobonKZChunk *s, int l)
 {
     if(!sound) //game is muted
         return;
-
-    struct ChannelState {
-        SyobonKZChunk* sound = nullptr;
-        Uint32 StartTime = 0;
-    };
-    static ChannelState channels[SYOBONKZ_MIX_CHANNELS];
 
     Uint32 CurrentTime = SDL_GetTicks();
 

@@ -83,5 +83,6 @@ extern bool sound;
 
 //+KZ custom
 void SyobonKZDrawGraphScaled(int x, int y, int scale_x, int scale_y, SDL_Surface * psurface);
+SyobonKZChunk * GetLastSoundInChannel(int channel);
 
 #endif

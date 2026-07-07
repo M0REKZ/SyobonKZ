@@ -262,6 +262,9 @@ void loadg(void)
     Sounds[17] = LoadSoundMem("SE/allclear.ogg");
     Sounds[18] = LoadSoundMem("SE/tekifire.ogg");
 
+    //+KZ
+    Sounds_KZ[0] = LoadSoundMem("SE/sa3/so_piranhaeat.wav");
+
     //}catch( int num){end();}
 
     // ループ設定-20000-20秒
