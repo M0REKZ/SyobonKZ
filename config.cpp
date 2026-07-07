@@ -17,7 +17,8 @@ void SaveConfig()
 
         for(auto &LevelFinished : SyobonGlobalConfig.LevelsFinished)
         {
-            file << "LEVEL_FINISHED " << (int)LevelFinished.Game <<  " " << LevelFinished.World <<  " " << LevelFinished.Level <<std::endl;
+            file << "LEVEL_FINISHED " << (int)LevelFinished.Game <<  " " << LevelFinished.World <<  " " << LevelFinished.Level << std::endl;
+            file << "FULLSCREEN " << (int)SyobonKZIsFullscreen() << std::endl;
         }
 
         file.close();
@@ -47,6 +48,10 @@ void LoadConfig()
                 sscanf(line.c_str(), "LEVEL_FINISHED %d %d %d", &game, &temp.World, &temp.Level);
                 temp.Game = (ESyobonActionGame)game;
                 SyobonGlobalConfig.LevelsFinished.push_back(temp);
+            }
+            if(strstr(line.c_str(), "FULLSCREEN"))
+            {
+                sscanf(line.c_str(), "FULLSCREEN %d", &SyobonGlobalConfig.Fullscreen);
             }
         }
 

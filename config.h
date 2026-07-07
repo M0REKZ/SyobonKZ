@@ -19,6 +19,7 @@ struct SSyobonGameLevel
 struct SConfig
 {
     std::vector<SSyobonGameLevel> LevelsFinished;
+    int Fullscreen = false;
 };
 
 extern SConfig SyobonGlobalConfig;

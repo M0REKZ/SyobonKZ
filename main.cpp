@@ -57,6 +57,11 @@ int main(int argc, char *argv[])
 
 	LoadConfig();
 
+	if(SyobonGlobalConfig.Fullscreen && !SyobonKZIsFullscreen())
+	{
+		SyobonKZToggleFullscreen();
+	}
+
 	//+KZ: init things that are too CPU consuming
 	CreateEnemyMessageCache();
 	CreatePlayerMessageCache();
