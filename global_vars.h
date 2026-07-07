@@ -79,7 +79,7 @@ extern SDL_Surface *Sliced_GFX[161][8];
 extern SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
-#define MAIN_GFX_KZ_MAX 12
+#define MAIN_GFX_KZ_MAX 13
 #define SLICED_GFX_KZ_MAX 6
 #define SOUNDS_KZ_MAX 2
 extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
@@ -441,9 +441,10 @@ enum class ESyobonActionGame : int
 {
     SYOBON_ACTION_1_AND_2 = 0,
     SYOBON_ACTION_3,
+    KAIZO_SYOBON,
 
     FIRST = SYOBON_ACTION_1_AND_2,
-    LAST = SYOBON_ACTION_3,
+    LAST = KAIZO_SYOBON,
 };
 extern ESyobonActionGame currentGame;
 extern bool SA3Enabled;

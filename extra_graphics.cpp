@@ -48,7 +48,7 @@ void RenderExtraGraphics()
             // ブロックの破片 (Block fragments)
             if (ExtraGraphicType[t] == EExtraGraphicType::BLOCK_FRAGMENT)
             {
-                if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY)
+                if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY || StageColor == ELevelType::KAIZO_SYOBON_UNKNOWN)
                     setcolor(9 * 16, 6 * 16, 3 * 16);
                 if (StageColor == ELevelType::UNDERGROUND)
                     setcolor(0, 120, 160);
@@ -114,19 +114,30 @@ void RenderBackground()
 
             if (BackgroundType[t] != EDecorationType::CASTLE)
             {
-                if ((BackgroundType[t] == EDecorationType::GRASS || BackgroundType[t] == EDecorationType::CLOUD)
-                    && StageColor == ELevelType::ICY)
+                //+KZ: so.. this draws the broken grass in 3-1, did it even work correctly in any syobon action version?
+                //  Changed code to use custom sprites in SyobonKZ
+                switch (StageColor)
                 {
-                    //+KZ: so.. this draws the broken grass in 3-1, did it even work correctly in any syobon action version?
-                    //  Fixed with custom sprites in SyobonKZ
-                    drawimage(Sliced_GFX[(int)BackgroundType[t] + 30]
-                                        [4],
-                              xx[0] / 100, xx[1] / 100);
-                }
-                else
-                {
+                case ELevelType::ICY:
+                    if(BackgroundType[t] == EDecorationType::GRASS)
+                    {
+                        drawimage(Sliced_GFX[31][4], xx[0] / 100, xx[1] / 100);
+                    }
+                    else if(BackgroundType[t] == EDecorationType::CLOUD)
+                    {
+                        drawimage(Sliced_GFX[32][4], xx[0] / 100, xx[1] / 100);
+                    }
+                    break;
+                
+                case ELevelType::OVERWORLD:
+                case ELevelType::UNDERGROUND:
+                case ELevelType::SKY:
+                case ELevelType::CASTLE:
+                case ELevelType::KAIZO_SYOBON_UNKNOWN:
+                    //Original code is like this
                     drawimage(Sliced_GFX[(int)BackgroundType[t]][4],
-                              xx[0] / 100, xx[1] / 100);
+                            xx[0] / 100, xx[1] / 100);
+                    break;
                 }
             }
             else

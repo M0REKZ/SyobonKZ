@@ -91,6 +91,14 @@ void rpaint()
 	if (StageColor == ELevelType::ICY)
 	{
 		setcolor(160, 180, 250);
+	}
+	if(StageColor == ELevelType::KAIZO_SYOBON_UNKNOWN)
+	{
+		setcolor(110, 130, 200);
+	}
+	if(StageColor == ELevelType::ICY ||
+		StageColor == ELevelType::KAIZO_SYOBON_UNKNOWN)
+	{
 		PlayerGroundType = EPlayerGroundType::SLIP;
 	}
 	else
@@ -364,8 +372,10 @@ void Mainprogram()
 		// x
 		if (kscroll != 1 && kscroll != 2)
 		{
-			if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+			switch(currentGame)
 			{
+			case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+			case ESyobonActionGame::KAIZO_SYOBON:
 				xx[2] = mascrollmax;
 				xx[3] = 0;
 				xx[1] = xx[2];
@@ -378,10 +388,9 @@ void Mainprogram()
 					//if (xx[1] <= 5000) //mascrollmax is never changed
 					//	xx[3] = 1;
 				}
-			}
+				break;
 			//SA3 camera can go back
-			else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
-			{
+			case ESyobonActionGame::SYOBON_ACTION_3:
 				xx[2] = mascrollmax;
 				xx[3] = 0;
 				xx[1] = xx[2];
@@ -413,6 +422,7 @@ void Mainprogram()
 					
 				if(PlayerX < 0)
 					PlayerX = 0;
+				break;
 			}
 		} // kscroll
 
@@ -581,6 +591,17 @@ void deinit()
 	for (int i = 0; i < 161; i++)
 		for (int j = 0; j < 8; j++)
 			SyobonKZFreeImage(Sliced_GFX[i][j]);
+
+	//+KZ: destroy custom surfaces
+	// SURFACES
+	for (t = 0; t < MAIN_GFX_KZ_MAX; t++)
+	{
+		SyobonKZFreeImage(Main_GFX_KZ[t]);
+	}
+	for (int i = 0; i < SLICED_GFX_KZ_MAX; i++)
+	{
+		SyobonKZFreeImage(Sliced_GFX_KZ[i]);
+	}
 
 	//+KZ: Destroy surfaces cache
 	DestroyEnemyMessageCache();

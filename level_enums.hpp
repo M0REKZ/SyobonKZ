@@ -66,6 +66,8 @@ enum class EBlockType : int
     ITEM_BLOCK_MUSHROOM_2 = 103, // "Not poisonous, but..."
     ITEM_BLOCK_STAR = 104,
 
+    KAIZO_SYOBON_UNKNOWN_105 = 105,
+
     // Invisible item block with infinite poisonous mushrooms
     ITEM_BLOCK_POISON_HIDDEN = 110,
     // Same as above, but already open
@@ -248,6 +250,7 @@ enum class ELiftType : int
     PILLAR_FALL = 11,
 
     PILLAR_BOUNCY = 12,
+    KAIZO_SYOBON_UNKNOWN_13 = 13,
     PILLAR_BRICKS = 15,
 
     GRAY = 21,
@@ -547,6 +550,9 @@ enum class EBlockSubType : int
     MESSAGE_BLOCK_KAIZO_SYOBON_1 = 12,
     MESSAGE_BLOCK_KAIZO_SYOBON_2 = 17,
     MESSAGE_BLOCK_KAIZO_SYOBON_3 = 13,
+    MESSAGE_BLOCK_KAIZO_SYOBON_4 = 14,
+    MESSAGE_BLOCK_KAIZO_SYOBON_5 = 15,
+    MESSAGE_BLOCK_KAIZO_SYOBON_6 = 16,
 
     MESSAGE_BLOCK_MAX = 100, //seems to be a "MAX" ids value
 

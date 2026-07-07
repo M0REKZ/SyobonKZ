@@ -265,15 +265,21 @@ void stagep()
 
 	// 1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
 
-	if (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
-	{
-		HandleSyobonActionOneLevels();
+    switch (currentGame)
+    {
+    case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+        HandleSyobonActionOneLevels();
 		HandleSyobonActionTwoLevels();
-	}
-	else if (currentGame == ESyobonActionGame::SYOBON_ACTION_3)
-	{
-		HandleSyobonActionThreeLevels();
-	}
+        break;
+    
+    case ESyobonActionGame::SYOBON_ACTION_3:
+        HandleSyobonActionThreeLevels();
+        break;
+
+    case ESyobonActionGame::KAIZO_SYOBON:
+        HandleKaizoSyobonLevels();
+        break;
+    }
 
 } // stagep
 
@@ -6906,11 +6912,287 @@ void HandleSyobonActionThreeLevels()
     }
 }
 
+//From SA : All Stars
 void HandleKaizoSyobonLevels()
 {
+    StageClear(); //+KZ added
+
+    if(SyobonState == ESyobonGameState::TITLE)
+    {
+        scrollx = 0;
+
+        PlayerX = (2 * 30) * 100;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
+
+        BlockCreate(2, 13, EBlockType::GROUND_TOP);
+        BlockCreate(2, 14, EBlockType::GROUND_BOTTOM);
+
+        return;
+    }
+
+    scrollx = 360000;
+
     if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
     {
-        MapList.Map stagedatexKaizo = MapList.stagedatexKaizo1;
+        byte stagedatexKaizo1[17][1001] =
+			{
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 4, 4, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 4, 4, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 4, 4, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 99,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					99, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 99, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 99, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 10, 10, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 7, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 0, 0, 4, 4, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 7, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 98, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 0, 4, 4, 4, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 4, 4, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 7, 7, 7, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 0, 10, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 7, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 4, 4, 4, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 0, 0, 4, 7, 7, 7, 7, 7, 7,
+					7, 7, 7, 7, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 4, 4, 4, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 7, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					4, 0, 4, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 4, 4, 4, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					50, 0, 10, 4, 0, 0, 0, 0, 0, 0,
+					85, 0, 0, 85, 0, 7, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 4, 4, 4, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 83, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 7, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					30, 0, 0, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 4, 0, 0, 0,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					0, 0, 0, 4, 4, 4, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 81,
+					0, 0, 0, 4, 0, 0, 0, 0, 0, 0,
+					4, 0, 0, 4, 0, 0, 4, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
+					4, 0, 0, 0, 0, 0, 4, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 50, 0, 50, 0, 0, 0, 0, 4, 4,
+					0, 0, 4, 4, 4, 4, 4, 0, 0, 0,
+					0, 0, 0, 4, 81, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 5, 5,
+					5, 5, 5, 5, 0, 0, 5, 0, 0, 0,
+					5, 5, 5, 5, 0, 0, 5, 5, 5, 5,
+					5, 0, 4, 0, 0, 0, 0, 5, 5, 5,
+					5, 5, 5, 5, 5, 0, 5, 5, 5, 5,
+					0, 0, 0, 0, 0, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 0, 5, 5, 5,
+					5, 5, 5, 5
+				},
+				{
+					0, 0, 0, 6, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 6, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					6, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 6, 0, 0, 0, 6, 6,
+					6, 6, 6, 6, 0, 0, 6, 0, 0, 0,
+					6, 6, 6, 6, 0, 0, 6, 6, 6, 6,
+					6, 0, 4, 0, 0, 0, 0, 6, 6, 6,
+					6, 6, 6, 6, 6, 0, 6, 6, 6, 6,
+					0, 0, 0, 0, 0, 6, 6, 6, 6, 6,
+					6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+					6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+					6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+					6, 6, 6, 6, 6, 6, 6, 0, 6, 6,
+					6, 6, 6, 6, 6, 6, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 3, 3, 3, 0, 0, 3, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0
+				}
+			};
+
         bgmchange(Music[1]);
         PlayerGroundType = EPlayerGroundType::NORMAL;
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_1;
@@ -6921,17 +7203,227 @@ void HandleKaizoSyobonLevels()
         {
             for (int num144 = 0; num144 <= 16; num144++)
             {
-                stagedate[num144][num143] = stagedatexKaizo[num144][num143];
+                stagedate[num144][num143] = (ELegacyStageDate)stagedatexKaizo1[num144][num143];
             }
         }
     }
     if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 0)
     {
+        byte stagedatexKaizo2[17][1001] =
+			{
+				{
+					10, 10, 10, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
+					4, 4, 4, 4, 4, 4, 4, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 10, 10, 4, 10, 10, 10, 4,
+					10, 10, 4, 10, 10, 10, 10, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0
+				},
+				{
+					4, 0, 4, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 0,
+					0, 0, 4, 0, 99, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
+					0, 0, 0, 99
+				},
+				{
+					10, 0, 10, 10, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 7, 7,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 7, 0, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 7, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					7, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 0, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 7, 0, 0, 0,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 7,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 7, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 7, 7, 7, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 4, 4,
+					0, 0, 4, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 7, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 7, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 7, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					43, 44, 44, 44, 44, 44, 44, 44, 44, 44
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 4, 4,
+					0, 0, 4, 0, 4, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 4, 0, 0, 0, 0, 0, 0,
+					0, 0, 0
+				},
+				{
+					5, 5, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 5, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 4, 4, 4, 4, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5
+				},
+				{
+					6, 6, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 6, 6, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 6, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 6, 6, 6, 6, 6, 6, 6,
+					6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 6, 6, 6, 6, 5, 0, 0,
+					0
+				}
+			};
+
         bgmchange(Music[2]);
         PlayerGroundType = EPlayerGroundType::NORMAL;
         StageColor = ELevelType::UNDERGROUND;
         scrollx = 408000;
-        MapList.Map stagedatexKaizo2 = MapList.stagedatexKaizo2;
         BlockCount = 0;
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_3;
         BlockCreateLegacy(0, 249, EBlockType::MESSAGE_BLOCK);
@@ -6948,24 +7440,57 @@ void HandleKaizoSyobonLevels()
         {
             for (int num147 = 0; num147 <= 16; num147++)
             {
-                stagedate[num147][num146] = stagedatexKaizo2[num147][num146];
+                stagedate[num147][num146] = (ELegacyStageDate)stagedatexKaizo2[num147][num146];
             }
         }
     }
     if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 1)
     {
+        byte stagedatexKaizo3[17][1001] =
+			{
+				{0},
+				{0},
+				{0},
+				{0},
+				{0},
+				{0},
+				{0},
+				{0},
+				{0},
+				{0},
+				{
+					7, 7, 7, 7, 7, 7, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					7, 7, 7, 7, 7, 7, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					7, 7, 7, 7, 7, 7, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
+					0, 0, 0, 0, 0, 5, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 6,
+					0, 0, 0, 0, 0, 6, 0, 0, 0
+				},
+				{0}
+			};
         bgmchange(Music[2]);
         PlayerGroundType = EPlayerGroundType::NORMAL;
         scrollx = 0;
         PlayerX = 6000;
         PlayerY = 3000;
         StageColor = ELevelType::UNDERGROUND;
-        MapList.Map stagedatexKaizo3 = MapList.stagedatexKaizo3;
         for (int num148 = 0; num148 <= 1000; num148++)
         {
             for (int num149 = 0; num149 <= 16; num149++)
             {
-                stagedate[num149][num148] = stagedatexKaizo3[num149][num148];
+                stagedate[num149][num148] = (ELegacyStageDate)stagedatexKaizo3[num149][num148];
             }
         }
     }
@@ -6975,46 +7500,319 @@ void HandleKaizoSyobonLevels()
     }
     if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 0)
     {
+        byte stagedatexKaizo5[17][1001] =
+			{
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+					4, 4, 4, 4, 4, 4, 4, 4, 0, 0,
+					0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 7, 7, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 10, 10, 10, 10,
+					10, 10, 10, 10, 10, 10, 10, 10, 4, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					10, 10, 10, 10, 10, 10, 10, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 7, 0, 0, 0, 0,
+					7, 7, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 7, 0, 0,
+					99, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					0, 0, 0, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 7, 4, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 99, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 2, 0, 0, 4,
+					4, 0, 4, 0, 0, 0, 0, 0, 4, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					0, 4, 0, 4, 0, 4, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+					1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 4,
+					10, 0, 4, 0, 0, 0, 0, 0, 4, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					0, 0, 0, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 4,
+					0, 0, 4, 0, 0, 0, 0, 0, 4, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					0, 0, 0, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 4, 4, 4, 4,
+					0, 4, 4, 0, 0, 0, 0, 7, 4, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					0, 4, 0, 4, 0, 4, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 10, 4, 0, 0, 0, 0, 0, 4, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+					0, 0, 0, 0, 0, 0, 0, 4, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 4, 0, 0, 0, 0,
+					0, 0, 4, 0, 0, 0, 0, 0, 4, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{0},
+				{
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+                    0, 4, 0, 4, 0, 4, 0, 4, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 83, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 83, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0
+                },
+                    {
+                    43, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+                    0, 0, 0, 0, 0, 0, 0, 4, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                },
+				{
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+                    0, 0, 0, 0, 0, 0, 0, 4, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    4, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 4, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0
+                },
+				{
+                    5, 50, 0, 0, 0, 5, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+                    0, 4, 4, 4, 4, 4, 4, 4, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    5, 0, 5, 0, 5, 5, 5, 5, 5, 0,
+                    5, 0, 0, 0, 0, 0, 5, 5, 5, 5,
+                    0, 0, 0, 0, 5, 5, 5, 5, 5, 0,
+                    0, 0, 0, 0, 0, 0
+                },
+				{
+                    6, 0, 0, 0, 0, 6, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 4, 0, 0, 0, 0, 0, 4, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    6, 0, 6, 0, 6, 6, 6, 6, 6, 0,
+                    6, 0, 0, 0, 0, 0, 6, 6, 6, 6,
+                    0, 0, 0, 0, 6, 6, 6, 6, 6, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0
+                },
+				{
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+                    4, 4, 0, 0, 0, 0, 0, 4, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0
+                }
+			};
+        stagedatexKaizo5[9][49] = 4;
+        stagedatexKaizo5[9][57] = 4;
+		
+
         PlayerGroundType = EPlayerGroundType::SLIP;
         bgmchange(Music[1]);
         StageColor = ELevelType::KAIZO_SYOBON_UNKNOWN;
         scrollx = 390000;
         PlayerY = 33720;
-        MapList.Map stagedatexKaizo4 = MapList.stagedatexKaizo5;
         BlockCount = 0;
-        BlockSubType[BlockCount] = 14;
-        BlockCreateLegacy(0, 220, 300);
-        BlockCreateLegacy(1566, 278, 110);
-        BlockCreateLegacy(1450, 278, 110);
-        BlockCreateLegacy(1624, 278, 110);
-        BlockCreateLegacy(1450, 191, 110);
-        BlockCreateLegacy(1508, 191, 110);
-        BlockCreateLegacy(1566, 191, 110);
-        BlockCreateLegacy(1450, 104, 110);
-        BlockCreateLegacy(1508, 104, 110);
-        BlockCreateLegacy(1566, 104, 110);
-        BlockCreateLegacy(1624, 104, 110);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(1711, 133, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(1740, 133, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(1856, 75, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(1885, 75, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(2001, 133, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(2059, 133, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(2146, 104, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(2175, 104, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(2291, 104, 115);
-        BlockSubType[BlockCount] = 1;
-        BlockCreateLegacy(2349, 104, 115);
-        BlockCreateLegacy(2639, 307, 105);
+        BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_4;
+        BlockCreateLegacy(0, 220, EBlockType::MESSAGE_BLOCK);
+        BlockCreateLegacy(1566, 278, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1450, 278, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1624, 278, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1450, 191, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1508, 191, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1566, 191, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1450, 104, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1508, 104, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1566, 104, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockCreateLegacy(1624, 104, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(1711, 133, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(1740, 133, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(1856, 75, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(1885, 75, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(2001, 133, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(2059, 133, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(2146, 104, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(2175, 104, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(2291, 104, EBlockType::BRICK_BRITTLE);
+        BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
+        BlockCreateLegacy(2349, 104, EBlockType::BRICK_BRITTLE);
+        BlockCreateLegacy(2639, 307, EBlockType::KAIZO_SYOBON_UNKNOWN_105);
         LiftCount = 0;
         LiftX[LiftCount] = 5800;
         LiftY[LiftCount] = 7500;
@@ -7022,7 +7820,7 @@ void HandleKaizoSyobonLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 1;
         LiftVelY[LiftCount] = 0;
-        LiftType[LiftCount] = 13;
+        LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
         LiftY[LiftCount] = false;
         LiftCount++;
         LiftX[LiftCount] = 29000;
@@ -7031,7 +7829,7 @@ void HandleKaizoSyobonLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        LiftType[LiftCount] = 12;
+        LiftType[LiftCount] = ELiftType::PILLAR_BOUNCY;
         LiftY[LiftCount] = false;
         LiftCount++;
         LiftX[LiftCount] = 52200;
@@ -7040,7 +7838,7 @@ void HandleKaizoSyobonLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        LiftType[LiftCount] = 13;
+        LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
         LiftY[LiftCount] = false;
         LiftCount++;
         LiftX[LiftCount] = 75400;
@@ -7049,7 +7847,7 @@ void HandleKaizoSyobonLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        LiftType[LiftCount] = 1;
+        LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
         LiftX[LiftCount] = 90800;
         LiftY[LiftCount] = 13300;
@@ -7057,7 +7855,7 @@ void HandleKaizoSyobonLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        LiftType[LiftCount] = 1;
+        LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
         LiftX[LiftCount] = 108200;
         LiftY[LiftCount] = 1700;
@@ -7065,7 +7863,7 @@ void HandleKaizoSyobonLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        LiftType[LiftCount] = 1;
+        LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
         LiftX[LiftCount] = 275500;
         LiftY[LiftCount] = 16200;
@@ -7073,7 +7871,7 @@ void HandleKaizoSyobonLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        LiftType[LiftCount] = 13;
+        LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
         LiftY[LiftCount] = false;
         LiftCount++;
         LiftX[LiftCount] = 304500;
@@ -7082,37 +7880,37 @@ void HandleKaizoSyobonLevels()
         srtype[LiftCount] = 0;
         sracttype[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
-        LiftType[LiftCount] = 13;
+        LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
         LiftY[LiftCount] = false;
         LiftCount++;
-        BlockCreateLegacy(522, 394, 117);
-        BlockCreateLegacy(551, 394, 117);
-        BlockCreateLegacy(580, 394, 117);
-        BlockCreateLegacy(2146, 249, 7);
+        BlockCreateLegacy(522, 394, EBlockType::NOTE_BLOCK);
+        BlockCreateLegacy(551, 394, EBlockType::NOTE_BLOCK);
+        BlockCreateLegacy(580, 394, EBlockType::NOTE_BLOCK);
+        BlockCreateLegacy(2146, 249, EBlockType::ITEM_BLOCK_HIDDEN);
         int num150 = ObjectCount;
         ObjectX[num150] = 26100;
         ObjectY[num150] = 36500;
         ObjectSizeX[num150] = 8999;
         ObjectSizeY[num150] = 3000;
-        ObjectType[num150] = 52;
+        ObjectType[num150] = EObjectType::FALLING_FLOOR;
         ObjectCount++;
         num150 = ObjectCount;
         ObjectX[num150] = 378400;
         ObjectY[num150] = -1300;
         ObjectSizeX[num150] = 15000;
         ObjectSizeY[num150] = 14000;
-        ObjectType[num150] = 104;
+        ObjectType[num150] = EObjectType::TRIGGER_MULTI_LASER;
         ObjectCount++;
         EnemyAppearCount = 0;
         EnemyAppearX[EnemyAppearCount] = 258100;
         EnemyAppearY[EnemyAppearCount] = 30700;
-        EnemyAppearType[EnemyAppearCount] = 82;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearType[EnemyAppearCount] = EEnemyType::SPIKY_BLOCK;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::SPIKY_BLOCK_HARD_BLOCK;
         EnemyAppearCount++;
         EnemyAppearX[EnemyAppearCount] = 300;
         EnemyAppearY[EnemyAppearCount] = 4600;
-        EnemyAppearType[EnemyAppearCount] = 80;
-        EnemyAppearSubType[EnemyAppearCount] = 0;
+        EnemyAppearType[EnemyAppearCount] = EEnemyType::EVIL_CLOUD;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::EVIL_CLOUD_NORMAL;
         EnemyAppearCount++;
         if (stagepoint)
         {
@@ -7125,12 +7923,65 @@ void HandleKaizoSyobonLevels()
         {
             for (int num152 = 0; num152 <= 16; num152++)
             {
-                stagedate[num152][num151] = stagedatexKaizo4[num152][num151];
+                stagedate[num152][num151] = (ELegacyStageDate)stagedatexKaizo5[num152][num151];
             }
         }
     }
     if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 5)
     {
+        byte stagedatexKaizo7[17][1001] =
+			{
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 7, 0,
+					0, 0, 0, 0
+				},
+				{0},
+				{0},
+				{
+					0, 0, 0, 0, 7, 7, 0, 9, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 8, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 9, 0, 0, 0, 0, 0,
+					0, 0, 0, 9
+				},
+				{
+					0, 0, 7, 7, 8, 0, 0, 0, 0, 0,
+					0, 0, 0, 8
+				},
+				{
+					0, 7, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					9, 0, 0, 0
+				},
+				{
+					9, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					8, 0, 0, 0
+				},
+				{
+					8, 0, 9, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 0, 8, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{0},
+				{
+					0, 8, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{0},
+				{0}
+			};
+
         StageColor = ELevelType::KAIZO_SYOBON_UNKNOWN;
         PlayerGroundType = EPlayerGroundType::SLIP;
         bgmchange(Music[3]);
@@ -7138,52 +7989,360 @@ void HandleKaizoSyobonLevels()
         PlayerX = 3000;
         PlayerY = 33000;
         stagepoint = true;
-        MapList.Map stagedatexKaizo5 = MapList.stagedatexKaizo7;
         ObjectCount = 0;
         int num153 = ObjectCount;
         ObjectX[num153] = 40595;
         ObjectY[num153] = 30700;
         ObjectSizeX[num153] = 6000;
         ObjectSizeY[num153] = 14800;
-        ObjectType[num153] = 50;
-        ObjectSubType[num153] = 1;
+        ObjectType[num153] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[num153] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
         ObjectCount++;
-        BlockSubType[BlockCount] = 0;
-        BlockCreateLegacy(377, 75, 112);
-        BlockSubType[BlockCount] = 15;
-        BlockCreateLegacy(377, -12, 300);
+        BlockSubType[BlockCount] = EBlockSubType::NONE;
+        BlockCreateLegacy(377, 75, EBlockType::ITEM_BLOCK_COINS);
+        BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_5;
+        BlockCreateLegacy(377, -12, EBlockType::MESSAGE_BLOCK);
         for (int num154 = 0; num154 <= 1000; num154++)
         {
             for (int num155 = 0; num155 <= 16; num155++)
             {
-                stagedate[num155][num154] = stagedatexKaizo5[num155][num154];
+                stagedate[num155][num154] = (ELegacyStageDate)stagedatexKaizo7[num155][num154];
             }
         }
     }
     if (SyobonWorld == 1 && SyobonLevel == 4 && SyobonSection == 0)
     {
+        byte stagedatexKaizo8[17][1001] =
+			{
+				{
+					0, 5, 0, 5, 0, 0, 0, 5, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 41, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0
+				},
+				{
+					0, 5, 0, 5, 0, 0, 0, 5, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 5, 5, 5, 5, 5, 41, 5, 5,
+					5, 5, 1, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0
+				},
+				{
+					0, 5, 0, 5, 5, 5, 5, 5, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 0, 0, 0, 0, 0, 0, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 0, 0, 0, 43, 44, 41, 5, 0,
+					0, 0, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 5, 0, 0, 0
+				},
+				{
+					0, 5, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 0, 0, 0, 0, 0, 0, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 0, 0, 0, 0, 0, 41, 5, 0,
+					0, 0, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 0, 0, 0,
+					5, 0, 0, 5, 0, 0, 0, 99, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 5, 0, 0, 0
+				},
+				{
+					0, 5, 0, 5, 0, 5, 5, 5, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 0, 0, 0, 0, 0, 0, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 0, 0, 5, 5, 5, 5, 5, 0,
+					0, 0, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 0, 0, 0,
+					5, 0, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0
+				},
+				{
+					0, 5, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 0, 0, 0, 0, 0, 0, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 0, 0, 5, 5, 5, 5, 5, 0,
+					0, 0, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 7, 5, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 5, 0, 0, 0
+				},
+				{
+					0, 5, 5, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 5, 5, 5, 5, 5, 5, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 10, 10, 10, 10, 10, 10,
+					10, 10, 5, 0, 0, 0, 0, 5, 5, 5,
+					5, 5, 0, 5, 5, 5, 5, 5, 5, 0,
+					0, 5, 5, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 5, 5, 5,
+					5, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 0, 0, 5,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 5, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 10, 10, 10, 10, 10, 10, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 5, 10, 10,
+					10, 10, 7, 10, 10, 10, 10, 5, 5, 0,
+					0, 0, 0, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					7, 0, 0, 0, 0, 5, 5, 0, 0, 0,
+					5, 5, 5, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 5, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 5, 5, 5, 5, 5, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 10, 10, 0,
+					0, 60, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 5, 5, 0,
+					0, 0, 0, 0, 0, 0, 58, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					5, 5, 5, 0, 0, 7, 5, 0, 5, 7,
+					7, 7, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 10, 10, 10, 10, 10, 10, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 60, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 5, 5, 5, 0,
+					5, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 5, 0, 5, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 5, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					7, 7, 0, 0, 0, 0, 0, 0, 7, 5,
+					0, 5, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					5, 5, 0, 0, 0, 0, 5, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 5, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 7, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 60,
+					0, 5, 0, 5, 0, 0, 0, 0, 51, 0,
+					0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 5, 5,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 0, 0, 0, 0, 5, 0, 5, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 0, 0, 0, 60,
+					0, 5, 0, 0, 0, 0, 0, 0, 0, 1,
+					1, 1, 1, 1, 1, 1, 7, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 5,
+					0, 0, 0, 0, 0, 5, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 5, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 5, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 0, 0, 0, 0, 5, 0, 5, 5,
+					5, 5, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					5, 0, 0, 0, 0, 0, 0, 0, 5, 60,
+					0, 5, 0, 0, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 0, 0, 5,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 5,
+					0, 0, 0, 0, 0, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0
+				},
+				{
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 5, 86, 0, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 5, 0, 0, 0, 0, 0, 0
+				},
+				{0}
+			};
+
         bgmchange(Music[6]);
         scrollx = 440000;
         PlayerX = 12000;
         PlayerY = 6000;
-        StageColor = 4;
-        MapList.Map stagedatexKaizo6 = MapList.stagedatexKaizo8;
+        StageColor = ELevelType::CASTLE;
         ObjectCount = 0;
         int num156 = ObjectCount;
-        BlockSubType[BlockCount] = 16;
-        BlockCreateLegacy(58, 46, 300);
+        BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_6;
+        BlockCreateLegacy(58, 46, EBlockType::MESSAGE_BLOCK);
         EnemyAppearCount = 0;
         EnemyAppearX[EnemyAppearCount] = 8700;
         EnemyAppearY[EnemyAppearCount] = 7500;
-        EnemyAppearType[EnemyAppearCount] = 80;
-        EnemyAppearSubType[EnemyAppearCount] = 1;
+        EnemyAppearType[EnemyAppearCount] = EEnemyType::EVIL_CLOUD;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::EVIL_CLOUD_HIDDEN;
         EnemyAppearCount++;
         SyobonSection = 0;
         for (int num157 = 0; num157 <= 1000; num157++)
         {
             for (num156 = 0; num156 <= 16; num156++)
             {
-                stagedate[num156][num157] = stagedatexKaizo6[num156][num157];
+                stagedate[num156][num157] = (ELegacyStageDate)stagedatexKaizo8[num156][num157];
             }
         }
     }
