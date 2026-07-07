@@ -1163,6 +1163,22 @@ void HandlePlayerBlocks()
                     }
                 } // 104
 
+                //From SA: All Stars
+                //this code is hard to understand
+                if (BlockType[t] == EBlockType::KAIZO_SYOBON_ITEM_BLOCK_105 && xx[17] == 1)
+                {
+                    PlaySound(Sounds[8]);
+                    BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
+                    //+KZ:?????
+                    //oh, ok C# will give 0 to every other value
+                    //.... which means this enemy is useless?? because it will spawn at 0,0
+                    /*CEnemy ec6 = new CEnemy
+                    {
+                        brocktm = 16
+                    };
+                    Enemies.Add(ec6);*/
+                }
+
                 // 毒きのこ量産 (Mass production of poisonous mushrooms)
                 if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_HIDDEN)
                 {

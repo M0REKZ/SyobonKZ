@@ -7776,7 +7776,7 @@ void HandleKaizoSyobonLevels()
 
         PlayerGroundType = EPlayerGroundType::SLIP;
         bgmchange(Music[1]);
-        StageColor = ELevelType::KAIZO_SYOBON_UNKNOWN;
+        StageColor = ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP;
         scrollx = 390000;
         PlayerY = 33720;
         BlockCount = 0;
@@ -7812,7 +7812,7 @@ void HandleKaizoSyobonLevels()
         BlockCreateLegacy(2291, 104, EBlockType::BRICK_BRITTLE);
         BlockSubType[BlockCount] = EBlockSubType::BRICK_BRITTLE_BRICK;
         BlockCreateLegacy(2349, 104, EBlockType::BRICK_BRITTLE);
-        BlockCreateLegacy(2639, 307, EBlockType::KAIZO_SYOBON_UNKNOWN_105);
+        BlockCreateLegacy(2639, 307, EBlockType::KAIZO_SYOBON_ITEM_BLOCK_105);
         LiftCount = 0;
         LiftX[LiftCount] = 5800;
         LiftY[LiftCount] = 7500;
@@ -7982,7 +7982,7 @@ void HandleKaizoSyobonLevels()
 				{0}
 			};
 
-        StageColor = ELevelType::KAIZO_SYOBON_UNKNOWN;
+        StageColor = ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP;
         PlayerGroundType = EPlayerGroundType::SLIP;
         bgmchange(Music[3]);
         scrollx = 0;

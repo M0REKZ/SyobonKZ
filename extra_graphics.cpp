@@ -48,7 +48,7 @@ void RenderExtraGraphics()
             // ブロックの破片 (Block fragments)
             if (ExtraGraphicType[t] == EExtraGraphicType::BLOCK_FRAGMENT)
             {
-                if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY || StageColor == ELevelType::KAIZO_SYOBON_UNKNOWN)
+                if (StageColor == ELevelType::OVERWORLD || StageColor == ELevelType::SKY || StageColor == ELevelType::ICY || StageColor == ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP)
                     setcolor(9 * 16, 6 * 16, 3 * 16);
                 if (StageColor == ELevelType::UNDERGROUND)
                     setcolor(0, 120, 160);
@@ -133,7 +133,7 @@ void RenderBackground()
                 case ELevelType::UNDERGROUND:
                 case ELevelType::SKY:
                 case ELevelType::CASTLE:
-                case ELevelType::KAIZO_SYOBON_UNKNOWN:
+                case ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP:
                     //Original code is like this
                     drawimage(Sliced_GFX[(int)BackgroundType[t]][4],
                             xx[0] / 100, xx[1] / 100);

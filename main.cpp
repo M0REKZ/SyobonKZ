@@ -92,12 +92,12 @@ void rpaint()
 	{
 		setcolor(160, 180, 250);
 	}
-	if(StageColor == ELevelType::KAIZO_SYOBON_UNKNOWN)
+	if(StageColor == ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP)
 	{
 		setcolor(110, 130, 200);
 	}
 	if(StageColor == ELevelType::ICY ||
-		StageColor == ELevelType::KAIZO_SYOBON_UNKNOWN)
+		StageColor == ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP)
 	{
 		PlayerGroundType = EPlayerGroundType::SLIP;
 	}
@@ -906,6 +906,46 @@ void ttmsg()
 			txmsg("                          (…チッ)", 6);
 		}
 
+		//Kaizo Syobon (SA: All Stars)
+		if (tmsg == 12)
+		{
+			txmsg("Welcome to Kaizo Syobon!", 0);
+			txmsg("And...that's all I have to say.", 1);
+			txmsg("Good luck!", 4);
+		}
+		if (tmsg == 13)
+		{
+			txmsg("You beat level 1!", 0);
+			txmsg("But it was just a piece of cake,", 1);
+			txmsg("So good luck...", 2);
+		}
+		if (tmsg == 14)
+		{
+			txmsg("Wow, you beat level 2?", 0);
+			txmsg("Great job! But can you beat this", 1);
+			txmsg("level?", 2);
+			txmsg("Because this level has really", 3);
+			txmsg("hard things...", 4);
+		}
+		if (tmsg == 15)
+		{
+			txmsg("Hello! :3", 0);
+		}
+		if (tmsg == 16)
+		{
+			txmsg("Welcome to level 4", 0);
+			txmsg("Time to use some hard tricks", 1);
+			txmsg("Good luck!", 2);
+			txmsg("And don't forget: this is last", 3);
+			txmsg("Level, and you're on the finish", 4);
+			txmsg("Line!!!", 5);
+		}
+		if (tmsg == 17)
+		{
+			txmsg("There are hidden blocks here.", 2);
+			txmsg("Just search for them.", 3);
+		}
+
 		setfont(16, 4);
 	} // 2
 
@@ -1001,6 +1041,33 @@ void CreateGlobalTextCache()
 	apGlobalTexts["ヒントブロックですよ〜"] = LoadGraph("text/main_1.bmp", false);
 	apGlobalTexts["決して怪しいブロックじゃないですよ"] = LoadGraph("text/main_4.bmp", false);
 	apGlobalTexts["                          (…チッ)"] = LoadGraph("text/main_0.bmp", false);
+
+	//Kaizo Syobon (SA: All Stars)
+	apGlobalTexts["Welcome to Kaizo Syobon!"] = LoadGraph("text/kaizosyobon/messagebox_1.bmp", false);
+	apGlobalTexts["And...that's all I have to say."] = LoadGraph("text/kaizosyobon/messagebox_2.bmp", false);
+	apGlobalTexts["Good luck!"] = LoadGraph("text/kaizosyobon/messagebox_3.bmp", false);
+	
+	apGlobalTexts["You beat level 1!"] = LoadGraph("text/kaizosyobon/messagebox_4.bmp", false);
+	apGlobalTexts["But it was just a piece of cake,"] = LoadGraph("text/kaizosyobon/messagebox_5.bmp", false);
+	apGlobalTexts["So good luck..."] = LoadGraph("text/kaizosyobon/messagebox_6.bmp", false);
+		
+	apGlobalTexts["Wow, you beat level 2?"] = LoadGraph("text/kaizosyobon/messagebox_7.bmp", false);
+	apGlobalTexts["Great job! But can you beat this"] = LoadGraph("text/kaizosyobon/messagebox_8.bmp", false);
+	apGlobalTexts["level?"] = LoadGraph("text/kaizosyobon/messagebox_9.bmp", false);
+	apGlobalTexts["Because this level has really"] = LoadGraph("text/kaizosyobon/messagebox_10.bmp", false);
+	apGlobalTexts["hard things..."] = LoadGraph("text/kaizosyobon/messagebox_11.bmp", false);
+
+	apGlobalTexts["Hello! :3"] = LoadGraph("text/kaizosyobon/messagebox_12.bmp", false);
+
+	apGlobalTexts["Welcome to level 4"] = LoadGraph("text/kaizosyobon/messagebox_13.bmp", false);
+	apGlobalTexts["Time to use some hard tricks"] = LoadGraph("text/kaizosyobon/messagebox_14.bmp", false);
+	apGlobalTexts["Good luck!"] = LoadGraph("text/kaizosyobon/messagebox_15.bmp", false);
+	apGlobalTexts["And don't forget: this is last"] = LoadGraph("text/kaizosyobon/messagebox_16.bmp", false);
+	apGlobalTexts["Level, and you're on the finish"] = LoadGraph("text/kaizosyobon/messagebox_17.bmp", false);
+	apGlobalTexts["Line!!!"] = LoadGraph("text/kaizosyobon/messagebox_18.bmp", false);
+
+	apGlobalTexts["There are hidden blocks here."] = LoadGraph("text/kaizosyobon/messagebox_19.bmp", false);
+	apGlobalTexts["Just search for them."] = LoadGraph("text/kaizosyobon/messagebox_20.bmp", false);
 }
 
 void DestroyGlobalTextCache()

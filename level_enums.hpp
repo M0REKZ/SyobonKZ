@@ -18,7 +18,7 @@ enum class ELevelType : int
     SKY = 3,
     CASTLE = 4,
     ICY = 5,
-    KAIZO_SYOBON_UNKNOWN = 6,
+    KAIZO_SYOBON_OVERWORLD_SLIP = 6,
 };
 
 
@@ -66,7 +66,7 @@ enum class EBlockType : int
     ITEM_BLOCK_MUSHROOM_2 = 103, // "Not poisonous, but..."
     ITEM_BLOCK_STAR = 104,
 
-    KAIZO_SYOBON_UNKNOWN_105 = 105,
+    KAIZO_SYOBON_ITEM_BLOCK_105 = 105, //+KZ: from SA:All Stars
 
     // Invisible item block with infinite poisonous mushrooms
     ITEM_BLOCK_POISON_HIDDEN = 110,
@@ -250,7 +250,7 @@ enum class ELiftType : int
     PILLAR_FALL = 11,
 
     PILLAR_BOUNCY = 12,
-    KAIZO_SYOBON_UNKNOWN_13 = 13,
+    KAIZO_SYOBON_UNKNOWN_13 = 13, //+KZ: from SA:All Stars, but seems like a invalid type?
     PILLAR_BRICKS = 15,
 
     GRAY = 21,
