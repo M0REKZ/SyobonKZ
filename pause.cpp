@@ -100,7 +100,7 @@ int CurrentSelection = 0;
 bool Selected = false;
 bool PauseMenuKeyPressed = false;
 
-static ESyobonState prevSyobonState = (ESyobonState)-1;
+static ESyobonGameState prevSyobonState = (ESyobonGameState)-1;
 
 #define PAUSE_MAX_RENDER_OPTIONS 12
 #define LEVEL_SELECT_MAX_RENDER_OPTIONS 6
@@ -184,7 +184,7 @@ const char ** GetCurrentLabels()
 {
     if(PauseState == EPauseState::PAUSE)
     {
-        if(prevSyobonState == ESyobonState::TITLE)
+        if(prevSyobonState == ESyobonGameState::TITLE)
             return pTitleLabels;
         else
             return pPauseLabels;
@@ -218,10 +218,10 @@ int GetCurrentMaxRenderOptions()
 
 void TogglePauseState(EPauseState state)
 {
-    if(SyobonState != ESyobonState::PAUSE)
+    if(SyobonState != ESyobonGameState::PAUSE)
     {
         prevSyobonState = SyobonState;
-        SyobonState = ESyobonState::PAUSE;
+        SyobonState = ESyobonGameState::PAUSE;
         PauseMenuKeyPressed = true;
         ChangeToPauseState(state);
     }

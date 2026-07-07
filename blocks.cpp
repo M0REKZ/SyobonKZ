@@ -138,109 +138,109 @@ void RenderBlocks()
 void RenderWalls()
 {
     // 地面(壁)//土管も (Ground (walls) // Also pipes)
-    for (t = 0; t < GROUND_MAX; t++)
+    for (t = 0; t < OBJECT_MAX; t++)
     {
-        if (GroundX[t] - fx + GroundSizeX[t] >= -10 && GroundX[t] - fx <= fxmax + 1100)
+        if (ObjectX[t] - fx + ObjectSizeX[t] >= -10 && ObjectX[t] - fx <= fxmax + 1100)
         {
 
-            if (GroundType[t] == EObjectType::VERTICAL_PIPE_BODY)
+            if (ObjectType[t] == EObjectType::VERTICAL_PIPE_BODY)
             {
                 setcolor(40, 200, 40);
-                fillrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100,
-                         GroundSizeX[t] / 100, GroundSizeY[t] / 100);
-                drawrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100,
-                         GroundSizeX[t] / 100, GroundSizeY[t] / 100);
+                fillrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100,
+                         ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
+                drawrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100,
+                         ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
             }
             // 土管
-            if (GroundType[t] == EObjectType::VERTICAL_PIPE_HEAD)
+            if (ObjectType[t] == EObjectType::VERTICAL_PIPE_HEAD)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100,
-                         GroundSizeX[t] / 100, GroundSizeY[t] / 100);
+                fillrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100,
+                         ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
                 setc0();
-                drawrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100,
-                         GroundSizeX[t] / 100, GroundSizeY[t] / 100);
+                drawrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100,
+                         ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
             }
             // 土管(下)
-            if (GroundType[t] == EObjectType::HORIZONTAL_PIPE_BODY)
+            if (ObjectType[t] == EObjectType::HORIZONTAL_PIPE_BODY)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100 + 1,
-                         GroundSizeX[t] / 100, GroundSizeY[t] / 100);
+                fillrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100 + 1,
+                         ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
                 setc0();
-                drawline((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100,
-                         (GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
-                drawline((GroundX[t] - fx) / 100 +
-                             GroundSizeX[t] / 100,
-                         (GroundY[t] - fy) / 100,
-                         (GroundX[t] - fx) / 100 +
-                             GroundSizeX[t] / 100,
-                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
+                drawline((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100,
+                         (ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100 + ObjectSizeY[t] / 100);
+                drawline((ObjectX[t] - fx) / 100 +
+                             ObjectSizeX[t] / 100,
+                         (ObjectY[t] - fy) / 100,
+                         (ObjectX[t] - fx) / 100 +
+                             ObjectSizeX[t] / 100,
+                         (ObjectY[t] - fy) / 100 + ObjectSizeY[t] / 100);
             }
             // 土管(横)
-            if (GroundType[t] == EObjectType::HORIZONTAL_PIPE_HEAD)
+            if (ObjectType[t] == EObjectType::HORIZONTAL_PIPE_HEAD)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100 + 1,
-                         GroundSizeX[t] / 100, GroundSizeY[t] / 100);
+                fillrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100 + 1,
+                         ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
                 setc0();
-                drawline((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100,
-                         (GroundX[t] - fx) / 100 +
-                             GroundSizeX[t] / 100,
-                         (GroundY[t] - fy) / 100);
-                drawline((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100 +
-                             GroundSizeY[t] / 100,
-                         (GroundX[t] - fx) / 100 +
-                             GroundSizeX[t] / 100,
-                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
+                drawline((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100,
+                         (ObjectX[t] - fx) / 100 +
+                             ObjectSizeX[t] / 100,
+                         (ObjectY[t] - fy) / 100);
+                drawline((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100 +
+                             ObjectSizeY[t] / 100,
+                         (ObjectX[t] - fx) / 100 +
+                             ObjectSizeX[t] / 100,
+                         (ObjectY[t] - fy) / 100 + ObjectSizeY[t] / 100);
             }
             // 落ちてくるブロック (Falling blocks)
-            if (GroundType[t] == EObjectType::FALLING_BLOCKS)
+            if (ObjectType[t] == EObjectType::FALLING_BLOCKS)
             {
-                if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK)
+                if (ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK)
                 {
-                    for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
+                    for (t3 = 0; t3 <= ObjectSizeX[t] / 3000; t3++)
                     {
                         drawimage(Sliced_GFX[1][1],
-                                  (GroundX[t] -
+                                  (ObjectX[t] -
                                    fx) / 100 + 29 * t3,
-                                  (GroundY[t] - fy) / 100);
+                                  (ObjectY[t] - fy) / 100);
                     }
                 }
-                if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK ||
-                    GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2)
+                if (ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK ||
+                    ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2)
                 {
-                    for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
+                    for (t3 = 0; t3 <= ObjectSizeX[t] / 3000; t3++)
                     {
                         drawimage(Sliced_GFX[31][1],
-                                  (GroundX[t] -
+                                  (ObjectX[t] -
                                    fx) / 100 + 29 * t3,
-                                  (GroundY[t] - fy) / 100);
+                                  (ObjectY[t] - fy) / 100);
                     }
                 }
-                if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP ||
-                    GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4)
+                if (ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP ||
+                    ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4)
                 {
-                    for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
+                    for (t3 = 0; t3 <= ObjectSizeX[t] / 3000; t3++)
                     {
-                        for (t2 = 0; t2 <= GroundSizeY[t] / 3000; t2++)
+                        for (t2 = 0; t2 <= ObjectSizeY[t] / 3000; t2++)
                         {
                             drawimage(Sliced_GFX[65]
                                                 [1],
-                                      (GroundX[t] -
+                                      (ObjectX[t] -
                                        fx) /
                                               100 + 29 * t3,
-                                      (GroundY[t] -
+                                      (ObjectY[t] -
                                        fy) /
                                               100 +
                                           29 * t2);
@@ -248,22 +248,22 @@ void RenderWalls()
                     }
                 }
 
-                if (GroundSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY)
+                if (ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY)
                 {
-                    for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
+                    for (t3 = 0; t3 <= ObjectSizeX[t] / 3000; t3++)
                     {
                         drawimage(Sliced_GFX[65][1],
-                                  (GroundX[t] -
+                                  (ObjectX[t] -
                                    fx) / 100 + 29 * t3,
-                                  (GroundY[t] - fy) / 100);
+                                  (ObjectY[t] - fy) / 100);
                     }
                 }
 
             } // 51
 
             // 落ちるやつ (The one that falls)
-            if (GroundType[t] == EObjectType::FALLING_FLOOR || 
-                (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && GroundType[t] == EObjectType::SA3_FALLING_FLOOR))
+            if (ObjectType[t] == EObjectType::FALLING_FLOOR || 
+                (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && ObjectType[t] == EObjectType::SA3_FALLING_FLOOR))
             {
                 xx[29] = 0;
                 if (StageColor == ELevelType::UNDERGROUND)
@@ -279,22 +279,22 @@ void RenderWalls()
                     xx[29] = 90;
                 }
 
-                for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
+                for (t3 = 0; t3 <= ObjectSizeX[t] / 3000; t3++)
                 {
-                    if (GroundSubType[t] == EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM)
+                    if (ObjectSubType[t] == EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM)
                     {
                         drawimage(Sliced_GFX[5 + xx[29]][1],
-                                  (GroundX[t] -
+                                  (ObjectX[t] -
                                    fx) / 100 + 29 * t3,
-                                  (GroundY[t] - fy) / 100);
+                                  (ObjectY[t] - fy) / 100);
                         if (StageColor != ELevelType::CASTLE)
                         {
                             drawimage(Sliced_GFX[6 + xx[29]]
                                                 [1],
-                                      (GroundX[t] -
+                                      (ObjectX[t] -
                                        fx) /
                                               100 + 29 * t3,
-                                      (GroundY[t] -
+                                      (ObjectY[t] -
                                        fy) /
                                               100 + 29);
                         }
@@ -302,39 +302,39 @@ void RenderWalls()
                         {
                             drawimage(Sliced_GFX[5 + xx[29]]
                                                 [1],
-                                      (GroundX[t] -
+                                      (ObjectX[t] -
                                        fx) /
                                               100 + 29 * t3,
-                                      (GroundY[t] -
+                                      (ObjectY[t] -
                                        fy) /
                                               100 + 29);
                         }
                     }
-                    if (GroundSubType[t] == EObjectSubType::FALLING_FLOOR_BRICK)
+                    if (ObjectSubType[t] == EObjectSubType::FALLING_FLOOR_BRICK)
                     {
-                        for (t2 = 0; t2 <= GroundSizeY[t] / 3000; t2++)
+                        for (t2 = 0; t2 <= ObjectSizeY[t] / 3000; t2++)
                         {
                             drawimage(Sliced_GFX[1 + xx[29]]
                                                 [1],
-                                      (GroundX[t] -
+                                      (ObjectX[t] -
                                        fx) /
                                               100 + 29 * t3,
-                                      (GroundY[t] -
+                                      (ObjectY[t] -
                                        fy) /
                                               100 + 29 * t2);
                         }
                     }
 
-                    if (GroundSubType[t] == EObjectSubType::FALLING_FLOOR_GROUND_TOP)
+                    if (ObjectSubType[t] == EObjectSubType::FALLING_FLOOR_GROUND_TOP)
                     {
-                        for (t2 = 0; t2 <= GroundSizeY[t] / 3000; t2++)
+                        for (t2 = 0; t2 <= ObjectSizeY[t] / 3000; t2++)
                         {
                             drawimage(Sliced_GFX[5 + xx[29]]
                                                 [1],
-                                      (GroundX[t] -
+                                      (ObjectX[t] -
                                        fx) /
                                               100 + 29 * t3,
-                                      (GroundY[t] -
+                                      (ObjectY[t] -
                                        fy) /
                                               100 + 29 * t2);
                         }
@@ -345,9 +345,9 @@ void RenderWalls()
             if (TrapDisplay == 1)
             {
                 if (
-                    (GroundType[t] >= EObjectType::TRIGGERS_START && GroundType[t] <= EObjectType::TRIGGERS_END) ||
+                    (ObjectType[t] >= EObjectType::TRIGGERS_START && ObjectType[t] <= EObjectType::TRIGGERS_END) ||
                     (currentGame == ESyobonActionGame::SYOBON_ACTION_3 ?
-                    GroundType[t] >= EObjectType::SA3_TRIGGER_START && GroundType[t] < EObjectType::SA3_TRIGGER_END
+                    ObjectType[t] >= EObjectType::SA3_TRIGGER_START && ObjectType[t] < EObjectType::SA3_TRIGGER_END
                     :
                     false
                     )
@@ -357,32 +357,32 @@ void RenderWalls()
                         setc0();
                     if (StageColor == ELevelType::UNDERGROUND || StageColor == ELevelType::CASTLE)
                         setc1();
-                    drawrect((GroundX[t] - fx) / 100,
-                             (GroundY[t] - fy) / 100,
-                             GroundSizeX[t] / 100, GroundSizeY[t] / 100);
+                    drawrect((ObjectX[t] - fx) / 100,
+                             (ObjectY[t] - fy) / 100,
+                             ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
                 }
             }
             // ゴール (Goal)
-            if (GroundType[t] == EObjectType::GOAL_POLE)
+            if (ObjectType[t] == EObjectType::GOAL_POLE)
             {
                 setc1();
-                fillrect((GroundX[t] - fx) / 100 + 10,
-                         (GroundY[t] - fy) / 100, 10, GroundSizeY[t] / 100 - 8);
+                fillrect((ObjectX[t] - fx) / 100 + 10,
+                         (ObjectY[t] - fy) / 100, 10, ObjectSizeY[t] / 100 - 8);
                 setc0();
-                drawrect((GroundX[t] - fx) / 100 + 10,
-                         (GroundY[t] - fy) / 100, 10, GroundSizeY[t] / 100 - 8);
+                drawrect((ObjectX[t] - fx) / 100 + 10,
+                         (ObjectY[t] - fy) / 100, 10, ObjectSizeY[t] / 100 - 8);
                 setcolor(250, 250, 0);
-                fillarc((GroundX[t] - fx) / 100 + 15 - 1,
-                        (GroundY[t] - fy) / 100, 10, 10);
+                fillarc((ObjectX[t] - fx) / 100 + 15 - 1,
+                        (ObjectY[t] - fy) / 100, 10, 10);
                 setc0();
-                drawarc((GroundX[t] - fx) / 100 + 15 - 1,
-                        (GroundY[t] - fy) / 100, 10, 10);
+                drawarc((ObjectX[t] - fx) / 100 + 15 - 1,
+                        (ObjectY[t] - fy) / 100, 10, 10);
             }
             // 中間
-            if (GroundType[t] == EObjectType::CHECKPOINT)
+            if (ObjectType[t] == EObjectType::CHECKPOINT)
             {
                 drawimage(Sliced_GFX[20][4],
-                          (GroundX[t] - fx) / 100, (GroundY[t] - fy) / 100);
+                          (ObjectX[t] - fx) / 100, (ObjectY[t] - fy) / 100);
             }
 
             //Syobon Action 3
@@ -397,60 +397,60 @@ void RenderWalls()
 void RenderOverwritePipe()
 {
     // 描画上書き(土管) (Overwrite drawing (pipe)) //+KZ: ??
-    for (t = 0; t < GROUND_MAX; t++)
+    for (t = 0; t < OBJECT_MAX; t++)
     {
-        if (GroundX[t] - fx + GroundSizeX[t] >= -10 && GroundX[t] - fx <= fxmax + 1100)
+        if (ObjectX[t] - fx + ObjectSizeX[t] >= -10 && ObjectX[t] - fx <= fxmax + 1100)
         {
 
             // 入る土管(右)
-            if (GroundType[t] == EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD)
+            if (ObjectType[t] == EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100 + 1,
-                         GroundSizeX[t] / 100, GroundSizeY[t] / 100);
+                fillrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100 + 1,
+                         ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
                 setc0();
-                drawrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100 + 1,
-                         GroundSizeX[t] / 100, GroundSizeY[t] / 100);
+                drawrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100 + 1,
+                         ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
             }
             // とぶ土管
-            if (GroundType[t] == EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD)
+            if (ObjectType[t] == EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD)
             {
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100 + 5,
-                         (GroundY[t] - fy) / 100 + 30,
-                         50, GroundSizeY[t] / 100 - 30);
+                fillrect((ObjectX[t] - fx) / 100 + 5,
+                         (ObjectY[t] - fy) / 100 + 30,
+                         50, ObjectSizeY[t] / 100 - 30);
                 setc0();
-                drawline((GroundX[t] - fx) / 100 + 5,
-                         (GroundY[t] - fy) / 100 + 30,
-                         (GroundX[t] - fx) / 100 + 5,
-                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
-                drawline((GroundX[t] - fx) / 100 + 5 +
+                drawline((ObjectX[t] - fx) / 100 + 5,
+                         (ObjectY[t] - fy) / 100 + 30,
+                         (ObjectX[t] - fx) / 100 + 5,
+                         (ObjectY[t] - fy) / 100 + ObjectSizeY[t] / 100);
+                drawline((ObjectX[t] - fx) / 100 + 5 +
                              50,
-                         (GroundY[t] - fy) / 100 + 30,
-                         (GroundX[t] - fx) / 100 + 50 +
+                         (ObjectY[t] - fy) / 100 + 30,
+                         (ObjectX[t] - fx) / 100 + 50 +
                              5,
-                         (GroundY[t] - fy) / 100 + GroundSizeY[t] / 100);
+                         (ObjectY[t] - fy) / 100 + ObjectSizeY[t] / 100);
 
                 setcolor(0, 230, 0);
-                fillrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100 + 1, 60, 30);
+                fillrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100 + 1, 60, 30);
                 setc0();
-                drawrect((GroundX[t] - fx) / 100,
-                         (GroundY[t] - fy) / 100 + 1, 60, 30);
+                drawrect((ObjectX[t] - fx) / 100,
+                         (ObjectY[t] - fy) / 100 + 1, 60, 30);
             }
             // 地面(ブロック)
-            if (GroundType[t] == EObjectType::CASTLE_BRICKS)
+            if (ObjectType[t] == EObjectType::CASTLE_BRICKS)
             {
-                for (t3 = 0; t3 <= GroundSizeX[t] / 3000; t3++)
+                for (t3 = 0; t3 <= ObjectSizeX[t] / 3000; t3++)
                 {
-                    for (t2 = 0; t2 <= GroundSizeY[t] / 3000; t2++)
+                    for (t2 = 0; t2 <= ObjectSizeY[t] / 3000; t2++)
                     {
                         drawimage(Sliced_GFX[65][1],
-                                  (GroundX[t] -
+                                  (ObjectX[t] -
                                    fx) / 100 + 29 * t3,
-                                  (GroundY[t] - fy) / 100 + 29 * t2);
+                                  (ObjectY[t] - fy) / 100 + 29 * t2);
                     }
                 }
             }
@@ -460,22 +460,22 @@ void RenderOverwritePipe()
 
 void RenderObjectsBehind()
 {
-    for (int ground_index = 0; ground_index < GROUND_MAX; ground_index++)
+    for (int ground_index = 0; ground_index < OBJECT_MAX; ground_index++)
     {
-        if (GroundX[ground_index] - fx + GroundSizeX[ground_index] >= -10 && GroundX[ground_index] - fx <= fxmax + 1100)
+        if (ObjectX[ground_index] - fx + ObjectSizeX[ground_index] >= -10 && ObjectX[ground_index] - fx <= fxmax + 1100)
         {
             if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
             {
-                if (GroundType[ground_index] == EObjectType::SA3_FAKE_PIPE_BODY)
+                if (ObjectType[ground_index] == EObjectType::SA3_FAKE_PIPE_BODY)
                 {
                     setcolor(0, 230, 0);
-                    fillrect((GroundX[ground_index] - fx) / 100,
-                            (GroundY[ground_index] - fy) / 100,
-                            GroundSizeX[ground_index] / 100, GroundSizeY[ground_index] / 100);
+                    fillrect((ObjectX[ground_index] - fx) / 100,
+                            (ObjectY[ground_index] - fy) / 100,
+                            ObjectSizeX[ground_index] / 100, ObjectSizeY[ground_index] / 100);
                     setc0();
-                    drawrect((GroundX[ground_index] - fx) / 100,
-                            (GroundY[ground_index] - fy) / 100,
-                            GroundSizeX[ground_index] / 100, GroundSizeY[ground_index] / 100);
+                    drawrect((ObjectX[ground_index] - fx) / 100,
+                            (ObjectY[ground_index] - fy) / 100,
+                            ObjectSizeX[ground_index] / 100, ObjectSizeY[ground_index] / 100);
                 }
             }
         }
@@ -540,7 +540,7 @@ void BlockClearAll()
     BlockCount = 0;
 }
 
-int GroundCreate(double x, double y, double size_x, double size_y, EObjectType type, EObjectSubType subtype, int index)
+int ObjectCreate(double x, double y, double size_x, double size_y, EObjectType type, EObjectSubType subtype, int index)
 {
     x *= BLOCK_DEFAULT_SIZE;
     y *= BLOCK_DEFAULT_SIZE;
@@ -555,48 +555,48 @@ int GroundCreate(double x, double y, double size_x, double size_y, EObjectType t
     if(index < 0)
     {
         //use BlockCount to keep compat with BlockCreateLegacy()
-        index = GroundCount++;
-        if(GroundCount == GROUND_MAX)
-            GroundCount = 0;
+        index = ObjectCount++;
+        if(ObjectCount == OBJECT_MAX)
+            ObjectCount = 0;
     }
 
-    if(index >= 0 && index < GROUND_MAX)
+    if(index >= 0 && index < OBJECT_MAX)
     {
-        GroundX[index] = (int)x;
-        GroundY[index] = (int)y;
-        GroundType[index] = type;
-        GroundSubType[index] = subtype;
-        GroundSizeX[index] = (int)(size_x * BLOCK_DEFAULT_SIZE * 100);
-        GroundSizeY[index] = (int)(size_y * BLOCK_DEFAULT_SIZE * 100);
+        ObjectX[index] = (int)x;
+        ObjectY[index] = (int)y;
+        ObjectType[index] = type;
+        ObjectSubType[index] = subtype;
+        ObjectSizeX[index] = (int)(size_x * BLOCK_DEFAULT_SIZE * 100);
+        ObjectSizeY[index] = (int)(size_y * BLOCK_DEFAULT_SIZE * 100);
 
-        GroundAI[index] = 0;
-        GroundVelY[index] = 0;
+        ObjectAI[index] = 0;
+        ObjectVelY[index] = 0;
     }
     else
     {
-        fprintf(stderr, "GroundCreate - Could not create object %d %d at %d %d! (index %d)", type, subtype, (int)x, (int)y, index);
+        fprintf(stderr, "ObjectCreate - Could not create object %d %d at %d %d! (index %d)", type, subtype, (int)x, (int)y, index);
     }
 
     return index;
 }
 
-void GroundClearAll()
+void ObjectClearAll()
 {
-    for(int i = 0; i < GROUND_MAX; ++i)
+    for(int i = 0; i < OBJECT_MAX; ++i)
     {
-        GroundX[i] = std::numeric_limits<int>::min();
-        GroundY[i] = std::numeric_limits<int>::min();
-        GroundSizeX[i] = std::numeric_limits<int>::min();
-        GroundSizeY[i] = std::numeric_limits<int>::min();
+        ObjectX[i] = std::numeric_limits<int>::min();
+        ObjectY[i] = std::numeric_limits<int>::min();
+        ObjectSizeX[i] = std::numeric_limits<int>::min();
+        ObjectSizeY[i] = std::numeric_limits<int>::min();
 
-        GroundType[i] = EObjectType::VERTICAL_PIPE_BODY;
-        GroundSubType[i] = EObjectSubType::NONE;
+        ObjectType[i] = EObjectType::VERTICAL_PIPE_BODY;
+        ObjectSubType[i] = EObjectSubType::NONE;
 
-        GroundVelY[i] = 0;
-        GroundAI[i] = 0;
+        ObjectVelY[i] = 0;
+        ObjectAI[i] = 0;
     }
 
-    GroundCount = 0;
+    ObjectCount = 0;
 }
 
 // ブロック出現 (Block appears)

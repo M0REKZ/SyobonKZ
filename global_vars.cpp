@@ -12,7 +12,7 @@
 //: This is unexcusable. How could someone in their right mind define
 //: a variable called 'main'!?
 //: The new define is after the main method
-ESyobonState SyobonState = ESyobonState::TITLE;
+ESyobonGameState SyobonState = ESyobonGameState::TITLE;
 int SyobonStateTimer = 0;
 
 //ステージ
@@ -90,12 +90,12 @@ double pai = 3.1415926535;
 
 
 //地面
-int GroundCount;
-int GroundX[GROUND_MAX], GroundY[GROUND_MAX], GroundSizeX[GROUND_MAX], GroundSizeY[GROUND_MAX];
-EObjectType GroundType[GROUND_MAX];
-EObjectSubType GroundSubType[GROUND_MAX];
-int GroundVelY[GROUND_MAX];
-int GroundAI[GROUND_MAX];
+int ObjectCount;
+int ObjectX[OBJECT_MAX], ObjectY[OBJECT_MAX], ObjectSizeX[OBJECT_MAX], ObjectSizeY[OBJECT_MAX];
+EObjectType ObjectType[OBJECT_MAX];
+EObjectSubType ObjectSubType[OBJECT_MAX];
+int ObjectVelY[OBJECT_MAX];
+int ObjectAI[OBJECT_MAX];
 
 
 

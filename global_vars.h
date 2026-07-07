@@ -9,7 +9,7 @@
 //main-10
 //タイトル-100
 
-enum class ESyobonState : int
+enum class ESyobonGameState : int
 {
     IN_GAME = 1,
     CREDITS = 2,
@@ -24,8 +24,8 @@ enum class ESyobonState : int
 // a variable called 'main'!?
 // The new define is after the main method
 //
-// @attention +KZ: int mainZ is now ESyobonState SyobonState
-extern ESyobonState SyobonState;
+// @attention +KZ: int mainZ is now ESyobonGameState SyobonState
+extern ESyobonGameState SyobonState;
 // @attention +KZ: int maintm is now int SyobonStateTimer
 extern int SyobonStateTimer;
 
@@ -111,29 +111,29 @@ extern double pai;
 
 
 //地面 (Ground)
-// @attention +KZ: smax is now GROUND_MAX
+// @attention +KZ: smax is now OBJECT_MAX
 // +KZ: had to increase it to support SA3
-#define LEGACY_GROUND_MAX 31
-#define GROUND_MAX 64
+#define LEGACY_OBJECT_MAX 31
+#define OBJECT_MAX 64
 //extern int sx; //+KZ: unused
-// @attention +KZ: int sco is now GroundCount
-extern int GroundCount;
-// @attention +KZ: int sa[smax] is now GroundX[smax]
-extern int GroundX[GROUND_MAX];
-// @attention +KZ: int sb[smax] is now GroundY[smax]
-extern int GroundY[GROUND_MAX];
-// @attention +KZ: int sc[smax] is now GroundSizeX[smax]
-extern int GroundSizeX[GROUND_MAX];
-// @attention +KZ: int sd[smax] is now GroundSizeY[smax]
-extern int GroundSizeY[GROUND_MAX];
-// @attention +KZ: int stype[smax] is now EObjectType GroundType[smax]
-extern EObjectType GroundType[GROUND_MAX];
-// @attention +KZ: int sxtype[smax] is now GroundSubType[smax]
-extern EObjectSubType GroundSubType[GROUND_MAX];
-// @attention +KZ: int sr[smax] is now GroundVelY[smax]
-extern int GroundVelY[GROUND_MAX];
-// @attention +KZ: int sgtype[smax] is now GroundAI[smax]
-extern int GroundAI[GROUND_MAX];
+// @attention +KZ: int sco is now ObjectCount
+extern int ObjectCount;
+// @attention +KZ: int sa[smax] is now ObjectX[smax]
+extern int ObjectX[OBJECT_MAX];
+// @attention +KZ: int sb[smax] is now ObjectY[smax]
+extern int ObjectY[OBJECT_MAX];
+// @attention +KZ: int sc[smax] is now ObjectSizeX[smax]
+extern int ObjectSizeX[OBJECT_MAX];
+// @attention +KZ: int sd[smax] is now ObjectSizeY[smax]
+extern int ObjectSizeY[OBJECT_MAX];
+// @attention +KZ: int stype[smax] is now EObjectType ObjectType[smax]
+extern EObjectType ObjectType[OBJECT_MAX];
+// @attention +KZ: int sxtype[smax] is now ObjectSubType[smax]
+extern EObjectSubType ObjectSubType[OBJECT_MAX];
+// @attention +KZ: int sr[smax] is now ObjectVelY[smax]
+extern int ObjectVelY[OBJECT_MAX];
+// @attention +KZ: int sgtype[smax] is now ObjectAI[smax]
+extern int ObjectAI[OBJECT_MAX];
 
 //@attention +KZ: int mainmsgtype is now int WarpZoneMessageState
 extern int WarpZoneMessageState;

@@ -153,7 +153,7 @@ void HandleTitleKeys()
     //+KZ: before it checked for xx[0], replaced with SyobonStartGame for new menu
     if (SyobonStartGame)
     {
-        SyobonState = ESyobonState::LIVES_SPLASH;
+        SyobonState = ESyobonGameState::LIVES_SPLASH;
         InGameInitialized = 0;
         SyobonStateTimer = 0;
         Lives = 2;
@@ -169,7 +169,7 @@ void HandleTitleKeys()
 void UpdateTitleScreen()
 {
     //HandleTitleKeys() may have changed the state
-    if(SyobonState != ESyobonState::TITLE)
+    if(SyobonState != ESyobonGameState::TITLE)
         return;
 
     if(prevGame != currentGame)
@@ -225,8 +225,8 @@ void UpdateTitleScreen()
 
     HandleExtraGraphics();
 
-    PlaceEntities();
-    HandleEntities();
+    PlaceEnemies();
+    HandleEnemies();
 }
 
 void RenderTitleScreen()
@@ -271,7 +271,7 @@ void TitleWaitToReleaseKey()
 
 void GoToTitleScreen()
 {
-    SyobonState = ESyobonState::TITLE;
+    SyobonState = ESyobonGameState::TITLE;
     InGameInitialized = 0;
     SyobonKZHaltMusic();
 }

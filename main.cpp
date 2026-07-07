@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 	LoadConfig();
 
 	//+KZ: init things that are too CPU consuming
-	CreateEntityMessageCache();
+	CreateEnemyMessageCache();
 	CreatePlayerMessageCache();
 	CreateGlobalTextCache();
 
@@ -96,7 +96,7 @@ void rpaint()
 	//: Clear screen
 	FillScreen();
 
-	if ((SyobonState == ESyobonState::IN_GAME && InGameInitialized >= 1) || SyobonState == ESyobonState::TITLE)
+	if ((SyobonState == ESyobonGameState::IN_GAME && InGameInitialized >= 1) || SyobonState == ESyobonGameState::TITLE)
 	{
 		RenderBackground();
 
@@ -197,7 +197,7 @@ void rpaint()
 		} // blacktm
 	}
 
-	if (SyobonState == ESyobonState::CREDITS)
+	if (SyobonState == ESyobonGameState::CREDITS)
 	{
 
 		setcolor(255, 255, 255);
@@ -223,7 +223,7 @@ void rpaint()
 		DrawGraphZ(240 - 22 * 20 / 2, xx[30] / 100, apGlobalTexts["プレイしていただき　ありがとうございました〜"]);
 	}
 	// Showing lives
-	if (SyobonState == ESyobonState::LIVES_SPLASH)
+	if (SyobonState == ESyobonGameState::LIVES_SPLASH)
 	{
 
 		setc0();
@@ -237,11 +237,11 @@ void rpaint()
 						 Lives);
 	}
 	// タイトル (Title)
-	if (SyobonState == ESyobonState::TITLE)
+	if (SyobonState == ESyobonGameState::TITLE)
 	{
 		RenderTitleScreen();
 	}
-	if(SyobonState == ESyobonState::PAUSE)
+	if(SyobonState == ESyobonGameState::PAUSE)
 	{
 		RenderPauseState();
 	}
@@ -256,11 +256,11 @@ void Mainprogram()
 	stimeZ = long(GetNowCount());
 
 	if (ending == 1)
-		SyobonState = ESyobonState::CREDITS;
+		SyobonState = ESyobonGameState::CREDITS;
 
 	// キー (Key)
 
-	if (SyobonState == ESyobonState::IN_GAME && tmsgtype == 0)
+	if (SyobonState == ESyobonGameState::IN_GAME && tmsgtype == 0)
 	{
 
 		//+KZ: Init
@@ -351,8 +351,8 @@ void Mainprogram()
 
 		HandleExtraGraphics();
 
-		PlaceEntities();
-		HandleEntities();
+		PlaceEnemies();
+		HandleEnemies();
 
 		// スクロール (Scroll)
 		// xx[0]=xx[0];
@@ -414,7 +414,7 @@ void Mainprogram()
 	} // if (mainZ==1){
 
 	// スタッフロール (Staff Roll)
-	if (SyobonState == ESyobonState::CREDITS)
+	if (SyobonState == ESyobonGameState::CREDITS)
 	{
 		SyobonStateTimer++;
 
@@ -482,7 +482,7 @@ void Mainprogram()
 		}
 		if (xx[30] <= -400)
 		{
-			//SyobonState = ESyobonState::TITLE;
+			//SyobonState = ESyobonGameState::TITLE;
 			GoToTitleScreen(); //+KZ
 			Lives = 2;
 			SyobonStateTimer = 0;
@@ -491,7 +491,7 @@ void Mainprogram()
 
 	} // mainZ==2
 
-	if (SyobonState == ESyobonState::LIVES_SPLASH)
+	if (SyobonState == ESyobonGameState::LIVES_SPLASH)
 	{
 		SyobonStateTimer++;
 
@@ -500,20 +500,20 @@ void Mainprogram()
 		if (SyobonStateTimer >= 30)
 		{
 			SyobonStateTimer = 0;
-			SyobonState = ESyobonState::IN_GAME;
+			SyobonState = ESyobonGameState::IN_GAME;
 			InGameInitialized = 0;
 		}
 	} // if (mainZ==10){
 
 	// タイトル (Title)
 	//+KZ: This is the part that handles pressed keys in title
-	if (SyobonState == ESyobonState::TITLE)
+	if (SyobonState == ESyobonGameState::TITLE)
 	{
 		HandleTitleKeys();
 		UpdateTitleScreen();
 	} // 100
 
-	if(SyobonState == ESyobonState::PAUSE)
+	if(SyobonState == ESyobonGameState::PAUSE)
 	{
 		HandlePauseState();
 	}	
@@ -578,7 +578,7 @@ void deinit()
 			SyobonKZFreeImage(Sliced_GFX[i][j]);
 
 	//+KZ: Destroy surfaces cache
-	DestroyEntityMessageCache();
+	DestroyEnemyMessageCache();
 	DestroyPlayerMessageCache();
 	DestroyGlobalTextCache();
 	//--

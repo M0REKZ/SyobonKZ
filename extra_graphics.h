@@ -8,7 +8,7 @@ void RenderExtraGraphics();
 void RenderBackground();
 
 //+KZ: Backgrounds didnt have a create function
-//	this works like the new BlockCreate() and CreateEntity() functions
+//	this works like the new BlockCreate() and CreateEnemy() functions
 int CreateBackground(double PosX, double PosY, EDecorationType Type, int index = -1);
 void ClearAllBackgrounds();
 

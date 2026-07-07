@@ -8,15 +8,15 @@
 
 void stagecls()
 {
-	for (t = 0; t < GROUND_MAX; t++)
+	for (t = 0; t < OBJECT_MAX; t++)
 	{
-		GroundX[t] = -9000000;
-		GroundY[t] = 1;
-		GroundSizeX[t] = 1;
-		GroundSizeY[t] = 1;
-		GroundAI[t] = 0;
-		GroundType[t] = EObjectType::VERTICAL_PIPE_BODY;
-		GroundSubType[t] = EObjectSubType::NONE;
+		ObjectX[t] = -9000000;
+		ObjectY[t] = 1;
+		ObjectSizeX[t] = 1;
+		ObjectSizeY[t] = 1;
+		ObjectAI[t] = 0;
+		ObjectType[t] = EObjectType::VERTICAL_PIPE_BODY;
+		ObjectSubType[t] = EObjectSubType::NONE;
 	}
 	// for (t=0;t<spmax;t++){spa[t]=-9000000;szyunni[t]=t;spb[t]=1;spc[t]=1;spd[t]=1;sptype[t]=0;spgtype[t]=0;}
 	for (t = 0; t < BLOCK_MAX; t++)
@@ -86,7 +86,7 @@ void stagecls()
 	// for (t=0;t<vmax;t++){va[t]=-9000000;vtype[t]=0;vb[t]=0;vc[t]=1;vd[t]=1;}
 	// for (t=0;t<gmax;t++){ga[t]=-9000000;gx[t]=0;gstring[t]="";}
 
-	GroundCount = 0;
+	ObjectCount = 0;
 	BlockCount = 0;
 	EnemyCount = 0;
 	EnemyAppearCount = 0;
@@ -135,59 +135,59 @@ void stage()
 			}
 			if (xx[10] == 30)
 			{
-				GroundX[GroundCount] = xx[21] * 100;
-				GroundY[GroundCount] = xx[22] * 100;
-				GroundSizeX[GroundCount] = 3000;
-				GroundSizeY[GroundCount] = 6000;
-				GroundType[GroundCount] = EObjectType::CHECKPOINT;
-				GroundCount++;
-				if (GroundCount >= GROUND_MAX)
-					GroundCount = 0;
+				ObjectX[ObjectCount] = xx[21] * 100;
+				ObjectY[ObjectCount] = xx[22] * 100;
+				ObjectSizeX[ObjectCount] = 3000;
+				ObjectSizeY[ObjectCount] = 6000;
+				ObjectType[ObjectCount] = EObjectType::CHECKPOINT;
+				ObjectCount++;
+				if (ObjectCount >= OBJECT_MAX)
+					ObjectCount = 0;
 			}
 			if (xx[10] == 40)
 			{
-				GroundX[GroundCount] = xx[21] * 100;
-				GroundY[GroundCount] = xx[22] * 100;
-				GroundSizeX[GroundCount] = 6000;
-				GroundSizeY[GroundCount] = 3000;
-				GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_HEAD;
-				GroundCount++;
-				if (GroundCount >= GROUND_MAX)
-					GroundCount = 0;
+				ObjectX[ObjectCount] = xx[21] * 100;
+				ObjectY[ObjectCount] = xx[22] * 100;
+				ObjectSizeX[ObjectCount] = 6000;
+				ObjectSizeY[ObjectCount] = 3000;
+				ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_HEAD;
+				ObjectCount++;
+				if (ObjectCount >= OBJECT_MAX)
+					ObjectCount = 0;
 			}
 			if (xx[10] == 41)
 			{
-				GroundX[GroundCount] = xx[21] * 100 + 500;
-				GroundY[GroundCount] = xx[22] * 100;
-				GroundSizeX[GroundCount] = 5000;
-				GroundSizeY[GroundCount] = 3000;
-				GroundType[GroundCount] = EObjectType::HORIZONTAL_PIPE_BODY;
-				GroundCount++;
-				if (GroundCount >= GROUND_MAX)
-					GroundCount = 0;
+				ObjectX[ObjectCount] = xx[21] * 100 + 500;
+				ObjectY[ObjectCount] = xx[22] * 100;
+				ObjectSizeX[ObjectCount] = 5000;
+				ObjectSizeY[ObjectCount] = 3000;
+				ObjectType[ObjectCount] = EObjectType::HORIZONTAL_PIPE_BODY;
+				ObjectCount++;
+				if (ObjectCount >= OBJECT_MAX)
+					ObjectCount = 0;
 			}
 
 			if (xx[10] == 43)
 			{
-				GroundX[GroundCount] = xx[21] * 100;
-				GroundY[GroundCount] = xx[22] * 100 + 500;
-				GroundSizeX[GroundCount] = 2900;
-				GroundSizeY[GroundCount] = 5300;
-				GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_HEAD;
-				GroundCount++;
-				if (GroundCount >= GROUND_MAX)
-					GroundCount = 0;
+				ObjectX[ObjectCount] = xx[21] * 100;
+				ObjectY[ObjectCount] = xx[22] * 100 + 500;
+				ObjectSizeX[ObjectCount] = 2900;
+				ObjectSizeY[ObjectCount] = 5300;
+				ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_HEAD;
+				ObjectCount++;
+				if (ObjectCount >= OBJECT_MAX)
+					ObjectCount = 0;
 			}
 			if (xx[10] == 44)
 			{
-				GroundX[GroundCount] = xx[21] * 100;
-				GroundY[GroundCount] = xx[22] * 100 + 700;
-				GroundSizeX[GroundCount] = 3900;
-				GroundSizeY[GroundCount] = 5000;
-				GroundType[GroundCount] = EObjectType::HORIZONTAL_PIPE_HEAD;
-				GroundCount++;
-				if (GroundCount >= GROUND_MAX)
-					GroundCount = 0;
+				ObjectX[ObjectCount] = xx[21] * 100;
+				ObjectY[ObjectCount] = xx[22] * 100 + 700;
+				ObjectSizeX[ObjectCount] = 3900;
+				ObjectSizeY[ObjectCount] = 5000;
+				ObjectType[ObjectCount] = EObjectType::HORIZONTAL_PIPE_HEAD;
+				ObjectCount++;
+				if (ObjectCount >= OBJECT_MAX)
+					ObjectCount = 0;
 			}
 			// これなぜかバグの原因ｗ (For some reason, this is the cause of the bug lol)
 			if (xx[10] >= 50 && xx[10] <= 79)
@@ -216,14 +216,14 @@ void stage()
 			}
 			if (xx[10] == 99)
 			{
-				GroundX[GroundCount] = xx[21] * 100;
-				GroundY[GroundCount] = xx[22] * 100;
-				GroundSizeX[GroundCount] = 3000;
-				GroundSizeY[GroundCount] = (12 - t) * 3000;
-				GroundType[GroundCount] = EObjectType::GOAL_POLE;
-				GroundCount++;
-				if (GroundCount >= GROUND_MAX)
-					GroundCount = 0;
+				ObjectX[ObjectCount] = xx[21] * 100;
+				ObjectY[ObjectCount] = xx[22] * 100;
+				ObjectSizeX[ObjectCount] = 3000;
+				ObjectSizeY[ObjectCount] = (12 - t) * 3000;
+				ObjectType[ObjectCount] = EObjectType::GOAL_POLE;
+				ObjectCount++;
+				if (ObjectCount >= OBJECT_MAX)
+					ObjectCount = 0;
 			}
 		}
 	}
@@ -231,18 +231,18 @@ void stage()
 	if (CurrentPlayerCheckpoint >= 1)
 	{
 		xx[17] = 0;
-		for (t = 0; t < GROUND_MAX; t++)
+		for (t = 0; t < OBJECT_MAX; t++)
 		{
-			if (GroundType[t] == EObjectType::CHECKPOINT && CurrentPlayerCheckpoint >= 1)
+			if (ObjectType[t] == EObjectType::CHECKPOINT && CurrentPlayerCheckpoint >= 1)
 			{
-				fx = GroundX[t] - fxmax / 2;
+				fx = ObjectX[t] - fxmax / 2;
 				fzx = fx;
-				PlayerX = GroundX[t] - fx;
-				PlayerY = GroundY[t] - fy;
+				PlayerX = ObjectX[t] - fx;
+				PlayerY = ObjectY[t] - fy;
 				CurrentPlayerCheckpoint--;
 				xx[17]++;
 
-				GroundX[t] = -80000000;
+				ObjectX[t] = -80000000;
 			}
 		}
 		CurrentPlayerCheckpoint += xx[17];
@@ -279,7 +279,7 @@ void stagep()
 
 void HandleSyobonActionOneLevels()
 {
-    if(SyobonState == ESyobonState::TITLE)
+    if(SyobonState == ESyobonGameState::TITLE)
     {
         scrollx = 0;
 
@@ -586,65 +586,65 @@ void HandleSyobonActionOneLevels()
         BlockCreateLegacy(59 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_COINS);
         BlockCreateLegacy(67 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_STAR);
 
-        GroundCount = 0;
-        t = GroundCount;
-        GroundX[t] = 20 * 29 * 100 + 500;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 5000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_SEAL_UP;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 54 * 29 * 100 - 500;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 7000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_SEAL_DOWN;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 112 * 29 * 100 + 1000;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 3000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 117 * 29 * 100;
-        GroundY[t] = (2 * 29 - 12) * 100 - 1500;
-        GroundSizeX[t] = 15000;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::TRIGGER_LASER;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 125 * 29 * 100;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 9000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_SEAL_DOWN;
-        GroundCount++;
+        ObjectCount = 0;
+        t = ObjectCount;
+        ObjectX[t] = 20 * 29 * 100 + 500;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 5000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_SEAL_UP;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 54 * 29 * 100 - 500;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 7000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_SEAL_DOWN;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 112 * 29 * 100 + 1000;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 3000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 117 * 29 * 100;
+        ObjectY[t] = (2 * 29 - 12) * 100 - 1500;
+        ObjectSizeX[t] = 15000;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::TRIGGER_LASER;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 125 * 29 * 100;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 9000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_SEAL_DOWN;
+        ObjectCount++;
         // t=sco;sa[t]=77*29*100;sb[t]=(6*29-12)*100-1500;sc[t]=12000;sd[t]=3000;stype[t]=103;sco++;
         t = 28;
-        GroundX[t] = 29 * 29 * 100 + 500;
-        GroundY[t] = (9 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 49 * 29 * 100;
-        GroundY[t] = (5 * 29 - 12) * 100;
-        GroundSizeX[t] = 9000 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundAI[t] = 0;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 72 * 29 * 100;
-        GroundY[t] = (13 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000 * 5 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_FLOOR;
-        GroundCount++;
+        ObjectX[t] = 29 * 29 * 100 + 500;
+        ObjectY[t] = (9 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 12000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 49 * 29 * 100;
+        ObjectY[t] = (5 * 29 - 12) * 100;
+        ObjectSizeX[t] = 9000 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_BLOCKS;
+        ObjectAI[t] = 0;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 72 * 29 * 100;
+        ObjectY[t] = (13 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000 * 5 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_FLOOR;
+        ObjectCount++;
 
         EnemyAppearCount = 0;
         t = EnemyAppearCount;
@@ -944,31 +944,31 @@ void HandleSyobonActionOneLevels()
         BlockCreateLegacy(13 * 29, 8 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
 
         // t=28;
-        GroundCount = 0;
-        t = GroundCount;
-        GroundX[t] = 14 * 29 * 100 + 500;
-        GroundY[t] = (9 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 12 * 29 * 100;
-        GroundY[t] = (11 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000;
-        GroundSizeY[t] = 6000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 14 * 29 * 100 + 1000;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 5000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_SEAL_UP;
-        GroundSubType[t] = EObjectSubType::TRIGGER_SEAL_UP_LEVEL_1_2;
-        GroundCount++;
+        ObjectCount = 0;
+        t = ObjectCount;
+        ObjectX[t] = 14 * 29 * 100 + 500;
+        ObjectY[t] = (9 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 12000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 12 * 29 * 100;
+        ObjectY[t] = (11 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000;
+        ObjectSizeY[t] = 6000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 14 * 29 * 100 + 1000;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 5000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_SEAL_UP;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_SEAL_UP_LEVEL_1_2;
+        ObjectCount++;
 
         // ブロックもどき
         // t=bco;ba[t]=7*29*100;bb[t]=(9*29-12)*100;btype[t]=82;bxtype[t]=0;bco++;
@@ -1345,149 +1345,149 @@ void HandleSyobonActionOneLevels()
 
         // txtype[tco]=1;BlockCreate(11*29,9*29-12,114);//毒1
 
-        GroundCount = 0;
-        t = GroundCount;
-        GroundX[t] = 2 * 29 * 100;
-        GroundY[t] = (13 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000 * 1 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_FLOOR;
-        GroundCount++;
+        ObjectCount = 0;
+        t = ObjectCount;
+        ObjectX[t] = 2 * 29 * 100;
+        ObjectY[t] = (13 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000 * 1 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_FLOOR;
+        ObjectCount++;
         // t=sco;sa[t]=19*29*100;sb[t]=(13*29-12)*100;sc[t]=3000*1-1;sd[t]=3000;stype[t]=52;sco++;
-        t = GroundCount;
-        GroundX[t] = 24 * 29 * 100;
-        GroundY[t] = (13 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000 * 1 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_FLOOR;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 43 * 29 * 100 + 500;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 3000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 53 * 29 * 100 + 500;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 3000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_FIRST_KUMA;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 129 * 29 * 100;
-        GroundY[t] = (7 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000;
-        GroundSizeY[t] = 6000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 154 * 29 * 100;
-        GroundY[t] = 3000;
-        GroundSizeX[t] = 9000;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 24 * 29 * 100;
+        ObjectY[t] = (13 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000 * 1 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_FLOOR;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 43 * 29 * 100 + 500;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 3000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 53 * 29 * 100 + 500;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 3000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_FIRST_KUMA;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 129 * 29 * 100;
+        ObjectY[t] = (7 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000;
+        ObjectSizeY[t] = 6000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 154 * 29 * 100;
+        ObjectY[t] = 3000;
+        ObjectSizeX[t] = 9000;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE;
+        ObjectCount++;
 
         // ブロックもどき
 
         t = 27;
-        GroundX[t] = 69 * 29 * 100;
-        GroundY[t] = (1 * 29 - 12) * 100;
-        GroundSizeX[t] = 9000 * 2 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK;
-        GroundAI[t] = 0;
-        GroundCount++;
+        ObjectX[t] = 69 * 29 * 100;
+        ObjectY[t] = (1 * 29 - 12) * 100;
+        ObjectSizeX[t] = 9000 * 2 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_BLOCKS;
+        ObjectSubType[t] = EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK;
+        ObjectAI[t] = 0;
+        ObjectCount++;
         t = 28;
-        GroundX[t] = 66 * 29 * 100;
-        GroundY[t] = (1 * 29 - 12) * 100;
-        GroundSizeX[t] = 9000 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK;
-        GroundAI[t] = 0;
-        GroundCount++;
+        ObjectX[t] = 66 * 29 * 100;
+        ObjectY[t] = (1 * 29 - 12) * 100;
+        ObjectSizeX[t] = 9000 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_BLOCKS;
+        ObjectSubType[t] = EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK;
+        ObjectAI[t] = 0;
+        ObjectCount++;
         t = 29;
-        GroundX[t] = 66 * 29 * 100;
-        GroundY[t] = (-2 * 29 - 12) * 100;
-        GroundSizeX[t] = 9000 * 3 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2;
-        GroundAI[t] = 0;
-        GroundCount++;
+        ObjectX[t] = 66 * 29 * 100;
+        ObjectY[t] = (-2 * 29 - 12) * 100;
+        ObjectSizeX[t] = 9000 * 3 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_BLOCKS;
+        ObjectSubType[t] = EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2;
+        ObjectAI[t] = 0;
+        ObjectCount++;
 
         // 26 ファイアー土管
         t = 26;
-        GroundX[t] = 103 * 29 * 100 - 1500;
-        GroundY[t] = (9 * 29 - 12) * 100 - 2000;
-        GroundSizeX[t] = 3000;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::TRIGGER_LAVA_SPAWNER;
-        GroundSubType[t] = EObjectSubType::NONE;
-        GroundVelY[t] = 0;
-        GroundAI[t] = 48;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 102 * 29 * 100;
-        GroundY[t] = (9 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_LAVA;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 123 * 29 * 100;
-        GroundY[t] = (9 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000 * 5 - 1;
-        GroundSizeY[t] = 3000 * 5;
-        GroundType[t] = EObjectType::FALLING_FLOOR;
-        GroundSubType[t] = EObjectSubType::FALLING_FLOOR_BRICK;
-        GroundCount++;
+        ObjectX[t] = 103 * 29 * 100 - 1500;
+        ObjectY[t] = (9 * 29 - 12) * 100 - 2000;
+        ObjectSizeX[t] = 3000;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::TRIGGER_LAVA_SPAWNER;
+        ObjectSubType[t] = EObjectSubType::NONE;
+        ObjectVelY[t] = 0;
+        ObjectAI[t] = 48;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 102 * 29 * 100;
+        ObjectY[t] = (9 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 12000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_LAVA;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 123 * 29 * 100;
+        ObjectY[t] = (9 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000 * 5 - 1;
+        ObjectSizeY[t] = 3000 * 5;
+        ObjectType[t] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[t] = EObjectSubType::FALLING_FLOOR_BRICK;
+        ObjectCount++;
 
-        t = GroundCount;
-        GroundX[t] = 131 * 29 * 100;
-        GroundY[t] = (1 * 29 - 12) * 100;
-        GroundSizeX[t] = 4700;
-        GroundSizeY[t] = 3000 * 8 - 700;
-        GroundType[t] = EObjectType::VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::NONE;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 131 * 29 * 100;
+        ObjectY[t] = (1 * 29 - 12) * 100;
+        ObjectSizeX[t] = 4700;
+        ObjectSizeY[t] = 3000 * 8 - 700;
+        ObjectType[t] = EObjectType::VERTICAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::NONE;
+        ObjectCount++;
 
         // t=sco;sa[t]=44*29*100;sb[t]=-6000;sc[t]=9000;sd[t]=70000;stype[t]=102;sco++;
 
         // オワタゾーン
-        t = GroundCount;
-        GroundX[t] = 143 * 29 * 100;
-        GroundY[t] = (9 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 148 * 29 * 100;
-        GroundY[t] = (9 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 153 * 29 * 100;
-        GroundY[t] = (9 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 12000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 143 * 29 * 100;
+        ObjectY[t] = (9 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 12000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 148 * 29 * 100;
+        ObjectY[t] = (9 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 12000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 153 * 29 * 100;
+        ObjectY[t] = (9 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 12000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE;
+        ObjectCount++;
 
         EnemyAppearCount = 0;
         t = EnemyAppearCount;
@@ -2034,22 +2034,22 @@ void HandleSyobonActionOneLevels()
         t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
         */
 
-        t = GroundCount;
-        GroundX[t] = 5 * 29 * 100 + 500;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 3000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THIRD_KUMA;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 5 * 29 * 100 + 500;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 3000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THIRD_KUMA;
+        ObjectCount++;
         // 空飛ぶ土管
         t = 28;
-        GroundX[t] = 44 * 29 * 100 + 500;
-        GroundY[t] = (10 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 9000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundCount++;
+        ObjectX[t] = 44 * 29 * 100 + 500;
+        ObjectY[t] = (10 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 9000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectCount++;
 
         // ポールもどき
         EnemyAppearCount = 0;
@@ -2585,51 +2585,51 @@ void HandleSyobonActionOneLevels()
         EnemyAppearSubType[t] = EEnemySubType::DEFRAG_GRAB_POLE;
         EnemyAppearCount++;
 
-        t = GroundCount;
-        GroundX[t] = 9 * 29 * 100;
-        GroundY[t] = (13 * 29 - 12) * 100;
-        GroundSizeX[t] = 9000 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_FLOOR;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 9 * 29 * 100;
+        ObjectY[t] = (13 * 29 - 12) * 100;
+        ObjectSizeX[t] = 9000 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_FLOOR;
+        ObjectCount++;
         // t=sco;sa[t]=58*29*100;sb[t]=(13*29-12)*100;sc[t]=9000-1;sd[t]=3000;stype[t]=52;sco++;
 
         // 土管
-        t = GroundCount;
-        GroundX[t] = 65 * 29 * 100 + 500;
-        GroundY[t] = (10 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 9000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 65 * 29 * 100 + 500;
+        ObjectY[t] = (10 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 9000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount++;
         // t=28;sa[t]=65*29*100;sb[t]=(10*29-12)*100;sc[t]=6000;sd[t]=9000-200;stype[t]=50;sco++;
 
         // トラップ
-        t = GroundCount;
-        GroundX[t] = 74 * 29 * 100;
-        GroundY[t] = (8 * 29 - 12) * 100 - 1500;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::TRIGGER_LASER;
-        GroundSubType[t] = EObjectSubType::TRIGGER_LASER_LEVEL_1_3;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 96 * 29 * 100 - 3000;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 9000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 74 * 29 * 100;
+        ObjectY[t] = (8 * 29 - 12) * 100 - 1500;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::TRIGGER_LASER;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_LASER_LEVEL_1_3;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 96 * 29 * 100 - 3000;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 9000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN;
+        ObjectCount++;
         // ポール砲
-        t = GroundCount;
-        GroundX[t] = 131 * 29 * 100 - 1500;
-        GroundY[t] = (1 * 29 - 12) * 100 - 3000;
-        GroundSizeX[t] = 15000;
-        GroundSizeY[t] = 14000;
-        GroundType[t] = EObjectType::TRIGGER_MULTI_LASER;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 131 * 29 * 100 - 1500;
+        ObjectY[t] = (1 * 29 - 12) * 100 - 3000;
+        ObjectSizeX[t] = 15000;
+        ObjectSizeY[t] = 14000;
+        ObjectType[t] = EObjectType::TRIGGER_MULTI_LASER;
+        ObjectCount++;
 
         // ？ボール
         t = EnemyAppearCount;
@@ -3315,15 +3315,15 @@ void HandleSyobonActionOneLevels()
             NONE,NONE,
             NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE}};
 
-        GroundCount = 0;
-        t = GroundCount;
-        GroundX[t] = 14 * 29 * 100 - 5;
-        GroundY[t] = (11 * 29 - 12) * 100;
-        GroundSizeX[t] = 6000;
-        GroundSizeY[t] = 15000 - 200;
-        GroundType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
-        GroundCount++;
+        ObjectCount = 0;
+        t = ObjectCount;
+        ObjectX[t] = 14 * 29 * 100 - 5;
+        ObjectY[t] = (11 * 29 - 12) * 100;
+        ObjectSizeX[t] = 6000;
+        ObjectSizeY[t] = 15000 - 200;
+        ObjectType[t] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[t] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount++;
         // t=sco;sa[t]=12*29*100;sb[t]=(11*29-12)*100;sc[t]=3000;sd[t]=6000-200;stype[t]=40;sxtype[t]=0;sco++;
         // t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
 
@@ -3715,85 +3715,85 @@ void HandleSyobonActionOneLevels()
                                      NONE,NONE,
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE}};
 
-        GroundCount = 0; // sco=140;
-        t = GroundCount;
-        GroundX[t] = 35 * 29 * 100 - 1500 + 750;
-        GroundY[t] = (8 * 29 - 12) * 100 - 1500;
-        GroundSizeX[t] = 1500;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::TRIGGER_PLATFORM_SPLIT;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 67 * 29 * 100;
-        GroundY[t] = (4 * 29 - 12) * 100;
-        GroundSizeX[t] = 9000 - 1;
-        GroundSizeY[t] = 3000 * 1 - 1;
-        GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP;
-        GroundAI[t] = 0;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 73 * 29 * 100;
-        GroundY[t] = (13 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000 * 1 - 1;
-        GroundSizeY[t] = 3000;
-        GroundType[t] = EObjectType::FALLING_FLOOR;
-        GroundCount++;
+        ObjectCount = 0; // sco=140;
+        t = ObjectCount;
+        ObjectX[t] = 35 * 29 * 100 - 1500 + 750;
+        ObjectY[t] = (8 * 29 - 12) * 100 - 1500;
+        ObjectSizeX[t] = 1500;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::TRIGGER_PLATFORM_SPLIT;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 67 * 29 * 100;
+        ObjectY[t] = (4 * 29 - 12) * 100;
+        ObjectSizeX[t] = 9000 - 1;
+        ObjectSizeY[t] = 3000 * 1 - 1;
+        ObjectType[t] = EObjectType::FALLING_BLOCKS;
+        ObjectSubType[t] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP;
+        ObjectAI[t] = 0;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 73 * 29 * 100;
+        ObjectY[t] = (13 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000 * 1 - 1;
+        ObjectSizeY[t] = 3000;
+        ObjectType[t] = EObjectType::FALLING_FLOOR;
+        ObjectCount++;
         // t=sco;sa[t]=79*29*100;sb[t]=(13*29-12)*100;sc[t]=30*3*100-1;sd[t]=6000-200;stype[t]=51;sxtype[t]=4;sco++;
         // t=sco;sa[t]=83*29*100;sb[t]=(-2*29-12)*100;sc[t]=30*5*100-1;sd[t]=3000-200;stype[t]=51;sxtype[t]=4;sco++;
-        t = GroundCount;
-        GroundX[t] = 123 * 29 * 100;
-        GroundY[t] = (1 * 29 - 12) * 100;
-        GroundSizeX[t] = 30 * 6 * 100 - 1 + 0;
-        GroundSizeY[t] = 3000 - 200;
-        GroundType[t] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[t] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 123 * 29 * 100;
+        ObjectY[t] = (1 * 29 - 12) * 100;
+        ObjectSizeX[t] = 30 * 6 * 100 - 1 + 0;
+        ObjectSizeY[t] = 3000 - 200;
+        ObjectType[t] = EObjectType::FALLING_BLOCKS;
+        ObjectSubType[t] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY;
+        ObjectCount++;
         // スクロール消し
-        t = GroundCount;
-        GroundX[t] = 124 * 29 * 100 + 3000;
-        GroundY[t] = (2 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000 * 1 - 1;
-        GroundSizeY[t] = 300000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 148 * 29 * 100 + 1000;
-        GroundY[t] = (-12 * 29 - 12) * 100;
-        GroundSizeX[t] = 3000 * 1 - 1;
-        GroundSizeY[t] = 300000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_CLEAR_GAME;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 124 * 29 * 100 + 3000;
+        ObjectY[t] = (2 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000 * 1 - 1;
+        ObjectSizeY[t] = 300000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 148 * 29 * 100 + 1000;
+        ObjectY[t] = (-12 * 29 - 12) * 100;
+        ObjectSizeX[t] = 3000 * 1 - 1;
+        ObjectSizeY[t] = 300000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_CLEAR_GAME;
+        ObjectCount++;
 
         // 3連星
-        t = GroundCount;
-        GroundX[t] = 100 * 29 * 100 + 1000;
-        GroundY[t] = -6000;
-        GroundSizeX[t] = 3000;
-        GroundSizeY[t] = 70000;
-        GroundType[t] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 100 * 29 * 100 + 1000;
+        ObjectY[t] = -6000;
+        ObjectSizeX[t] = 3000;
+        ObjectSizeY[t] = 70000;
+        ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA;
+        ObjectCount++;
 
         // 地面1
-        t = GroundCount;
-        GroundX[t] = 0 * 29 * 100 - 0;
-        GroundY[t] = 9 * 29 * 100 + 1700;
-        GroundSizeX[t] = 3000 * 7 - 1;
-        GroundSizeY[t] = 3000 * 5 - 1;
-        GroundType[t] = EObjectType::CASTLE_BRICKS;
-        GroundSubType[t] = EObjectSubType::NONE;
-        GroundCount++;
-        t = GroundCount;
-        GroundX[t] = 11 * 29 * 100;
-        GroundY[t] = -1 * 29 * 100 + 1700;
-        GroundSizeX[t] = 3000 * 8 - 1;
-        GroundSizeY[t] = 3000 * 4 - 1;
-        GroundType[t] = EObjectType::CASTLE_BRICKS;
-        GroundSubType[t] = EObjectSubType::NONE;
-        GroundCount++;
+        t = ObjectCount;
+        ObjectX[t] = 0 * 29 * 100 - 0;
+        ObjectY[t] = 9 * 29 * 100 + 1700;
+        ObjectSizeX[t] = 3000 * 7 - 1;
+        ObjectSizeY[t] = 3000 * 5 - 1;
+        ObjectType[t] = EObjectType::CASTLE_BRICKS;
+        ObjectSubType[t] = EObjectSubType::NONE;
+        ObjectCount++;
+        t = ObjectCount;
+        ObjectX[t] = 11 * 29 * 100;
+        ObjectY[t] = -1 * 29 * 100 + 1700;
+        ObjectSizeX[t] = 3000 * 8 - 1;
+        ObjectSizeY[t] = 3000 * 4 - 1;
+        ObjectType[t] = EObjectType::CASTLE_BRICKS;
+        ObjectSubType[t] = EObjectSubType::NONE;
+        ObjectCount++;
 
         EnemyAppearCount = 0;
         t = EnemyAppearCount;
@@ -4242,38 +4242,38 @@ void HandleSyobonActionTwoLevels()
             BlockCount += 1;
         }
         //
-        GroundCount = 0;
-        GroundX[GroundCount] = 30 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 12000 - 1;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
-        GroundCount += 1;
+        ObjectCount = 0;
+        ObjectX[ObjectCount] = 30 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 12000 - 1;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 51 * 29 * 100;
-        GroundY[GroundCount] = (4 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 9000 - 1;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 51 * 29 * 100;
+        ObjectY[ObjectCount] = (4 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 9000 - 1;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_BLOCKS;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_BLOCKS_OVERWORLD_BRICK;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 84 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 9000 - 1;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 84 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 9000 - 1;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 105 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 15000 - 1;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 105 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 15000 - 1;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
+        ObjectCount += 1;
         //
         EnemyAppearCount = 0;
         //
@@ -4347,35 +4347,35 @@ void HandleSyobonActionTwoLevels()
             {GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM, NONE, NONE, NONE, NONE, NONE, NONE, NONE, GROUND_BOTTOM, GROUND_BOTTOM, GROUND_BOTTOM},
             {NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE}};
         //
-        GroundX[GroundCount] = 14 * 29 * 100 + 200;
-        GroundY[GroundCount] = -6000;
-        GroundSizeX[GroundCount] = 5000;
-        GroundSizeY[GroundCount] = 70000;
-        GroundType[GroundCount] = EObjectType::TRIGGER_SEAL_UP;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 14 * 29 * 100 + 200;
+        ObjectY[ObjectCount] = -6000;
+        ObjectSizeX[ObjectCount] = 5000;
+        ObjectSizeY[ObjectCount] = 70000;
+        ObjectType[ObjectCount] = EObjectType::TRIGGER_SEAL_UP;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 12 * 29 * 100 + 1200;
-        GroundY[GroundCount] = -6000;
-        GroundSizeX[GroundCount] = 7000;
-        GroundSizeY[GroundCount] = 70000;
-        GroundType[GroundCount] = EObjectType::TRIGGER_SEAL_DOWN;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 12 * 29 * 100 + 1200;
+        ObjectY[ObjectCount] = -6000;
+        ObjectSizeX[ObjectCount] = 7000;
+        ObjectSizeY[ObjectCount] = 70000;
+        ObjectType[ObjectCount] = EObjectType::TRIGGER_SEAL_DOWN;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 12 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 6000 - 1;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundAI[GroundCount] = 0;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 12 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 6000 - 1;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectAI[ObjectCount] = 0;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 14 * 29 * 100;
-        GroundY[GroundCount] = (9 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 6000;
-        GroundSizeY[GroundCount] = 12000 - 200;
-        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 14 * 29 * 100;
+        ObjectY[ObjectCount] = (9 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 6000;
+        ObjectSizeY[ObjectCount] = 12000 - 200;
+        ObjectType[ObjectCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[ObjectCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount += 1;
         //
         BlockCreateLegacy(6 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
         //
@@ -4742,70 +4742,70 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::NONE;
         EnemyAppearCount += 1;
         //
-        GroundCount = 0;
-        GroundX[GroundCount] = 2 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 300000 - 6001;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
-        GroundCount += 1;
+        ObjectCount = 0;
+        ObjectX[ObjectCount] = 2 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 300000 - 6001;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 3 * 29 * 100;
-        GroundY[GroundCount] = (7 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 3000;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::TRIGGER_PLATFORM_SPLIT;
-        GroundSubType[GroundCount] = (EObjectSubType)0; //this is a timer
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 3 * 29 * 100;
+        ObjectY[ObjectCount] = (7 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 3000;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::TRIGGER_PLATFORM_SPLIT;
+        ObjectSubType[ObjectCount] = (EObjectSubType)0; //this is a timer
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 107 * 29 * 100;
-        GroundY[GroundCount] = (9 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 9000 - 1;
-        GroundSizeY[GroundCount] = 24000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_BRICK;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 107 * 29 * 100;
+        ObjectY[ObjectCount] = (9 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 9000 - 1;
+        ObjectSizeY[ObjectCount] = 24000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_BRICK;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 111 * 29 * 100;
-        GroundY[GroundCount] = (7 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 3000;
-        GroundSizeY[GroundCount] = 6000 - 200;
-        GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 111 * 29 * 100;
+        ObjectY[ObjectCount] = (7 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 3000;
+        ObjectSizeY[ObjectCount] = 6000 - 200;
+        ObjectType[ObjectCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
+        ObjectSubType[ObjectCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 113 * 29 * 100 + 1100;
-        GroundY[GroundCount] = (0 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 4700;
-        GroundSizeY[GroundCount] = 27000 - 1000;
-        GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
-        GroundSubType[GroundCount] = EObjectSubType::NONE;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 113 * 29 * 100 + 1100;
+        ObjectY[ObjectCount] = (0 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 4700;
+        ObjectSizeY[ObjectCount] = 27000 - 1000;
+        ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_BODY;
+        ObjectSubType[ObjectCount] = EObjectSubType::NONE;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 128 * 29 * 100;
-        GroundY[GroundCount] = (9 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 9000 - 1;
-        GroundSizeY[GroundCount] = 24000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_BRICK;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 128 * 29 * 100;
+        ObjectY[ObjectCount] = (9 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 9000 - 1;
+        ObjectSizeY[ObjectCount] = 24000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_BRICK;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 131 * 29 * 100;
-        GroundY[GroundCount] = (9 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 3000;
-        GroundSizeY[GroundCount] = 6000 - 200;
-        GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 131 * 29 * 100;
+        ObjectY[ObjectCount] = (9 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 3000;
+        ObjectSizeY[ObjectCount] = 6000 - 200;
+        ObjectType[ObjectCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
+        ObjectSubType[ObjectCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 133 * 29 * 100 + 1100;
-        GroundY[GroundCount] = (0 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 4700;
-        GroundSizeY[GroundCount] = 32000;
-        GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
-        GroundSubType[GroundCount] = EObjectSubType::NONE;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 133 * 29 * 100 + 1100;
+        ObjectY[ObjectCount] = (0 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 4700;
+        ObjectSizeY[ObjectCount] = 32000;
+        ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_BODY;
+        ObjectSubType[ObjectCount] = EObjectSubType::NONE;
+        ObjectCount += 1;
         //
         BlockCount = 0;
         BlockSubType[BlockCount] = EBlockSubType::NONE;
@@ -5322,12 +5322,12 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearSubType[EnemyAppearCount]= EEnemySubType::EVIL_CLOUD_NORMAL;
         EnemyAppearCount += 1;
         
-        GroundCount = 0;
-        EnemyAppearX[GroundCount] = (102 * 29 - 12) * 100;
-        EnemyAppearY[GroundCount] = (10 * 29 - 12) * 100;
-        EnemyAppearType[GroundCount] = EEnemyType::UNKNOWN_ID_50;
-        EnemyAppearSubType[GroundCount] = EEnemySubType::UNKNOWN_ID_50_1;
-        GroundCount += 1;
+        ObjectCount = 0;
+        EnemyAppearX[ObjectCount] = (102 * 29 - 12) * 100;
+        EnemyAppearY[ObjectCount] = (10 * 29 - 12) * 100;
+        EnemyAppearType[ObjectCount] = EEnemyType::UNKNOWN_ID_50;
+        EnemyAppearSubType[ObjectCount] = EEnemySubType::UNKNOWN_ID_50_1;
+        ObjectCount += 1;
         //
         LiftCount = 0;
         LiftX[LiftCount] = 1 * 29 * 100;
@@ -5502,30 +5502,30 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearSubType[EnemyAppearCount] = (EEnemySubType)107;
         EnemyAppearCount += 1;
         //
-        GroundCount = 0;
-        GroundX[GroundCount] = 17 * 29 * 100;
-        GroundY[GroundCount] = (9 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 21000 - 1;
-        GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
-        GroundCount += 1;
+        ObjectCount = 0;
+        ObjectX[ObjectCount] = 17 * 29 * 100;
+        ObjectY[ObjectCount] = (9 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 21000 - 1;
+        ObjectSizeY[ObjectCount] = 3000 - 1;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 27 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 6000;
-        GroundSizeY[GroundCount] = 6000;
-        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 27 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 6000;
+        ObjectSizeY[ObjectCount] = 6000;
+        ObjectType[ObjectCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[ObjectCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 34 * 29 * 100;
-        GroundY[GroundCount] = (5 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 6000;
-        GroundSizeY[GroundCount] = 30000;
-        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 34 * 29 * 100;
+        ObjectY[ObjectCount] = (5 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 6000;
+        ObjectSizeY[ObjectCount] = 30000;
+        ObjectType[ObjectCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[ObjectCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -5583,38 +5583,38 @@ void HandleSyobonActionTwoLevels()
         BlockCreateLegacy(14 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
-        GroundCount = 0;
-        GroundX[GroundCount] = 6 * 29 * 100;
-        GroundY[GroundCount] = (6 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 18000 - 1;
-        GroundSizeY[GroundCount] = 6000 - 1;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
-        GroundCount += 1;
+        ObjectCount = 0;
+        ObjectX[ObjectCount] = 6 * 29 * 100;
+        ObjectY[ObjectCount] = (6 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 18000 - 1;
+        ObjectSizeY[ObjectCount] = 6000 - 1;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 12 * 29 * 100;
-        GroundY[GroundCount] = (8 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 9000 - 1;
-        GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 12 * 29 * 100;
+        ObjectY[ObjectCount] = (8 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 9000 - 1;
+        ObjectSizeY[ObjectCount] = 3000 - 1;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 15 * 29 * 100;
-        GroundY[GroundCount] = (11 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 3000;
-        GroundSizeY[GroundCount] = 6000;
-        GroundType[GroundCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 15 * 29 * 100;
+        ObjectY[ObjectCount] = (11 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 3000;
+        ObjectSizeY[ObjectCount] = 6000;
+        ObjectType[ObjectCount] = EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD;
+        ObjectSubType[ObjectCount] = EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 17 * 29 * 100 + 1100;
-        GroundY[GroundCount] = (0 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 4700;
-        GroundSizeY[GroundCount] = 38000;
-        GroundType[GroundCount] = EObjectType::VERTICAL_PIPE_BODY;
-        GroundSubType[GroundCount] = EObjectSubType::NONE;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 17 * 29 * 100 + 1100;
+        ObjectY[ObjectCount] = (0 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 4700;
+        ObjectSizeY[ObjectCount] = 38000;
+        ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_BODY;
+        ObjectSubType[ObjectCount] = EObjectSubType::NONE;
+        ObjectCount += 1;
         //
         for (tt = 0; tt <= 1000; tt++)
         {
@@ -6030,62 +6030,62 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::MOLALLA_ALIVE;
         EnemyAppearCount += 1;
         //
-        GroundCount = 0;
-        GroundX[GroundCount] = 13 * 29 * 100;
-        GroundY[GroundCount] = (8 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 33000 - 1;
-        GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
-        GroundCount += 1;
+        ObjectCount = 0;
+        ObjectX[ObjectCount] = 13 * 29 * 100;
+        ObjectY[ObjectCount] = (8 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 33000 - 1;
+        ObjectSizeY[ObjectCount] = 3000 - 1;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 13 * 29 * 100;
-        GroundY[GroundCount] = (0 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 33000 - 1;
-        GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = EObjectType::FALLING_BLOCKS;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 13 * 29 * 100;
+        ObjectY[ObjectCount] = (0 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 33000 - 1;
+        ObjectSizeY[ObjectCount] = 3000 - 1;
+        ObjectType[ObjectCount] = EObjectType::FALLING_BLOCKS;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 10 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 6000;
-        GroundSizeY[GroundCount] = 6000;
-        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 10 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 6000;
+        ObjectSizeY[ObjectCount] = 6000;
+        ObjectType[ObjectCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[ObjectCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 46 * 29 * 100;
-        GroundY[GroundCount] = (12 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 9000 - 1;
-        GroundSizeY[GroundCount] = 3000 - 1;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 46 * 29 * 100;
+        ObjectY[ObjectCount] = (12 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 9000 - 1;
+        ObjectSizeY[ObjectCount] = 3000 - 1;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 58 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 6000;
-        GroundSizeY[GroundCount] = 6000;
-        GroundType[GroundCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
-        GroundSubType[GroundCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 58 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 6000;
+        ObjectSizeY[ObjectCount] = 6000;
+        ObjectType[ObjectCount] = EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD;
+        ObjectSubType[ObjectCount] = EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 101 * 29 * 100 - 1500;
-        GroundY[GroundCount] = (10 * 29 - 12) * 100 - 3000;
-        GroundSizeX[GroundCount] = 12000;
-        GroundSizeY[GroundCount] = 12000;
-        GroundType[GroundCount] = EObjectType::TRIGGER_MULTI_LASER;
-        GroundSubType[GroundCount] = EObjectSubType::TRIGGER_MULTI_LASER_ACTIVE;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 101 * 29 * 100 - 1500;
+        ObjectY[ObjectCount] = (10 * 29 - 12) * 100 - 3000;
+        ObjectSizeX[ObjectCount] = 12000;
+        ObjectSizeY[ObjectCount] = 12000;
+        ObjectType[ObjectCount] = EObjectType::TRIGGER_MULTI_LASER;
+        ObjectSubType[ObjectCount] = EObjectSubType::TRIGGER_MULTI_LASER_ACTIVE;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 102 * 29 * 100 + 3000;
-        GroundY[GroundCount] = (2 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 3000 - 1;
-        GroundSizeY[GroundCount] = 300000;
-        GroundType[GroundCount] = EObjectType::TRIGGER_GENERIC_1;
-        GroundSubType[GroundCount] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 102 * 29 * 100 + 3000;
+        ObjectY[ObjectCount] = (2 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 3000 - 1;
+        ObjectSizeY[ObjectCount] = 300000;
+        ObjectType[ObjectCount] = EObjectType::TRIGGER_GENERIC_1;
+        ObjectSubType[ObjectCount] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF;
+        ObjectCount += 1;
         //
         LiftCount = 0;
         LiftX[LiftCount] = 74 * 29 * 100 - 1500;
@@ -6381,22 +6381,22 @@ void HandleSyobonActionTwoLevels()
         BlockCreateLegacy(64 * 29, 13 * 29 - 12, EBlockType::BRICK_BRITTLE);
         BlockCount += 1;
         //
-        GroundCount = 0;
-        GroundX[GroundCount] = 13 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 9000 - 1;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
-        GroundCount += 1;
+        ObjectCount = 0;
+        ObjectX[ObjectCount] = 13 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 9000 - 1;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
+        ObjectCount += 1;
         //
-        GroundX[GroundCount] = 84 * 29 * 100;
-        GroundY[GroundCount] = (13 * 29 - 12) * 100;
-        GroundSizeX[GroundCount] = 9000 - 1;
-        GroundSizeY[GroundCount] = 3000;
-        GroundType[GroundCount] = EObjectType::FALLING_FLOOR;
-        GroundSubType[GroundCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
-        GroundCount += 1;
+        ObjectX[ObjectCount] = 84 * 29 * 100;
+        ObjectY[ObjectCount] = (13 * 29 - 12) * 100;
+        ObjectSizeX[ObjectCount] = 9000 - 1;
+        ObjectSizeY[ObjectCount] = 3000;
+        ObjectType[ObjectCount] = EObjectType::FALLING_FLOOR;
+        ObjectSubType[ObjectCount] = EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM;
+        ObjectCount += 1;
         //
         EnemyAppearCount = 0;
         EnemyAppearX[EnemyAppearCount] = 108 * 29 * 100;
@@ -6462,7 +6462,7 @@ void HandleSyobonActionThreeLevels()
     StageClear();
 
     //SA3 Title Screen
-    if(SyobonState == ESyobonState::TITLE)
+    if(SyobonState == ESyobonGameState::TITLE)
     {
         scrollx = 0;
 
@@ -6475,14 +6475,14 @@ void HandleSyobonActionThreeLevels()
             BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
         }
 
-        GroundCreate(3, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(3 + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 5, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
+        ObjectCreate(3, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(3 + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 5, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
 
         CreateBackground(3, 10, EDecorationType::HILL);
         
         //Poison mushroom
         BlockCreate(9, 9, EBlockType::ITEM_BLOCK_OPEN);
-        int entity_index = CreateEntity(9, 9, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::NONE);
+        int entity_index = CreateEnemy(9, 9, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::NONE);
         if(entity_index >= 0)
             EnemyBlockAppearTimer[entity_index] = 16;
 
@@ -6559,13 +6559,13 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(17, 4.5, EBlockType::BRICK);
         
         //replace the copyright plant trap with a seal
-        GroundCreate(0.25, 8.75, 0.50, 5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
+        ObjectCreate(0.25, 8.75, 0.50, 5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
 
-        CreateEntity(12.5, 7.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
-        CreateEntity(6.5, 11.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::NONE);
-        CreateEntity(15.5, 3.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
+        CreateEnemy(12.5, 7.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
+        CreateEnemy(6.5, 11.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::NONE);
+        CreateEnemy(15.5, 3.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
 
-        CreateEntity(27.5, 8, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
+        CreateEnemy(27.5, 8, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
 
         CreateBackground(1, 2.5, EDecorationType::CLOUD);
         CreateBackground(10, 2.5, EDecorationType::CLOUD_SMALL);
@@ -6581,33 +6581,33 @@ void HandleSyobonActionThreeLevels()
         {
             if(i == 0)
             {
-                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+                ObjectCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
             }
             else
             {
-                GroundCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
+                ObjectCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
         
                 if(i != 4)
                 {
-                    CreateEntity(29 + (i * 4), 10, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
+                    CreateEnemy(29 + (i * 4), 10, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
                 }
                 else
                 {
-                    GroundCreate(27.25 + (i * 4), 0, 1.5, 8.5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS);
+                    ObjectCreate(27.25 + (i * 4), 0, 1.5, 8.5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS);
                 }
             }
 
-            GroundCreate(27 + (i * 4), 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+            ObjectCreate(27 + (i * 4), 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
         }
 
         //remaining code from all stars xd
-        int t_9 = GroundCount;
-        GroundX[t_9] = 8700; //n地面[t_9].a = 8700;
-        GroundY[t_9] = 36500; //n地面[t_9].b = 36500;
-        GroundSizeX[t_9] = 11999; //n地面[t_9].c = 11999;
-        GroundSizeY[t_9] = 3000; //n地面[t_9].d = 3000;
-        GroundType[t_9] = EObjectType::FALLING_FLOOR; //n地面[t_9].type = 52;
-        GroundCount++; //n地面co++;
+        int t_9 = ObjectCount;
+        ObjectX[t_9] = 8700; //n地面[t_9].a = 8700;
+        ObjectY[t_9] = 36500; //n地面[t_9].b = 36500;
+        ObjectSizeX[t_9] = 11999; //n地面[t_9].c = 11999;
+        ObjectSizeY[t_9] = 3000; //n地面[t_9].d = 3000;
+        ObjectType[t_9] = EObjectType::FALLING_FLOOR; //n地面[t_9].type = 52;
+        ObjectCount++; //n地面co++;
 
 
 
@@ -6622,9 +6622,9 @@ void HandleSyobonActionThreeLevels()
             if(i == 6)
             {
                 //save first block index for the trap
-                int trap_index = GroundCreate(56, 12.5, 7.5, 0.5, EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1, EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING);
+                int trap_index = ObjectCreate(56, 12.5, 7.5, 0.5, EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1, EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING);
                 if(trap_index >= 0)
-                    GroundAI[trap_index] = BlockCreate(55, i, EBlockType::ITEM_BLOCK_OPEN);
+                    ObjectAI[trap_index] = BlockCreate(55, i, EBlockType::ITEM_BLOCK_OPEN);
             }
             else
             {
@@ -6633,10 +6633,10 @@ void HandleSyobonActionThreeLevels()
             BlockCreate(64, i + 7, EBlockType::ITEM_BLOCK_OPEN);
         }
 
-        GroundCreate(65, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(65 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(67, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(67 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(65, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(65 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(67, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(67 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
 
 
         BlockCreate(69, 4.75, EBlockType::ITEM_BLOCK_HIDDEN);
@@ -6646,7 +6646,7 @@ void HandleSyobonActionThreeLevels()
             BlockCreate(i, 6, EBlockType::BRICK);
         }
 
-        CreateEntity(75.5, 5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+        CreateEnemy(75.5, 5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
 
         BlockCreate(80.9, 12, EBlockType::TRAMPOLINE, EBlockSubType::TRAMPOLINE_VISIBLE);
 
@@ -6657,12 +6657,12 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(86, 3.5, EBlockType::BRICK);
         BlockCreate(87, 3.5, EBlockType::BRICK);
 
-        GroundCreate(91, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
+        ObjectCreate(91, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
         BlockCreate(91, 13, EBlockType::ITEM_BLOCK_HIDDEN);
         BlockCreate(92, 13, EBlockType::ITEM_BLOCK_HIDDEN);
         BlockCreate(93, 13, EBlockType::ITEM_BLOCK_HIDDEN);
         BlockCreate(94, 13, EBlockType::ITEM_BLOCK_HIDDEN);
-        GroundCreate(98, 11, 1, 2, EObjectType::CHECKPOINT, EObjectSubType::NONE);
+        ObjectCreate(98, 11, 1, 2, EObjectType::CHECKPOINT, EObjectSubType::NONE);
 
         // tunnel thing
         BlockCreate(103, 11.5, EBlockType::HARD_BLOCK);
@@ -6703,21 +6703,21 @@ void HandleSyobonActionThreeLevels()
             {
                 if(x_pos == 107 || x_pos == 111 || x_pos == 113 || x_pos == 117)
                 {
-                    CreateEntity(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+                    CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
                 }
                 else
                 {
-                    CreateEntity(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+                    CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
                 }
             }
 
             if(x_pos == 122)
             {
-                CreateEntity(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+                CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
             }
             else if(x_pos == 124)
             {
-                CreateEntity(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+                CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
             }
 
             if(x_pos >= 106)
@@ -6761,13 +6761,13 @@ void HandleSyobonActionThreeLevels()
 
         CreateBackground(114, 1.5, EDecorationType::CLOUD);
 
-        int ind = GroundCreate(117, 1, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
-        GroundAI[ind] = first_wall_block;
-        ind = GroundCreate(121, 10.5, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
-        GroundAI[ind] = -1;
+        int ind = ObjectCreate(117, 1, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
+        ObjectAI[ind] = first_wall_block;
+        ind = ObjectCreate(121, 10.5, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
+        ObjectAI[ind] = -1;
 
-        GroundCreate(130, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(130 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(130, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(130 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
 
         BlockCreate(132, 5.5, EBlockType::ITEM_BLOCK_HIDDEN);
 
@@ -6776,11 +6776,11 @@ void HandleSyobonActionThreeLevels()
             BlockCreate(x_coin, 11.5, EBlockType::COIN);
         }
         //TODO: you should not be able to even touch this floor
-        GroundCreate(132, 13, 8, 2, EObjectType::FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
+        ObjectCreate(132, 13, 8, 2, EObjectType::FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
 
-        GroundCreate(140, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(140 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(140, 0, 2, 11, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
+        ObjectCreate(140, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(140 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(140, 0, 2, 11, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
 
         //plant
         BlockCreate(148, 12, EBlockType::HARD_BLOCK);
@@ -6797,21 +6797,21 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(151, 10, EBlockType::HARD_BLOCK);
         BlockCreate(151, 9, EBlockType::HARD_BLOCK);
 
-        CreateEntity(152.5, 9, 0, 0, EEnemyType::SA3_JUMPSCARE_PLANT, EEnemySubType::NONE);
-        GroundCreate(152, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(152 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        CreateEnemy(152.5, 9, 0, 0, EEnemyType::SA3_JUMPSCARE_PLANT, EEnemySubType::NONE);
+        ObjectCreate(152, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(152 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
 
-        GroundCreate(154, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
+        ObjectCreate(154, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
 
-        CreateEntity(168, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES);
+        CreateEnemy(168, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES);
 
-        GroundCreate(171, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
+        ObjectCreate(171, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
 
         BlockCreate(174, 9, EBlockType::ITEM_BLOCK_HIDDEN);
-        GroundCreate(175, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        GroundCreate(175 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(175, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(175 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
 
-        CreateEntity(171, 1.5, 0, 0, EEnemyType::BALL_SHELLED, EEnemySubType::NONE);
+        CreateEnemy(171, 1.5, 0, 0, EEnemyType::BALL_SHELLED, EEnemySubType::NONE);
         for(int x_pos = 169; x_pos <= 173; x_pos++)
         {
             BlockCreate(x_pos, 2.5, EBlockType::BRICK);
@@ -6885,8 +6885,8 @@ void HandleSyobonActionThreeLevels()
 
         BlockCreate(188, 1, EBlockType::ITEM_BLOCK_TRAP_HIDDEN, EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_SA3_1UP);
 
-        GroundCreate(188, 13, 9, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
-        GroundCreate(197, 1, 1, 11.3, EObjectType::GOAL_POLE, EObjectSubType::NONE);
+        ObjectCreate(188, 13, 9, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
+        ObjectCreate(197, 1, 1, 11.3, EObjectType::GOAL_POLE, EObjectSubType::NONE);
 
         BlockCreate(197, 12, EBlockType::HARD_BLOCK);
 
@@ -6900,7 +6900,7 @@ void HandleSyobonActionThreeLevels()
         CreateBackground(204, 10, EDecorationType::CASTLE);
 
         //REMOVE ME
-        GroundCreate(149, 1, 0, 0, EObjectType::CHECKPOINT, EObjectSubType::NONE);
+        ObjectCreate(149, 1, 0, 0, EObjectType::CHECKPOINT, EObjectSubType::NONE);
         CurrentPlayerCheckpoint = 2;
         printf("enemy count %d\n",EnemyCount);
     }
@@ -6913,6 +6913,6 @@ void StageClear()
     ClearAllBackgrounds();
     ClearAllExtraGraphics();
     BlockClearAll();
-    ClearAllEntities();
-    GroundClearAll();
+    ClearAllEnemies();
+    ObjectClearAll();
 }

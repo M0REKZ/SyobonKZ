@@ -20,10 +20,10 @@ int BlockCreate(double x, double y, EBlockType type, EBlockSubType subtype = EBl
 void BlockClearAll();
 
 //+KZ: like BlockCreate but for Objects
-int GroundCreate(double x, double y, double size_x, double size_y, EObjectType type, EObjectSubType subtype, int index = -1);
+int ObjectCreate(double x, double y, double size_x, double size_y, EObjectType type, EObjectSubType subtype, int index = -1);
 
 //+KZ: clear all objects from memory
-void GroundClearAll();
+void ObjectClearAll();
 
 //ブロック (Block)
 // @attention +KZ: void tyobi() is now void BlockCreateLegacy()
