@@ -411,7 +411,7 @@ void HandlePlayer()
             {
                 //+KZ: save progress
                 {
-                    SyobonGlobalConfig.LevelsFinished.push_back({currentGame, SyobonWorld, SyobonLevel});
+                    SyobonGlobalConfig.LevelsFinished.insert({currentGame, SyobonWorld, SyobonLevel});
                     SaveConfig();
                 }
 
@@ -520,7 +520,7 @@ void HandlePlayer()
             if (PlayerAITimer == 440)
             {
                 //+KZ: Save progress
-                SyobonGlobalConfig.LevelsFinished.push_back({currentGame, SyobonWorld, SyobonLevel});
+                SyobonGlobalConfig.LevelsFinished.insert({currentGame, SyobonWorld, SyobonLevel});
                 SaveConfig();
 
                 if (PlayerState == 301)

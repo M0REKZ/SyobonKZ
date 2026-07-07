@@ -1,7 +1,7 @@
 #ifndef SYOBON_CONFIG_H
 #define SYOBON_CONFIG_H
 
-#include <vector>
+#include <set>
 #include "global_vars.h"
 
 //+KZ: for config and save data
@@ -14,11 +14,29 @@ struct SSyobonGameLevel
     ESyobonActionGame Game;
     int World;
     int Level;
+
+    inline bool operator==(const SSyobonGameLevel& other) const
+    {
+        return (
+            this->Game == other.Game &&
+            this->World == other.World &&
+            this->Level == other.Level
+        );
+    }
+
+    inline bool operator<(const SSyobonGameLevel& other) const
+    {
+        return (
+            this->Game < other.Game ||
+            this->World < other.World ||
+            this->Level < other.Level
+        );
+    }
 };
 
 struct SConfig
 {
-    std::vector<SSyobonGameLevel> LevelsFinished;
+    std::set<SSyobonGameLevel> LevelsFinished;
     int Fullscreen = false;
 };
 
