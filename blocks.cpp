@@ -590,7 +590,8 @@ void ObjectClearAll()
         ObjectSizeX[i] = std::numeric_limits<int>::min();
         ObjectSizeY[i] = std::numeric_limits<int>::min();
 
-        ObjectType[i] = EObjectType::VERTICAL_PIPE_BODY;
+        //set a invalid type so it is ignored in all other functions
+        ObjectType[i] = (EObjectType)std::numeric_limits<int>::min();
         ObjectSubType[i] = EObjectSubType::NONE;
 
         ObjectVelY[i] = 0;

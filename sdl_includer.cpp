@@ -201,7 +201,7 @@ SDL_Surface *SyobonKZFixImage(SDL_Surface * image, const char *filename)
             if (newimage)
             {
                 SDL_Rect srcrect, destrect;
-                srcrect.x = 0; srcrect.y = 0; srcrect.w = image->w; srcrect.h = image->w;
+                srcrect.x = 0; srcrect.y = 0; srcrect.w = image->w; srcrect.h = image->h;
                 destrect.x = 0; destrect.y = 0; destrect.w = newimage->w; destrect.h = newimage->h;
                 SDL_BlitSurface(image, &srcrect, newimage, &destrect);
                 printf("Successfully converted\n");
