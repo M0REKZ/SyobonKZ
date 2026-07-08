@@ -1,8 +1,25 @@
 Release Changelog
 -----------------
 
-**SyobonKZ V2**
-* Still nothing xd
+**SyobonKZ V2 (In Development)**
+* Improve code for readability
+* Add functions to help modding the game
+* Working on Syobon Action 3 by DakaArts
+    * If you want to try it or help me developing it, use ´´´--dev-sa3´´´ parameter (will be removed when ready)
+* Add Kaizo Syobon by Zokalal (with permission #4)
+* Add Pause menu
+* Add Options menu (for now only has "Fullscreen" option)
+* Save progress and add level selection menu
+    * This also allows playing Level 9 in Android!
+* Add new parameters:
+    * ´´´--trap-display´´´: Cheating
+    * ´´´--fast-death´´´: Dont do death animation
+* Probably break SDL 1.2 support xD
+* Fix key keeping pressed after message box in SDL3
+* Fix mismatches from the original games:
+    * Level 2-3:
+        * Removed "wall" bricks that did not allow Defrag to fall
+* Fix random bugs...
 
 **SyobonKZ V1**
 * Add macOS, Android and Web Browser support
