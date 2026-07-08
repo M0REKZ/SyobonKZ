@@ -116,18 +116,21 @@ void HandleTitleKeys()
         TogglePauseState(EPauseState::LEVEL_SELECT);
     }
 
+    #define ISGAMEALLOWED(game) (currentGame != ESyobonActionGame::SYOBON_ACTION_3 || (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && SA3Enabled))
+
     static bool change_game_key_pressed = false;
     if(CheckHitKey(KEY_INPUT_LEFT))
     {
         if(!change_game_key_pressed)
         {
-            currentGame = (ESyobonActionGame)((int)currentGame - 1);
-            if(!SA3Enabled)
-                currentGame = ESyobonActionGame::SYOBON_ACTION_1_AND_2;
-            if(currentGame < ESyobonActionGame::FIRST)
+            do
             {
-                currentGame = ESyobonActionGame::LAST;
-            }
+                currentGame = (ESyobonActionGame)((int)currentGame - 1);
+                if(currentGame < ESyobonActionGame::FIRST)
+                {
+                    currentGame = ESyobonActionGame::LAST;
+                }
+            } while(!ISGAMEALLOWED(currentGame));
             change_game_key_pressed = true;
         }
     }
@@ -135,13 +138,14 @@ void HandleTitleKeys()
     {
         if(!change_game_key_pressed)
         {
-            currentGame = (ESyobonActionGame)((int)currentGame + 1);
-            if(!SA3Enabled)
-                currentGame = ESyobonActionGame::SYOBON_ACTION_1_AND_2;
-            if(currentGame > ESyobonActionGame::LAST)
+            do
             {
-                currentGame = ESyobonActionGame::FIRST;
-            }
+                currentGame = (ESyobonActionGame)((int)currentGame + 1);
+                if(currentGame > ESyobonActionGame::LAST)
+                {
+                    currentGame = ESyobonActionGame::FIRST;
+                }
+            } while(!ISGAMEALLOWED(currentGame));
             change_game_key_pressed = true;
         }
     }
@@ -149,6 +153,8 @@ void HandleTitleKeys()
     {
         change_game_key_pressed = false;
     }
+
+    #undef ISGAMEALLOWED
 
     //+KZ: before it checked for xx[0], replaced with SyobonStartGame for new menu
     if (SyobonStartGame)
