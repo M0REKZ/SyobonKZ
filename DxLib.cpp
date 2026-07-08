@@ -176,7 +176,8 @@ SDL_Surface *StringToSurface(const char *pstring, Uint32 color, byte font_size, 
 
 void DrawString(int a, int b, const char *x, Uint32 c)
 {
-    SDL_Color color = {(Uint8)(c >> 16), (Uint8)(c >> 8), (Uint8)(c)};
+    SDL_Color color;
+    SyobonKZGetRGBA(c, color);
     SDL_Surface *rendered = SyobonKZRenderUTF8Text(font[fontsize], x, color);
     if (fontType == DX_FONTTYPE_EDGE)
     {

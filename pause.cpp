@@ -449,7 +449,8 @@ void HandlePauseState()
 
 void RenderPauseState()
 {
-    SyobonKZFillRect(screen, 0, 0);
+    setc0();
+    FillScreen();
     setc1();
 
     if(PauseState == EPauseState::LEVEL_SELECT)

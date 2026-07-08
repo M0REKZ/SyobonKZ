@@ -142,6 +142,9 @@
     //maybe SDL3_gfx functions should be replaced with their RGBA counterparts instead of single color argument
     #define GetGFXColor(r, g, b) ((Uint32)(0xFF) << 24 | (Uint32)(b) << 16 | (Uint32)(g) << 8 | (Uint32)(r) << 0)
 
+    //Fix color from DrawString() in DxLib.cpp
+    #define SyobonKZGetRGBA(pixel, sdlcolor) SDL_GetRGBA(pixel, SDL_GetPixelFormatDetails(screen->format), SDL_GetSurfacePalette(screen), &sdlcolor.r, &sdlcolor.g, &sdlcolor.b, &sdlcolor.a)
+
     //DxLib.h
     #define GetColor(r, g, b) SDL_MapSurfaceRGB(screen, r, g, b)
     //evil macro to only draw touch controls in android
@@ -284,6 +287,9 @@
 
     //Fix gfxcolor from main.cpp
     #define GetGFXColor(r, g, b) ((Uint32)(r) << 24 | (Uint32)(g) << 16 | (Uint32)(b) << 8 | (Uint32)0xFF)
+
+    //Fix color from DrawString() in DxLib.cpp
+    #define SyobonKZGetRGBA(pixel, sdlcolor) SDL_GetRGBA(pixel, screen->format, &sdlcolor.r, &sdlcolor.g, &sdlcolor.b, &sdlcolor.unused)
 
     //DxLib.h
     #define GetColor(r, g, b) SDL_MapRGB(screen->format, r, g, b)
