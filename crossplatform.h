@@ -5,6 +5,8 @@
 //Note that some functions are replaced by #defines, be careful
 //Also note that this header must be included after every other header!
 
+#include <unordered_set>
+
 #ifndef SYOBON_DXLIB_H
     #error "You must include DxLib.h before this header"
 #endif
@@ -46,6 +48,7 @@
 #endif
 
 void UpdateKeys();
+void ReleaseKeys();
 const char * GetSavePath();
 
 #endif

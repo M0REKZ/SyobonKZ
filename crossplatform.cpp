@@ -5,10 +5,13 @@
 
 #include "crossplatform.h"
 
+std::unordered_set<Uint32> QueuedReleasedKeys;
+
 #ifdef __EMSCRIPTEN__ // Emscripten
 
 void MainloopEmscripten()
 {
+    ReleaseKeys();
     UpdateKeys();
     SyobonQuit = 0;
     Mainprogram();
@@ -172,16 +175,17 @@ void Emscripten_WaitKey()
         if(!SDL_GetWindowSize(pWindow, &w, &h))
             return;
 
+        //Release keys
+        bool left_pressed = false;
+        bool right_pressed = false;
+        bool down_pressed = false;
+        bool up_pressed = false;
+        bool z_pressed = false;
+        bool escape_pressed = false;
+
+        //Save pressed keys
         for(int j = 0; j < devicecount; ++j)
         {
-            //Release keys
-            SetKeyState(KEY_INPUT_LEFT, false); 
-            SetKeyState(KEY_INPUT_RIGHT, false);
-            SetKeyState(KEY_INPUT_DOWN, false);
-            SetKeyState(KEY_INPUT_UP, false);
-            SetKeyState(KEY_INPUT_Z, false); //Jump, Start
-            SetKeyState(KEY_INPUT_ESCAPE, false);
-
             int count = 0;
             SDL_Finger **fingers = SDL_GetTouchFingers(touchids[j], &count);
 
@@ -190,20 +194,51 @@ void Emscripten_WaitKey()
                 SDL_Point TouchedPos = {(int)(fingers[i]->x * w), (int)(fingers[i]->y * h)};
 
                 if(SDL_PointInRect(&TouchedPos, &LeftButton))
-                    SetKeyState(KEY_INPUT_LEFT, true); 
+                    left_pressed = true; 
                 else if(SDL_PointInRect(&TouchedPos, &RightButton))
-                    SetKeyState(KEY_INPUT_RIGHT, true);
+                    right_pressed = true;
                 else if(SDL_PointInRect(&TouchedPos, &DownButton))
-                    SetKeyState(KEY_INPUT_DOWN, true); 
+                    down_pressed = true; 
                 else if(SDL_PointInRect(&TouchedPos, &UpButton))
-                    SetKeyState(KEY_INPUT_UP, true); 
+                    up_pressed = true; 
                 else if(SDL_PointInRect(&TouchedPos, &JumpButton))
-                    SetKeyState(KEY_INPUT_Z, true);
+                    z_pressed = true;
                 else if(SDL_PointInRect(&TouchedPos, &PauseButton))
-                    SetKeyState(KEY_INPUT_ESCAPE, true);
+                    escape_pressed = true;
 
             }
         }
+
+        //Queue released keys
+        if(left_pressed)
+            SetKeyState(KEY_INPUT_LEFT, true); 
+        else
+            QueuedReleasedKeys.insert(KEY_INPUT_LEFT);
+        
+        if(right_pressed)
+            SetKeyState(KEY_INPUT_RIGHT, true);
+        else
+            QueuedReleasedKeys.insert(KEY_INPUT_RIGHT);
+
+        if(down_pressed)
+            SetKeyState(KEY_INPUT_DOWN, true); 
+        else
+            QueuedReleasedKeys.insert(KEY_INPUT_DOWN);
+        
+        if(up_pressed)
+            SetKeyState(KEY_INPUT_UP, true); 
+        else
+            QueuedReleasedKeys.insert(KEY_INPUT_UP);
+        
+        if(z_pressed)
+            SetKeyState(KEY_INPUT_Z, true);
+        else
+            QueuedReleasedKeys.insert(KEY_INPUT_Z);
+        
+        if(escape_pressed)
+            SetKeyState(KEY_INPUT_ESCAPE, true);
+        else
+            QueuedReleasedKeys.insert(KEY_INPUT_ESCAPE);
     }
 
     SDL_Surface * pDrawControlsSurface = nullptr;
@@ -338,6 +373,7 @@ void MainLoop()
 {
     while (ProcessMessage() == 0)
     {
+        ReleaseKeys();
         #ifdef __ANDROID__
             UpdateTouchControls();
             HandleTouchInput();
@@ -394,7 +430,8 @@ void UpdateKeys()
             SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS(event), true);
             break;
         case SYOBONKZ_EVENT_KEYUP:
-            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS(event), false);
+            //SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS(event), false);
+            QueuedReleasedKeys.insert(SYOBONKZ_KEY_EVENT_SDL_ALIAS(event));
             break;
         case SYOBONKZ_EVENT_JOYAXISMOTION:
             if (event.jaxis.which == 0)
@@ -430,6 +467,15 @@ void UpdateKeys()
             break;
         }
     }
+}
+
+void ReleaseKeys()
+{
+    for(auto &released_key : QueuedReleasedKeys)
+    {
+        SetKeyState(released_key, false);
+    }
+    QueuedReleasedKeys.clear();
 }
 
 const char *GetSavePath()
