@@ -98,7 +98,7 @@ void HandleTitleKeys()
         }
         break;
         
-    case ESyobonActionGame::SYOBON_ACTION_3:
+    default:
         break;
 
     }
@@ -116,18 +116,21 @@ void HandleTitleKeys()
         TogglePauseState(EPauseState::LEVEL_SELECT);
     }
 
+    #define ISGAMEALLOWED(game) (currentGame != ESyobonActionGame::SYOBON_ACTION_3 || (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && SA3Enabled))
+
     static bool change_game_key_pressed = false;
     if(CheckHitKey(KEY_INPUT_LEFT))
     {
         if(!change_game_key_pressed)
         {
-            currentGame = (ESyobonActionGame)((int)currentGame - 1);
-            if(!SA3Enabled)
-                currentGame = ESyobonActionGame::SYOBON_ACTION_1_AND_2;
-            if(currentGame < ESyobonActionGame::FIRST)
+            do
             {
-                currentGame = ESyobonActionGame::LAST;
-            }
+                currentGame = (ESyobonActionGame)((int)currentGame - 1);
+                if(currentGame < ESyobonActionGame::FIRST)
+                {
+                    currentGame = ESyobonActionGame::LAST;
+                }
+            } while(!ISGAMEALLOWED(currentGame));
             change_game_key_pressed = true;
         }
     }
@@ -135,13 +138,14 @@ void HandleTitleKeys()
     {
         if(!change_game_key_pressed)
         {
-            currentGame = (ESyobonActionGame)((int)currentGame + 1);
-            if(!SA3Enabled)
-                currentGame = ESyobonActionGame::SYOBON_ACTION_1_AND_2;
-            if(currentGame > ESyobonActionGame::LAST)
+            do
             {
-                currentGame = ESyobonActionGame::FIRST;
-            }
+                currentGame = (ESyobonActionGame)((int)currentGame + 1);
+                if(currentGame > ESyobonActionGame::LAST)
+                {
+                    currentGame = ESyobonActionGame::FIRST;
+                }
+            } while(!ISGAMEALLOWED(currentGame));
             change_game_key_pressed = true;
         }
     }
@@ -149,6 +153,8 @@ void HandleTitleKeys()
     {
         change_game_key_pressed = false;
     }
+
+    #undef ISGAMEALLOWED
 
     //+KZ: before it checked for xx[0], replaced with SyobonStartGame for new menu
     if (SyobonStartGame)
@@ -182,6 +188,10 @@ void UpdateTitleScreen()
         
         case ESyobonActionGame::SYOBON_ACTION_3:
             author = "Originally by DakaArts";
+            break;
+
+        case ESyobonActionGame::KAIZO_SYOBON:
+            author = "Originally by Zokalal";
             break;
         }
 
@@ -232,8 +242,9 @@ void UpdateTitleScreen()
 void RenderTitleScreen()
 {
     int author_y = 30;
-    if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+    switch(currentGame)
     {
+    case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
         //setcolor(160, 180, 250);
         //fillrect(0, 0, fxmax, fymax);
 
@@ -245,9 +256,8 @@ void RenderTitleScreen()
 
         setcolor(0, 0, 0);
         str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
-    }
-    else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
-    {
+        break;
+    case ESyobonActionGame::SYOBON_ACTION_3:
         //setcolor(160, 180, 250);
         //fillrect(0, 0, fxmax, fymax);
 
@@ -258,6 +268,20 @@ void RenderTitleScreen()
         str(PLUSKZ_REMAKE_TEXT, 480 / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, 120);
 
         author_y = 100;
+        break;
+    case ESyobonActionGame::KAIZO_SYOBON:
+        
+        //+KZ
+        setcolor(0, 0, 0);
+        str(PLUSKZ_EDITION_TEXT, 480 / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 120);
+
+        drawimage(Main_GFX_KZ[12], 240 - Main_GFX_KZ[12]->w / 2, 20);
+
+        setcolor(170, 0, 0);
+        str("Prece Enter For Hell.", 240 - 8 * 20 / 2, 250);
+
+        author_y = 100;
+        break;
     }
 
     setc0();

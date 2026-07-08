@@ -48,6 +48,14 @@ const char *pLevelSelectSA_3[] = {
     nullptr,
 };
 
+const char *pLevelSelectKaizoSyobon[] = {
+    "Level 1",
+    "Level 2",
+    "Level 3",
+    "Level 4",
+    nullptr,
+};
+
 
 bool OptionsAvailable[] = {
     true,
@@ -203,6 +211,9 @@ const char ** GetCurrentLabels()
         case ESyobonActionGame::SYOBON_ACTION_3:
             return pLevelSelectSA_3;
             break;
+        case ESyobonActionGame::KAIZO_SYOBON:
+            return pLevelSelectKaizoSyobon;
+            break;
         }
     }
     return nullptr;
@@ -258,8 +269,10 @@ void ChangeToPauseState(EPauseState newstate)
             if(finishedlevel.Game != currentGame)
                 continue;
             
-            if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+            switch (currentGame)
             {
+            case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+            
                 //Syobon Action 1
                 for(int lvl = 1; lvl < 5; lvl++)
                 {
@@ -286,10 +299,28 @@ void ChangeToPauseState(EPauseState newstate)
                     OptionsAvailable[8] = true;
                     ShowLevelAsFinished[8] = true;
                 }
-            }
-            else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
-            {
-
+                break;
+            
+            case ESyobonActionGame::SYOBON_ACTION_3:
+                for(int lvl = 1; lvl < 6; lvl++)
+                {
+                    if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
+                    {
+                        OptionsAvailable[lvl] = true;
+                        ShowLevelAsFinished[lvl - 1] = true;
+                    }
+                }
+                break;
+            case ESyobonActionGame::KAIZO_SYOBON:
+                for(int lvl = 1; lvl < 5; lvl++)
+                {
+                    if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
+                    {
+                        OptionsAvailable[lvl] = true;
+                        ShowLevelAsFinished[lvl - 1] = true;
+                    }
+                }
+                break;
             }
         }
 
@@ -362,8 +393,9 @@ void HandlePauseState()
                 if(OptionsAvailable[CurrentSelection])
                 {
                     //get level from selection
-                    if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                    switch(currentGame)
                     {
+                    case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
                         if(CurrentSelection >= 0 && CurrentSelection < 4)
                         {
                             SyobonWorld = 1;
@@ -382,15 +414,23 @@ void HandlePauseState()
                             SyobonLevel = 1;
                             SyobonSection = 0;
                         }
-                    }
-                    else if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
-                    {
+                        break;
+                    case ESyobonActionGame::SYOBON_ACTION_3:
                         if(CurrentSelection >= 0 && CurrentSelection < 5)
                         {
                             SyobonWorld = 1;
                             SyobonLevel = CurrentSelection + 1;
                             SyobonSection = 0;
                         }
+                        break;
+                    case ESyobonActionGame::KAIZO_SYOBON:
+                        if(CurrentSelection >= 0 && CurrentSelection < 4)
+                        {
+                            SyobonWorld = 1;
+                            SyobonLevel = CurrentSelection + 1;
+                            SyobonSection = 0;
+                        }
+                        break;
                     }
 
                     startgame = true;

@@ -64,6 +64,7 @@ void loadg(void)
     Main_GFX_KZ[9] = LoadGraph("res/sa3/jumpscare_plant_1.png", false);
     Main_GFX_KZ[10] = LoadGraph("res/sa3/jumpscare_plant_2.png", false);
     Main_GFX_KZ[11] = LoadGraph("res/kz/levelicons.png", false);
+    Main_GFX_KZ[12] = LoadGraph("res/kaizosyobon/syobon3.png", false);
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
     Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);
@@ -170,8 +171,11 @@ void loadg(void)
     // Sliced_GFX[32][4] was not even in this list, so probably the creator of that mod
     // forgot to upload loadg.cpp and the assets in the latest game zip...
     // im using alternative edited versions for now
-    Sliced_GFX[31][x1] = Sliced_GFX_KZ[0]; // DerivationGraph(293, 92, 64, 29, Main_GFX[x1]);
-    Sliced_GFX[32][x1] = Sliced_GFX_KZ[1];
+    //
+    // dont uncomment this, im using Sliced_GFX_KZ directly now
+    //Sliced_GFX[31][x1] = Sliced_GFX_KZ[0]; // DerivationGraph(293, 92, 64, 29, Main_GFX[x1]);
+    //Sliced_GFX[32][x1] = Sliced_GFX_KZ[1];
+    //
 
     // 中間フラグ (Intermediate flag)
     //+KZ: 42 to fix gray line, previously it was 40

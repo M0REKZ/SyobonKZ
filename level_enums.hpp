@@ -18,6 +18,7 @@ enum class ELevelType : int
     SKY = 3,
     CASTLE = 4,
     ICY = 5,
+    KAIZO_SYOBON_OVERWORLD_SLIP = 6,
 };
 
 
@@ -64,6 +65,8 @@ enum class EBlockType : int
     ITEM_BLOCK_MUSHROOM = 102,   // "Delicious!"
     ITEM_BLOCK_MUSHROOM_2 = 103, // "Not poisonous, but..."
     ITEM_BLOCK_STAR = 104,
+
+    KAIZO_SYOBON_ITEM_BLOCK_105 = 105, //+KZ: from SA:All Stars
 
     // Invisible item block with infinite poisonous mushrooms
     ITEM_BLOCK_POISON_HIDDEN = 110,
@@ -247,6 +250,7 @@ enum class ELiftType : int
     PILLAR_FALL = 11,
 
     PILLAR_BOUNCY = 12,
+    KAIZO_SYOBON_UNKNOWN_13 = 13, //+KZ: from SA:All Stars, but seems like a invalid type?
     PILLAR_BRICKS = 15,
 
     GRAY = 21,
@@ -541,6 +545,15 @@ enum class EBlockSubType : int
     MESSAGE_BLOCK_2_4_2 = 9,
     MESSAGE_BLOCK_3_1_0 = 10,
     MESSAGE_BLOCK_1_3_0_3 = 80, //appears after mystery ball is taken
+
+    //Kaizo Syobon
+    MESSAGE_BLOCK_KAIZO_SYOBON_1 = 12,
+    MESSAGE_BLOCK_KAIZO_SYOBON_2 = 17,
+    MESSAGE_BLOCK_KAIZO_SYOBON_3 = 13,
+    MESSAGE_BLOCK_KAIZO_SYOBON_4 = 14,
+    MESSAGE_BLOCK_KAIZO_SYOBON_5 = 15,
+    MESSAGE_BLOCK_KAIZO_SYOBON_6 = 16,
+
     MESSAGE_BLOCK_MAX = 100, //seems to be a "MAX" ids value
 
     //animation after firing laser in 1-3

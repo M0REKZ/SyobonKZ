@@ -352,17 +352,33 @@ void MainLoop()
 
 byte WaitKey()
 {
+    bool quit_wait_key = false;
+    SDL_Event outkey;
     SDL_Event event;
-    while (true)
+    while (!quit_wait_key)
     {
         while (SDL_PollEvent(&event))
-            if (event.type == SYOBONKZ_EVENT_KEYDOWN
+        {
+            if (event.type == SYOBONKZ_EVENT_KEYDOWN)
+            {
+                SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS(event), true);
+                quit_wait_key = true;
+                outkey = event;
+            }
+            else if(event.type == SYOBONKZ_EVENT_KEYUP)
+            {
+                SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS(event), false);
+            }
             #ifdef __ANDROID__
-            || event.type == SDL_EVENT_FINGER_DOWN
+            if (event.type == SDL_EVENT_FINGER_DOWN)
+            {
+                quit_wait_key = true;
+                outkey = event;
+            }
             #endif
-            )
-                return SYOBONKZ_KEY_EVENT_SDL_ALIAS;
+        }
     }
+    return SYOBONKZ_KEY_EVENT_SDL_ALIAS(outkey);
 }
 
 #endif
@@ -375,10 +391,10 @@ void UpdateKeys()
         switch (event.type)
         {
         case SYOBONKZ_EVENT_KEYDOWN:
-            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS, true);
+            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS(event), true);
             break;
         case SYOBONKZ_EVENT_KEYUP:
-            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS, false);
+            SetKeyState(SYOBONKZ_KEY_EVENT_SDL_ALIAS(event), false);
             break;
         case SYOBONKZ_EVENT_JOYAXISMOTION:
             if (event.jaxis.which == 0)

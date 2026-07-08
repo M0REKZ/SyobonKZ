@@ -43,6 +43,7 @@ void RenderBlocks()
                     BlockType[t] == EBlockType::ITEM_BLOCK_MUSHROOM ||
                     BlockType[t] == EBlockType::ITEM_BLOCK_MUSHROOM_2 ||
                     BlockType[t] == EBlockType::ITEM_BLOCK_STAR && BlockSubType[t] == EBlockSubType::ITEM_BLOCK_STAR_NORMAL ||
+                    BlockType[t] == EBlockType::KAIZO_SYOBON_ITEM_BLOCK_105 ||
                     BlockType[t] == EBlockType::ITEM_BLOCK_TRAP_HIDDEN && BlockSubType[t] == EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_VISIBLE ||
                     BlockType[t] == EBlockType::ITEM_BLOCK_PSWITCH
                 )
