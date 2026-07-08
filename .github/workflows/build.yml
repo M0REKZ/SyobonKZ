@@ -42,7 +42,7 @@ jobs:
         run: |
           cd build
           mkdir SyobonKZ-Linux
-          mv ./SyobonAction ./SyobonKZ-Linux/
+          mv ./SyobonKZ ./SyobonKZ-Linux/
           mv ./res ./SyobonKZ-Linux/
           mv ./BGM ./SyobonKZ-Linux/
           mv ./SE ./SyobonKZ-Linux/
@@ -89,7 +89,7 @@ jobs:
         run: |
           cd build
           mkdir SyobonKZ-Windows
-          mv ./SyobonAction.exe ./SyobonKZ-Windows/
+          mv ./SyobonKZ.exe ./SyobonKZ-Windows/
           mv ./res ./SyobonKZ-Windows/
           mv ./BGM ./SyobonKZ-Windows/
           mv ./SE ./SyobonKZ-Windows/
@@ -123,7 +123,7 @@ jobs:
         run: |
           cd build
           mkdir SyobonKZ-macOS
-          mv ./SyobonAction ./SyobonKZ-macOS/
+          mv ./SyobonKZ ./SyobonKZ-macOS/
           mv ./res ./SyobonKZ-macOS/
           mv ./BGM ./SyobonKZ-macOS/
           mv ./SE ./SyobonKZ-macOS/

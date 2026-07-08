@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 11)
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
     set(EXECUTABLE_NAME main)
 else()
-    set(EXECUTABLE_NAME SyobonAction)
+    set(EXECUTABLE_NAME SyobonKZ)
 endif()
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
