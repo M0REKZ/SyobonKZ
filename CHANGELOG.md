@@ -3,10 +3,12 @@ Release Changelog
 
 **SyobonKZ V2 (In Development)**
 * Improve code for readability
+* Rename executable to "SyobonKZ"
 * Add functions to help modding the game
 * Working on Syobon Action 3 by DakaArts
     * If you want to try it or help me developing it, use ´´´--dev-sa3´´´ parameter (will be removed when ready)
 * Add Kaizo Syobon by Zokalal (with permission #4)
+* Make input more responsive
 * Add Pause menu
 * Add Options menu (for now only has "Fullscreen" option)
 * Save progress and add level selection menu (still not added in SDL 1.2 version)
