@@ -33,12 +33,12 @@ void stagecls()
 		LiftSizeX[t] = 1;
 		LiftVelY[t] = 0;
 		LiftFrictionY[t] = 0;
-		srmuki[t] = 0;
-		sron[t] = 0;
-		sree[t] = 0;
-		srsok[t] = 0;
-		srmove[t] = 0;
-		srmovep[t] = 0;
+		LiftDirection[t] = 0;
+		LiftON[t] = 0;
+		//sree[t] = 0;
+		LiftVelX[t] = 0;
+		LiftPlayerFatigueX[t] = 0;
+		//srmovep[t] = 0;
 		LiftType[t] = ELiftType::YELLOW;
 	}
 	// for (t=0;t<sqmax;t++){sqa[t]=-9000000;sqb[t]=1;sqc[t]=1;sqd[t]=1;sqgtype[t]=0;sqtype[t]=0;}
@@ -128,7 +128,7 @@ void stage()
 				LiftX[LiftCount] = xx[21] * 100;
 				LiftY[LiftCount] = xx[22] * 100;
 				LiftSizeX[LiftCount] = 3000;
-				srtype[LiftCount] = 0;
+				LiftInteractType[LiftCount] = 0;
 				LiftCount++;
 				if (LiftCount >= LIFT_MAX)
 					LiftCount = 0;
@@ -1524,32 +1524,32 @@ void HandleSyobonActionOneLevels()
         LiftX[t] = 111 * 29 * 100;
         LiftY[t] = (8 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 5;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 5;
         LiftVelY[t] = -300;
         LiftCount++;
         t = LiftCount;
         LiftX[t] = 111 * 29 * 100;
         LiftY[t] = (0 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 5;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 5;
         LiftVelY[t] = -300;
         LiftCount++;
         t = 10;
         LiftX[t] = 116 * 29 * 100;
         LiftY[t] = (4 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 1;
-        sracttype[t] = 5;
+        LiftInteractType[t] = 1;
+        LiftMovementType[t] = 5;
         LiftVelY[t] = 300;
         LiftCount++;
         t = 11;
         LiftX[t] = 116 * 29 * 100;
         LiftY[t] = (12 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 1;
-        sracttype[t] = 5;
+        LiftInteractType[t] = 1;
+        LiftMovementType[t] = 5;
         LiftVelY[t] = 300;
         LiftCount++;
 
@@ -2666,8 +2666,8 @@ void HandleSyobonActionOneLevels()
         LiftX[t] = 33 * 29 * 100;
         LiftY[t] = (3 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 0;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 0;
         LiftVelY[t] = 0;
         LiftType[t] = ELiftType::BREAKING;
         LiftCount++;
@@ -2675,16 +2675,16 @@ void HandleSyobonActionOneLevels()
         LiftX[t] = 39 * 29 * 100 - 2000;
         LiftY[t] = (6 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 1;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 1;
         LiftVelY[t] = 0;
         LiftCount++;
         t = LiftCount;
         LiftX[t] = 45 * 29 * 100 + 1500;
         LiftY[t] = (10 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 0;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 0;
         LiftVelY[t] = 0;
         LiftType[t] = ELiftType::PUSH_LEFT;
         LiftCount++;
@@ -2693,8 +2693,8 @@ void HandleSyobonActionOneLevels()
         LiftX[t] = 95 * 29 * 100;
         LiftY[t] = (7 * 29 - 12) * 100;
         LiftSizeX[t] = 180 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 0;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 0;
         LiftVelY[t] = 0;
         LiftType[t] = ELiftType::PILLAR;
         LiftCount++;
@@ -2702,8 +2702,8 @@ void HandleSyobonActionOneLevels()
         LiftX[t] = 104 * 29 * 100;
         LiftY[t] = (9 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 0;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 0;
         LiftVelY[t] = 0;
         LiftType[t] = ELiftType::PILLAR_BOUNCY;
         LiftCount++;
@@ -2711,8 +2711,8 @@ void HandleSyobonActionOneLevels()
         LiftX[t] = 117 * 29 * 100;
         LiftY[t] = (3 * 29 - 12) * 100;
         LiftSizeX[t] = 90 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 1;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 1;
         LiftVelY[t] = 0;
         LiftType[t] = ELiftType::PILLAR_BRICKS;
         LiftCount++;
@@ -2720,8 +2720,8 @@ void HandleSyobonActionOneLevels()
         LiftX[t] = 124 * 29 * 100;
         LiftY[t] = (5 * 29 - 12) * 100;
         LiftSizeX[t] = 210 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 0;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 0;
         LiftVelY[t] = 0;
         LiftType[t] = ELiftType::PILLAR;
         LiftCount++;
@@ -3755,7 +3755,7 @@ void HandleSyobonActionOneLevels()
         ObjectType[t] = EObjectType::FALLING_BLOCKS;
         ObjectSubType[t] = EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_X_ONLY;
         ObjectCount++;
-        // スクロール消し
+        // スクロール消し (Scrolling OFF)
         t = ObjectCount;
         ObjectX[t] = 124 * 29 * 100 + 3000;
         ObjectY[t] = (2 * 29 - 12) * 100;
@@ -3783,7 +3783,7 @@ void HandleSyobonActionOneLevels()
         ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA;
         ObjectCount++;
 
-        // 地面1
+        // 地面1 (Ground 1)
         t = ObjectCount;
         ObjectX[t] = 0 * 29 * 100 - 0;
         ObjectY[t] = 9 * 29 * 100 + 1700;
@@ -3845,36 +3845,36 @@ void HandleSyobonActionOneLevels()
         EnemyAppearSubType[t] = (EEnemySubType)105;
         EnemyAppearCount++;
 
-        // ステルスうめぇ
+        // ステルスうめぇ (Stealth is awesome)
         t = EnemyAppearCount;
         EnemyAppearX[t] = 57 * 29 * 100;
         EnemyAppearY[t] = (2 * 29 - 12 + 10) * 100 - 500;
         EnemyAppearType[t] = EEnemyType::EVIL_CLOUD;
         EnemyAppearSubType[t] = EEnemySubType::EVIL_CLOUD_HIDDEN;
         EnemyAppearCount++;
-        // ブロックもどき
+        // ブロックもどき (Block lookalike)
         t = EnemyAppearCount;
         EnemyAppearX[t] = 77 * 29 * 100;
         EnemyAppearY[t] = (5 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::SPIKY_BLOCK;
         EnemyAppearSubType[t] = EEnemySubType::SPIKY_BLOCK_MESSAGE_BLOCK;
         EnemyAppearCount++;
-        // ボス
+        // ボス (Boss)
         t = EnemyAppearCount;
         EnemyAppearX[t] = 130 * 29 * 100;
         EnemyAppearY[t] = (8 * 29 - 12) * 100;
         EnemyAppearType[t] = EEnemyType::MOLALLA;
         EnemyAppearSubType[t] = EEnemySubType::MOLALLA_ALIVE;
         EnemyAppearCount++;
-        // クックル
+        // クックル (Kukkuru)
         t = EnemyAppearCount;
         EnemyAppearX[t] = 142 * 29 * 100;
         EnemyAppearY[t] = (10 * 29 - 12) * 100;
-        EnemyAppearType[t] = EEnemyType::KUKURRU;
+        EnemyAppearType[t] = EEnemyType::KUKKURU;
         EnemyAppearSubType[t] = EEnemySubType::NONE;
         EnemyAppearCount++;
 
-        // マグマ
+        // マグマ (Magma)
         BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 7 * 29 * 100 - 300;
         BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
@@ -3896,25 +3896,25 @@ void HandleSyobonActionOneLevels()
             BackgroundCount = 0;
 
         BlockCount = 0;
-        // ON-OFFブロック
+        // ON-OFFブロック (ON-OFF Block)
         BlockSubType[BlockCount] = EBlockSubType::ON_BLOCK_LOCKED;
         BlockCreateLegacy(29 * 29, 3 * 29 - 12, EBlockType::ON_BLOCK);
         // 1-2
         BlockCreateLegacy(34 * 29, 9 * 29 - 12, EBlockType::GROUND_TOP);
         BlockCreateLegacy(35 * 29, 9 * 29 - 12, EBlockType::GROUND_TOP);
-        // 隠し
+        // 隠し (Hidden)
         BlockCreateLegacy(55 * 29 + 15, 6 * 29 - 12, EBlockType::ITEM_BLOCK_HIDDEN);
         // BlockCreate(62*29,9*29-12,2);
-        // 隠しON-OFF
+        // 隠しON-OFF (Hidden ON-OFF)
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_FIREBAR_SWITCH;
         BlockCreateLegacy(50 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_TRAP_HIDDEN);
-        // ヒント3
+        // ヒント3 (Hint 3)
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_1_4_0;
         BlockCreateLegacy(1 * 29, 5 * 29 - 12, EBlockType::MESSAGE_BLOCK);
-        // ファイア
+        // ファイア (Fire)
         BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_BURNING_FLOWER;
         BlockCreateLegacy(86 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
-        // キノコなし　普通
+        // キノコなし　普通 (No mushrooms, normal)
         // txtype[tco]=2;BlockCreate(81*29,1*29-12,5);
         // 音符
         BlockSubType[BlockCount] = EBlockSubType::NOTE_BLOCK_WHITE_HIDDEN;
@@ -3952,16 +3952,16 @@ void HandleSyobonActionOneLevels()
         LiftX[t] = 93 * 29 * 100;
         LiftY[t] = (10 * 29 - 12) * 100;
         LiftSizeX[t] = 60 * 100;
-        srtype[t] = 0;
-        sracttype[t] = 1;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 1;
         LiftVelY[t] = 0;
         LiftCount++;
         t = 20;
         LiftX[t] = 119 * 29 * 100 + 300;
         LiftY[t] = (10 * 29 - 12) * 100;
         LiftSizeX[t] = 12 * 30 * 100 + 1000;
-        srtype[t] = 0;
-        sracttype[t] = 0;
+        LiftInteractType[t] = 0;
+        LiftMovementType[t] = 0;
         LiftType[t] = ELiftType::GRAY;
         LiftVelY[t] = 0;
         LiftCount++;
@@ -4219,7 +4219,7 @@ void HandleSyobonActionTwoLevels()
             NONE,NONE,
             NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
             NONE,NONE,NONE}};
-        // 追加情報
+        // 追加情報 (Additional information)
         BlockCount = 0;
         //
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_2_1_0_1;
@@ -4330,7 +4330,7 @@ void HandleSyobonActionTwoLevels()
     }
 
     if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 0)
-    { // 2-2(地上)
+    { // 2-2(地上) (2-2 (Above ground))
         bgmchange(Music[1]);
         StageColor = ELevelType::OVERWORLD;
         scrollx = 2900 * (19 - 19);
@@ -4396,7 +4396,7 @@ void HandleSyobonActionTwoLevels()
     }
 
     if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 1)
-    { // 2-2(地下)
+    { // 2-2(地下) (2-2 (Underground))
         bgmchange(Music[2]);
         StageColor = ELevelType::UNDERGROUND;
         PlayerX = 7500;
@@ -5339,8 +5339,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 1 * 29 * 100;
         LiftY[LiftCount] = (10 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 5 * 3000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 1;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 1;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
@@ -5348,8 +5348,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 18 * 29 * 100;
         LiftY[LiftCount] = (4 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 3 * 3000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
@@ -5357,8 +5357,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 35 * 29 * 100;
         LiftY[LiftCount] = (4 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 5 * 3000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
@@ -5366,8 +5366,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 35 * 29 * 100;
         LiftY[LiftCount] = (8 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 5 * 3000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
@@ -5375,8 +5375,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 94 * 29 * 100;
         LiftY[LiftCount] = (6 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 3 * 3000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
@@ -6097,8 +6097,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 74 * 29 * 100 - 1500;
         LiftY[LiftCount] = (7 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 2 * 3000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 1;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 1;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::YELLOW;
         LiftCount = 20;
@@ -6106,8 +6106,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 97 * 29 * 100;
         LiftY[LiftCount] = (12 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 12 * 3000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::GRAY;
         LiftCount += 1;
@@ -6445,8 +6445,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 41 * 29 * 100;
         LiftY[LiftCount] = (3 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 3 * 3000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PUSH_RIGHT;
         LiftCount = 0;
@@ -7817,8 +7817,8 @@ void HandleKaizoSyobonLevels()
         LiftX[LiftCount] = 5800;
         LiftY[LiftCount] = 7500;
         LiftSizeX[LiftCount] = 18000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 1;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 1;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
         LiftY[LiftCount] = false;
@@ -7826,8 +7826,8 @@ void HandleKaizoSyobonLevels()
         LiftX[LiftCount] = 29000;
         LiftY[LiftCount] = 13300;
         LiftSizeX[LiftCount] = 15000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR_BOUNCY;
         LiftY[LiftCount] = false;
@@ -7835,8 +7835,8 @@ void HandleKaizoSyobonLevels()
         LiftX[LiftCount] = 52200;
         LiftY[LiftCount] = 16200;
         LiftSizeX[LiftCount] = 18000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
         LiftY[LiftCount] = false;
@@ -7844,32 +7844,32 @@ void HandleKaizoSyobonLevels()
         LiftX[LiftCount] = 75400;
         LiftY[LiftCount] = 19100;
         LiftSizeX[LiftCount] = 9000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
         LiftX[LiftCount] = 90800;
         LiftY[LiftCount] = 13300;
         LiftSizeX[LiftCount] = 9000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
         LiftX[LiftCount] = 108200;
         LiftY[LiftCount] = 1700;
         LiftSizeX[LiftCount] = 9000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
         LiftX[LiftCount] = 275500;
         LiftY[LiftCount] = 16200;
         LiftSizeX[LiftCount] = 19000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
         LiftY[LiftCount] = false;
@@ -7877,8 +7877,8 @@ void HandleKaizoSyobonLevels()
         LiftX[LiftCount] = 304500;
         LiftY[LiftCount] = 24900;
         LiftSizeX[LiftCount] = 39000;
-        srtype[LiftCount] = 0;
-        sracttype[LiftCount] = 0;
+        LiftInteractType[LiftCount] = 0;
+        LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
         LiftY[LiftCount] = false;

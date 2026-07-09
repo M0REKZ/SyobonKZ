@@ -250,7 +250,7 @@ void RenderTitleScreen()
 
         //+KZ
         setcolor(0, 0, 0);
-        str(PLUSKZ_EDITION_TEXT, 480 / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 120);
+        str(PLUSKZ_EDITION_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 120);
 
         drawimage(Main_GFX[30], 240 - 380 / 2, 60);
 
@@ -265,7 +265,7 @@ void RenderTitleScreen()
 
         //+KZ
         setcolor(0, 0, 0);
-        str(PLUSKZ_REMAKE_TEXT, 480 / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, 120);
+        str(PLUSKZ_REMAKE_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, 120);
 
         author_y = 100;
         break;
@@ -273,7 +273,7 @@ void RenderTitleScreen()
         
         //+KZ
         setcolor(0, 0, 0);
-        str(PLUSKZ_EDITION_TEXT, 480 / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 120);
+        str(PLUSKZ_EDITION_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 120);
 
         drawimage(Main_GFX_KZ[12], 240 - Main_GFX_KZ[12]->w / 2, 20);
 
@@ -285,7 +285,7 @@ void RenderTitleScreen()
     }
 
     setc0();
-    str(author, 480 / 2 - (author.length() * 9) / 2, author_y);
+    str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
 }
 
 void TitleWaitToReleaseKey()

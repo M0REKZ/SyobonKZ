@@ -118,7 +118,7 @@ int actaon[7];
 //メッセージ
 int PlayerMessageTimer, PlayerMessageType;
 
-int mascrollmax = 21000;	//9000
+int PlayerScrollCenterX = 21000;	//9000
 
 
 
@@ -131,7 +131,8 @@ int BlockItemCount[BLOCK_MAX];
 EBlockSubType BlockSubType[BLOCK_MAX];
 
 //メッセージブロック
-int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
+// +KZ: tmsgx, tmsgnobix, tmsgnobiy, were unused
+int TextBoxTimer, TextBoxState, TextBoxSizeY, TextBoxMessageID;
 
 //効果を持たないグラ
 int ExtraGraphicCount;
@@ -172,10 +173,10 @@ EDecorationType BackgroundType[BACKGROUND_MAX];
 //リフト
 int LiftCount;
 int LiftX[LIFT_MAX], LiftY[LIFT_MAX], LiftSizeX[LIFT_MAX], LiftVelY[LIFT_MAX], LiftFrictionY[LIFT_MAX];
-int srtype[LIFT_MAX], sracttype[LIFT_MAX];
+int LiftInteractType[LIFT_MAX], LiftMovementType[LIFT_MAX];
 ELiftType LiftType[LIFT_MAX];
-int srmuki[LIFT_MAX], sron[LIFT_MAX], sree[LIFT_MAX];
-int srsok[LIFT_MAX], srmovep[LIFT_MAX], srmove[LIFT_MAX];
+int LiftDirection[LIFT_MAX], LiftON[LIFT_MAX];
+int LiftVelX[LIFT_MAX], LiftPlayerFatigueX[LIFT_MAX];
 
 
 
@@ -191,7 +192,7 @@ int fx = 0, fy = 0, fzx, fzy, scrollx, scrolly;
 //強制スクロール
 int kscroll = 0;
 //画面サイズ(ファミコンサイズ×2)(256-224)
-int fxmax = 48000, fymax = 42000;
+int fxmax = SYOBONKZ_SCREEN_SIZE_X * 100, fymax = SYOBONKZ_SCREEN_SIZE_Y * 100;
 
 
 

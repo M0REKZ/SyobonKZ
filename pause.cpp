@@ -454,9 +454,9 @@ void RenderPauseState()
     setc1();
 
     if(PauseState == EPauseState::LEVEL_SELECT)
-        DrawString(480 / 2 - ((sizeof("Select level:") - 1) * 9) / 2, 30, "Select level:", color);
+        DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Select level:") - 1) * 9) / 2, 30, "Select level:", color);
     else
-        DrawString(480 / 2 - ((sizeof("Paused") - 1) * 9) / 2, 50, "Paused", color);
+        DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Paused") - 1) * 9) / 2, 50, "Paused", color);
 
     const char ** pcurrent_labels = GetCurrentLabels();
     if(pcurrent_labels)
@@ -467,7 +467,7 @@ void RenderPauseState()
             optionYsize = 50;
 
         if(Offset)
-            DrawString(480 / 2 - (9) / 2, 100 - (optionYsize - 5), "Λ", color);
+            DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - (9) / 2, 100 - (optionYsize - 5), "Λ", color);
 
         bool drawdownarrow = true;
         for(int i = Offset; i < Offset + GetCurrentMaxRenderOptions(); i++)
@@ -492,7 +492,7 @@ void RenderPauseState()
 
             int ypos = i - Offset;
 
-            DrawString(480 / 2 - (strlen(pcurrent_labels[i]) * 9) / 2, 100 + (ypos * optionYsize), pcurrent_labels[i], color);
+            DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - (strlen(pcurrent_labels[i]) * 9) / 2, 100 + (ypos * optionYsize), pcurrent_labels[i], color);
             if(PauseState == EPauseState::LEVEL_SELECT)
             {
                 int x = -10;
@@ -512,12 +512,12 @@ void RenderPauseState()
             {
                 if(CurrentSelection == i)
                 {
-                    DrawString(480 / 2 - ((strlen(pcurrent_labels[i]) + 5) * 9) / 2, 100 + (ypos * optionYsize), "->", color);
-                    DrawString(480 / 2 + ((strlen(pcurrent_labels[i])) * 9) / 2, 100 + (ypos * optionYsize), "<-", color);
+                    DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((strlen(pcurrent_labels[i]) + 5) * 9) / 2, 100 + (ypos * optionYsize), "->", color);
+                    DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 + ((strlen(pcurrent_labels[i])) * 9) / 2, 100 + (ypos * optionYsize), "<-", color);
                 }
             }
         }
         if(drawdownarrow && pcurrent_labels[(Offset + GetCurrentMaxRenderOptions())])
-            DrawString(480 / 2 - (9) / 2, 100 + (GetCurrentMaxRenderOptions() * optionYsize - 5), "V", color);
+            DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - (9) / 2, 100 + (GetCurrentMaxRenderOptions() * optionYsize - 5), "V", color);
     }
 }

@@ -68,13 +68,13 @@ void SyobonKZQuit()
         //
         //pWindowSurface is not here
 
-        //Texture 480x420 for faster rendering
+        //Texture SYOBONKZ_SCREEN_SIZE_X x SYOBONKZ_SCREEN_SIZE_Y for faster rendering
         if(pTexture)
         {
             SDL_DestroyTexture(pTexture);
         }
 
-        //Renderer for 480x420 game surface (only for SDL3_gfx.....)
+        //Renderer for SYOBONKZ_SCREEN_SIZE_X x SYOBONKZ_SCREEN_SIZE_Y game surface (only for SDL3_gfx.....)
         if(pRenderer)
         {
             SDL_DestroyRenderer(pRenderer);
@@ -167,7 +167,7 @@ SDL_Surface *SyobonKZCreateWindow(int width, int height, int bpp, Uint32 flags)
         }
 
         pTexture = SDL_CreateTexture(pWindowRenderer, PixelFormat,
-        SDL_TEXTUREACCESS_STREAMING, 480, 420);
+        SDL_TEXTUREACCESS_STREAMING, SYOBONKZ_SCREEN_SIZE_X, SYOBONKZ_SCREEN_SIZE_Y);
 
         if(!pTexture)
         {

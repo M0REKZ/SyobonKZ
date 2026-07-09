@@ -1,5 +1,8 @@
 //+KZ: OMG SDL13-compat!!! nah, just for what we need
 
+#define SYOBONKZ_SCREEN_SIZE_X 480
+#define SYOBONKZ_SCREEN_SIZE_Y 420
+
 #ifdef SYOBONKZ_USE_SDL3
 	#include <SDL3/SDL.h>
 	#include <SDL3_image/SDL_image.h>
@@ -158,7 +161,7 @@
         if(SDL_GetWindowSize(pWindow, &w, &h))    \
         {   \
             SDL_FRect srcrect, destrect;     \
-            srcrect.x = 0; srcrect.y = 0; srcrect.w = 480; srcrect.h = 420; \
+            srcrect.x = 0; srcrect.y = 0; srcrect.w = SYOBONKZ_SCREEN_SIZE_X; srcrect.h = SYOBONKZ_SCREEN_SIZE_Y; \
         \
             float scaleX = (float)w / srcrect.w; \
             float scaleY = (float)h / srcrect.h; \

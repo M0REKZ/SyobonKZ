@@ -144,11 +144,9 @@ enum class EEnemyType : int
 
     // Enemy at the end of 1-4 on the bridge
     // Called "ボス" (boss) in Chiku's comments
-    BOSS = 30,
-    MOLALLA = BOSS,
+    MOLALLA = 30,
 
-    CHICKEN = 31,
-    KUKURRU = CHICKEN,
+    KUKKURU = 31,
 
     // ID exists in the code but doesn't do anything??
     UNKNOWN_ID_50 = 50,

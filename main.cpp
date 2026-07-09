@@ -138,47 +138,47 @@ void rpaint()
 		HandleEnemiesMessages();
 
 		// メッセージブロック (Message Block)
-		if (tmsgtm > 0)
+		if (TextBoxTimer > 0)
 		{
 			ttmsg();
-			if (tmsgtype == 1)
+			if (TextBoxState == 1)
 			{
 				xx[0] = 1200;
-				tmsgy += xx[0];
-				if (tmsgtm == 1)
+				TextBoxSizeY += xx[0];
+				if (TextBoxTimer == 1)
 				{
-					tmsgtm = 80000000;
-					tmsgtype = 2;
+					TextBoxTimer = 80000000;
+					TextBoxState = 2;
 				}
 			} // 1
 
-			else if (tmsgtype == 2)
+			else if (TextBoxState == 2)
 			{
-				tmsgy = 0;
-				tmsgtype = 3;
-				tmsgtm = 15 + 1;
+				TextBoxSizeY = 0;
+				TextBoxState = 3;
+				TextBoxTimer = 15 + 1;
 				#ifdef SYOBON_WAIT_KEY_MSGBOX_FIX
 				WaitKey();
 				#endif
 			}
 
-			else if (tmsgtype == 3)
+			else if (TextBoxState == 3)
 			{
 				xx[0] = 1200;
-				tmsgy += xx[0];
+				TextBoxSizeY += xx[0];
 				#ifndef SYOBON_WAIT_KEY_MSGBOX_FIX
-				if (tmsgtm == 15) //+KZ: WaitKey() works better above for emscripten
+				if (TextBoxTimer == 15) //+KZ: WaitKey() works better above for emscripten
 					WaitKey();
 				#endif
-				if (tmsgtm == 1)
+				if (TextBoxTimer == 1)
 				{
-					tmsgtm = 0;
-					tmsgtype = 0;
-					tmsgy = 0;
+					TextBoxTimer = 0;
+					TextBoxState = 0;
+					TextBoxSizeY = 0;
 				}
 			} // 1
 
-			tmsgtm--;
+			TextBoxTimer--;
 		} // tmsgtm
 
 		// メッセージ (Message)
@@ -273,7 +273,7 @@ void Mainprogram()
 
 	// キー (Key)
 
-	if (SyobonState == ESyobonGameState::IN_GAME && tmsgtype == 0)
+	if (SyobonState == ESyobonGameState::IN_GAME && TextBoxState == 0)
 	{
 
 		//+KZ: Init
@@ -341,8 +341,8 @@ void Mainprogram()
 				LiftX[t] = PlayerX + fx;
 				LiftY[t] = (13 * 29 - 12) * 100;
 				LiftSizeX[t] = 30 * 100;
-				srtype[t] = 0;
-				sracttype[t] = 0;
+				LiftInteractType[t] = 0;
+				LiftMovementType[t] = 0;
 				LiftVelY[t] = 0;
 				LiftType[t] = ELiftType::YELLOW;
 				LiftCount++;
@@ -376,7 +376,7 @@ void Mainprogram()
 			{
 			case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
 			case ESyobonActionGame::KAIZO_SYOBON:
-				xx[2] = mascrollmax;
+				xx[2] = PlayerScrollCenterX;
 				xx[3] = 0;
 				xx[1] = xx[2];
 				if (PlayerX > xx[1] && fzx < scrollx)
@@ -391,27 +391,27 @@ void Mainprogram()
 				break;
 			//SA3 camera can go back
 			case ESyobonActionGame::SYOBON_ACTION_3:
-				xx[2] = mascrollmax;
+				xx[2] = PlayerScrollCenterX;
 				xx[3] = 0;
 				xx[1] = xx[2];
 
-				xx[5] = PlayerX - mascrollmax;
-				if(PlayerX - mascrollmax > 0)
+				xx[5] = PlayerX - PlayerScrollCenterX;
+				if(PlayerX - PlayerScrollCenterX > 0)
 				{
 					if((fzx < scrollx))
 					{
-						fx += PlayerX - mascrollmax;
-						fzx += PlayerX - mascrollmax;
-						PlayerX = mascrollmax;
+						fx += PlayerX - PlayerScrollCenterX;
+						fzx += PlayerX - PlayerScrollCenterX;
+						PlayerX = PlayerScrollCenterX;
 					}
 				}
 				else
 				{
 					if((fzx > 0))
 					{
-						fx += PlayerX - mascrollmax;
-						fzx += PlayerX - mascrollmax;
-						PlayerX = mascrollmax;
+						fx += PlayerX - PlayerScrollCenterX;
+						fzx += PlayerX - PlayerScrollCenterX;
+						PlayerX = PlayerScrollCenterX;
 					}
 				}
 
@@ -792,14 +792,14 @@ void ttmsg()
 
 	xx[1] = 6000 / 100;
 	xx[2] = 4000 / 100;
-	if (tmsgtype == 1 || tmsgtype == 2)
+	if (TextBoxState == 1 || TextBoxState == 2)
 	{
 		setc0();
-		fillrect(xx[1], xx[2], 360, tmsgy / 100);
+		fillrect(xx[1], xx[2], 360, TextBoxSizeY / 100);
 		setc1();
-		drawrect(xx[1], xx[2], 360, tmsgy / 100);
+		drawrect(xx[1], xx[2], 360, TextBoxSizeY / 100);
 	}
-	if (tmsgtype == 2)
+	if (TextBoxState == 2)
 	{
 		// フォント
 		// From Syobon Action All Stars
@@ -812,7 +812,7 @@ void ttmsg()
 			setfont(20, 5);
 		}
 
-		if (tmsg == 0)
+		if (TextBoxMessageID == 0)
 		{
 			setc1();
 			// フォント
@@ -820,7 +820,7 @@ void ttmsg()
 			txmsg("テスト　hoge", 0);
 		}
 
-		if (tmsg == 1)
+		if (TextBoxMessageID == 1)
 		{
 			setc1();
 			//txmsg("", 0);
@@ -831,25 +831,25 @@ void ttmsg()
 			txmsg("                       ちく より", 6);
 		}
 
-		if (tmsg == 2)
+		if (TextBoxMessageID == 2)
 		{
 			txmsg("            ？が必要です ", 3);
 			txmsg("                         m9(^Д^)", 6);
 		}
 
-		if (tmsg == 3)
+		if (TextBoxMessageID == 3)
 		{
 			txmsg("   別にコインに意味ないけどね ", 3);
 			txmsg("                      (・ω・ )ﾉｼ", 6);
 		}
 
-		if (tmsg == 4)
+		if (TextBoxMessageID == 4)
 		{
 			txmsg("この先に隠しブロックがあります ", 2);
 			txmsg("注意してください !!", 4);
 		}
 
-		if (tmsg == 5)
+		if (TextBoxMessageID == 5)
 		{
 			//txmsg("", 0);
 			txmsg(" 前回よりも難易度を下げましたので", 1);
@@ -857,7 +857,7 @@ void ttmsg()
 			txmsg("                       ちく より", 6);
 		}
 
-		if (tmsg == 6)
+		if (TextBoxMessageID == 6)
 		{
 			//txmsg("", 0);
 			txmsg(" そこにいる敵のそばによると、      ", 1);
@@ -866,7 +866,7 @@ void ttmsg()
 			txmsg("   可愛いですね。                  ", 3);
 		}
 
-		if (tmsg == 7)
+		if (TextBoxMessageID == 7)
 		{
 			//txmsg("", 0);
 			txmsg(" あの敵は連れて来れましたか?、     ", 1);
@@ -875,21 +875,21 @@ void ttmsg()
 		}
 
 		//+KZ: 80 was missing?
-		if (tmsg == 8 || tmsg == 80)
+		if (TextBoxMessageID == 8 || TextBoxMessageID == 80)
 		{
 			txmsg("そんな容易に", 1);
 			txmsg("ヒントに頼るもんじゃないぜ", 2);
 			txmsg("ほら、さっさと次行きな!!", 3);
 		}
 
-		if (tmsg == 9)
+		if (TextBoxMessageID == 9)
 		{
 			txmsg(" 正真正銘のファイナルステージ。    ", 1);
 			txmsg(" クリアすれば遂にエンディング!!    ", 2);
 			txmsg(" その土管から戻ってもいいんだぜ?   ", 3);
 		}
 
-		if (tmsg == 10)
+		if (TextBoxMessageID == 10)
 		{
 			txmsg(" 床が凍ってるから、すっごい滑るよ。",
 				  1);
@@ -897,7 +897,7 @@ void ttmsg()
 			//txmsg(" 　                      ", 3);
 		}
 
-		if (tmsg == 100)
+		if (TextBoxMessageID == 100)
 		{
 			txmsg("え？私ですか？ ", 0);
 			txmsg("いやぁ、ただの通りすがりの", 2);
@@ -907,19 +907,19 @@ void ttmsg()
 		}
 
 		//Kaizo Syobon (SA: All Stars)
-		if (tmsg == 12)
+		if (TextBoxMessageID == 12)
 		{
 			txmsg("Welcome to Kaizo Syobon!", 0);
 			txmsg("And...that's all I have to say.", 1);
 			txmsg("Good luck!", 4);
 		}
-		if (tmsg == 13)
+		if (TextBoxMessageID == 13)
 		{
 			txmsg("You beat level 1!", 0);
 			txmsg("But it was just a piece of cake,", 1);
 			txmsg("So good luck...", 2);
 		}
-		if (tmsg == 14)
+		if (TextBoxMessageID == 14)
 		{
 			txmsg("Wow, you beat level 2?", 0);
 			txmsg("Great job! But can you beat this", 1);
@@ -927,11 +927,11 @@ void ttmsg()
 			txmsg("Because this level has really", 3);
 			txmsg("hard things...", 4);
 		}
-		if (tmsg == 15)
+		if (TextBoxMessageID == 15)
 		{
 			txmsg("Hello! :3", 0);
 		}
-		if (tmsg == 16)
+		if (TextBoxMessageID == 16)
 		{
 			txmsg("Welcome to level 4", 0);
 			txmsg("Time to use some hard tricks", 1);
@@ -940,7 +940,7 @@ void ttmsg()
 			txmsg("Level, and you're on the finish", 4);
 			txmsg("Line!!!", 5);
 		}
-		if (tmsg == 17)
+		if (TextBoxMessageID == 17)
 		{
 			txmsg("There are hidden blocks here.", 2);
 			txmsg("Just search for them.", 3);
@@ -949,15 +949,15 @@ void ttmsg()
 		setfont(16, 4);
 	} // 2
 
-	if (tmsgtype == 3)
+	if (TextBoxState == 3)
 	{
-		xx[5] = (((15 - 1) * 1200 + 1500) / 100 - tmsgy / 100);
+		xx[5] = (((15 - 1) * 1200 + 1500) / 100 - TextBoxSizeY / 100);
 		if (xx[5] > 0)
 		{
 			setc0();
-			fillrect(xx[1], xx[2] + tmsgy / 100, 360, xx[5]);
+			fillrect(xx[1], xx[2] + TextBoxSizeY / 100, 360, xx[5]);
 			setc1();
-			drawrect(xx[1], xx[2] + tmsgy / 100, 360, xx[5]);
+			drawrect(xx[1], xx[2] + TextBoxSizeY / 100, 360, xx[5]);
 		}
 	}
 	#undef txmsg

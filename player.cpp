@@ -1040,8 +1040,8 @@ void HandlePlayerBlocks()
                         PlayerX + PlayerSizeX > xx[8] - 400 && PlayerX < xx[8] + xx[1])
                     {
                         BlockX[t] = -800000; // PlaySound(Sounds[4]);
-                        sracttype[20] = 1;
-                        sron[20] = 1;
+                        LiftMovementType[20] = 1;
+                        LiftON[20] = 1;
                         SyobonKZHaltMusic();
                         PlayerState = 301;
                         PlayerAITimer = 0;
@@ -1369,17 +1369,17 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[15]);
                         if (BlockSubType[t] <= EBlockSubType::MESSAGE_BLOCK_MAX)
                         {
-                            tmsgtype = 1;
-                            tmsgtm = 15;
-                            tmsgy = 300 + ((int)BlockSubType[t] - 1);
-                            tmsg = (int)BlockSubType[t];
+                            TextBoxState = 1;
+                            TextBoxTimer = 15;
+                            TextBoxSizeY = 300 + ((int)BlockSubType[t] - 1);
+                            TextBoxMessageID = (int)BlockSubType[t];
                         }
                         if (BlockSubType[t] == EBlockSubType::MESSAGE_BLOCK_1_3_0_4_WAIT_END)
                         {
-                            tmsgtype = 1;
-                            tmsgtm = 15;
-                            tmsgy = 400;
-                            tmsg = 100;
+                            TextBoxState = 1;
+                            TextBoxTimer = 15;
+                            TextBoxSizeY = 400;
+                            TextBoxMessageID = 100;
                             BlockSubType[t] = EBlockSubType::MESSAGE_BLOCK_1_3_0_4_SHOW_MESSAGE;
                         }
                     }
@@ -1517,7 +1517,7 @@ void HandlePlayerWalls()
                         ObjectAI[t] = 1;
                         ObjectVelY[t] = 0;
                     }
-                    if (ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2 && ObjectY[28] >= 48000 && t != 28 && ObjectAI[t] == 0 && Health >= 1)
+                    if (ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2 && ObjectY[28] >= 48000 /* +KZ: this is SYOBONKZ_SCREEN_SIZE_X * 100 */ && t != 28 && ObjectAI[t] == 0 && Health >= 1)
                     {
                         ObjectAI[t] = 1;
                         ObjectVelY[t] = 0;
@@ -1764,7 +1764,7 @@ void HandlePlayerWalls()
                                                  t3 *
                                                      3000 +
                                                  3000,
-                                             48000, 0, -6000, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
+                                             48000 /* +KZ: this is SYOBONKZ_SCREEN_SIZE_X * 100 */, 0, -6000, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
                             }
                         }
                         if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN)

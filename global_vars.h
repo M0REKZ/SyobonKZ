@@ -205,7 +205,9 @@ extern int PlayerMessageTimer;
 // @attention +KZ: int mmsgtype is now int PlayerMessageType
 extern int PlayerMessageType;
 
-extern int mascrollmax;	//9000
+// @attention +KZ: int mascrollmax is now int PlayerScrollCenterX
+// +KZ: Keeps the player/camera centered in screen
+extern int PlayerScrollCenterX;	//9000
 
 //ブロック (Block)
 // @attention +KZ: tmax is now BLOCK_MAX
@@ -228,7 +230,9 @@ extern int BlockItemCount[BLOCK_MAX];
 extern EBlockSubType BlockSubType[BLOCK_MAX];
 
 //メッセージブロック (Message Block)
-extern int tmsgtm, tmsgtype, tmsgx, tmsgy, tmsgnobix, tmsgnobiy, tmsg;
+// @attention +KZ: They were int tmsgtm, tmsgtype, tmsgy, tmsg;
+// +KZ: tmsgx, tmsgnobix, tmsgnobiy, were unused
+extern int TextBoxTimer, TextBoxState, TextBoxSizeY, TextBoxMessageID;
 
 //効果を持たないグラ (Grass with no effect) //+KZ: or Graphics with no effect? Google translate...
 // @attention +KZ: emax is now EXTRA_GRAPHIC_MAX
@@ -366,14 +370,27 @@ extern int LiftSizeX[LIFT_MAX];
 extern int LiftVelY[LIFT_MAX];
 // @attention +KZ int srf[srmax] renamed to LiftFrictionY[srmax]
 extern int LiftFrictionY[LIFT_MAX];
-extern int srtype[LIFT_MAX];
+// @attention +KZ int srtype[srmax] is now int LiftInteractType[srmax]
+// +KZ: Only type 0 and 1 are used, seems that 2 kills the player but is not used anywhere
+extern int LiftInteractType[LIFT_MAX];
 //extern int srgtype[srmax]; //+KZ: unused
-extern int sracttype[LIFT_MAX];
+// @attention +KZ int sracttype[srmax] is now int LiftMovementType[srmax]
+extern int LiftMovementType[LIFT_MAX];
 // @attention +KZ int srsp[srmax] is now ELiftType LiftType[srmax]
 // +KZ: This is confusing, there are like 3 or more variables indicating the type of the lifts,
 extern ELiftType LiftType[LIFT_MAX];
-extern int srmuki[LIFT_MAX], sron[LIFT_MAX], sree[LIFT_MAX];
-extern int srsok[LIFT_MAX], srmovep[LIFT_MAX], srmove[LIFT_MAX];
+// @attention +KZ int srmuki[srmax] is now int LiftDirection[srmax]
+extern int LiftDirection[LIFT_MAX];
+// @attention +KZ int sron[srmax] is now int LiftON[srmax]
+extern int LiftON[LIFT_MAX];
+//extern int sree[LIFT_MAX]; //+KZ: unused
+// @attention +KZ int srsok[srmax] renamed to LiftVelX[srmax]
+// +KZ: note that this is directly affected by LiftDirection
+extern int LiftVelX[LIFT_MAX];
+//extern int srmovep[LIFT_MAX]; //+KZ: unused
+// @attention +KZ int srmove[srmax] renamed to LiftPlayerFatigueX[srmax]
+// +KZ: kills the player if he has high speed in the green lift for too much time, probably to avoid softlocks
+extern int LiftPlayerFatigueX[LIFT_MAX];
 
 
 

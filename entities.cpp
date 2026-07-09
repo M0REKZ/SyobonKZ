@@ -296,7 +296,7 @@ void HandleEnemies()
 
                 break;
 
-                // あらまき
+                // あらまき (Aramaki)
             case EEnemyType::SEAL:
                 EnemyMovementType[t] = 0; // end();
                 if (EnemySubType[t] == EEnemySubType::SEAL_UP)
@@ -483,7 +483,7 @@ void HandleEnemies()
 
                 break;
 
-                // ジエン大砲
+                // ジエン大砲 (Jien Cannon) //+KZ: or "Cannon Jien" i guess, google translate is weird sometimes
             case EEnemyType::BALL_ROCKET:
                 EnemyMovementType[t] = 0;
                 xx[10] = 0;
@@ -498,7 +498,7 @@ void HandleEnemies()
                     EnemyY[t] += 400;
                 break;
 
-                // スーパーブーン (Super Boon) //+KZ: xD??
+                // スーパーブーン (Super Boon)
             case EEnemyType::SUPER_BOON:
                 EnemyMovementType[t] = 0;
                 xx[22] = 20;
@@ -555,7 +555,7 @@ void HandleEnemies()
                     xx[10] = -400;
                 break;
 
-                // モララー (Molalla)
+                // モララー (Morarā) //+KZ: also named Moralar, Molalla
             case EEnemyType::MOLALLA:
                 EnemyAITimer[t] += 1;
                 if (EnemySubType[t] == EEnemySubType::MOLALLA_ALIVE)
@@ -1143,7 +1143,7 @@ void HandleEnemies()
                                 PlayerMessageType = 54;
                             }
 
-                            if (EnemyType[t] == EEnemyType::KUKURRU)
+                            if (EnemyType[t] == EEnemyType::KUKKURU)
                             {
                                 EnemyMessageTimer[t] = 30;
                                 EnemyMessageType[t] = 24;
@@ -1759,8 +1759,8 @@ void HandleEnemiesBlocks()
 			if (EnemyY[t] - fy > xx[9] - xx[0] * 2 - 2000 && EnemyY[t] - fy < xx[9] + xx[1] - xx[0] * 2 + 2000 && EnemyX[t] + EnemySizeX[t] - fx > xx[8] - 400 && EnemyX[t] - fx < xx[8] + xx[1])
 			{
 				BlockX[tt] = -800000; // PlaySound(Sounds[4]);
-				sracttype[20] = 1;
-				sron[20] = 1;
+				LiftMovementType[20] = 1;
+				LiftON[20] = 1;
 			}
 		}
 	} // tt
@@ -2200,11 +2200,11 @@ void HandleLifts()
             // if (srf[t]>=500)srf[t]=0;
 
             // 動き (Movement)
-            switch (sracttype[t])
+            switch (LiftMovementType[t])
             {
 
             case 1:
-                if (sron[t] == 1)
+                if (LiftON[t] == 1)
                     LiftFrictionY[t] = 60;
                 break;
 
@@ -2231,13 +2231,13 @@ void HandleLifts()
                 */
 
             case 5:
-                if (srmove[t] == 0)
+                if (LiftPlayerFatigueX[t] == 0)
                 {
-                    srmuki[t] = 0;
+                    LiftDirection[t] = 0;
                 }
                 else
                 {
-                    srmuki[t] = 1;
+                    LiftDirection[t] = 1;
                 }
                 if (LiftY[t] - fy < -2100)
                 {
@@ -2250,7 +2250,7 @@ void HandleLifts()
                 break;
 
             case 6:
-                if (sron[t] == 1)
+                if (LiftON[t] == 1)
                     LiftFrictionY[t] = 40;
                 break;
 
@@ -2269,7 +2269,7 @@ void HandleLifts()
                     PlayerY = xx[9] - PlayerSizeY + 100;
                     // if (sracttype[t]!=7)PlayerGrounded=1;
 
-                    if (srtype[t] == 1)
+                    if (LiftInteractType[t] == 1)
                     {
                         LiftVelY[10] = 900;
                         LiftVelY[11] = 900;
@@ -2298,10 +2298,10 @@ void HandleLifts()
                     */
 
                     // 落下 (Falling)
-                    if ((sracttype[t] == 1) && sron[t] == 0)
-                        sron[t] = 1;
+                    if ((LiftMovementType[t] == 1) && LiftON[t] == 0)
+                        LiftON[t] = 1;
 
-                    if (sracttype[t] == 1 && sron[t] == 1 || sracttype[t] == 3 || sracttype[t] == 5)
+                    if (LiftMovementType[t] == 1 && LiftON[t] == 1 || LiftMovementType[t] == 3 || LiftMovementType[t] == 5)
                     {
                         PlayerY += LiftVelY[t];
                         // if (srmuki[t]==0)
@@ -2311,7 +2311,7 @@ void HandleLifts()
                         // mb+=srsok[t];
                     }
 
-                    if (sracttype[t] == 7)
+                    if (LiftMovementType[t] == 7)
                     {
                         if (actaon[2] != 1)
                         {
@@ -2342,35 +2342,35 @@ void HandleLifts()
                     if (LiftType[t] == ELiftType::PUSH_LEFT)
                     {
                         PlayerVelX = -2400;
-                        srmove[t] += 1;
-                        if (srmove[t] >= 100)
+                        LiftPlayerFatigueX[t] += 1;
+                        if (LiftPlayerFatigueX[t] >= 100)
                         {
                             Health = 0;
                             PlayerMessageType = 53;
                             PlayerMessageTimer = 30;
-                            srmove[t] = -5000;
+                            LiftPlayerFatigueX[t] = -5000;
                         }
                     }
 
                     if (LiftType[t] == ELiftType::PUSH_RIGHT)
                     {
                         PlayerVelX = 2400;
-                        srmove[t] += 1;
-                        if (srmove[t] >= 100)
+                        LiftPlayerFatigueX[t] += 1;
+                        if (LiftPlayerFatigueX[t] >= 100)
                         {
                             Health = 0;
                             PlayerMessageType = 53;
                             PlayerMessageTimer = 30;
-                            srmove[t] = -5000;
+                            LiftPlayerFatigueX[t] = -5000;
                         }
                     }
                     // if (srtype[t]==1){md=-600;mb-=610;Health-=1;if (mmutekion!=1)mmutekitm=40;}
-                } // 判定内
+                } // 判定内 (Within the judgment)
 
-                // 疲れ初期化
-                if ((LiftType[t] == ELiftType::PUSH_LEFT || LiftType[t] == ELiftType::PUSH_RIGHT) && PlayerVelX != -2400 && srmove[t] > 0)
+                // 疲れ初期化 (Fatigue reset)
+                if ((LiftType[t] == ELiftType::PUSH_LEFT || LiftType[t] == ELiftType::PUSH_RIGHT) && PlayerVelX != -2400 && LiftPlayerFatigueX[t] > 0)
                 {
-                    srmove[t]--;
+                    LiftPlayerFatigueX[t]--;
                 }
 
                 if (LiftType[t] == ELiftType::PILLAR_FALL)
@@ -2379,9 +2379,9 @@ void HandleLifts()
                             xx[8] + xx[0] - 2000 &&
                         PlayerX < xx[8] + xx[12] - xx[0])
                     {
-                        sron[t] = 1;
+                        LiftON[t] = 1;
                     } // && mb+mnobib>xx[9]-1000 && mb+mnobib<xx[9]+xx[1]+2000)
-                    if (sron[t] == 1)
+                    if (LiftON[t] == 1)
                     {
                         LiftFrictionY[t] = 60;
                         LiftY[t] += LiftVelY[t];
@@ -2390,7 +2390,7 @@ void HandleLifts()
                 // トゲ(下) (Spikes (below))
                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0] && PlayerY > xx[9] - xx[1] / 2 && PlayerY < xx[9] + xx[1] / 2)
                 {
-                    if (srtype[t] == 2)
+                    if (LiftInteractType[t] == 2)
                     {
                         if (PlayerVelY < 0)
                         {
@@ -2404,11 +2404,11 @@ void HandleLifts()
                     }
                 }
                 // 落下 (Falling)
-                if (sracttype[t] == 6)
+                if (LiftMovementType[t] == 6)
                 {
                     if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0])
                     {
-                        sron[t] = 1;
+                        LiftON[t] = 1;
                     }
                 }
 
@@ -2423,19 +2423,19 @@ void HandleLifts()
             }}
             */
 
-            if (sracttype[t] == 2 || sracttype[t] == 4)
+            if (LiftMovementType[t] == 2 || LiftMovementType[t] == 4)
             {
-                if (srmuki[t] == 0)
-                    LiftX[t] -= srsok[t];
-                if (srmuki[t] == 1)
-                    LiftX[t] += srsok[t];
+                if (LiftDirection[t] == 0)
+                    LiftX[t] -= LiftVelX[t];
+                if (LiftDirection[t] == 1)
+                    LiftX[t] += LiftVelX[t];
             }
-            if (sracttype[t] == 3 || sracttype[t] == 5)
+            if (LiftMovementType[t] == 3 || LiftMovementType[t] == 5)
             {
-                if (srmuki[t] == 0)
-                    LiftY[t] -= srsok[t];
-                if (srmuki[t] == 1)
-                    LiftY[t] += srsok[t];
+                if (LiftDirection[t] == 0)
+                    LiftY[t] -= LiftVelX[t];
+                if (LiftDirection[t] == 1)
+                    LiftY[t] += LiftVelX[t];
             }
             // 敵キャラ適用 (Applies to enemy characters)
             for (tt = 0; tt < ENEMY_MAX; tt++)
@@ -2511,13 +2511,13 @@ void RenderLifts()
                                  20,
                              (LiftY[t] - fy) / 100 +
                                  30,
-                             LiftSizeX[t] / 100 - 40, 480);
+                             LiftSizeX[t] / 100 - 40, 480); //+KZ: 480 is SYOBONKZ_SCREEN_SIZE_X, but here is used as Y?
                     setcolor(100, 80, 20);
                     drawrect((LiftX[t] - fx) / 100 +
                                  20,
                              (LiftY[t] - fy) / 100 +
                                  30,
-                             LiftSizeX[t] / 100 - 40, 480);
+                             LiftSizeX[t] / 100 - 40, 480); //+KZ: 480 is SYOBONKZ_SCREEN_SIZE_X, but here is used as Y?
                 }
             }
             if (LiftType[t] == ELiftType::PILLAR_BRICKS)

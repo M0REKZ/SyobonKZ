@@ -48,8 +48,8 @@ int DxLib_Init()
     }
 
     if (!(screen =
-              SyobonKZCreateWindow(480 /*(int)fmax/100 */,
-                               420 /*(int)fymax/100 */, 32,
+              SyobonKZCreateWindow(SYOBONKZ_SCREEN_SIZE_X /*(int)fmax/100 */,
+                               SYOBONKZ_SCREEN_SIZE_Y /*(int)fymax/100 */, 32,
                                SYOBONKZ_SDL_SWSURFACE | SYOBONKZ_SDL_DOUBLEBUF | SYOBONKZ_SDL_RESIZABLE | (StartFullScreenFlag ? SYOBONKZ_SDL_FULLSCREEN : 0))))
     {
         fprintf(stderr, "Unable to create SDL Window: %s\n", SDL_GetError());
