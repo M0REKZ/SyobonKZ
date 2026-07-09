@@ -110,7 +110,7 @@ int PlayerGrounded;
 ELookingDirection PlayerLookingDirection;
 int mjumptm, mkeytm;
 EPlayerGroundType PlayerGroundType;
-int mmutekitm, mmutekion;
+int PlayerNoDamageTimer, PlayerInvincibleON;
 //+KZ: these are never set, but are read?
 int mztm, mztype;
 

@@ -171,8 +171,8 @@ void HandlePlayer()
 
     //}//陸地 (Land)
 
-    if (mmutekitm >= -1)
-        mmutekitm--;
+    if (PlayerNoDamageTimer >= -1)
+        PlayerNoDamageTimer--;
 
     // HPがなくなったとき (When HP runs out)
     if (Health <= 0 && Health >= -9)

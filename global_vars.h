@@ -193,7 +193,12 @@ extern ELookingDirection PlayerLookingDirection;
 //  * mkasok
 
 extern int mjumptm, mkeytm;
-extern int mmutekitm, mmutekion;
+// @attention +KZ: int mmutekitm is now int PlayerNoDamageTimer
+// +KZ: It is enabled for 5 ticks after kicking a shell
+extern int PlayerNoDamageTimer;
+// @attention +KZ: int mmutekion is now int PlayerInvincibleON
+// +KZ: It is never initialized, but if PlayerInvincibleON == 1 player will kill any enemy it touches
+extern int PlayerInvincibleON;
 
 //+KZ: these are never set, but are read?
 extern int mztm, mztype;

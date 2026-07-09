@@ -946,7 +946,7 @@ void HandleEnemies()
                 xx[12] = PlayerVelY;
             xx[25] = 0;
 
-            if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 && PlayerX < xx[8] + EnemySizeX[t] - xx[0] * 2 && PlayerY + PlayerSizeY > xx[9] - xx[5] && PlayerY + PlayerSizeY < xx[9] + xx[1] + xx[12] && (mmutekitm <= 0 || PlayerVelY >= 100) && EnemyBlockAppearTimer[t] <= 0)
+            if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 && PlayerX < xx[8] + EnemySizeX[t] - xx[0] * 2 && PlayerY + PlayerSizeY > xx[9] - xx[5] && PlayerY + PlayerSizeY < xx[9] + xx[1] + xx[12] && (PlayerNoDamageTimer <= 0 || PlayerVelY >= 100) && EnemyBlockAppearTimer[t] <= 0)
             {
                 if (EnemyType[t] != EEnemyType::BALL_SPIKY && EnemyType[t] != EEnemyType::MAGMA && EnemyType[t] != EEnemyType::FLAME && ((int)EnemyType[t] <= 78 || EnemyType[t] == EEnemyType::FAKE_POLE) && PlayerGrounded != 1 && PlayerState != 200)
                 { // && atype[t]!=4 && atype[t]!=7){
@@ -1073,13 +1073,13 @@ void HandleEnemies()
                 xx[16] = -EnemySizeY[t] + 6000;
             if (PlayerX + PlayerSizeX > xx[8] + xx[4] && PlayerX < xx[8] + EnemySizeX[t] - xx[4] && PlayerY < xx[9] + EnemySizeY[t] + xx[15] && PlayerY + PlayerSizeY > xx[9] + EnemySizeY[t] - xx[0] + xx[16] && EnemyPlayerNoInteractTimer[t] <= 0 && EnemyBlockAppearTimer[t] <= 0)
             {
-                if (mmutekion == 1)
+                if (PlayerInvincibleON == 1)
                 {
                     EnemyX[t] = -9000000;
                 }
-                if (mmutekitm <= 0 && ((int)EnemyType[t] <= 99 || (int)EnemyType[t] >= 200))
+                if (PlayerNoDamageTimer <= 0 && ((int)EnemyType[t] <= 99 || (int)EnemyType[t] >= 200))
                 {
-                    if (mmutekion != 1 && PlayerState != 200)
+                    if (PlayerInvincibleON != 1 && PlayerState != 200)
                     {
                         // if (mmutekitm<=0)
 
@@ -1113,7 +1113,7 @@ void HandleEnemies()
                                 EnemyMessageType[t] = SyobonRand(2) + 15;
                             }
 
-                            if (EnemyType[t] == EEnemyType::SHELL && EnemySubType[t] >= EEnemySubType::SHELL_MOVING && mmutekitm <= 0)
+                            if (EnemyType[t] == EEnemyType::SHELL && EnemySubType[t] >= EEnemySubType::SHELL_MOVING && PlayerNoDamageTimer <= 0)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = 18;
@@ -1195,14 +1195,14 @@ void HandleEnemies()
                                     EnemySubType[t] = EEnemySubType::SHELL_MOVING;
                                     EnemyLookingDirection[t] = LOOKING_RIGHT;
                                     EnemyX[t] = PlayerX + PlayerSizeX + fx + PlayerVelX;
-                                    mmutekitm = 5;
+                                    PlayerNoDamageTimer = 5;
                                 }
                                 else
                                 {
                                     EnemySubType[t] = EEnemySubType::SHELL_MOVING;
                                     EnemyLookingDirection[t] = LOOKING_LEFT;
                                     EnemyX[t] = PlayerX - EnemySizeX[t] + fx - PlayerVelX;
-                                    mmutekitm = 5;
+                                    PlayerNoDamageTimer = 5;
                                 }
                             }
                             else
@@ -1992,7 +1992,7 @@ void RenderEnemies()
 
             } // 85
 
-            // ニャッスン
+            // ニャッスン (Nyassun)
             if (EnemyType[t] == EEnemyType::FALLING_CAT)
             {
                 if (PlayerX >= EnemyX[t] - fx - PlayerSizeX - 4000 && PlayerX <= EnemyX[t] - fx + EnemySizeX[t] + 4000)
@@ -2397,10 +2397,10 @@ void HandleLifts()
                             PlayerVelY = -PlayerVelY;
                         }
                         PlayerY += 110;
-                        if (mmutekitm <= 0)
+                        if (PlayerNoDamageTimer <= 0)
                             Health -= 1;
-                        if (mmutekion != 1)
-                            mmutekitm = 40;
+                        if (PlayerInvincibleON != 1)
+                            PlayerNoDamageTimer = 40;
                     }
                 }
                 // 落下 (Falling)
