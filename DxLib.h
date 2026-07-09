@@ -13,10 +13,6 @@
 
 #include "joyconfig.h"
 
-#define TRUE 1
-#define FALSE 0
-#define byte unsigned char
-
 #define GetNowCount() SDL_GetTicks()
 
 //UNIMPLEMENTED - macro substitution
@@ -44,19 +40,19 @@ extern TTF_Font *font[FONT_MAX];
 //Strings & fonts
 #define DX_FONTTYPE_NORMAL 0
 #define DX_FONTTYPE_EDGE 1
-void SetFontSize(byte size);
-void ChangeFontType(byte type);
-SDL_Surface *StringToSurface(const char * pstring, Uint32 color, byte font_size, byte font_type); //+KZ
+void SetFontSize(Uint8 size);
+void ChangeFontType(Uint8 type);
+SDL_Surface *StringToSurface(const char * pstring, Uint32 color, Uint8 font_size, Uint8 font_type); //+KZ
 void DrawString(int a, int b, const char *x, Uint32 c);
 void DrawFormatString(int a, int b, Uint32 color, const char *str, ...);
 
 extern SDL_Joystick* joystick;
 
-byte ProcessMessage();
-byte CheckHitKey(int key);
-byte WaitKey();
+Uint8 ProcessMessage();
+Uint8 CheckHitKey(int key);
+Uint8 WaitKey();
 
-//Uint32 GetColor(byte r, byte g, byte b);
+//Uint32 GetColor(Uint8 r, Uint8 g, Uint8 b);
 
 #define DrawGraph(a, b, mx, z) DrawGraphZ(a, b, mx)
 void DrawGraphZ(int a, int b, SDL_Surface * mx);

@@ -97,11 +97,11 @@ int DxLib_Init()
 SDL_Surface *screen;
 
 // Fonts
-byte fontsize = 0;
+Uint8 fontsize = 0;
 TTF_Font *font[FONT_MAX];
 
 // Strings
-void SetFontSize(byte size)
+void SetFontSize(Uint8 size)
 {
     fontsize = size;
     if (font[size] == NULL)
@@ -115,13 +115,13 @@ void SetFontSize(byte size)
     }
 }
 
-byte fontType = DX_FONTTYPE_NORMAL;
-void ChangeFontType(byte type)
+Uint8 fontType = DX_FONTTYPE_NORMAL;
+void ChangeFontType(Uint8 type)
 {
     fontType = type;
 }
 
-SDL_Surface *StringToSurface(const char *pstring, Uint32 color, byte font_size, byte font_type)
+SDL_Surface *StringToSurface(const char *pstring, Uint32 color, Uint8 font_size, Uint8 font_type)
 {
     SDL_Color temp_color = {(Uint8)(color >> 16), (Uint8)(color >> 8), (Uint8)(color)};
     SDL_Surface *rendered = SyobonKZRenderUTF8Text(font[font_size], pstring, temp_color);
@@ -379,12 +379,12 @@ void SyobonKZDrawGraphScaled(int x, int y, int scale_x, int scale_y, SDL_Surface
     }
 }
 
-byte ProcessMessage()
+Uint8 ProcessMessage()
 {
     return DxLibExit;
 }
 
-byte CheckHitKey(int key)
+Uint8 CheckHitKey(int key)
 {
     if (key == KEY_INPUT_Z && GetKeyState(SDLK_SEMICOLON))
         return true;

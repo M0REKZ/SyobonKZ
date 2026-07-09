@@ -328,7 +328,7 @@ enum ELookingDirection : int
     LOOKING_RIGHT = 1,
 };
 
-enum ELegacyStageDate : unsigned char
+enum ELegacyStageDate : uint8_t
 {
     //only IDs from 1 to 255 (unsigned char)
     //many IDs were not even used though and many things are missing

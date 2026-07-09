@@ -386,7 +386,7 @@ void MainLoop()
     }
 }
 
-byte WaitKey()
+Uint8 WaitKey()
 {
     bool quit_wait_key = false;
     SDL_Event outkey;
