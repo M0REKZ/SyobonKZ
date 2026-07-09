@@ -7,7 +7,7 @@ Release Changelog
 * Add functions to help modding the game
 * Working on Syobon Action 3 by DakaArts
     * If you want to try it or help me developing it, use ```--dev-sa3``` parameter (will be removed when ready)
-* Add Kaizo Syobon by Zokalal (with permission #4)
+* Add Kaizo Syobon by Zokalal (with permission https://github.com/M0REKZ/SyobonKZ/issues/4)
 * Make input more responsive
 * Add Pause menu
 * Add Options menu (for now only has "Fullscreen" option)
