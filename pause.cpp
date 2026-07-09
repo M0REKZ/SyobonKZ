@@ -284,7 +284,7 @@ void ChangeToPauseState(EPauseState newstate)
                 }
 
                 //Syobon Action 2
-                for(int lvl = 1; lvl < 4; lvl++)
+                for(int lvl = 1; lvl < 5; lvl++)
                 {
                     if(finishedlevel.World == 2 && finishedlevel.Level == lvl)
                     {
