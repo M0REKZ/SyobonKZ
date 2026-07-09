@@ -18,6 +18,8 @@ Release Changelog
     * ```--fast-death```: Dont do death animation
 * Fix key keeping pressed after message box in SDL3
 * Fix mismatches from the original games:
+    * Level 1-3:
+        * Fixed finish sound still being played after Defrag grabs the pole
     * Level 2-3:
         * Removed "wall" bricks that did not allow Defrag to fall
 * Fix random bugs...

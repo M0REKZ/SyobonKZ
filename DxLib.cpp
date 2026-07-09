@@ -558,6 +558,23 @@ void PlaySoundMem(SyobonKZChunk *s, int l)
     channels[bestChannel].StartTime = CurrentTime;
 }
 
+void StopSoundMem(SyobonKZChunk *pchunk)
+{
+    for (int i = 0; i < SYOBONKZ_MIX_CHANNELS; i++)
+    {
+        if (!SyobonKZIsChannelPlaying(i))
+        {
+            continue;
+        }
+ 
+        if (channels[i].sound == pchunk)
+        {
+            SyobonKZHaltChannel(i);
+            break;
+        }
+    }
+}
+
 SyobonKZChunk *LoadSoundMem(const char *f)
 {
     if (!sound)

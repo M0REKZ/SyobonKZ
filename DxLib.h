@@ -17,13 +17,13 @@
 
 //UNIMPLEMENTED - macro substitution
 #define SetFontThickness(f);
-#define StopSoundMem(s);
 //#define ChangeVolumeSoundMem(s, v); //+KZ seems unused
 
 //Sound
 #define DX_PLAYTYPE_LOOP -1
 #define DX_PLAYTYPE_BACK 0
 void PlaySoundMem(SyobonKZChunk* s, int l);
+void StopSoundMem(SyobonKZChunk * pchunk);
 SyobonKZChunk* LoadSoundMem(const char* f);
 SyobonKZMusic* LoadMusicMem(const char* f);
 #define CheckSoundMem(s) (!s)

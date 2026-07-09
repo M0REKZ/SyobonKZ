@@ -192,7 +192,7 @@ void HandlePlayer()
 
         SyobonKZHaltMusic();
         PlaySound(Sounds[12]);
-        StopSoundMem(Sounds[16]);
+        //StopSoundMem(Sounds[16]); //+KZ this is not needed since we already halted all channels
     } // Health
     // if (Health<=-10){
     if (PlayerState == 200)
