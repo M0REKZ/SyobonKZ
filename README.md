@@ -8,6 +8,17 @@
 ###### Developer/maintainer of this fork: +KZ (@M0REKZ)
 ###### [Syobon Action 2 readme (japanese)](readme_ja.txt)
 
+> [!NOTE]
+> **For modders:**
+>
+>    If you use this source code for your mod, would be cool if you give credits to "+KZ" and mention the SyobonKZ project, it takes a lot of time and high effort to improve Chiku's and Bluvel's code to make it easier to modify and port to other platforms.
+>
+>   Dont forget to also include Chiku as he requested in the original japanese readme.
+>
+> Thanks.
+>
+> *+KZ*
+
 SyobonKZ is a cross-platform port of the unforgiving Japanese platformer ***Syobon Action***.
 
 It is also known as:
