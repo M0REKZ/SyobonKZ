@@ -38,9 +38,8 @@ SyobonKZ includes the following game remakes/ports:
 * Shobon Action (Modified by Bluvel):
     * The "World 2" expansion made by Bluvel, also the most played and popular Syobon Action version thanks to OpenSyobonAction.
 * Syobon Action 3 (Remake):
-    * > [!IMPORTANT]
-      > Work in progress, use ´´´--dev-sa3´´´ to try the current state, expect bugs
     * Custom sequel made by DakaArts (Daka256xr), now remade with original Syobon Action code and physics!
+    * **Work in progress, use ```--dev-sa3``` to try the current state, expect bugs**
 * Kaizo Syobon:
     * Kaizo Syobon by Zokalal, directly ported from Syobon Action: All Stars!
 
