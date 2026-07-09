@@ -74,7 +74,7 @@ bool GetKeyState(Uint32 key);
 
 extern bool DxLibExit;
 
-//moved here to be used in other places
+//moved here to be used in other places (main.cpp)
 extern bool sound;
 
 //+KZ custom
