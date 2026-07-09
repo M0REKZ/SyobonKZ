@@ -6,7 +6,7 @@ Release Changelog
 * Rename executable to "SyobonKZ"
 * Add functions to help modding the game
 * Working on Syobon Action 3 by DakaArts
-    * If you want to try it or help me developing it, use ´´´--dev-sa3´´´ parameter (will be removed when ready)
+    * If you want to try it or help me developing it, use ```--dev-sa3``` parameter (will be removed when ready)
 * Add Kaizo Syobon by Zokalal (with permission #4)
 * Make input more responsive
 * Add Pause menu
@@ -14,8 +14,8 @@ Release Changelog
 * Save progress and add level selection menu (still not added in SDL 1.2 version)
     * This also allows playing Level 9 in Android!
 * Add new parameters:
-    * ´´´--trap-display´´´: Cheating
-    * ´´´--fast-death´´´: Dont do death animation
+    * ```--trap-display```: Cheating
+    * ```--fast-death```: Dont do death animation
 * Fix key keeping pressed after message box in SDL3
 * Fix mismatches from the original games:
     * Level 2-3:
