@@ -54,11 +54,12 @@ enum class EBlockType : int
     INVISIBLE_BLOCK = 9,
     SPIKE = 10,
 
-    // A trampoline that you can't interact with
-    //+KZ: this one probably was never intended to be used as a normal block
+    //+KZ: This one was probably never intended to be used as a normal block
     // it just happened that you can "hack" the block type to make it choose
-    // the trampoline sprite instead (and it only works in overworld and sky)
-    TRAMPOLINE_BROKEN = 16,
+    // that sprite instead (and it only works in specific level types).
+    //
+    // It's also funny that this ID is valid in stagedate IDs
+    TRAMPOLINE_HACK_OVERWORLD = 16,
 
     // A fake item block that you can't hit
     // (block at the start of 1-1)
@@ -345,7 +346,7 @@ enum ELegacyStageDate : uint8_t
     CLOUD_BLOCK = 8, // Only visible in overworld or sky stages
     COIN = 9, //9 makes a coin in stagedate!!
     SPIKE = 10,
-    TRAMPOLINE_BROKEN = 16, // A trampoline that you can't interact with
+    TRAMPOLINE_HACK_OVERWORLD = 16, // A trampoline that you can't interact with
 
     BLOCKS_END = 19,
     //20-29 makes Lifts
