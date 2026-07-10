@@ -144,7 +144,7 @@ void RenderWalls()
         if (ObjectX[t] - fx + ObjectSizeX[t] >= -10 && ObjectX[t] - fx <= fxmax + 1100)
         {
 
-            if (ObjectType[t] == EObjectType::VERTICAL_PIPE_BODY)
+            if (ObjectType[t] == EObjectType::GREEN_OUTLINE_PIPE_PART)
             {
                 setcolor(40, 200, 40);
                 fillrect((ObjectX[t] - fx) / 100,
@@ -155,7 +155,7 @@ void RenderWalls()
                          ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
             }
             // 土管
-            if (ObjectType[t] == EObjectType::VERTICAL_PIPE_HEAD)
+            if (ObjectType[t] == EObjectType::BLACK_OUTLINE_PIPE_PART)
             {
                 setcolor(0, 230, 0);
                 fillrect((ObjectX[t] - fx) / 100,
@@ -167,7 +167,7 @@ void RenderWalls()
                          ObjectSizeX[t] / 100, ObjectSizeY[t] / 100);
             }
             // 土管(下)
-            if (ObjectType[t] == EObjectType::HORIZONTAL_PIPE_BODY)
+            if (ObjectType[t] == EObjectType::VERTICAL_PIPE_BODY)
             {
                 setcolor(0, 230, 0);
                 fillrect((ObjectX[t] - fx) / 100,
@@ -186,7 +186,7 @@ void RenderWalls()
                          (ObjectY[t] - fy) / 100 + ObjectSizeY[t] / 100);
             }
             // 土管(横)
-            if (ObjectType[t] == EObjectType::HORIZONTAL_PIPE_HEAD)
+            if (ObjectType[t] == EObjectType::HORIZONTAL_PIPE_BODY)
             {
                 setcolor(0, 230, 0);
                 fillrect((ObjectX[t] - fx) / 100,

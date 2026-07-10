@@ -15,7 +15,7 @@ void stagecls()
 		ObjectSizeX[t] = 1;
 		ObjectSizeY[t] = 1;
 		ObjectAI[t] = 0;
-		ObjectType[t] = EObjectType::VERTICAL_PIPE_BODY;
+		ObjectType[t] = EObjectType::GREEN_OUTLINE_PIPE_PART;
 		ObjectSubType[t] = EObjectSubType::NONE;
 	}
 	// for (t=0;t<spmax;t++){spa[t]=-9000000;szyunni[t]=t;spb[t]=1;spc[t]=1;spd[t]=1;sptype[t]=0;spgtype[t]=0;}
@@ -113,17 +113,17 @@ void stage()
 	{
 		for (t = 0; t <= 16; t++)
 		{
-			xx[10] = 0;
+			ELegacyStageDate local_xx_10 = NONE;//local_xx_10 = 0;
 			if (stagedate[t][tt] >= 1 && stagedate[t][tt] <= 255)
-				xx[10] = (int)stagedate[t][tt];
+				local_xx_10 = stagedate[t][tt];
 			xx[21] = tt * 29;
 			xx[22] = t * 29 - 12;
-			xx[23] = xx[10];
-			if (xx[10] >= 1 && xx[10] <= 19 && xx[10] != 9)
+			xx[23] = local_xx_10;
+			if (local_xx_10 >= BRICK && local_xx_10 <= BLOCKS_END && local_xx_10 != COIN)
 			{
-				BlockCreateLegacy(tt * 29, t * 29 - 12, (EBlockType)xx[10]);
+				BlockCreateLegacy(tt * 29, t * 29 - 12, (EBlockType)local_xx_10);
 			}
-			if (xx[10] >= 20 && xx[10] <= 29)
+			if (local_xx_10 >= 20 && local_xx_10 <= 29)
 			{
 				LiftX[LiftCount] = xx[21] * 100;
 				LiftY[LiftCount] = xx[22] * 100;
@@ -133,7 +133,7 @@ void stage()
 				if (LiftCount >= LIFT_MAX)
 					LiftCount = 0;
 			}
-			if (xx[10] == 30)
+			if (local_xx_10 == CHECKPOINT)
 			{
 				ObjectX[ObjectCount] = xx[21] * 100;
 				ObjectY[ObjectCount] = xx[22] * 100;
@@ -144,77 +144,77 @@ void stage()
 				if (ObjectCount >= OBJECT_MAX)
 					ObjectCount = 0;
 			}
-			if (xx[10] == 40)
+			if (local_xx_10 == VERTICAL_PIPE_HEAD)
 			{
 				ObjectX[ObjectCount] = xx[21] * 100;
 				ObjectY[ObjectCount] = xx[22] * 100;
 				ObjectSizeX[ObjectCount] = 6000;
 				ObjectSizeY[ObjectCount] = 3000;
-				ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_HEAD;
+				ObjectType[ObjectCount] = EObjectType::BLACK_OUTLINE_PIPE_PART;
 				ObjectCount++;
 				if (ObjectCount >= OBJECT_MAX)
 					ObjectCount = 0;
 			}
-			if (xx[10] == 41)
+			if (local_xx_10 == VERTICAL_PIPE_BODY)
 			{
 				ObjectX[ObjectCount] = xx[21] * 100 + 500;
 				ObjectY[ObjectCount] = xx[22] * 100;
 				ObjectSizeX[ObjectCount] = 5000;
 				ObjectSizeY[ObjectCount] = 3000;
-				ObjectType[ObjectCount] = EObjectType::HORIZONTAL_PIPE_BODY;
+				ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_BODY;
 				ObjectCount++;
 				if (ObjectCount >= OBJECT_MAX)
 					ObjectCount = 0;
 			}
 
-			if (xx[10] == 43)
+			if (local_xx_10 == HORIZONTAL_PIPE_HEAD)
 			{
 				ObjectX[ObjectCount] = xx[21] * 100;
 				ObjectY[ObjectCount] = xx[22] * 100 + 500;
 				ObjectSizeX[ObjectCount] = 2900;
 				ObjectSizeY[ObjectCount] = 5300;
-				ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_HEAD;
+				ObjectType[ObjectCount] = EObjectType::BLACK_OUTLINE_PIPE_PART;
 				ObjectCount++;
 				if (ObjectCount >= OBJECT_MAX)
 					ObjectCount = 0;
 			}
-			if (xx[10] == 44)
+			if (local_xx_10 == HORIZONTAL_PIPE_BODY)
 			{
 				ObjectX[ObjectCount] = xx[21] * 100;
 				ObjectY[ObjectCount] = xx[22] * 100 + 700;
 				ObjectSizeX[ObjectCount] = 3900;
 				ObjectSizeY[ObjectCount] = 5000;
-				ObjectType[ObjectCount] = EObjectType::HORIZONTAL_PIPE_HEAD;
+				ObjectType[ObjectCount] = EObjectType::HORIZONTAL_PIPE_BODY;
 				ObjectCount++;
 				if (ObjectCount >= OBJECT_MAX)
 					ObjectCount = 0;
 			}
 			// これなぜかバグの原因ｗ (For some reason, this is the cause of the bug lol)
-			if (xx[10] >= 50 && xx[10] <= 79)
+			if (local_xx_10 >= BALL && local_xx_10 <= ENEMIES_END)
 			{
 				EnemyAppearX[EnemyAppearCount] = xx[21] * 100;
 				EnemyAppearY[EnemyAppearCount] = xx[22] * 100;
-				EnemyAppearType[EnemyAppearCount] = (EEnemyType)(xx[23] - 50);
+				EnemyAppearType[EnemyAppearCount] = (EEnemyType)(xx[23] - BALL);
 				EnemyAppearCount++;
 				if (EnemyAppearCount >= ENEMY_APPEAR_MAX)
 					EnemyAppearCount = 0;
 			}
 
-			if (xx[10] >= 80 && xx[10] <= 89)
+			if (local_xx_10 >= HILL && local_xx_10 <= BACKGROUNDS_END)
 			{
 				BackgroundX[BackgroundCount] = xx[21] * 100;
 				BackgroundY[BackgroundCount] = xx[22] * 100;
-				BackgroundType[BackgroundCount] = (EDecorationType)(xx[23] - 80);
+				BackgroundType[BackgroundCount] = (EDecorationType)(xx[23] - HILL);
 				BackgroundCount++;
 				if (BackgroundCount >= BACKGROUND_MAX)
 					BackgroundCount = 0;
 			}
 			// コイン (Coin)
-			if (xx[10] == 9)
+			if (local_xx_10 == COIN)
 			{
 				BlockCreateLegacy(tt * 29, t * 29 - 12, EBlockType::COIN);
 			}
-			if (xx[10] == 99)
+			if (local_xx_10 == GOAL_POLE)
 			{
 				ObjectX[ObjectCount] = xx[21] * 100;
 				ObjectY[ObjectCount] = xx[22] * 100;
@@ -495,7 +495,7 @@ void HandleSyobonActionOneLevels()
              NONE, NONE},
             {NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE,
-            HORIZONTAL_PIPE_BODY, NONE, NONE,
+            VERTICAL_PIPE_BODY, NONE, NONE,
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE, NONE,
              NONE, NONE,
@@ -505,14 +505,14 @@ void HandleSyobonActionOneLevels()
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,HARD_BLOCK,HARD_BLOCK, NONE, NONE,
              NONE,HARD_BLOCK,HARD_BLOCK,
              NONE, NONE,
-             NONE, NONE, NONE,HORIZONTAL_PIPE_BODY, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,VERTICAL_PIPE_HEAD, NONE, NONE,HARD_BLOCK,
+             NONE, NONE, NONE,VERTICAL_PIPE_BODY, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,VERTICAL_PIPE_HEAD, NONE, NONE,HARD_BLOCK,
             HARD_BLOCK,HARD_BLOCK,
             HARD_BLOCK,HARD_BLOCK,
             HARD_BLOCK,HARD_BLOCK,HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE},
             {NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, BALL, NONE, NONE, NONE, NONE, NONE, BALL, NONE,
              NONE,GRASS,
-            HORIZONTAL_PIPE_BODY, NONE,
+            VERTICAL_PIPE_BODY, NONE,
              NONE, NONE, NONE, NONE,GRASS, STAGEDATE_98, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE,
              NONE, NONE,
@@ -522,8 +522,8 @@ void HandleSyobonActionOneLevels()
              BALL_SHELLED, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,GRASS, NONE, NONE, NONE,HARD_BLOCK,HARD_BLOCK,
             HARD_BLOCK, NONE,
              NONE, NONE,
-            HARD_BLOCK,HARD_BLOCK, NONE, NONE, NONE, NONE, NONE,HORIZONTAL_PIPE_BODY, NONE, NONE, NONE, NONE, NONE, BALL, NONE, BALL, NONE,
-             NONE,HORIZONTAL_PIPE_BODY,
+            HARD_BLOCK,HARD_BLOCK, NONE, NONE, NONE, NONE, NONE,VERTICAL_PIPE_BODY, NONE, NONE, NONE, NONE, NONE, BALL, NONE, BALL, NONE,
+             NONE,VERTICAL_PIPE_BODY,
              NONE,HARD_BLOCK,HARD_BLOCK,
             HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE,HARD_BLOCK,GRASS, NONE, NONE, NONE,
              NONE, NONE,
@@ -868,7 +868,7 @@ void HandleSyobonActionOneLevels()
                NONE,
                NONE,
                NONE,
-                HORIZONTAL_PIPE_HEAD,
+                HORIZONTAL_PIPE_BODY,
                NONE,
             },
             {
@@ -1157,7 +1157,7 @@ void HandleSyobonActionOneLevels()
             NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
             NONE,NONE,NONE,
             NONE,NONE,
-            NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, STAGEDATE_97, HORIZONTAL_PIPE_HEAD,NONE,NONE,
+            NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, STAGEDATE_97, HORIZONTAL_PIPE_BODY,NONE,NONE,
             BRICK,BRICK,
             BRICK,BRICK,
             BRICK,BRICK,BRICK,BRICK,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -1251,7 +1251,7 @@ void HandleSyobonActionOneLevels()
              BALL,NONE,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,NONE,NONE,NONE, BALL, BALL, BALL,
              ITEM_BLOCK_HIDDEN,NONE,
             NONE,NONE,NONE,
-            NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, HORIZONTAL_PIPE_BODY,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
+            NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, VERTICAL_PIPE_BODY,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
             NONE,NONE,
             NONE,NONE,NONE,
             NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,BRICK,BRICK,BRICK,BRICK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,
@@ -1463,7 +1463,7 @@ void HandleSyobonActionOneLevels()
         ObjectY[t] = (1 * 29 - 12) * 100;
         ObjectSizeX[t] = 4700;
         ObjectSizeY[t] = 3000 * 8 - 700;
-        ObjectType[t] = EObjectType::VERTICAL_PIPE_HEAD;
+        ObjectType[t] = EObjectType::BLACK_OUTLINE_PIPE_PART;
         ObjectSubType[t] = EObjectSubType::NONE;
         ObjectCount++;
 
@@ -1940,7 +1940,7 @@ void HandleSyobonActionOneLevels()
             {
                NONE,
                NONE,
-                HORIZONTAL_PIPE_BODY,
+                VERTICAL_PIPE_BODY,
                NONE,
                NONE,
                HARD_BLOCK,
@@ -3674,7 +3674,7 @@ void HandleSyobonActionOneLevels()
                                      NONE,NONE,GROUND_TOP,GROUND_TOP,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,GROUND_TOP,
                                      GROUND_TOP,GROUND_TOP,GROUND_TOP,
                                      GROUND_TOP,GROUND_TOP,
-                                     GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,HORIZONTAL_PIPE_BODY,NONE,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,
+                                     GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,VERTICAL_PIPE_BODY,NONE,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,
                                      GROUND_TOP,GROUND_TOP,
                                      GROUND_TOP,GROUND_TOP,GROUND_TOP,
                                      GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -3701,7 +3701,7 @@ void HandleSyobonActionOneLevels()
                                      NONE,NONE,
                                      LAVA,NONE,
                                      NONE,LAVA,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,
-                                     HORIZONTAL_PIPE_BODY,NONE,
+                                     VERTICAL_PIPE_BODY,NONE,
                                      GROUND_TOP,GROUND_TOP,
                                      GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,
                                      GROUND_TOP,NONE,NONE,
@@ -4540,7 +4540,7 @@ void HandleSyobonActionTwoLevels()
              NONE, ITEM_BLOCK_HIDDEN,
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, SPIKE, HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE,
-             HORIZONTAL_PIPE_HEAD, NONE,
+             HORIZONTAL_PIPE_BODY, NONE,
              NONE, BRICK, BRICK, BRICK, BRICK, BRICK, BRICK, HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE, NONE,
              BRICK},
@@ -4576,7 +4576,7 @@ void HandleSyobonActionTwoLevels()
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE, BRICK, NONE, NONE, NONE,
              BRICK, BRICK, BRICK,
              BRICK, BRICK,
-             BRICK, BRICK, BRICK, BRICK, BRICK, BRICK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE, BRICK, BRICK, NONE, NONE, NONE, NONE, HORIZONTAL_PIPE_HEAD,
+             BRICK, BRICK, BRICK, BRICK, BRICK, BRICK, HARD_BLOCK, HARD_BLOCK, NONE, NONE, NONE, BRICK, BRICK, NONE, NONE, NONE, NONE, HORIZONTAL_PIPE_BODY,
              NONE, NONE, BRICK},
             {HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE, BRICK, BRICK, BRICK, BRICK, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE, NONE,
@@ -4785,7 +4785,7 @@ void HandleSyobonActionTwoLevels()
         ObjectY[ObjectCount] = (0 * 29 - 12) * 100;
         ObjectSizeX[ObjectCount] = 4700;
         ObjectSizeY[ObjectCount] = 27000 - 1000;
-        ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_BODY;
+        ObjectType[ObjectCount] = EObjectType::GREEN_OUTLINE_PIPE_PART;
         ObjectSubType[ObjectCount] = EObjectSubType::NONE;
         ObjectCount += 1;
         //
@@ -4809,7 +4809,7 @@ void HandleSyobonActionTwoLevels()
         ObjectY[ObjectCount] = (0 * 29 - 12) * 100;
         ObjectSizeX[ObjectCount] = 4700;
         ObjectSizeY[ObjectCount] = 32000;
-        ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_BODY;
+        ObjectType[ObjectCount] = EObjectType::GREEN_OUTLINE_PIPE_PART;
         ObjectSubType[ObjectCount] = EObjectSubType::NONE;
         ObjectCount += 1;
         //
@@ -4927,7 +4927,7 @@ void HandleSyobonActionTwoLevels()
              HARD_BLOCK, HARD_BLOCK,
              HARD_BLOCK, NONE, NONE,
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE},
-            {NONE, NONE, HORIZONTAL_PIPE_BODY, NONE, NONE, NONE, NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK,
+            {NONE, NONE, VERTICAL_PIPE_BODY, NONE, NONE, NONE, NONE, NONE, NONE, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK, HARD_BLOCK,
              HARD_BLOCK, HARD_BLOCK,
              HARD_BLOCK, NONE, NONE,
              NONE, NONE, NONE, NONE, HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, BALL_SPIKY, NONE, NONE},
@@ -5465,7 +5465,7 @@ void HandleSyobonActionTwoLevels()
              NONE, NONE,
              NONE, NONE, NONE,
              NONE, GROUND_TOP, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, MAGMA, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP},
-            {GROUND_TOP, LAVA, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, HORIZONTAL_PIPE_BODY, NONE, GROUND_TOP, LAVA, NONE, NONE, LAVA, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
+            {GROUND_TOP, LAVA, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, VERTICAL_PIPE_BODY, NONE, GROUND_TOP, LAVA, NONE, NONE, LAVA, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
              LAVA, NONE,
              NONE, LAVA,
              NONE, NONE, LAVA, GROUND_TOP, NONE, LAVA, GROUND_TOP, GROUND_TOP, GROUND_TOP, LAVA, NONE, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP},
@@ -5565,13 +5565,13 @@ void HandleSyobonActionTwoLevels()
             {NONE, GROUND_TOP, GROUND_TOP, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, NONE, NONE},
             {NONE, SPIKE, SPIKE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE},
-            {NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, HORIZONTAL_PIPE_HEAD, NONE,
+            {NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, HORIZONTAL_PIPE_BODY, NONE,
              NONE},
             {NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, STAGEDATE_97, NONE, NONE,
              NONE},
             {NONE, VERTICAL_PIPE_HEAD, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP,
              GROUND_TOP},
-            {LAVA, HORIZONTAL_PIPE_BODY, NONE, LAVA, NONE, GROUND_TOP, LAVA, NONE, NONE, LAVA, NONE, GROUND_TOP, LAVA, NONE, NONE, LAVA,
+            {LAVA, VERTICAL_PIPE_BODY, NONE, LAVA, NONE, GROUND_TOP, LAVA, NONE, NONE, LAVA, NONE, GROUND_TOP, LAVA, NONE, NONE, LAVA,
              NONE, NONE,
              LAVA},
             {NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE}};
@@ -5618,7 +5618,7 @@ void HandleSyobonActionTwoLevels()
         ObjectY[ObjectCount] = (0 * 29 - 12) * 100;
         ObjectSizeX[ObjectCount] = 4700;
         ObjectSizeY[ObjectCount] = 38000;
-        ObjectType[ObjectCount] = EObjectType::VERTICAL_PIPE_BODY;
+        ObjectType[ObjectCount] = EObjectType::GREEN_OUTLINE_PIPE_PART;
         ObjectSubType[ObjectCount] = EObjectSubType::NONE;
         ObjectCount += 1;
         //
@@ -5865,7 +5865,7 @@ void HandleSyobonActionTwoLevels()
              GROUND_TOP, GROUND_TOP, GROUND_TOP,
              GROUND_TOP, GROUND_TOP,
              GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP},
-            {GROUND_TOP, HORIZONTAL_PIPE_BODY, NONE, GROUND_TOP, LAVA, NONE, GROUND_TOP, LAVA, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, LAVA, NONE, NONE, LAVA,
+            {GROUND_TOP, VERTICAL_PIPE_BODY, NONE, GROUND_TOP, LAVA, NONE, GROUND_TOP, LAVA, NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, LAVA, NONE, NONE, LAVA,
              NONE, NONE,
              LAVA, NONE,
              NONE, LAVA, NONE, NONE, LAVA, NONE, NONE, LAVA, NONE, NONE, LAVA, NONE, NONE, LAVA, NONE, NONE, GROUND_TOP,
@@ -6481,7 +6481,7 @@ void HandleSyobonActionThreeLevels()
             BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
         }
 
-        ObjectCreate(3, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(3, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         ObjectCreate(3 + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 5, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
 
         CreateBackground(3, 10, EDecorationType::HILL);
@@ -6587,7 +6587,7 @@ void HandleSyobonActionThreeLevels()
         {
             if(i == 0)
             {
-                ObjectCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+                ObjectCreate(27 + (i * 4) + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 4, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
             }
             else
             {
@@ -6603,7 +6603,7 @@ void HandleSyobonActionThreeLevels()
                 }
             }
 
-            ObjectCreate(27 + (i * 4), 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+            ObjectCreate(27 + (i * 4), 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         }
 
         //remaining code from all stars xd
@@ -6639,10 +6639,10 @@ void HandleSyobonActionThreeLevels()
             BlockCreate(64, i + 7, EBlockType::ITEM_BLOCK_OPEN);
         }
 
-        ObjectCreate(65, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        ObjectCreate(65 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        ObjectCreate(67, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        ObjectCreate(67 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(65, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+        ObjectCreate(65 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+        ObjectCreate(67, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+        ObjectCreate(67 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
 
 
         BlockCreate(69, 4.75, EBlockType::ITEM_BLOCK_HIDDEN);
@@ -6772,8 +6772,8 @@ void HandleSyobonActionThreeLevels()
         ind = ObjectCreate(121, 10.5, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
         ObjectAI[ind] = -1;
 
-        ObjectCreate(130, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        ObjectCreate(130 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(130, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+        ObjectCreate(130 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
 
         BlockCreate(132, 5.5, EBlockType::ITEM_BLOCK_HIDDEN);
 
@@ -6784,8 +6784,8 @@ void HandleSyobonActionThreeLevels()
         //TODO: you should not be able to even touch this floor
         ObjectCreate(132, 13, 8, 2, EObjectType::FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
 
-        ObjectCreate(140, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        ObjectCreate(140 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(140, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+        ObjectCreate(140 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         ObjectCreate(140, 0, 2, 11, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
 
         //plant
@@ -6804,8 +6804,8 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(151, 9, EBlockType::HARD_BLOCK);
 
         CreateEnemy(152.5, 9, 0, 0, EEnemyType::SA3_JUMPSCARE_PLANT, EEnemySubType::NONE);
-        ObjectCreate(152, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        ObjectCreate(152 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(152, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+        ObjectCreate(152 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
 
         ObjectCreate(154, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
 
@@ -6814,8 +6814,8 @@ void HandleSyobonActionThreeLevels()
         ObjectCreate(171, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
 
         BlockCreate(174, 9, EBlockType::ITEM_BLOCK_HIDDEN);
-        ObjectCreate(175, 9, 2, 1, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
-        ObjectCreate(175 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::VERTICAL_PIPE_HEAD, EObjectSubType::NONE);
+        ObjectCreate(175, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+        ObjectCreate(175 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
 
         CreateEnemy(171, 1.5, 0, 0, EEnemyType::BALL_SHELLED, EEnemySubType::NONE);
         for(int x_pos = 169; x_pos <= 173; x_pos++)
@@ -7360,7 +7360,7 @@ void HandleKaizoSyobonLevels()
 					NONE, BRICK, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-					VERTICAL_PIPE_HEAD_2, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_HEAD
+					HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_BODY, HORIZONTAL_PIPE_BODY, HORIZONTAL_PIPE_BODY, HORIZONTAL_PIPE_BODY, HORIZONTAL_PIPE_BODY, HORIZONTAL_PIPE_BODY, HORIZONTAL_PIPE_BODY, HORIZONTAL_PIPE_BODY, HORIZONTAL_PIPE_BODY
 				},
 				{
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
@@ -7684,7 +7684,7 @@ void HandleKaizoSyobonLevels()
                     NONE, NONE, NONE, NONE, NONE
                 },
                     {
-                    VERTICAL_PIPE_HEAD_2, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
+                    HORIZONTAL_PIPE_HEAD, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
                     NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
                     NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
                     NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
@@ -8023,7 +8023,7 @@ void HandleKaizoSyobonLevels()
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-					NONE, NONE, NONE, NONE, NONE, NONE, NONE, HORIZONTAL_PIPE_BODY, NONE, NONE,
+					NONE, NONE, NONE, NONE, NONE, NONE, NONE, VERTICAL_PIPE_BODY, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
@@ -8041,7 +8041,7 @@ void HandleKaizoSyobonLevels()
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-					NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, HORIZONTAL_PIPE_BODY, GROUND_TOP, GROUND_TOP,
+					NONE, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, VERTICAL_PIPE_BODY, GROUND_TOP, GROUND_TOP,
 					GROUND_TOP, GROUND_TOP, BRICK, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
 					GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
 					GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP, GROUND_TOP,
@@ -8062,7 +8062,7 @@ void HandleKaizoSyobonLevels()
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-					NONE, GROUND_TOP, NONE, NONE, NONE, VERTICAL_PIPE_HEAD_2, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_BODY, GROUND_TOP, NONE,
+					NONE, GROUND_TOP, NONE, NONE, NONE, HORIZONTAL_PIPE_HEAD, HORIZONTAL_PIPE_BODY, VERTICAL_PIPE_BODY, GROUND_TOP, NONE,
 					NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, GROUND_TOP, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, NONE,
@@ -8082,7 +8082,7 @@ void HandleKaizoSyobonLevels()
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
-					NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, HORIZONTAL_PIPE_BODY, GROUND_TOP, NONE,
+					NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, VERTICAL_PIPE_BODY, GROUND_TOP, NONE,
 					NONE, NONE, NONE, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
 					NONE, NONE, GROUND_TOP, GROUND_TOP, NONE, NONE, NONE, NONE, NONE, NONE,

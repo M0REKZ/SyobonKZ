@@ -266,10 +266,10 @@ enum class EObjectType : int
 {
     // not sure what this is
     // +KZ: it is the same as PIPE_BODY :D
-    VERTICAL_PIPE_BODY = 0,
-    VERTICAL_PIPE_HEAD = 1,
-    HORIZONTAL_PIPE_BODY = 2,
-    HORIZONTAL_PIPE_HEAD = 5,
+    GREEN_OUTLINE_PIPE_PART = 0, //used in 2-2 and 2-4 as the body of the exit pipes
+    BLACK_OUTLINE_PIPE_PART = 1,
+    VERTICAL_PIPE_BODY = 2,
+    HORIZONTAL_PIPE_BODY = 5,
 
     // +KZ: You can go inside the pipe
     ENTRANCE_HORIZONTAL_PIPE_HEAD = 40,
@@ -347,18 +347,19 @@ enum ELegacyStageDate : uint8_t
     SPIKE = 10,
     TRAMPOLINE_BROKEN = 16, // A trampoline that you can't interact with
 
+    BLOCKS_END = 19,
     //20-29 makes Lifts
     //however it does not set a type listed in this file,
-    //but it sets srtype...
+    //but it sets srtype to 0...
 
     //30 is a Checkpoint
     CHECKPOINT = 30,
 
     //Pipes... does not seem to be used as their name indicate
     VERTICAL_PIPE_HEAD = 40, //40 is the Vertical pipe head
-    HORIZONTAL_PIPE_BODY = 41, //41 is the Horizontal pipe body
-    VERTICAL_PIPE_HEAD_2 = 43, //43 is the Vertical pipe head but another size?
-    HORIZONTAL_PIPE_HEAD = 44, //44 is the Horizontal pipe head
+    VERTICAL_PIPE_BODY = 41, //41 is the Vertical pipe body
+    HORIZONTAL_PIPE_HEAD = 43, //43 is the Horizontal pipe head
+    HORIZONTAL_PIPE_BODY = 44, //44 is the Horizontal pipe body
 
     // Chiku(?): "これなぜかバグの原因ｗ (For some reason, this is the cause of the bug lol)"
     // what
@@ -377,6 +378,7 @@ enum ELegacyStageDate : uint8_t
     MAGMA = 59,
     FLAME = 60,
 
+    ENEMIES_END = 79,
     //80-89 will make background decorations
     //it will be ID - 80
     HILL = 80,
@@ -387,6 +389,7 @@ enum ELegacyStageDate : uint8_t
     TREE = 85,
     LAVA = 86,
 
+    BACKGROUNDS_END = 89,
     //99 is the finish pole
     GOAL_POLE = 99,
 
