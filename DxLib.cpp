@@ -36,6 +36,7 @@ struct sKeysHeld
 
     //+KZ
     bool KEY_F9 = false; //for screenshots
+    bool KEY_F8 = false; //for gifs (SDL3 only)
 } keysHeld;
 bool sound = true;
 void deinit();
@@ -287,6 +288,9 @@ void SetKeyState(Uint32 key, bool state)
     case KEY_INPUT_F9:
         keysHeld.KEY_F9 = state;
         break;
+    case KEY_INPUT_F8:
+        keysHeld.KEY_F8 = state;
+        break;
     default:
         break;
     }
@@ -361,6 +365,9 @@ bool GetKeyState(Uint32 key)
         break;
     case KEY_INPUT_F9:
         return keysHeld.KEY_F9;
+        break;
+    case KEY_INPUT_F8:
+        return keysHeld.KEY_F8;
         break;
     default:
         return false;

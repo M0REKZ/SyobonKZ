@@ -280,6 +280,52 @@ void rpaint()
 		ScreenshotKeyState = false;
 	}
 
+	#ifdef SYOBONKZ_USE_SDL3
+
+	{
+		static IMG_AnimationEncoder * AnimationEncoder = nullptr;
+		if(GetKeyState(KEY_INPUT_F8))
+		{
+			if(!GIFKeyState)
+			{
+				if(!AnimationEncoder)
+				{
+					const char * pBasePath = GetSavePath();
+					if(pBasePath)
+					{
+						char temppath[512] = {0};
+						//+KZ: yes im just overwriting for now
+						if(snprintf(temppath, sizeof(temppath), "%s/recording.gif", pBasePath) >= 0)
+							AnimationEncoder = IMG_CreateAnimationEncoder(temppath);
+					}
+				}
+				else
+				{
+					IMG_CloseAnimationEncoder(AnimationEncoder);
+					AnimationEncoder = nullptr;
+				}
+				GIFKeyState = true;
+			}
+		}
+		else
+		{
+			GIFKeyState = false;
+		}
+
+		if(AnimationEncoder)
+		{
+			// 30-fps
+			int local_fps = 1000 / 30;
+			if (CheckHitKey(KEY_INPUT_SPACE) == 1)
+			{
+				int local_fps = 1000 / 60;
+			}
+			IMG_AddAnimationEncoderFrame(AnimationEncoder, screen, local_fps);
+		}
+	}
+
+	#endif
+
 } // rpaint()
 
 // メインプログラム (Main Program)
