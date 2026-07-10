@@ -1668,7 +1668,7 @@ void HandlePlayerWalls()
                             PlayerState = 100;
                         }
                         // ループ (Loop) //+KZ: ????????????
-                        if (ObjectSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_PLUS_10_SECTION)
+                        if (ObjectSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON_UNUSED)
                         {
                             PlayerState = 3;
                             PlayerAITimer = 0;

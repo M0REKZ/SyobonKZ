@@ -55,6 +55,9 @@ enum class EBlockType : int
     SPIKE = 10,
 
     // A trampoline that you can't interact with
+    //+KZ: this one probably was never intended to be used as a normal block
+    // it just happened that you can "hack" the block type to make it choose
+    // the trampoline sprite instead (and it only works in overworld and sky)
     TRAMPOLINE_BROKEN = 16,
 
     // A fake item block that you can't hit
@@ -150,9 +153,6 @@ enum class EEnemyType : int
 
     // ID exists in the code but doesn't do anything??
     UNKNOWN_ID_50 = 50,
-
-    FALLING_BLOCK = 51,
-    FALLING_BLOCK_2 = 52,
 
     LASER = 79,
     
@@ -437,12 +437,12 @@ enum class EEnemySubType : int
     DEFRAG_GRAB_POLE,
 
     BALL_ROCKET_NORMAL = 0,
-    BALL_ROCKET_1,
-    BALL_ROCKET_2,
-    BALL_ROCKET_3,
+    BALL_ROCKET_BACKWARDS,
+    BALL_ROCKET_UPWARDS,
+    BALL_ROCKET_DOWNWARDS,
 
-    FLAME_0 = 0,
-    FLAME_1,
+    FLAME_NORMAL = 0,
+    FLAME_BACKWARDS,
 
     MOLALLA_ALIVE = 0,
     MOLALLA_DEAD,
@@ -488,7 +488,7 @@ enum class EBlockSubType : int
     ITEM_BLOCK_UNKNOWN_10 = 10, //unknown purpose
 
     ITEM_BLOCK_DODGE_VERTICAL = 0,
-    ITEM_BLOCK_DODGE_HORIZONTAL = 1, //unused
+    ITEM_BLOCK_DODGE_HORIZONTAL = 1, //unused, but may appear in random mode
 
     ITEM_BLOCK_ENEMY_BALL_NORMAL = 0,
     ITEM_BLOCK_ENEMY_BALL_SPIKY_NORMAL = 1,
@@ -529,7 +529,7 @@ enum class EBlockSubType : int
     NOTE_BLOCK_WHITE_VISIBLE = 3,
 
     TRAMPOLINE_VISIBLE = 0,
-    TRAMPOLINE_HIDDEN = 1,
+    TRAMPOLINE_HIDDEN = 1, //unused, but may appear in random mode
     TRAMPOLINE_VISIBLE_3 = 3, //same as TRAMPOLINE_VISIBLE
 
     //triggers text box for specific levels...
@@ -587,7 +587,7 @@ enum class EObjectSubType : int
 
     ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON = 0, //1-2 cannon pipe trap
     ENTRACE_HORIZONTAL_PIPE_HEAD_GO_NEXT_SECTION = 2, //1-2 2-4 pipe entrace from left, go to next section
-    ENTRACE_HORIZONTAL_PIPE_HEAD_PLUS_10_SECTION = 6, //unused, same behavior as 2-4 go back trap pipe but horizontal
+    ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON_UNUSED = 6, //unused, code is similar to 2-4 go back trap pipe but horizontal and kills the player?
 
     //Triggers
     TRIGGER_SEAL_UP_NORMAL = 0,

@@ -490,11 +490,11 @@ void HandleEnemies()
                 xx[11] = 400;
                 if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_NORMAL)
                     xx[10] = 400;
-                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_1)
+                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_BACKWARDS)
                     xx[10] = -400;
-                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_2)
+                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_UPWARDS)
                     EnemyY[t] -= 400;
-                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_3)
+                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_DOWNWARDS)
                     EnemyY[t] += 400;
                 break;
 
@@ -549,9 +549,9 @@ void HandleEnemies()
                 EnemyMovementType[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
-                if (EnemySubType[t] == EEnemySubType::FLAME_0)
+                if (EnemySubType[t] == EEnemySubType::FLAME_NORMAL)
                     xx[10] = 400;
-                if (EnemySubType[t] == EEnemySubType::FLAME_1)
+                if (EnemySubType[t] == EEnemySubType::FLAME_BACKWARDS)
                     xx[10] = -400;
                 break;
 

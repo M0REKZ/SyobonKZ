@@ -90,8 +90,13 @@ void loadg(void)
         Sliced_GFX[t + 60][x1] = DerivationGraph(33 * t, 66, 30, 30, Main_GFX[x1]);
         Sliced_GFX[t + 90][x1] = DerivationGraph(33 * t, 99, 30, 30, Main_GFX[x1]);
     }
+    //Cloud Block
     Sliced_GFX[8][x1] = DerivationGraph(33 * 7, 0, 30, 30, Main_GFX[x1]);
+
+    //Trampoline
     Sliced_GFX[16][x1] = DerivationGraph(33 * 6, 0, 24, 27, Main_GFX[2]);
+
+    //Spikes
     Sliced_GFX[10][x1] = DerivationGraph(33 * 9, 0, 30, 30, Main_GFX[x1]);
     Sliced_GFX[40][x1] = DerivationGraph(33 * 9, 33, 30, 30, Main_GFX[x1]);
     Sliced_GFX[70][x1] = DerivationGraph(33 * 9, 66, 30, 30, Main_GFX[x1]);
