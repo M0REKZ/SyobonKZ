@@ -219,7 +219,7 @@ enum class EDecorationType : int
     CLOUD = 2,
     CASTLE = 3,
     CLOUD_SMALL = 4,
-    TREE = 5,
+    TREE = 5, //unused
     LAVA = 6,
 
     CHECKPOINT_HACK = 20, //+KZ: checkpoint sprite is loaded in ID 20 of the same backgrounds array, does not seem intended to be used like this
