@@ -222,6 +222,10 @@ enum class EDecorationType : int
     TREE = 5,
     LAVA = 6,
 
+    CHECKPOINT_HACK = 20, //+KZ: checkpoint sprite is loaded in ID 20 of the same backgrounds array, does not seem intended to be used like this
+
+    UNKNOWN_UNUSED_30 = 30, //+KZ: there is a graphic loaded for ID 30 in loadg.cpp, but is not used anywhere and the sprite just does not exist
+
     TEXT_51 = 100,
     TEXT_GAME_CLEAR = 101,
     TEXT_THANKS_FOR_PLAYING = 102,

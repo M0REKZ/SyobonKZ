@@ -169,6 +169,8 @@ void loadg(void)
     Sliced_GFX[4][x1] = DerivationGraph(151, 113, 51, 29, Main_GFX[x1]);
     Sliced_GFX[5][x1] = DerivationGraph(222, 0, 28, 60, Main_GFX[x1]);
     Sliced_GFX[6][x1] = DerivationGraph(151, 143, 90, 40, Main_GFX[x1]);
+
+    //+KZ: just realized this is a non-existent graphic, see below for explanation
     Sliced_GFX[30][x1] = DerivationGraph(293, 0, 149, 90, Main_GFX[x1]);
 
     //+KZ: Sliced_GFX[31][4] is 3-1 grass?? 3-1 also wants a Sliced_GFX[32][4] sprite, which seems to be a cloud
