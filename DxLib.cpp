@@ -33,6 +33,9 @@ struct sKeysHeld
 
     //other keys
     bool KEY_SEMICOLON = false;
+
+    //+KZ
+    bool KEY_F9 = false; //for screenshots
 } keysHeld;
 bool sound = true;
 void deinit();
@@ -280,6 +283,10 @@ void SetKeyState(Uint32 key, bool state)
     case SDLK_SEMICOLON:
         keysHeld.KEY_SEMICOLON = state;
         break;
+    //+KZ added keys
+    case KEY_INPUT_F9:
+        keysHeld.KEY_F9 = state;
+        break;
     default:
         break;
     }
@@ -351,6 +358,9 @@ bool GetKeyState(Uint32 key)
         break;
     case SDLK_SEMICOLON:
         return keysHeld.KEY_SEMICOLON;
+        break;
+    case KEY_INPUT_F9:
+        return keysHeld.KEY_F9;
         break;
     default:
         return false;

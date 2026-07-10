@@ -190,6 +190,7 @@
     #define KEY_INPUT_DOWN SDLK_DOWN
     #define KEY_INPUT_UP SDLK_UP
     #define KEY_INPUT_F1 SDLK_F1
+    #define KEY_INPUT_F9 SDLK_F9
     #define KEY_INPUT_O SDLK_O
     #define KEY_INPUT_Z SDLK_Z
     #define KEY_INPUT_RETURN SDLK_RETURN
@@ -305,6 +306,7 @@
     #define KEY_INPUT_DOWN SDLK_DOWN
     #define KEY_INPUT_UP SDLK_UP
     #define KEY_INPUT_F1 SDLK_F1
+    #define KEY_INPUT_F9 SDLK_F9
     #define KEY_INPUT_O SDLK_o
     #define KEY_INPUT_Z SDLK_z
     #define KEY_INPUT_RETURN SDLK_RETURN

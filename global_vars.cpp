@@ -220,3 +220,4 @@ bool HelpFlagHandled = false;
 bool StartFullScreenFlag = false;
 bool SA3Enabled = false;
 bool SyobonStartGame = false;
+bool ScreenshotKeyState = false;

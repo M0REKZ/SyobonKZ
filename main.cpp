@@ -260,6 +260,26 @@ void rpaint()
 	}
 	SyobonKZScreenFlip(screen);
 
+	if(GetKeyState(KEY_INPUT_F9))
+	{
+		if(!ScreenshotKeyState)
+		{
+			const char * pBasePath = GetSavePath();
+			if(pBasePath)
+			{
+				char temppath[512] = {0};
+				//+KZ: yes im just overwriting for now
+				if(snprintf(temppath, sizeof(temppath), "%s/screenshot.bmp", pBasePath) >= 0)
+					SDL_SaveBMP(screen, temppath);
+			}
+			ScreenshotKeyState = true;
+		}
+	}
+	else
+	{
+		ScreenshotKeyState = false;
+	}
+
 } // rpaint()
 
 // メインプログラム (Main Program)

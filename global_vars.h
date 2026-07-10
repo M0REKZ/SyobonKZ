@@ -471,5 +471,6 @@ enum class ESyobonActionGame : int
 extern ESyobonActionGame currentGame;
 extern bool SA3Enabled;
 extern bool SyobonStartGame;
+extern bool ScreenshotKeyState;
 
 #endif
