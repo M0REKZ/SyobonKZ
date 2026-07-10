@@ -436,7 +436,7 @@ enum class EEnemySubType : int
     DEFRAG_NORMAL = 0,
     DEFRAG_GRAB_POLE,
 
-    BALL_ROCKET_0 = 0,
+    BALL_ROCKET_NORMAL = 0,
     BALL_ROCKET_1,
     BALL_ROCKET_2,
     BALL_ROCKET_3,

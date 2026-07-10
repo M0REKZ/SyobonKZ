@@ -4691,7 +4691,7 @@ void HandleSyobonActionTwoLevels()
         EnemyAppearX[EnemyAppearCount] = (31 * 29 - 12) * 100;
         EnemyAppearY[EnemyAppearCount] = (7 * 29 - 12) * 100;
         EnemyAppearType[EnemyAppearCount] = EEnemyType::BALL_ROCKET;
-        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::BALL_ROCKET_0;
+        EnemyAppearSubType[EnemyAppearCount] = EEnemySubType::BALL_ROCKET_NORMAL;
         EnemyAppearCount += 1;
         //
         EnemyAppearX[EnemyAppearCount] = 38 * 29 * 100 + 1500;

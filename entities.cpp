@@ -488,7 +488,7 @@ void HandleEnemies()
                 EnemyMovementType[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
-                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_0)
+                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_NORMAL)
                     xx[10] = 400;
                 if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_1)
                     xx[10] = -400;
