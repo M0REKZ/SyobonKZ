@@ -8425,6 +8425,7 @@ void HandleSyobonKZTrueActionLevels()
             CreateEnemy(16, 11.7, -1, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
 
             CreateEnemy(4, 10, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
+            CreateEnemy(6, 8.5, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
 
             BlockCreate(6.5, 13, EBlockType::GROUND_TOP);
             BlockCreate(6.5, 14, EBlockType::GROUND_BOTTOM);
@@ -8437,8 +8438,22 @@ void HandleSyobonKZTrueActionLevels()
             BlockCreate(17, 15, EBlockType::GROUND_BOTTOM);
             BlockCreate(17, 16, EBlockType::GROUND_BOTTOM);
 
-            CreateEnemy(20, 11, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::NONE);
+            QueueEnemyAppear(22, 11, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_JUMPER);
             ObjectCreate(18, 13, 20, 1, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
+
+            //weird thing to avoid that jumping ball glitching through the fake floor
+            //i was going to use ID 1000 (invalid id that only enemies can touch) but ill just use coins
+            for(int x_pos = 0; x_pos <= 4; x_pos++)
+            {
+                BlockCreate(18 + x_pos, 13, EBlockType::COIN);
+            }
+
+            BlockCreate(27, 10, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN);
+            BlockCreate(28, 10, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN);
+            BlockCreate(29, 10, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN);
+            BlockCreate(30, 10, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN);
+
+            QueueEnemyAppear(31, 8, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES);
 
         }
     }
