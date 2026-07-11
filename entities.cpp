@@ -1541,14 +1541,19 @@ void HandleEnemiesBlocks()
 	// 壁 (Wall)
 	for (tt = 0; tt < OBJECT_MAX; tt++)
 	{
-        if(((int)ObjectType[tt] > 99) ||
-            (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 &&
-                ObjectType[tt] > EObjectType::LAST_LEGACY_OBJECT &&
-                !(
-                    ObjectType[tt] >= EObjectType::SA3_TRIGGER_START &&
-                    ObjectType[tt] <= EObjectType::SA3_TRIGGER_END
+        if(((int)ObjectType[tt] > 99) &&
+            (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 ?
+                (
+                    ObjectType[tt] > EObjectType::LAST_LEGACY_OBJECT &&
+                    (
+                        ObjectType[tt] >= EObjectType::SA3_TRIGGER_START &&
+                        ObjectType[tt] <= EObjectType::SA3_TRIGGER_END
+                    )
                 )
-            ))
+                :
+                true
+            )
+        )
             continue;
 		if (ObjectX[tt] - fx + ObjectSizeX[tt] >= -12010 && ObjectX[tt] - fx <= fxmax + 12100)
 		{
@@ -2589,6 +2594,45 @@ int CreateEnemy(double PosX, double PosY, double VelX, double VelY, EEnemyType E
     else
     {
         fprintf(stderr, "CreateEnemy - Could not create entity %d %d at %d %d! (index %d)", EntityType, EntitySubType, (int)PosX, (int)PosY, index);
+    }
+
+    return index;
+}
+
+int QueueEnemyAppear(double PosX, double PosY, EEnemyType EntityType, EEnemySubType EntitySubType, int Timer, int index)
+{
+    PosX *= BLOCK_DEFAULT_SIZE;
+    PosY *= BLOCK_DEFAULT_SIZE;
+
+    PosY -= 12; //stage() does -12 to blocks, lets be consistent
+
+    //the game simulates floating point numbers
+    //by multiplying all positions by 100
+    PosX *= 100;
+    PosY *= 100;
+
+    if(index < 0)
+    {
+        //use EnemyCount to keep compat with legacy behavior
+        index = EnemyAppearCount++;
+        if(EnemyAppearCount == ENEMY_MAX)
+            EnemyAppearCount = 0;
+    }
+
+    if(index >= 0 && index < ENEMY_MAX)
+    {
+        EnemyAppearX[index] = (int)PosX;
+        EnemyAppearY[index] = (int)PosY;
+        EnemyAppearType[index] = EntityType;
+        EnemyAppearSubType[index] = EntitySubType;
+
+        EnemyAppearTimer[index] = Timer;
+
+        EnemyAppearMustPlace[index] = 1; //to make PlaceEntities() place it
+    }
+    else
+    {
+        fprintf(stderr, "QueueEnemyAppear - Could not create entity appear %d %d at %d %d! (index %d)", EntityType, EntitySubType, (int)PosX, (int)PosY, index);
     }
 
     return index;
