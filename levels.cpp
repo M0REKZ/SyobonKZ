@@ -8455,6 +8455,7 @@ void HandleSyobonKZTrueActionLevels()
 
             QueueEnemyAppear(31, 8, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES);
 
+            BlockCreate(38, 9, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
         }
     }
 }

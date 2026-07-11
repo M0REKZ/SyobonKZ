@@ -782,7 +782,10 @@ void HandlePlayerBlocks()
                         xx[17] = 0;
 
                         // 上 (Above)
-                        if (BlockType[t] != EBlockType::ITEM_BLOCK_HIDDEN && BlockType[t] != EBlockType::ITEM_BLOCK_POISON_HIDDEN && !(BlockType[t] == EBlockType::ITEM_BLOCK_TRAP_HIDDEN))
+                        if (BlockType[t] != EBlockType::ITEM_BLOCK_HIDDEN &&
+                            (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK) &&
+                            BlockType[t] != EBlockType::ITEM_BLOCK_POISON_HIDDEN &&
+                            !(BlockType[t] == EBlockType::ITEM_BLOCK_TRAP_HIDDEN))
                         {
                             if (PlayerX +
                                         PlayerSizeX >
@@ -964,12 +967,27 @@ void HandlePlayerBlocks()
                                         PlayerMessageType = 3;
                                         Health--;
                                     }
+
+                                    //+KZ
+                                    if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                                    {
+                                        if(BlockSubType[t] == EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN)
+                                        {
+                                            PlaySound(Sounds[14]);
+                                            BlockType[t] = EBlockType::SPIKE;
+                                            Health = 0;
+                                        }
+                                    }
                                 }
                             }
                             // 左右 (Left and right)
                             if (t3 == xx[22] && xx[15] == 0)
                             {
-                                if (BlockType[t] != EBlockType::ITEM_BLOCK_HIDDEN && BlockType[t] != EBlockType::ITEM_BLOCK_POISON_HIDDEN && BlockType[t] != EBlockType::NOTE_BLOCK)
+                                if (BlockType[t] != EBlockType::ITEM_BLOCK_HIDDEN &&
+                                    BlockType[t] != EBlockType::ITEM_BLOCK_POISON_HIDDEN &&
+                                    BlockType[t] != EBlockType::NOTE_BLOCK &&
+                                    (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                                )
                                 {
                                     if (!(BlockType[t] == EBlockType::ITEM_BLOCK_TRAP_HIDDEN))
                                     { // && txtype[t]==1)){
