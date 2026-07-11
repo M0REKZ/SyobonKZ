@@ -193,6 +193,9 @@ void UpdateTitleScreen()
         case ESyobonActionGame::KAIZO_SYOBON:
             author = "Originally by Zokalal";
             break;
+        case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+            author = "By +KZ";
+            break;
         }
 
         prevGame = currentGame;
@@ -281,6 +284,18 @@ void RenderTitleScreen()
         str("Prece Enter For Hell.", 240 - 8 * 20 / 2, 250);
 
         author_y = 100;
+        break;
+    case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+
+        drawimage(Main_GFX_KZ[13], 240 - Main_GFX_KZ[13]->w / 2, 20);
+
+        setcolor(170, 0, 0);
+        if(PlayerState != 200)
+            str("Press Enter to save Shobon!", 240 - 8 * 20 / 2, 250);
+        else
+            str("You're too slow... ._.", 240 - 8 * 20 / 2, 250);
+
+        author_y = 130;
         break;
     }
 
