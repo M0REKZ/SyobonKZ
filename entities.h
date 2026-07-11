@@ -25,6 +25,10 @@ void RenderLifts();
 int CreateEnemy(double PosX, double PosY, double VelX, double VelY, EEnemyType EntityType,
 	   EEnemySubType EntitySubType, ELookingDirection LookingDirection = LOOKING_LEFT, int PlayerNoInteractTimer = 0, int index = -1);
 
+// like CreateEnemy but it uses EnemyAppear and PlaceEnemies()
+// NOT MEMORY SAFE: Enemy types higher or equal to 160 will read memory out of range
+int QueueEnemyAppear(double PosX, double PosY, EEnemyType EntityType, EEnemySubType EntitySubType, int Timer = 0, int index = -1);
+
 //+KZ: clear all entities from memory
 void ClearAllEnemies();
 
