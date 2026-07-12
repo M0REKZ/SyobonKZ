@@ -1544,11 +1544,15 @@ void HandleEnemiesBlocks()
         if(((int)ObjectType[tt] > 99) &&
             (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 ?
                 (
-                    ObjectType[tt] > EObjectType::LAST_LEGACY_OBJECT &&
                     (
-                        ObjectType[tt] >= EObjectType::SA3_TRIGGER_START &&
-                        ObjectType[tt] <= EObjectType::SA3_TRIGGER_END
+                        ObjectType[tt] > EObjectType::LAST_LEGACY_OBJECT &&
+                        (
+                            ObjectType[tt] >= EObjectType::SA3_TRIGGER_START &&
+                            ObjectType[tt] <= EObjectType::SA3_TRIGGER_END
+                        )
                     )
+                    ||
+                    ObjectType[tt] == EObjectType::SA3_FAKE_PIPE_BODY
                 )
                 :
                 true
