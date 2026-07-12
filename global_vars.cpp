@@ -215,7 +215,7 @@ std::string xs[31];
 long stimeZ;
 
 //+KZ
-ESyobonActionGame currentGame = ESyobonActionGame::SYOBON_ACTION_1_AND_2;
+ESyobonActionGame currentGame = ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2;
 bool HelpFlagHandled = false;
 bool StartFullScreenFlag = false;
 bool SA3Enabled = false;

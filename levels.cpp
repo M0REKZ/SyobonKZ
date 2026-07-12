@@ -267,7 +267,7 @@ void stagep()
 
     switch (currentGame)
     {
-    case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+    case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
         HandleSyobonActionOneLevels();
 		HandleSyobonActionTwoLevels();
         break;
@@ -279,6 +279,15 @@ void stagep()
     case ESyobonActionGame::KAIZO_SYOBON:
         HandleKaizoSyobonLevels();
         break;
+
+    case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
+        HandleJinLevels();
+        break;
+
+    case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
+        HandleTakumiLevels();
+        break;
+
     case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
         HandleSyobonKZTrueActionLevels();
         break;
@@ -8348,6 +8357,50 @@ void HandleKaizoSyobonLevels()
                 stagedate[num156][num157] = stagedatexKaizo8[num156][num157];
             }
         }
+    }
+}
+
+void HandleJinLevels()
+{
+    if(SyobonState == ESyobonGameState::TITLE)
+    {
+        scrollx = 0;
+
+        PlayerX = (2 * 30) * 100;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
+
+        for(int grounds = 0; grounds < 20; grounds++)
+        {
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
+        }
+
+        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EDecorationType::GRASS);
+        CreateBackground(GAME_X_POS_TO_DOUBLE(12 * 30 * 100), 10, EDecorationType::HILL);
+
+        return;
+    }
+}
+
+void HandleTakumiLevels()
+{
+    if(SyobonState == ESyobonGameState::TITLE)
+    {
+        scrollx = 0;
+
+        PlayerX = (2 * 30) * 100;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
+
+        for(int grounds = 0; grounds < 20; grounds++)
+        {
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
+        }
+
+        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EDecorationType::GRASS);
+        CreateBackground(GAME_X_POS_TO_DOUBLE(12 * 30 * 100), 10, EDecorationType::HILL);
+
+        return;
     }
 }
 

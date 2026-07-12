@@ -64,6 +64,22 @@ const char *pLevelSelectSyobonKZTrueAction[] = {
     nullptr,
 };
 
+const char *pLevelSelectSyobonNoActionJin[] = {
+    "Level 1",
+    "Level 2",
+    "Level 3",
+    "Level 4",
+    nullptr,
+};
+
+const char *pLevelSelectSyobonNoActionTakumi[] = {
+    "Level 1",
+    "Level 2",
+    "Level 3",
+    "Level 4",
+    nullptr,
+};
+
 bool OptionsAvailable[] = {
     true,
     true,
@@ -212,7 +228,7 @@ const char ** GetCurrentLabels()
     {
         switch (currentGame)
         {
-        case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+        case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
             return pLevelSelectSA_1_AND_2;
             break;
         case ESyobonActionGame::SYOBON_ACTION_3:
@@ -220,6 +236,12 @@ const char ** GetCurrentLabels()
             break;
         case ESyobonActionGame::KAIZO_SYOBON:
             return pLevelSelectKaizoSyobon;
+            break;
+        case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
+            return pLevelSelectSyobonNoActionJin;
+            break;
+        case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
+            return pLevelSelectSyobonNoActionTakumi;
             break;
         case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
             return pLevelSelectSyobonKZTrueAction;
@@ -271,7 +293,7 @@ void ChangeToPauseState(EPauseState newstate)
 
         //level 1 is always available
         OptionsAvailable[0] = true;
-        OptionsAvailable[8] = currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? true : false;
+        OptionsAvailable[8] = currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ? true : false;
 
         //check for finished levels
         for(auto finishedlevel : SyobonGlobalConfig.LevelsFinished)
@@ -281,7 +303,7 @@ void ChangeToPauseState(EPauseState newstate)
             
             switch (currentGame)
             {
-            case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+            case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
             
                 //Syobon Action 1
                 for(int lvl = 1; lvl < 5; lvl++)
@@ -322,6 +344,26 @@ void ChangeToPauseState(EPauseState newstate)
                 }
                 break;
             case ESyobonActionGame::KAIZO_SYOBON:
+                for(int lvl = 1; lvl < 5; lvl++)
+                {
+                    if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
+                    {
+                        OptionsAvailable[lvl] = true;
+                        ShowLevelAsFinished[lvl - 1] = true;
+                    }
+                }
+                break;
+            case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
+                for(int lvl = 1; lvl < 5; lvl++)
+                {
+                    if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
+                    {
+                        OptionsAvailable[lvl] = true;
+                        ShowLevelAsFinished[lvl - 1] = true;
+                    }
+                }
+                break;
+            case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
                 for(int lvl = 1; lvl < 5; lvl++)
                 {
                     if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
@@ -415,7 +457,7 @@ void HandlePauseState()
                     //get level from selection
                     switch(currentGame)
                     {
-                    case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+                    case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
                         if(CurrentSelection >= 0 && CurrentSelection < 4)
                         {
                             SyobonWorld = 1;
@@ -444,6 +486,22 @@ void HandlePauseState()
                         }
                         break;
                     case ESyobonActionGame::KAIZO_SYOBON:
+                        if(CurrentSelection >= 0 && CurrentSelection < 4)
+                        {
+                            SyobonWorld = 1;
+                            SyobonLevel = CurrentSelection + 1;
+                            SyobonSection = 0;
+                        }
+                        break;
+                    case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
+                        if(CurrentSelection >= 0 && CurrentSelection < 4)
+                        {
+                            SyobonWorld = 1;
+                            SyobonLevel = CurrentSelection + 1;
+                            SyobonSection = 0;
+                        }
+                        break;
+                    case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
                         if(CurrentSelection >= 0 && CurrentSelection < 4)
                         {
                             SyobonWorld = 1;

@@ -88,7 +88,7 @@ void HandleEnemies()
         int player_pos_y = PlayerY + fy;
 
         // Syobon Action 3
-        if (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+        if (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
         {
             bool handled = false;
             //update
@@ -1338,7 +1338,7 @@ void HandleEnemies()
         }
         else
         {
-            if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+            if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                 EnemyX[t] = -9000000;
         }
 
@@ -1542,7 +1542,7 @@ void HandleEnemiesBlocks()
 	for (tt = 0; tt < OBJECT_MAX; tt++)
 	{
         if(((int)ObjectType[tt] > 99) &&
-            (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 ?
+            (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ?
                 (
                     (
                         ObjectType[tt] > EObjectType::LAST_LEGACY_OBJECT &&
@@ -1605,12 +1605,12 @@ void HandleEnemiesBlocks()
             (
                 BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN &&
                 EnemyType[t] == EEnemyType::SHELL &&
-                currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 &&
+                currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
                 BlockSubType[tt] == EBlockSubType::ITEM_BLOCK_HIDDEN_SA3_NO_SHELL
             )
             ||
             (
-                (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? false :
+                (currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ? false :
                     (
                         BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK &&
                         EnemyType[t] == EEnemyType::SHELL
@@ -1635,7 +1635,7 @@ void HandleEnemiesBlocks()
 				// 上 (Above)
 				if (
                     BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN &&
-                    (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                    (currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK)
                 )
 				{
 					// if (ttype[tt]==117 && txtype[t]==1){ad[t]=-1500;}
@@ -1677,7 +1677,7 @@ void HandleEnemiesBlocks()
 				if (((int)EnemyType[t] >= 100 ||
                 (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN ||
                     (BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL) ||
-                    (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? false : BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                    (currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ? false : BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
                 ))
                 && BlockType[tt] != EBlockType::NOTE_BLOCK)
 				{
@@ -1685,7 +1685,7 @@ void HandleEnemiesBlocks()
                     //+KZ: Syobon Action has broken physics, which makes 2-3 be inconsistent when trying to hit
                     //  the hidden block with the shell in the start, this patch adds a very specific collision
                     //  check only for that SPECIFIC shell and that SPECIFIC block in that SPECIFIC level!
-                    if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 && SyobonRandomMode == 0 &&
+                    if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && SyobonRandomMode == 0 &&
                         (
                             SyobonWorld == 2 &&
                             SyobonLevel == 3 &&
@@ -1764,7 +1764,7 @@ void HandleEnemiesBlocks()
 						}
 
                         //+KZ
-                        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                        if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
                         {
                             if(BlockSubType[t] == EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN)
                             {
@@ -1811,7 +1811,7 @@ void RenderEnemies()
     // 敵キャラ (Enemy character)
     for (t = 0; t < ENEMY_MAX; t++)
     {
-        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+        if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
         {
             if(EnemyType[t] == EEnemyType::SA3_BIG_MUSHROOM_FALLING && EnemyX[t] >= -900000)
             {

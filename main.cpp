@@ -440,8 +440,10 @@ void Mainprogram()
 		{
 			switch(currentGame)
 			{
-			case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+			case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
 			case ESyobonActionGame::KAIZO_SYOBON:
+			case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
+			case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
 				xx[2] = PlayerScrollCenterX;
 				xx[3] = 0;
 				xx[1] = xx[2];

@@ -117,7 +117,7 @@ void RenderBlocks()
                           xx[1] / 100 + 1);
             }
 
-            if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
             {
                 if(BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT ||
                     BlockType[t] == EBlockType::SA3_GRAY_SPIKE_RIGHT)
@@ -264,7 +264,7 @@ void RenderWalls()
 
             // 落ちるやつ (The one that falls)
             if (ObjectType[t] == EObjectType::FALLING_FLOOR || 
-                (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && ObjectType[t] == EObjectType::SA3_FALLING_FLOOR))
+                (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && ObjectType[t] == EObjectType::SA3_FALLING_FLOOR))
             {
                 xx[29] = 0;
                 if (StageColor == ELevelType::UNDERGROUND)
@@ -382,8 +382,10 @@ void RenderWalls()
             // 中間
             if (ObjectType[t] == EObjectType::CHECKPOINT)
             {
-                drawimage(Sliced_GFX[20][4],
-                          (ObjectX[t] - fx) / 100, (ObjectY[t] - fy) / 100);
+                if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && SyobonWorld == 1)
+                    drawimage(Sliced_GFX_KZ[6], (ObjectX[t] - fx) / 100, (ObjectY[t] - fy) / 100);
+                else
+                    drawimage(Sliced_GFX[20][4], (ObjectX[t] - fx) / 100, (ObjectY[t] - fy) / 100);
             }
 
             //Syobon Action 3

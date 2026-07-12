@@ -81,7 +81,7 @@ void RenderExtraGraphics()
                 drawarc((xx[0]) / 100 + 15 - 1, (xx[1]) / 100, 10, 10);
             } // 4
 
-            if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
             {
                 if (ExtraGraphicType[t] == EExtraGraphicType::SA3_MUSHROOM)
                 {

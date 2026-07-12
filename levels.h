@@ -16,6 +16,12 @@ void HandleSyobonActionThreeLevels();
 //Kaizo Syobon
 void HandleKaizoSyobonLevels();
 
+//Jin
+void HandleJinLevels();
+
+//Takumi
+void HandleTakumiLevels();
+
 //+KZ
 void StageClear();
 void HandleSyobonKZTrueActionLevels();

@@ -35,7 +35,7 @@ void HandleTitleKeys()
 
     switch (currentGame)
     {
-    case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+    case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
         if (CheckHitKey(KEY_INPUT_1) == 1)
         {
             SyobonWorld = 1;
@@ -116,7 +116,16 @@ void HandleTitleKeys()
         TogglePauseState(EPauseState::LEVEL_SELECT);
     }
 
-    #define ISGAMEALLOWED(game) (currentGame != ESyobonActionGame::SYOBON_ACTION_3 || (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && SA3Enabled))
+    #define ISGAMEALLOWED(game) (   \
+        (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && SA3Enabled) ||  \
+        (   \
+            currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||   \
+            currentGame == ESyobonActionGame::KAIZO_SYOBON ||   \
+            currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION ||   \
+            currentGame == ESyobonActionGame::SYOBON_NO_ACTION_JIN ||   \
+            currentGame == ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI   \
+        )   \
+    )
 
     static bool change_game_key_pressed = false;
     if(CheckHitKey(KEY_INPUT_LEFT))
@@ -182,7 +191,7 @@ void UpdateTitleScreen()
     {
         switch (currentGame)
         {
-        case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
+        case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
             author = "Originally by Chiku & Bluvel";
             break;
         
@@ -193,6 +202,12 @@ void UpdateTitleScreen()
         case ESyobonActionGame::KAIZO_SYOBON:
             author = "Originally by Zokalal";
             break;
+
+        case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
+        case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
+            author = "Originally by Yoshiro";
+            break;
+
         case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
             author = "By +KZ";
             break;
@@ -247,10 +262,7 @@ void RenderTitleScreen()
     int author_y = 30;
     switch(currentGame)
     {
-    case ESyobonActionGame::SYOBON_ACTION_1_AND_2:
-        //setcolor(160, 180, 250);
-        //fillrect(0, 0, fxmax, fymax);
-
+    case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
         //+KZ
         setcolor(0, 0, 0);
         str(PLUSKZ_EDITION_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 120);
@@ -258,12 +270,12 @@ void RenderTitleScreen()
         drawimage(Main_GFX[30], 240 - 380 / 2, 60);
 
         setcolor(0, 0, 0);
-        str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
+        if(GetNowCount() % 5000 >= 2500)
+            str("Prece Enter Key ",240 - 8 * 20 / 2, 250); //Chiku
+        else
+            str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250); //Bluvel
         break;
     case ESyobonActionGame::SYOBON_ACTION_3:
-        //setcolor(160, 180, 250);
-        //fillrect(0, 0, fxmax, fymax);
-
         drawimage(Main_GFX_KZ[1], 240 - Main_GFX_KZ[1]->w / 2, 20);
 
         //+KZ
@@ -296,6 +308,30 @@ void RenderTitleScreen()
             str("You're too slow... ._.", 240 - 8 * 20 / 2, 250);
 
         author_y = 130;
+        break;
+    case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
+        //+KZ
+        setcolor(0, 0, 0);
+        str(PLUSKZ_EDITION_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 140);
+
+        drawimage(Main_GFX_KZ[14], 240 - Main_GFX_KZ[14]->w / 2, 35);
+
+        ChangeFontType(DX_FONTTYPE_EDGE);
+        setc1();
+        str("Press Enter to Start!", 240 - 8 * 20 / 2, 250);
+        ChangeFontType(DX_FONTTYPE_NORMAL);
+        break;
+    case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
+        //+KZ
+        setcolor(0, 0, 0);
+        str(PLUSKZ_EDITION_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 140);
+
+        drawimage(Main_GFX_KZ[15], 240 - Main_GFX_KZ[15]->w / 2, 35);
+
+        ChangeFontType(DX_FONTTYPE_EDGE);
+        setc1();
+        str("Press Enter to Start!", 240 - 8 * 20 / 2, 250);
+        ChangeFontType(DX_FONTTYPE_NORMAL);
         break;
     }
 

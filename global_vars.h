@@ -80,7 +80,7 @@ extern SDL_Surface *Main_GFX[51];
 
 // +KZ: i added these
 #define MAIN_GFX_KZ_MAX 16
-#define SLICED_GFX_KZ_MAX 6
+#define SLICED_GFX_KZ_MAX 7
 #define SOUNDS_KZ_MAX 2
 extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
 extern SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
@@ -462,14 +462,14 @@ extern bool StartFullScreenFlag;
 //Dont change the IDs or saves will break!!!
 enum class ESyobonActionGame : int
 {
-    SYOBON_ACTION_1_AND_2 = 0,
+    SHOBON_NO_ACTION_1_AND_2 = 0,
     SYOBON_ACTION_3 = 300,
     SYOBON_NO_ACTION_JIN = 700,
     SYOBON_NO_ACTION_TAKUMI = 1000,
     KAIZO_SYOBON = 1500,
     SYOBONKZ_TRUE_ACTION = 3000, //+KZ
 
-    FIRST = SYOBON_ACTION_1_AND_2,
+    FIRST = SHOBON_NO_ACTION_1_AND_2,
     LAST = SYOBONKZ_TRUE_ACTION,
 };
 extern ESyobonActionGame currentGame;

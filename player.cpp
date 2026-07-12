@@ -417,7 +417,7 @@ void HandlePlayer()
 
                 //+KZ: patch for level 3-1 finish
                 // so we dont get stuck in a invalid level (3-2 does not exist)
-                if(currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 &&
+                if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
                     (
                         SyobonWorld == 3 &&
                         SyobonLevel == 1 &&
@@ -469,7 +469,7 @@ void HandlePlayer()
             //  but we want the original version, right?
             //  Lets "un-fix" it for level 1-4 so the chicken trap works
             if (
-                (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 && SyobonRandomMode == 0 &&
+                (currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && SyobonRandomMode == 0 &&
                 SyobonWorld == 1 && SyobonLevel == 4 && SyobonSection == 0)
                 ?
                 (PlayerState == 301 || (PlayerState == 302 && PlayerAITimer >= 2 && PlayerAITimer <= 100)) //Original Syobon Action
@@ -783,7 +783,7 @@ void HandlePlayerBlocks()
 
                         // 上 (Above)
                         if (BlockType[t] != EBlockType::ITEM_BLOCK_HIDDEN &&
-                            (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK) &&
+                            (currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK) &&
                             BlockType[t] != EBlockType::ITEM_BLOCK_POISON_HIDDEN &&
                             !(BlockType[t] == EBlockType::ITEM_BLOCK_TRAP_HIDDEN))
                         {
@@ -969,7 +969,7 @@ void HandlePlayerBlocks()
                                     }
 
                                     //+KZ
-                                    if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                                    if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
                                     {
                                         if(BlockSubType[t] == EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN)
                                         {
@@ -986,7 +986,7 @@ void HandlePlayerBlocks()
                                 if (BlockType[t] != EBlockType::ITEM_BLOCK_HIDDEN &&
                                     BlockType[t] != EBlockType::ITEM_BLOCK_POISON_HIDDEN &&
                                     BlockType[t] != EBlockType::NOTE_BLOCK &&
-                                    (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                                    (currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK)
                                 )
                                 {
                                     if (!(BlockType[t] == EBlockType::ITEM_BLOCK_TRAP_HIDDEN))
@@ -1016,7 +1016,7 @@ void HandlePlayerBlocks()
                                     }
                                 }
 
-                                if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                                if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                                 {
                                     if((BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT && xx[16] && PlayerX < xx[8]) ||
                                     (BlockType[t] == EBlockType::SA3_GRAY_SPIKE_RIGHT && xx[16] && PlayerX + PlayerSizeX > xx[8] + xx[1]))
@@ -1146,7 +1146,7 @@ void HandlePlayerBlocks()
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_POISONOUS_FASTER)
                             CreateEnemyLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::MUSHROOM_POISONOUS, EEnemySubType::MUSHROOM_POISONOUS_FASTER);
 
-                        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                        if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                         {
                             if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_SA3_TRAP)
                             {
@@ -1294,7 +1294,7 @@ void HandlePlayerBlocks()
                                 BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                             }
                         }
-                        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                        if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                         {
                             if(BlockSubType[t] == EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_SA3_1UP)
                             {
@@ -1489,7 +1489,7 @@ void HandlePlayerWalls()
             xx[8] = ObjectX[t] - fx;
             xx[9] = ObjectY[t] - fy;
             if ((
-                currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 ?
+                currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ?
                 (
                     //+KZ: allow more objects in other games
                     ObjectType[t] < EObjectType::TRIGGERS_START ||
@@ -1565,7 +1565,7 @@ void HandlePlayerWalls()
                 }
                 // おちるブロック2 (Falling Block 2)
                 if (ObjectType[t] == EObjectType::FALLING_FLOOR ||
-                    (currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && ObjectType[t] == EObjectType::SA3_FALLING_FLOOR && ((prev_player_vel_y > 0 && prev_player_grounded == 0) || ObjectAI[t] != 0))
+                    (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && ObjectType[t] == EObjectType::SA3_FALLING_FLOOR && ((prev_player_vel_y > 0 && prev_player_grounded == 0) || ObjectAI[t] != 0))
                 )
                 {
                     if (ObjectAI[t] == 0 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 2000 && PlayerX < xx[8] + ObjectSizeX[t] - xx[0] - 2500 && PlayerY + PlayerSizeY > xx[9] - 3000)
@@ -1888,7 +1888,7 @@ void HandlePlayerWalls()
                     }
 
                     //Syobon Action 3
-                    if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2)
+                    if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                     {
                         if(ObjectType[t] == EObjectType::SA3_TRIGGER_FAST_SEAL_UP)
                         {
