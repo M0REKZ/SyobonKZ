@@ -27,32 +27,32 @@ const char *pOptionsLabels[] = {
 };
 
 const char *pLevelSelectSA_1_AND_2[] = {
-    "Level 1-1",
-    "Level 1-2",
-    "Level 1-3",
-    "Level 1-4",
-    "Level 2-1",
-    "Level 2-2",
-    "Level 2-3",
-    "Level 2-4",
-    "Special Level 9",
+    "Shobon no Action Level 1",
+    "Shobon no Action Level 2",
+    "Shobon no Action Level 3",
+    "Shobon no Action Level 4",
+    "Shobon no Action 2 Level 1",
+    "Shobon no Action 2 Level 2",
+    "Shobon no Action 2 Level 3",
+    "Shobon no Action 2 Level 4",
+    "Shobon no Action 2 \"Special Level 9\"",
     nullptr,
 };
 
 const char *pLevelSelectSA_3[] = {
-    "Level 1",
-    "Level 2",
-    "Level 3",
-    "Level 4",
-    "Level 5",
+    "Syobon Action 3 Level 1",
+    "Syobon Action 3 Level 2",
+    "Syobon Action 3 Level 3",
+    "Syobon Action 3 Level 4",
+    "Syobon Action 3 Level 5",
     nullptr,
 };
 
 const char *pLevelSelectKaizoSyobon[] = {
-    "Level 1",
-    "Level 2",
-    "Level 3",
-    "Level 4",
+    "Empty Overworld",
+    "Deserted Underground",
+    "Trees Madness",
+    "Castle Of Tricks",
     nullptr,
 };
 
