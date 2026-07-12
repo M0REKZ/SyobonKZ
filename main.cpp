@@ -457,6 +457,7 @@ void Mainprogram()
 				break;
 			//SA3 camera can go back
 			case ESyobonActionGame::SYOBON_ACTION_3:
+			case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
 				xx[2] = PlayerScrollCenterX;
 				xx[3] = 0;
 				xx[1] = xx[2];

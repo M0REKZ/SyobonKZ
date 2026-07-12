@@ -65,6 +65,7 @@ void loadg(void)
     Main_GFX_KZ[10] = LoadGraph("res/sa3/jumpscare_plant_2.png", false);
     Main_GFX_KZ[11] = LoadGraph("res/kz/levelicons.png", false);
     Main_GFX_KZ[12] = LoadGraph("res/kaizosyobon/syobon3.png", false);
+    Main_GFX_KZ[13] = LoadGraph("res/kz/logo.png", false);
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
     Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);

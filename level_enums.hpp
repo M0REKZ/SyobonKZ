@@ -122,6 +122,9 @@ enum class EBlockType : int
     //Syobon Action 3
     SA3_GRAY_SPIKE_LEFT,
     SA3_GRAY_SPIKE_RIGHT,
+
+    //+KZ
+    SYOBONKZ_HIDDEN_BLOCK,
 };
 
 
@@ -566,6 +569,9 @@ enum class EBlockSubType : int
     MESSAGE_BLOCK_1_3_0_4_WAIT_START = 500,
     MESSAGE_BLOCK_1_3_0_4_WAIT_END = 540,
     MESSAGE_BLOCK_1_3_0_4_SHOW_MESSAGE = 541,
+
+    //+KZ
+    SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN = 0,
 };
 
 enum class EObjectSubType : int

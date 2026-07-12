@@ -1601,7 +1601,23 @@ void HandleEnemiesBlocks()
 	{
 
         //skip untouchable blocks
-        if((BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL) && currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && BlockSubType[tt] == EBlockSubType::ITEM_BLOCK_HIDDEN_SA3_NO_SHELL)
+        if(
+            (
+                BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN &&
+                EnemyType[t] == EEnemyType::SHELL &&
+                currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 &&
+                BlockSubType[tt] == EBlockSubType::ITEM_BLOCK_HIDDEN_SA3_NO_SHELL
+            )
+            ||
+            (
+                (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? false :
+                    (
+                        BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK &&
+                        EnemyType[t] == EEnemyType::SHELL
+                    )
+                )
+            )
+        )
         {
             continue;
         }
@@ -1617,7 +1633,10 @@ void HandleEnemiesBlocks()
 			{
 
 				// 上 (Above)
-				if (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN)
+				if (
+                    BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN &&
+                    (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? true : BlockType[t] != EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                )
 				{
 					// if (ttype[tt]==117 && txtype[t]==1){ad[t]=-1500;}
 					if (!(BlockType[tt] == EBlockType::NOTE_BLOCK))
@@ -1657,7 +1676,8 @@ void HandleEnemiesBlocks()
 				xx[27] = 0;
 				if (((int)EnemyType[t] >= 100 ||
                 (BlockType[tt] != EBlockType::ITEM_BLOCK_HIDDEN ||
-                    (BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL)
+                    (BlockType[tt] == EBlockType::ITEM_BLOCK_HIDDEN && EnemyType[t] == EEnemyType::SHELL) ||
+                    (currentGame == ESyobonActionGame::SYOBON_ACTION_1_AND_2 ? false : BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
                 ))
                 && BlockType[tt] != EBlockType::NOTE_BLOCK)
 				{
@@ -1742,6 +1762,16 @@ void HandleEnemiesBlocks()
 								  -240, -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
 							BlockBreak(tt);
 						}
+
+                        //+KZ
+                        if(currentGame != ESyobonActionGame::SYOBON_ACTION_1_AND_2 && BlockType[t] == EBlockType::SYOBONKZ_HIDDEN_BLOCK)
+                        {
+                            if(BlockSubType[t] == EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN)
+                            {
+                                PlaySound(Sounds[14]);
+                                BlockType[tt] = EBlockType::SPIKE;
+                            }
+                        }
 					}
 				}
 			}

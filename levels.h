@@ -18,5 +18,6 @@ void HandleKaizoSyobonLevels();
 
 //+KZ
 void StageClear();
+void HandleSyobonKZTrueActionLevels();
 
 #endif
