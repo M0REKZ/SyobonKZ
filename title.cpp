@@ -121,9 +121,7 @@ void HandleTitleKeys()
         (   \
             currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||   \
             currentGame == ESyobonActionGame::KAIZO_SYOBON ||   \
-            currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION ||   \
-            currentGame == ESyobonActionGame::SYOBON_NO_ACTION_JIN ||   \
-            currentGame == ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI   \
+            currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION  \
         )   \
     )
 
@@ -201,11 +199,6 @@ void UpdateTitleScreen()
 
         case ESyobonActionGame::KAIZO_SYOBON:
             author = "Originally by Zokalal";
-            break;
-
-        case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
-        case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
-            author = "Originally by Yoshiro";
             break;
 
         case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
@@ -308,30 +301,6 @@ void RenderTitleScreen()
             str("You're too slow... ._.", 240 - 8 * 20 / 2, 250);
 
         author_y = 130;
-        break;
-    case ESyobonActionGame::SYOBON_NO_ACTION_JIN:
-        //+KZ
-        setcolor(0, 0, 0);
-        str(PLUSKZ_EDITION_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 140);
-
-        drawimage(Main_GFX_KZ[14], 240 - Main_GFX_KZ[14]->w / 2, 35);
-
-        ChangeFontType(DX_FONTTYPE_EDGE);
-        setc1();
-        str("Press Enter to Start!", 240 - 8 * 20 / 2, 250);
-        ChangeFontType(DX_FONTTYPE_NORMAL);
-        break;
-    case ESyobonActionGame::SYOBON_NO_ACTION_TAKUMI:
-        //+KZ
-        setcolor(0, 0, 0);
-        str(PLUSKZ_EDITION_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 140);
-
-        drawimage(Main_GFX_KZ[15], 240 - Main_GFX_KZ[15]->w / 2, 35);
-
-        ChangeFontType(DX_FONTTYPE_EDGE);
-        setc1();
-        str("Press Enter to Start!", 240 - 8 * 20 / 2, 250);
-        ChangeFontType(DX_FONTTYPE_NORMAL);
         break;
     }
 
