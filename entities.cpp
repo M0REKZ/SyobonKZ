@@ -2720,6 +2720,28 @@ void ClearAllEnemies()
     }
 
     EnemyCount = 0;
+    EnemyAppearCount = 0;
+}
+
+void ClearAllLifts()
+{
+    for (int i = 0; i < LIFT_MAX; i++)
+    {
+        LiftX[i] = std::numeric_limits<int>::min();
+		LiftY[i] = std::numeric_limits<int>::min();
+		LiftSizeX[i] = 1;
+        LiftVelX[i] = 0;
+		LiftVelY[i] = 0;
+		LiftFrictionY[i] = 0;
+		LiftDirection[i] = 0;
+		LiftON[i] = 0;
+		LiftPlayerFatigueX[i] = 0;
+		LiftType[i] = ELiftType::YELLOW;
+        LiftInteractType[i] = 0;
+        LiftMovementType[i] = 0;
+    }
+
+    LiftCount = 0;
 }
 
 // 敵キャラ、アイテム作成 (Enemy character and item creation)

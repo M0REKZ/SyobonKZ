@@ -32,6 +32,9 @@ int QueueEnemyAppear(double PosX, double PosY, EEnemyType EntityType, EEnemySubT
 //+KZ: clear all entities from memory
 void ClearAllEnemies();
 
+//+KZ: clear all lifts from memory
+void ClearAllLifts();
+
 //+KZ: for new entities
 void HandleEnemiesBlocksKZ();
 

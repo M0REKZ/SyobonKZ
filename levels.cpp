@@ -8413,6 +8413,7 @@ void StageClear()
     BlockClearAll();
     ClearAllEnemies();
     ObjectClearAll();
+    ClearAllLifts();
 }
 
 //+KZ
