@@ -471,7 +471,7 @@ enum class ESyobonActionGame : int
     LAST = SYOBONKZ_TRUE_ACTION,
 };
 extern ESyobonActionGame currentGame;
-extern bool SA3Enabled;
+extern bool SADevGamesEnabled;
 extern bool SyobonStartGame;
 extern bool ScreenshotKeyState;
 extern bool GIFKeyState;

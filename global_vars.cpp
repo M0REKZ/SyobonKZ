@@ -218,7 +218,7 @@ long stimeZ;
 ESyobonActionGame currentGame = ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2;
 bool HelpFlagHandled = false;
 bool StartFullScreenFlag = false;
-bool SA3Enabled = false;
+bool SADevGamesEnabled = false;
 bool SyobonStartGame = false;
 bool ScreenshotKeyState = false;
 bool GIFKeyState = false;

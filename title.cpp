@@ -117,12 +117,10 @@ void HandleTitleKeys()
     }
 
     #define ISGAMEALLOWED(game) (   \
-        (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && SA3Enabled) ||  \
-        (   \
-            currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||   \
-            currentGame == ESyobonActionGame::KAIZO_SYOBON ||   \
-            currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION  \
-        )   \
+        (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && SADevGamesEnabled) ||  \
+        currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||   \
+        currentGame == ESyobonActionGame::KAIZO_SYOBON ||   \
+        (currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION && SADevGamesEnabled)  \
     )
 
     static bool change_game_key_pressed = false;
