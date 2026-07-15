@@ -18,6 +18,9 @@ Release Changelog
     * ```--fast-death```: Dont do death animation
 * Fix key keeping pressed after message box in SDL3
 * Fix mismatches from the original games:
+    * General:
+        * Now title screen will toggle Enter key text between Chiku's and Bluvel's
+        * Restored no-text Checkpoint sprite for Syobon Action 1 levels
     * Level 1-3:
         * Fixed finish sound still being played after Defrag grabs the pole
     * Level 2-3:
