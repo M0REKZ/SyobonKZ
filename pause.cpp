@@ -48,6 +48,11 @@ const char *pLevelSelectSA_3[] = {
     nullptr,
 };
 
+const char *pLevelSelectSAJAM[] = {
+    "Syobon Action JAM",
+    nullptr,
+};
+
 const char *pLevelSelectKaizoSyobon[] = {
     "Empty Overworld",
     "Deserted Underground",
@@ -218,6 +223,9 @@ const char ** GetCurrentLabels()
         case ESyobonActionGame::SYOBON_ACTION_3:
             return pLevelSelectSA_3;
             break;
+        case ESyobonActionGame::SYOBON_ACTION_JAM:
+            return pLevelSelectSAJAM;
+            break;
         case ESyobonActionGame::KAIZO_SYOBON:
             return pLevelSelectKaizoSyobon;
             break;
@@ -329,6 +337,12 @@ void ChangeToPauseState(EPauseState newstate)
                         OptionsAvailable[lvl] = true;
                         ShowLevelAsFinished[lvl - 1] = true;
                     }
+                }
+                break;
+            case ESyobonActionGame::SYOBON_ACTION_JAM: 
+                if(finishedlevel.World == 1 && finishedlevel.Level == 1)
+                {
+                    ShowLevelAsFinished[0] = true;
                 }
                 break;
             case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
@@ -448,6 +462,14 @@ void HandlePauseState()
                         {
                             SyobonWorld = 1;
                             SyobonLevel = CurrentSelection + 1;
+                            SyobonSection = 0;
+                        }
+                        break;
+                    case ESyobonActionGame::SYOBON_ACTION_JAM:
+                        if(CurrentSelection == 0)
+                        {
+                            SyobonWorld = 1;
+                            SyobonLevel = 1;
                             SyobonSection = 0;
                         }
                         break;

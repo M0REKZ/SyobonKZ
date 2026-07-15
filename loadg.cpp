@@ -66,7 +66,7 @@ void loadg(void)
     Main_GFX_KZ[11] = LoadGraph("res/kz/levelicons.png", false);
     Main_GFX_KZ[12] = LoadGraph("res/kaizosyobon/syobon3.png", false);
     Main_GFX_KZ[13] = LoadGraph("res/kz/logo.png", false);
-    Main_GFX_KZ[14] = nullptr;
+    Main_GFX_KZ[14] = LoadGraph("res/jam/logojam.png", false);
     Main_GFX_KZ[15] = nullptr;
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);

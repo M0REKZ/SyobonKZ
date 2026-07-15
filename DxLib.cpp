@@ -91,7 +91,10 @@ int DxLib_Init()
     SDL_memset(&keysHeld, 0, sizeof(keysHeld));
 
     for (int i = 0; i < FONT_MAX; i++)
-        font[i] = NULL;
+    {
+        font[i][0] = nullptr;
+        font[i][1] = nullptr;
+    }
     srand(time(NULL));
 
     return 0;
@@ -102,16 +105,36 @@ SDL_Surface *screen;
 
 // Fonts
 Uint8 fontsize = 0;
-TTF_Font *font[FONT_MAX];
+TTF_Font * font[FONT_MAX][2];
+
+int currentfont = 0;
+const char *pFontFiles[2] = {
+    "res/sazanami-gothic.ttf",
+    "res/RasterForge.ttf"
+};
+
+void SyobonKZSetFontFile(int id)
+{
+    if(currentfont == id)
+        return;
+
+    if(id >= 0 && id < (sizeof(pFontFiles) / sizeof(const char *)))
+    {
+        currentfont = id;
+
+        //Load font
+        SetFontSize(fontsize);
+    }
+}
 
 // Strings
 void SetFontSize(Uint8 size)
 {
     fontsize = size;
-    if (font[size] == NULL)
+    if (font[size][currentfont] == NULL)
     {
-        font[size] = TTF_OpenFont("res/sazanami-gothic.ttf", size);
-        if (font[size] == NULL)
+        font[size][currentfont] = TTF_OpenFont(pFontFiles[currentfont], size);
+        if (font[size][currentfont] == NULL)
         {
             printf("Unable to load font: %s\n", SyobonKZGetSDLTTFError());
             exit(1);
@@ -128,7 +151,7 @@ void ChangeFontType(Uint8 type)
 SDL_Surface *StringToSurface(const char *pstring, Uint32 color, Uint8 font_size, Uint8 font_type)
 {
     SDL_Color temp_color = {(Uint8)(color >> 16), (Uint8)(color >> 8), (Uint8)(color)};
-    SDL_Surface *rendered = SyobonKZRenderUTF8Text(font[font_size], pstring, temp_color);
+    SDL_Surface *rendered = SyobonKZRenderUTF8Text(font[font_size][currentfont], pstring, temp_color);
     if (font_type == DX_FONTTYPE_EDGE)
     {
         //final surface
@@ -140,7 +163,7 @@ SDL_Surface *StringToSurface(const char *pstring, Uint32 color, Uint8 font_size,
         {
             //copy shadow
             SDL_Color blk = {0, 0, 0}; //forever TODO: 0,0,0 invisible?
-            SDL_Surface *shadow = SyobonKZRenderUTF8Text(font[font_size], pstring, blk);
+            SDL_Surface *shadow = SyobonKZRenderUTF8Text(font[font_size][currentfont], pstring, blk);
             shadow = SyobonKZFixImage(shadow, pstring);
             printf("SHADOW %p %s\n",shadow, pstring);
             if(shadow)
@@ -182,11 +205,11 @@ void DrawString(int a, int b, const char *x, Uint32 c)
 {
     SDL_Color color;
     SyobonKZGetRGBA(c, color);
-    SDL_Surface *rendered = SyobonKZRenderUTF8Text(font[fontsize], x, color);
+    SDL_Surface *rendered = SyobonKZRenderUTF8Text(font[fontsize][currentfont], x, color);
     if (fontType == DX_FONTTYPE_EDGE)
     {
         SDL_Color blk = {0, 0, 0};
-        SDL_Surface *shadow = SyobonKZRenderUTF8Text(font[fontsize], x, blk);
+        SDL_Surface *shadow = SyobonKZRenderUTF8Text(font[fontsize][currentfont], x, blk);
         DrawGraphZ(a - 1, b - 1, shadow);
         DrawGraphZ(a, b - 1, shadow);
         DrawGraphZ(a + 1, b - 1, shadow);
@@ -507,7 +530,7 @@ struct ChannelState {
 };
 static ChannelState channels[SYOBONKZ_MIX_CHANNELS];
 
-SyobonKZChunk *GetLastSoundInChannel(int channel)
+SyobonKZChunk *SyobonKZGetLastSoundInChannel(int channel)
 {
     return channel >= 0 && channel < SYOBONKZ_MIX_CHANNELS ? channels[channel].sound : nullptr;
 }

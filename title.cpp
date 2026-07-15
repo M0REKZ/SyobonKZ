@@ -119,6 +119,7 @@ void HandleTitleKeys()
     #define ISGAMEALLOWED(game) (   \
         (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && SADevGamesEnabled) ||  \
         currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||   \
+        (currentGame == ESyobonActionGame::SYOBON_ACTION_JAM && SADevGamesEnabled) ||  \
         currentGame == ESyobonActionGame::KAIZO_SYOBON ||   \
         (currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION && SADevGamesEnabled)  \
     )
@@ -199,6 +200,10 @@ void UpdateTitleScreen()
             author = "Originally by Zokalal";
             break;
 
+        case ESyobonActionGame::SYOBON_ACTION_JAM:
+            author = "StudsX";
+            break;
+
         case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
             author = "By +KZ";
             break;
@@ -265,6 +270,9 @@ void RenderTitleScreen()
             str("Prece Enter Key ",240 - 8 * 20 / 2, 250); //Chiku
         else
             str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250); //Bluvel
+
+        setc0();
+        str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
         break;
     case ESyobonActionGame::SYOBON_ACTION_3:
         drawimage(Main_GFX_KZ[1], 240 - Main_GFX_KZ[1]->w / 2, 20);
@@ -274,6 +282,8 @@ void RenderTitleScreen()
         str(PLUSKZ_REMAKE_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, 120);
 
         author_y = 100;
+        setc0();
+        str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
         break;
     case ESyobonActionGame::KAIZO_SYOBON:
         
@@ -287,6 +297,28 @@ void RenderTitleScreen()
         str("Prece Enter For Hell.", 240 - 8 * 20 / 2, 250);
 
         author_y = 100;
+        setc0();
+        str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
+        break;
+    case ESyobonActionGame::SYOBON_ACTION_JAM:
+    
+        SyobonKZSetFontFile(1);
+
+        SyobonKZDrawGraphScaled(240 - (Main_GFX_KZ[14]->w * 2) / 2, 100, 2, 2, Main_GFX_KZ[14]);
+
+        setc1();
+        str("Play Game", SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Play Game")) * 9) / 2, 250);
+
+        DrawGraphZ(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Play Game")) * 9) / 2 - (Sliced_GFX[1][2]->w * 1.5f), 240, Sliced_GFX[1][2]);
+
+        author_y = 125;
+        setcolor(231, 147, 31);
+        str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
+        DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y + 15, "SMBJAM", color);
+        DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y + 15 * 2, "2―0―2―1", color);
+        //+KZ
+        setcolor(0, 0, 0);
+        str(PLUSKZ_REMAKE_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, author_y + 15 * 4);
         break;
     case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
 
@@ -299,11 +331,12 @@ void RenderTitleScreen()
             str("You're too slow... ._.", 240 - 8 * 20 / 2, 250);
 
         author_y = 130;
+        setc0();
+        str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
         break;
     }
 
-    setc0();
-    str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
+    SyobonKZSetFontFile(0);
 }
 
 void TitleWaitToReleaseKey()

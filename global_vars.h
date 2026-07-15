@@ -464,6 +464,7 @@ enum class ESyobonActionGame : int
 {
     SHOBON_NO_ACTION_1_AND_2 = 0,
     SYOBON_ACTION_3 = 300,
+    SYOBON_ACTION_JAM = 1350,
     KAIZO_SYOBON = 1500,
     SYOBONKZ_TRUE_ACTION = 3000, //+KZ
 

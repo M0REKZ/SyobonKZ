@@ -280,6 +280,10 @@ void stagep()
         HandleKaizoSyobonLevels();
         break;
 
+    case ESyobonActionGame::SYOBON_ACTION_JAM:
+        HandleSyobonActionJAMLevels();
+        break;
+
     case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
         HandleSyobonKZTrueActionLevels();
         break;
@@ -8349,6 +8353,30 @@ void HandleKaizoSyobonLevels()
                 stagedate[num156][num157] = stagedatexKaizo8[num156][num157];
             }
         }
+    }
+}
+
+void HandleSyobonActionJAMLevels()
+{
+    if(SyobonState == ESyobonGameState::TITLE)
+    {
+        scrollx = 0;
+
+        PlayerX = (2.4 * 30) * 100;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
+
+        for(int grounds = 0; grounds < 20; grounds++)
+        {
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
+        }
+
+        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EDecorationType::GRASS);
+        CreateBackground(0, 10, EDecorationType::HILL);
+
+        CreateEnemy(18, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+
+        return;
     }
 }
 

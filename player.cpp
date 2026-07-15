@@ -185,7 +185,7 @@ void HandlePlayer()
         //+KZ: halt all channels except some sounds
         for(int ch = 0; ch < SYOBONKZ_MIX_CHANNELS; ch++)
         {
-            SyobonKZChunk * snd = GetLastSoundInChannel(ch);
+            SyobonKZChunk * snd = SyobonKZGetLastSoundInChannel(ch);
             if(snd != Sounds_KZ[0])
                 SyobonKZHaltChannel(ch);
         }

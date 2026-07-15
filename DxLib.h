@@ -35,7 +35,7 @@ extern SDL_Surface *screen;
 
 //Fonts
 #define FONT_MAX 64
-extern TTF_Font *font[FONT_MAX];
+extern TTF_Font * font[FONT_MAX][2];
 
 //Strings & fonts
 #define DX_FONTTYPE_NORMAL 0
@@ -79,6 +79,7 @@ extern bool sound;
 
 //+KZ custom
 void SyobonKZDrawGraphScaled(int x, int y, int scale_x, int scale_y, SDL_Surface * psurface);
-SyobonKZChunk * GetLastSoundInChannel(int channel);
+SyobonKZChunk * SyobonKZGetLastSoundInChannel(int channel);
+void SyobonKZSetFontFile(int id);
 
 #endif

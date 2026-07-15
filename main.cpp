@@ -442,6 +442,7 @@ void Mainprogram()
 			{
 			case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
 			case ESyobonActionGame::KAIZO_SYOBON:
+			case ESyobonActionGame::SYOBON_ACTION_JAM:
 				xx[2] = PlayerScrollCenterX;
 				xx[3] = 0;
 				xx[1] = xx[2];
@@ -685,7 +686,10 @@ void deinit()
 
 	// Font
 	for (int i = 0; i < FONT_MAX; i++)
-		TTF_CloseFont(font[i]);
+	{
+		TTF_CloseFont(font[i][0]);
+		TTF_CloseFont(font[i][1]);
+	}
 
 	// Joystick
 	SyobonKZJoystickClose(joystick);
