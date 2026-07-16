@@ -345,6 +345,11 @@ void RenderTitleScreen()
     }
 
     SyobonKZSetFontFile(0);
+
+    //draw some arrows
+    int x_offset = (cosf((GetNowCount() * 0.01f) / 2.5f) * 10.f);
+    DrawGraphZ(15 + x_offset, SYOBONKZ_SCREEN_SIZE_Y / 2 - Main_GFX_KZ[15]->h / 2, Main_GFX_KZ[15]);
+    DrawTurnGraphZ(SYOBONKZ_SCREEN_SIZE_X - (15 + x_offset + Main_GFX_KZ[15]->w), SYOBONKZ_SCREEN_SIZE_Y / 2 - Main_GFX_KZ[15]->h / 2, Main_GFX_KZ[15]);
 }
 
 void TitleWaitToReleaseKey()
