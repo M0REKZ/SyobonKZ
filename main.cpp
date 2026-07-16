@@ -14,6 +14,7 @@
 std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
 
 bool pauseKeyPressed = false;
+bool can_save_config = false; //for loading errors
 
 // プログラムは WinMain から始まります
 // Changed to ansi c++ main()
@@ -67,6 +68,9 @@ int main(int argc, char *argv[])
 	CreateEnemyMessageCache();
 	CreatePlayerMessageCache();
 	CreateGlobalTextCache();
+
+	//+KZ: if we got here, we can safely save config and game progress
+	can_save_config = true;
 
 	MainLoop(); //+KZ
 
@@ -652,7 +656,8 @@ void deinit()
 	DrawString(200, 200, "EXITING...", GetColor(255, 255, 255));
 	SyobonKZScreenFlip(screen);
 
-	SaveConfig();
+	if(can_save_config)
+		SaveConfig();
 
 	// SURFACES
 	for (t = 0; t < 51; t++)
