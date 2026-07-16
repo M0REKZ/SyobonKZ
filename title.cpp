@@ -267,7 +267,14 @@ void RenderTitleScreen()
 
         setcolor(0, 0, 0);
         if(GetNowCount() % 5000 >= 2500)
+        {
+            SetFontSize(20);
             str("Prece Enter Key ",240 - 8 * 20 / 2, 250); //Chiku
+            str("Prece Enter Key ",(240 - 8 * 20 / 2) + 1, 250); //+KZ: (me trying to make a fake thickness effect)
+            //str("Prece Enter Key ",240 - 8 * 20 / 2, 250 - 1);
+            //str("Prece Enter Key ",(240 - 8 * 20 / 2) - 1, 250 - 1);
+            SetFontSize(16);
+        }
         else
             str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250); //Bluvel
 
