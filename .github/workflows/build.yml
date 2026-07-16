@@ -123,11 +123,7 @@ jobs:
         run: |
           cd build
           mkdir SyobonKZ-macOS
-          mv ./SyobonKZ ./SyobonKZ-macOS/
-          mv ./res ./SyobonKZ-macOS/
-          mv ./BGM ./SyobonKZ-macOS/
-          mv ./SE ./SyobonKZ-macOS/
-          mv ./text ./SyobonKZ-macOS/
+          mv ./SyobonKZ.app ./SyobonKZ-macOS/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
