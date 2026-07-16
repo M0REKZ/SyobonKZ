@@ -486,3 +486,12 @@ const char *GetSavePath()
         return nullptr;
     #endif
 }
+
+const char *GetBasePath()
+{
+    #ifdef SYOBONKZ_USE_SDL3
+        return SDL_GetBasePath();
+    #else
+        return "";
+    #endif
+}

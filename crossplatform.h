@@ -50,5 +50,6 @@
 void UpdateKeys();
 void ReleaseKeys();
 const char * GetSavePath();
+const char * GetBasePath();
 
 #endif

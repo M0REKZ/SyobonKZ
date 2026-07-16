@@ -133,7 +133,10 @@ void SetFontSize(Uint8 size)
     fontsize = size;
     if (font[size][currentfont] == NULL)
     {
-        font[size][currentfont] = TTF_OpenFont(pFontFiles[currentfont], size);
+        char temp_buf[600] = {'\0'};
+        int res = snprintf(temp_buf, sizeof(temp_buf), "%s%s", GetBasePath(), pFontFiles[currentfont]);
+        if(res >= 0)
+            font[size][currentfont] = TTF_OpenFont(temp_buf, size);
         if (font[size][currentfont] == NULL)
         {
             printf("Unable to load font: %s\n", SyobonKZGetSDLTTFError());
@@ -506,13 +509,19 @@ SDL_Surface *DerivationGraph(int srcx, int srcy, int width, int height,
 // Noticably different than the original
 SDL_Surface *LoadGraph(const char *filename, bool fix)
 {
-    SDL_Surface *image = IMG_Load(filename);
+    SDL_Surface * image = nullptr;
+
+    char temp_buf[600] = {'\0'};
+    int res = snprintf(temp_buf, sizeof(temp_buf), "%s%s", GetBasePath(), filename);
+    printf("%s\n",temp_buf);
+    if(res >= 0)
+        image = IMG_Load(temp_buf);
 
     if (image)
     {
         if (fix)
         {
-            image = SyobonKZFixImage(image, filename);
+            image = SyobonKZFixImage(image, temp_buf);
         }
 
         if (image)
@@ -520,7 +529,7 @@ SDL_Surface *LoadGraph(const char *filename, bool fix)
             return image;
         }
     }
-    fprintf(stderr, "Error: Unable to load %s: %s\n", filename, SyobonKZGetSDLImgError());
+    fprintf(stderr, "Error: Unable to load %s: %s\n", temp_buf, SyobonKZGetSDLImgError());
     exit(1);
 }
 
@@ -620,10 +629,15 @@ SyobonKZChunk *LoadSoundMem(const char *f)
     if (!sound)
         return NULL;
 
-    SyobonKZChunk *s = SyobonKZLoadChunk(f);
+    SyobonKZChunk * s = nullptr;
+
+    char temp_buf[600] = {'\0'};
+    int res = snprintf(temp_buf, sizeof(temp_buf), "%s%s", GetBasePath(), f);
+    if(res >= 0)
+        s = SyobonKZLoadChunk(temp_buf);
     if (s)
         return s;
-    fprintf(stderr, "Error: Unable to load sound %s: %s\n", f, SyobonKZGetSDLMixError());
+    fprintf(stderr, "Error: Unable to load sound %s: %s\n", temp_buf, SyobonKZGetSDLMixError());
     return NULL;
 }
 
@@ -632,9 +646,14 @@ SyobonKZMusic *LoadMusicMem(const char *f)
     if (!sound)
         return NULL;
 
-    SyobonKZMusic *m = SyobonKZLoadMusic(f);
+    SyobonKZMusic * m = nullptr;
+
+    char temp_buf[600] = {'\0'};
+    int res = snprintf(temp_buf, sizeof(temp_buf), "%s%s", GetBasePath(), f);
+    if(res >= 0)
+        m = SyobonKZLoadMusic(temp_buf);
     if (m)
         return m;
-    fprintf(stderr, "Error: Unable to load music %s: %s\n", f, SyobonKZGetSDLMixError());
+    fprintf(stderr, "Error: Unable to load music %s: %s\n", temp_buf, SyobonKZGetSDLMixError());
     return NULL;
 }

@@ -190,6 +190,18 @@ else()
     add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES_SYOBON})
 endif()
 
+# make app bundle on macOS
+if(APPLE)
+    set_target_properties(${EXECUTABLE_NAME} PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_BUNDLE_NAME "SyobonKZ"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "io.github.m0rekz.SyobonKZ"
+        MACOSX_BUNDLE_BUNDLE_VERSION "1.0.0"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0"
+        MACOSX_BUNDLE_ICON_FILE icon.icns
+    )
+endif()
+
 # we should not need to include standard libraries as .dll/.so
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     target_link_options(${EXECUTABLE_NAME} PRIVATE -static-libgcc)
@@ -241,9 +253,21 @@ elseif(NOT(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten"))
 endif()
 
 # copy syobon action data
-add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/BGM/ ${CMAKE_BINARY_DIR}/BGM/
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/res/ ${CMAKE_BINARY_DIR}/res/
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/SE/ ${CMAKE_BINARY_DIR}/SE/
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/text/ ${CMAKE_BINARY_DIR}/text/
-)
+if(NOT APPLE)
+    add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/BGM/ ${CMAKE_BINARY_DIR}/BGM/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/res/ ${CMAKE_BINARY_DIR}/res/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/SE/ ${CMAKE_BINARY_DIR}/SE/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/text/ ${CMAKE_BINARY_DIR}/text/
+    )
+else()
+    add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/BGM/ $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/BGM/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/res/ $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/res/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/SE/ $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/SE/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/text/ $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/text/
+
+        # macOS icon
+        COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/icon.icns $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/icon.icns
+    )
+endif()
