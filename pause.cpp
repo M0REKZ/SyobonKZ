@@ -4,6 +4,7 @@
 #include "pause.h"
 #include "title.h"
 #include "config.h"
+#include "loadg.h"
 
 const char *pPauseLabels[] = {
     "Resume",

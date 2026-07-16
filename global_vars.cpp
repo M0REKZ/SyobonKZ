@@ -52,21 +52,7 @@ int SyobonQuit;
 Uint32 color;
 Uint32 gfxcolor;
 
-SDL_Surface *Sliced_GFX[161][8];
-SDL_Surface *Main_GFX[51];
-
-// +KZ: i added these
-SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
-SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
-SyobonKZChunk *Sounds_KZ[SOUNDS_KZ_MAX]; //+KZ
-
 int mirror;
-
-SyobonKZMusic *Music[7]; //+KZ increased for Syobon Action 2 music
-SyobonKZChunk *Sounds[19];
-
-
-
 
 
 //1-ステージ

@@ -73,27 +73,8 @@ extern int SyobonQuit;
 extern Uint32 color;
 extern Uint32 gfxcolor;
 
-// @attention +KZ: renamed grap[][] to Sliced_GFX[][]
-extern SDL_Surface *Sliced_GFX[161][8];
-// @attention +KZ: renamed mgrap[][] to Main_GFX[][]
-extern SDL_Surface *Main_GFX[51];
-
-// +KZ: i added these
-#define MAIN_GFX_KZ_MAX 16
-#define SLICED_GFX_KZ_MAX 7
-#define SOUNDS_KZ_MAX 2
-extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ
-extern SDL_Surface *Sliced_GFX_KZ[SLICED_GFX_KZ_MAX]; //+KZ
-extern SyobonKZChunk *Sounds_KZ[SOUNDS_KZ_MAX]; //+KZ
-
 //+KZ: mirrors the image drawn by drawimage()
 extern int mirror;
-
-//+KZ increased it for Syobon Action 2 music
-// @attention +KZ: Mix_Music *otom is now Mix_Music *Music
-extern SyobonKZMusic *Music[7];
-// @attention +KZ: Mix_Chunk *oto is now Mix_Chunk *Sounds
-extern SyobonKZChunk *Sounds[19];
 
 //1-ステージ (1-Stage)
 //10-ステージ前 (10-Before Stage)

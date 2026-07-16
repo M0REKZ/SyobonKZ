@@ -5,6 +5,7 @@
 #include "main.h"
 #include "entities.h"
 #include "extra_graphics.h"
+#include "loadg.h"
 
 void stagecls()
 {

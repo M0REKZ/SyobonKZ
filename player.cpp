@@ -7,6 +7,7 @@
 #include "blocks.h"
 #include "title.h"
 #include "config.h"
+#include "loadg.h"
 
 std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 

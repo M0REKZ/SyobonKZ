@@ -9,6 +9,7 @@
 #include "extra_graphics.h"
 #include "pause.h"
 #include "config.h"
+#include "loadg.h"
 
 std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
 

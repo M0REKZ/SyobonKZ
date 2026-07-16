@@ -6,6 +6,7 @@
 #include "entities.h"
 #include "extra_graphics.h"
 #include "pause.h"
+#include "loadg.h"
 
 static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
 static std::string author = "";

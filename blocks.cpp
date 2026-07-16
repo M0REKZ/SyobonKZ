@@ -1,5 +1,6 @@
 #include "main.h"
 #include "global_vars.h"
+#include "loadg.h"
 #include "blocks.h"
 
 void RenderBlocks()

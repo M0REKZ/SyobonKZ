@@ -4,6 +4,7 @@
 #include "entities.h"
 #include "blocks.h"
 #include "extra_graphics.h"
+#include "loadg.h"
 
 std::unordered_map<std::string, SDL_Surface *> apEnemyMessages;
 

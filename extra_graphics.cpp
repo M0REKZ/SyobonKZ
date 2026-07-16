@@ -2,6 +2,7 @@
 #include "global_vars.h"
 #include "main.h"
 #include "extra_graphics.h"
+#include "loadg.h"
 
 void HandleExtraGraphics()
 {

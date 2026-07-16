@@ -3,6 +3,7 @@
 
 #include "crossplatform.h"
 #include "global_vars.h"
+#include "loadg.h"
 
 SDL_Joystick *joystick;
 
