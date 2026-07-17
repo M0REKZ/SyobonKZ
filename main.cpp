@@ -6,10 +6,13 @@
 #include "title.h"
 #include "player.h"
 #include "blocks.h"
-#include "extra_graphics.h"
+#include "effects.h"
+#include "objects.h"
+#include "lifts.h"
 #include "pause.h"
 #include "config.h"
 #include "loadg.h"
+#include "backgrounds.h"
 
 std::unordered_map<std::string, SDL_Surface *> apGlobalTexts;
 
@@ -85,24 +88,24 @@ void rpaint()
 	// ダブルバッファリング (Double buffering)
 	setcolor(0, 0, 0);
 	// if (stagecolor==1)setcolor(170,170,255);
-	if (StageColor == ELevelType::OVERWORLD)
+	if (LevelType == ELevelType::OVERWORLD)
 		setcolor(160, 180, 250);
-	if (StageColor == ELevelType::UNDERGROUND)
+	if (LevelType == ELevelType::UNDERGROUND)
 		setcolor(10, 10, 10);
-	if (StageColor == ELevelType::SKY)
+	if (LevelType == ELevelType::SKY)
 		setcolor(160, 180, 250);
-	if (StageColor == ELevelType::CASTLE)
+	if (LevelType == ELevelType::CASTLE)
 		setcolor(10, 10, 10);
-	if (StageColor == ELevelType::ICY)
+	if (LevelType == ELevelType::ICY)
 	{
 		setcolor(160, 180, 250);
 	}
-	if(StageColor == ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP)
+	if(LevelType == ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP)
 	{
 		setcolor(110, 130, 200);
 	}
-	if(StageColor == ELevelType::ICY ||
-		StageColor == ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP)
+	if(LevelType == ELevelType::ICY ||
+		LevelType == ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP)
 	{
 		PlayerGroundType = EPlayerGroundType::SLIP;
 	}
@@ -118,7 +121,7 @@ void rpaint()
 	{
 		RenderBackground();
 
-		RenderExtraGraphics();
+		RenderEffects();
 
 		RenderLifts();
 
@@ -252,7 +255,7 @@ void rpaint()
 
 		drawimage(Sliced_GFX[0][0], 190, 190);
 		DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
-						 Lives);
+						 PlayerLives);
 	}
 	// タイトル (Title)
 	if (SyobonState == ESyobonGameState::TITLE)
@@ -353,11 +356,11 @@ void Mainprogram()
 			InGameInitialized = 1;
 			WarpZoneMessageState = 0;
 
-			StageColor = ELevelType::OVERWORLD;
+			LevelType = ELevelType::OVERWORLD;
 			PlayerX = 5600;
 			PlayerY = 32000;
 			PlayerLookingDirection = LOOKING_RIGHT;
-			Health = 1;
+			PlayerHealth = 1;
 			PlayerVelX = 0;
 			PlayerVelY = 0;
 			PlayerSizeX = 3000;
@@ -419,7 +422,7 @@ void Mainprogram()
 				LiftCount++;
 
 				if (SyobonRand(4) == 0)
-					StageColor = (ELevelType)SyobonRand(5);
+					LevelType = (ELevelType)SyobonRand(5);
 			}
 
 		} // zxon
@@ -433,7 +436,7 @@ void Mainprogram()
 
 		HandleLifts();
 
-		HandleExtraGraphics();
+		HandleEffects();
 
 		PlaceEnemies();
 		HandleEnemies();
@@ -572,7 +575,7 @@ void Mainprogram()
 		{
 			//SyobonState = ESyobonGameState::TITLE;
 			GoToTitleScreen(); //+KZ
-			Lives = 2;
+			PlayerLives = 2;
 			SyobonStateTimer = 0;
 			ending = 0;
 		}

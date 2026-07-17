@@ -30,8 +30,8 @@ extern ESyobonGameState SyobonState;
 extern int SyobonStateTimer;
 
 //ステージ (Stage)
-// @attention +KZ: int stagecolor is now LevelType StageColor
-extern ELevelType StageColor;
+// @attention +KZ: int stagecolor is now LevelType LevelType
+extern ELevelType LevelType;
 // @attention +KZ: int sta is now int SyobonWorld
 extern int SyobonWorld;
 // @attention +KZ: int stb is now int SyobonLevel
@@ -90,293 +90,14 @@ extern int InGameInitialized;//, zzxon; //+KZ: zzxon is unused
 //三角関数 (Trigonometric functions)
 extern double pai;
 
-
-//地面 (Ground)
-// @attention +KZ: smax is now OBJECT_MAX
-// +KZ: had to increase it to support SA3
-#define LEGACY_OBJECT_MAX 31
-#define OBJECT_MAX 64
-//extern int sx; //+KZ: unused
-// @attention +KZ: int sco is now ObjectCount
-extern int ObjectCount;
-// @attention +KZ: int sa[smax] is now ObjectX[smax]
-extern int ObjectX[OBJECT_MAX];
-// @attention +KZ: int sb[smax] is now ObjectY[smax]
-extern int ObjectY[OBJECT_MAX];
-// @attention +KZ: int sc[smax] is now ObjectSizeX[smax]
-extern int ObjectSizeX[OBJECT_MAX];
-// @attention +KZ: int sd[smax] is now ObjectSizeY[smax]
-extern int ObjectSizeY[OBJECT_MAX];
-// @attention +KZ: int stype[smax] is now EObjectType ObjectType[smax]
-extern EObjectType ObjectType[OBJECT_MAX];
-// @attention +KZ: int sxtype[smax] is now ObjectSubType[smax]
-extern EObjectSubType ObjectSubType[OBJECT_MAX];
-// @attention +KZ: int sr[smax] is now ObjectVelY[smax]
-extern int ObjectVelY[OBJECT_MAX];
-// @attention +KZ: int sgtype[smax] is now ObjectAI[smax]
-extern int ObjectAI[OBJECT_MAX];
-
 //@attention +KZ: int mainmsgtype is now int WarpZoneMessageState
 extern int WarpZoneMessageState;
 
-//プレイヤー (Player)
-// mainmsgtype is not really player related, moved above (and renamed)
-// @attention +KZ: int ma is now int PlayerX
-extern int PlayerX;
-// @attention +KZ: int mb is now int PlayerY
-extern int PlayerY;
-// @attention +KZ: int mnobia is now int PlayerSizeX
-extern int PlayerSizeX;
-// @attention +KZ: int mnobib is now int PlayerSizeY
-extern int PlayerSizeY;
-// Condition "Health <= 0 && Health >= -9" makes the player die
-// @attention +KZ: int mhp is now int Health
-extern int Health;
-// @attention +KZ: int mc is now int PlayerVelX
-extern int PlayerVelX;
-// @attention +KZ: int md is now int PlayerVelY
-extern int PlayerVelY;
-//extern int macttype, atkon; //+KZ unused
-extern int atktm; //+KZ: never set, but still read?
-//extern int mactsok, msstar;//+KZ unused
-// @attention +KZ: int mactp is now int PlayerWalkAnimTimer
-extern int PlayerWalkAnimTimer;
-// @attention +KZ: int mact is now int PlayerWalkAnim
-extern int PlayerWalkAnim;
-// @attention +KZ: int nokori is now int Lives;
-extern int Lives;
-
-// @attention +KZ: int mactp is now int PlayerState
-extern int PlayerState;
-// @attention +KZ: int mactp is now int PlayerSubState
-extern int PlayerSubState;
-// @attention +KZ: int mactp is now int PlayerAITimer
-extern int PlayerAITimer;
-// @attention +KZ int mzz is now int PlayerRocketPipeTrapVelY
-// This variable is specific for the rocket pipe trap from 1-1
-extern int PlayerRocketPipeTrapVelY;
-// @attention +KZ: int mzimen is now int PlayerGrounded
-extern int PlayerGrounded;
-enum class EPlayerGroundType
-{
-    NORMAL = 0,
-    SLIP = 1,
-};
-// @attention +KZ: int mrzimen is now EGroundType GroundType
-extern EPlayerGroundType PlayerGroundType;
-// @attention +KZ: int mmuki is now ELookingDirection PlayerLookingDirection
-extern ELookingDirection PlayerLookingDirection;
-
-//+KZ: following player variables were unused:
-//  * mmukitm
-//  * mcleartm
-//the following were used but also were useless:
-//  * mkasok
-
-extern int mjumptm, mkeytm;
-// @attention +KZ: int mmutekitm is now int PlayerNoDamageTimer
-// +KZ: It is enabled for 5 ticks after kicking a shell
-extern int PlayerNoDamageTimer;
-// @attention +KZ: int mmutekion is now int PlayerInvincibleON
-// +KZ: It is never initialized, but if PlayerInvincibleON == 1 player will kill any enemy it touches
-extern int PlayerInvincibleON;
-
-//+KZ: these are never set, but are read?
-extern int mztm, mztype;
-
-extern int actaon[7];
-//メッセージ (Message)
-// @attention +KZ: int mmsgtm is now int PlayerMessageTimer
-extern int PlayerMessageTimer;
-// @attention +KZ: int mmsgtype is now int PlayerMessageType
-extern int PlayerMessageType;
-
-// @attention +KZ: int mascrollmax is now int PlayerScrollCenterX
-// +KZ: Keeps the player/camera centered in screen
-extern int PlayerScrollCenterX;	//9000
-
-//ブロック (Block)
-// @attention +KZ: tmax is now BLOCK_MAX
-#define BLOCK_MAX 641
-// @attention +KZ: int tco is now int BlockCount
-extern int BlockCount;
-// @attention +KZ: int ta[tmax] is now int BlockX[tmax]
-extern int BlockX[BLOCK_MAX];
-// @attention +KZ: int tb[tmax] is now int BlockY[tmax]
-extern int BlockY[BLOCK_MAX];
-//extern int tc[tmax], td[tmax]; //+KZ: unused
-// @attention +KZ: int thp[tmax] is now int BlockAITimer[tmax]
-extern int BlockAITimer[BLOCK_MAX];
-// @attention +KZ: int ttype[tmax] is now EBlockType BlockType[tmax]
-extern EBlockType BlockType[BLOCK_MAX];
-//+KZ: titem[tmax] is specific for Block 112/113 (Coin mass production)
-// @attention +KZ: int titem[tmax] is now int BlockItemCount[tmax]
-extern int BlockItemCount[BLOCK_MAX];
-// @attention +KZ: int txtype[tmax] is now EBlockSubType BlockSubType[tmax]
-extern EBlockSubType BlockSubType[BLOCK_MAX];
 
 //メッセージブロック (Message Block)
 // @attention +KZ: They were int tmsgtm, tmsgtype, tmsgy, tmsg;
 // +KZ: tmsgx, tmsgnobix, tmsgnobiy, were unused
 extern int TextBoxTimer, TextBoxState, TextBoxSizeY, TextBoxMessageID;
-
-//効果を持たないグラ (Grass with no effect) //+KZ: or Graphics with no effect? Google translate...
-// @attention +KZ: emax is now EXTRA_GRAPHIC_MAX
-#define EXTRA_GRAPHIC_MAX 201
-// @attention +KZ: int eco is now int ExtraGraphicCount
-extern int ExtraGraphicCount;
-// @attention +KZ: int ea[emax] is now int ExtraGraphicX[emax]
-extern int ExtraGraphicX[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int eb[emax] is now int ExtraGraphicY[emax]
-extern int ExtraGraphicY[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int enobia[emax] is now int ExtraGraphicSizeX[emax]
-extern int ExtraGraphicSizeX[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int enobib[emax] is now int ExtraGraphicSizeY[emax]
-extern int ExtraGraphicSizeY[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int ec[emax] is now int ExtraGraphicVelX[emax]
-extern int ExtraGraphicVelX[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int ed[emax] is now int ExtraGraphicVelY[emax]
-extern int ExtraGraphicVelY[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int ee[emax] is now int ExtraGraphicFrictionX[emax] (maybe should be a different name)
-extern int ExtraGraphicFrictionX[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int ef[emax] is now int ExtraGraphicFrictionY[emax] (maybe should be a different name)
-extern int ExtraGraphicFrictionY[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int etm[emax] is now int ExtraGraphicTimer[emax]
-extern int ExtraGraphicTimer[EXTRA_GRAPHIC_MAX];
-// @attention +KZ: int egtype[emax] is now EExtraGraphicType ExtraGraphicType[emax]
-extern EExtraGraphicType ExtraGraphicType[EXTRA_GRAPHIC_MAX];
-
-//敵キャラ (Enemy character)
-// @attention +KZ: amax is now ENEMY_MAX
-#define ENEMY_MAX 24
-// @attention +KZ: int aco[amax] is now int EnemyCount[amax]
-extern int EnemyCount;
-// @attention +KZ: int aa[amax] is now int EnemyX[amax]
-extern int EnemyX[ENEMY_MAX];
-// @attention +KZ: int ab[amax] is now int EnemyY[amax]
-extern int EnemyY[ENEMY_MAX];
-// @attention +KZ: int anobia[amax] is now int EnemySizeX[amax]
-extern int EnemySizeX[ENEMY_MAX];
-// @attention +KZ: int anobib[amax] is now int EnemySizeY[amax]
-extern int EnemySizeY[ENEMY_MAX];
-// @attention +KZ: int ac[amax] is now int EnemyVelX[amax]
-extern int EnemyVelX[ENEMY_MAX];
-// @attention +KZ: int ad[amax] is now int EnemyVelY[amax]
-extern int EnemyVelY[ENEMY_MAX];
-//extern int ae[amax]; //+KZ: unused, always set to 0
-// @attention +KZ: int af[amax] is now int EnemyFloatingTimer[amax]
-// in Syobon Action 1 & 2 it is only used in SUPER_BOON
-extern int EnemyFloatingTimer[ENEMY_MAX];
-// @attention +KZ: int abrocktm[amax] is now int EnemyBlockAppearTimer[amax]
-extern int EnemyBlockAppearTimer[ENEMY_MAX];
-// @attention +KZ: int aacta[amax] is now int EnemyActionX[amax]
-// it works like a Second kind of VelX, it is set depending of the looking direction by the enemy itself
-extern int EnemyActionX[ENEMY_MAX];
-// @attention +KZ: int aactb[amax] is now int EnemyActionY[amax]
-// unused, seems like the Y axis version of EnemyActionX
-extern int EnemyActionY[ENEMY_MAX];
-// @attention +KZ: int azimentype[amax] is now int EnemyMovementType[amax]
-// affects enemy movement and gravity, if your enemy is floating try using "EnemyMovementType = 1"
-extern int EnemyMovementType[ENEMY_MAX];
-// @attention +KZ int axzimen[amax] is now int EnemyGrounded[amax]
-extern int EnemyGrounded[ENEMY_MAX];
-// @attention +KZ: int atype[amax] is now EEnemyType EnemyType[amax]
-extern EEnemyType EnemyType[ENEMY_MAX];
-// @attention +KZ: int axtype[amax] is now EEnemySubType EnemySubType[amax]
-extern EEnemySubType EnemySubType[ENEMY_MAX];
-// @attention +KZ: int amuki[amax] is now ELookingDirection EnemyLookingDirection[amax]
-extern ELookingDirection EnemyLookingDirection[ENEMY_MAX];
-//extern int ahp[amax]; //+KZ: unused
-// @attention +KZ: int anotm[amax] is now EnemyPlayerNoInteractTimer[amax]
-extern int EnemyPlayerNoInteractTimer[ENEMY_MAX];
-// @attention +KZ: int anx[160] is now int EnemyDefaultSizeX[160]
-extern int EnemyDefaultSizeX[160];
-// @attention +KZ: int any[160] is now int EnemyDefaultSizeY[160]
-extern int EnemyDefaultSizeY[160];
-// @attention +KZ: int atm[amax] is now int EnemyAITimer[amax]
-extern int EnemyAITimer[ENEMY_MAX];
-//extern int a2tm[amax]; //+KZ: unused
-// @attention +KZ: int amsgtm[amax] is now int EnemyMessageTimer[amax]
-extern int EnemyMessageTimer[ENEMY_MAX];
-// @attention +KZ: int amsgtype[amax] is now int EnemyMessageType[amax]
-extern int EnemyMessageType[ENEMY_MAX];
-
-//敵出現 (Enemy Appearance)
-// @attention +KZ: bmax is now ENEMY_APPEAR_MAX
-#define ENEMY_APPEAR_MAX 81
-// @attention +KZ: int bco is now int EnemyAppearCount[bmax]
-extern int EnemyAppearCount;
-// @attention +KZ: int ba[bmax] is now int EnemyAppearX[bmax]
-extern int EnemyAppearX[ENEMY_APPEAR_MAX];
-// @attention +KZ: int bb[bmax] is now int EnemyAppearY[bmax]
-extern int EnemyAppearY[ENEMY_APPEAR_MAX];
-// @attention +KZ: int btm[bmax] is now int EnemyAppearTimer[bmax]
-extern int EnemyAppearTimer[ENEMY_APPEAR_MAX];
-// @attention +KZ: int btype[bmax] is now EEnemyType EnemyAppearType[bmax]
-extern EEnemyType EnemyAppearType[ENEMY_APPEAR_MAX];
-// @attention +KZ: int bxtype[bmax] is now EEnemySubType EnemyAppearSubType[bmax]
-extern EEnemySubType EnemyAppearSubType[ENEMY_APPEAR_MAX];
-// @attention +KZ: int bz[bmax] is now int EnemyAppearMustPlace[bmax]
-extern int EnemyAppearMustPlace[ENEMY_APPEAR_MAX];
-
-
-//背景 (Background)
-// @attention +KZ: nmax is now BACKGROUND_MAX
-#define BACKGROUND_MAX 41
-//extern int nxxmax; //+KZ: unused
-// @attention +KZ: int nco[nmax] is now int BackgroundCount
-extern int BackgroundCount;
-// @attention +KZ: int na[nmax] is now int BackgroundX[nmax]
-extern int BackgroundX[BACKGROUND_MAX];
-// @attention +KZ: int nb[nmax] is now int BackgroundY[nmax]
-extern int BackgroundY[BACKGROUND_MAX];
-//extern int nc[nmax], nd[nmax]; //+KZ: unused
-// @attention +KZ: int ntype[nmax] is now int BackgroundType[nmax]
-extern EDecorationType BackgroundType[BACKGROUND_MAX];
-// @attention +KZ int ne[nmax] renamed to BackgroundWidth[nmax]
-//extern int BackgroundWidth[BACKGROUND_MAX]; //+KZ: value is set but never used
-// @attention +KZ int nf[nmax] renamed to BackgroundHeight[nmax]
-//extern int BackgroundHeight[BACKGROUND_MAX]; //+KZ: value is set but never used
-//extern int ng[nmax], nx[nmax]; //+KZ: unused
-
-
-//リフト (Lift)
-// @attention +KZ: srmax is now LIFT_MAX
-#define LIFT_MAX 21
-// @attention +KZ int srco renamed to LiftCount
-extern int LiftCount;
-// @attention +KZ int sra[srmax] renamed to LiftX[srmax]
-extern int LiftX[LIFT_MAX];
-// @attention +KZ int srb[srmax] renamed to LiftY[srmax]
-extern int LiftY[LIFT_MAX];
-// @attention +KZ int src[srmax] renamed to LiftSizeX[srmax]
-extern int LiftSizeX[LIFT_MAX];
-//extern int srd[srmax]; //+KZ: useless
-// @attention +KZ int sre[srmax] renamed to LiftVelY[srmax]
-extern int LiftVelY[LIFT_MAX];
-// @attention +KZ int srf[srmax] renamed to LiftFrictionY[srmax]
-extern int LiftFrictionY[LIFT_MAX];
-// @attention +KZ int srtype[srmax] is now int LiftInteractType[srmax]
-// +KZ: Only type 0 and 1 are used, seems that 2 kills the player but is not used anywhere
-extern int LiftInteractType[LIFT_MAX];
-//extern int srgtype[srmax]; //+KZ: unused
-// @attention +KZ int sracttype[srmax] is now int LiftMovementType[srmax]
-extern int LiftMovementType[LIFT_MAX];
-// @attention +KZ int srsp[srmax] is now ELiftType LiftType[srmax]
-// +KZ: This is confusing, there are like 3 or more variables indicating the type of the lifts,
-extern ELiftType LiftType[LIFT_MAX];
-// @attention +KZ int srmuki[srmax] is now int LiftDirection[srmax]
-extern int LiftDirection[LIFT_MAX];
-// @attention +KZ int sron[srmax] is now int LiftON[srmax]
-extern int LiftON[LIFT_MAX];
-//extern int sree[LIFT_MAX]; //+KZ: unused
-// @attention +KZ int srsok[srmax] renamed to LiftVelX[srmax]
-// +KZ: note that this is directly affected by LiftDirection
-extern int LiftVelX[LIFT_MAX];
-//extern int srmovep[LIFT_MAX]; //+KZ: unused
-// @attention +KZ int srmove[srmax] renamed to LiftPlayerFatigueX[srmax]
-// +KZ: kills the player if he has high speed in the green lift for too much time, probably to avoid softlocks
-extern int LiftPlayerFatigueX[LIFT_MAX];
 
 
 
@@ -403,8 +124,8 @@ extern int fxmax, fymax;
 
 
 //ステージ (Stage)
-// @attention +KZ: byte stagedate[17][2001] now is ELegacyStageDate stagedate[17][2001]
-extern ELegacyStageDate stagedate[17][2001];
+// @attention +KZ: byte LegacyStageDate[17][2001] now is ELegacyStageDate LegacyStageDate[17][2001]
+extern ELegacyStageDate LegacyStageDate[17][2001];
 
 //画面黒 (Black screen)
 extern int blacktm, blackx;

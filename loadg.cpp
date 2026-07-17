@@ -2,6 +2,7 @@
 #include "global_vars.h"
 #include "main.h"
 #include "loadg.h"
+#include "entities.h"
 
 SDL_Surface *Sliced_GFX[161][8];
 SDL_Surface *Main_GFX[51];

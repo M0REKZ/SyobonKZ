@@ -4,8 +4,12 @@
 #include "levels.h"
 #include "main.h"
 #include "entities.h"
-#include "extra_graphics.h"
+#include "effects.h"
 #include "loadg.h"
+#include "backgrounds.h"
+#include "objects.h"
+#include "lifts.h"
+#include "player.h"
 
 void stagecls()
 {
@@ -67,13 +71,13 @@ void stagecls()
 		EnemyAppearTimer[t] = 0;
 		EnemyAppearSubType[t] = EEnemySubType::NONE;
 	}
-	for (t = 0; t < EXTRA_GRAPHIC_MAX; t++)
+	for (t = 0; t < EFFECT_MAX; t++)
 	{
-		ExtraGraphicX[t] = -9000000;
-		ExtraGraphicY[t] = 1;
-		ExtraGraphicVelX[t] = 1;
-		ExtraGraphicVelY[t] = 1;
-		ExtraGraphicType[t] = EExtraGraphicType::COIN;
+		EffectX[t] = -9000000;
+		EffectY[t] = 1;
+		EffectVelX[t] = 1;
+		EffectVelY[t] = 1;
+		EffectType[t] = EEffectType::COIN;
 	}
 	for (t = 0; t < BACKGROUND_MAX; t++)
 	{
@@ -81,7 +85,7 @@ void stagecls()
 		BackgroundY[t] = 1;
 		//BackgroundWidth[t] = 1;
 		//BackgroundHeight[t] = 1;
-		BackgroundType[t] = EDecorationType::HILL;
+		BackgroundType[t] = EBackgroundType::HILL;
 	}
 	// for (t=0;t<cmax;t++){ca[t]=-9000000;cb[t]=1;contm[t]=0;ctype[t]=0;ce[t]=0;cf[t]=0;}
 	// for (t=0;t<vmax;t++){va[t]=-9000000;vtype[t]=0;vb[t]=0;vc[t]=1;vd[t]=1;}
@@ -91,7 +95,7 @@ void stagecls()
 	BlockCount = 0;
 	EnemyCount = 0;
 	EnemyAppearCount = 0;
-	ExtraGraphicCount = 0;
+	EffectCount = 0;
 	BackgroundCount = 0;
 	// haikeitouroku();
 } // stagecls()
@@ -103,7 +107,7 @@ void stage()
 	// fzx=6000*100;
 	scrollx = 3600 * 100;
 
-	// byte stagedate[16][801];
+	// byte LegacyStageDate[16][801];
 	// byte stagedate2[16][801];
 
 	// 1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し// (1-Brick, 2-Coin, 3-Empty, 4-Foundation // 5-6 Ground // 7-Hidden //)
@@ -115,8 +119,8 @@ void stage()
 		for (t = 0; t <= 16; t++)
 		{
 			ELegacyStageDate local_xx_10 = NONE;//local_xx_10 = 0;
-			if (stagedate[t][tt] >= 1 && stagedate[t][tt] <= 255)
-				local_xx_10 = stagedate[t][tt];
+			if (LegacyStageDate[t][tt] >= 1 && LegacyStageDate[t][tt] <= 255)
+				local_xx_10 = LegacyStageDate[t][tt];
 			xx[21] = tt * 29;
 			xx[22] = t * 29 - 12;
 			xx[23] = local_xx_10;
@@ -205,7 +209,7 @@ void stage()
 			{
 				BackgroundX[BackgroundCount] = xx[21] * 100;
 				BackgroundY[BackgroundCount] = xx[22] * 100;
-				BackgroundType[BackgroundCount] = (EDecorationType)(xx[23] - HILL);
+				BackgroundType[BackgroundCount] = (EBackgroundType)(xx[23] - HILL);
 				BackgroundCount++;
 				if (BackgroundCount >= BACKGROUND_MAX)
 					BackgroundCount = 0;
@@ -261,7 +265,7 @@ void stagep()
 	// fzx=6000*100;
 	scrollx = 3600 * 100;
 
-	// byte stagedate[16][801];
+	// byte LegacyStageDate[16][801];
 	// byte stagedate2[16][801];
 
 	// 1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
@@ -307,8 +311,8 @@ void HandleSyobonActionOneLevels()
             BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
         }
 
-        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EDecorationType::GRASS);
-        CreateBackground(GAME_X_POS_TO_DOUBLE(12 * 30 * 100), 10, EDecorationType::HILL);
+        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EBackgroundType::GRASS);
+        CreateBackground(GAME_X_POS_TO_DOUBLE(12 * 30 * 100), 10, EBackgroundType::HILL);
 
         return;
     }
@@ -316,7 +320,7 @@ void HandleSyobonActionOneLevels()
     if (SyobonWorld == 1 && SyobonLevel == 1 && SyobonSection == 0)
     {
         bgmchange(Music[1]);
-        // new byte stagedate[16][801]={
+        // new byte LegacyStageDate[16][801]={
 
         //                                                                                                                                                                                     中間
         ELegacyStageDate stagedatex[17][1001] = {
@@ -680,8 +684,8 @@ void HandleSyobonActionOneLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = ELegacyStageDate::NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = ELegacyStageDate::NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
 
@@ -992,8 +996,8 @@ void HandleSyobonActionOneLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
 
@@ -1009,7 +1013,7 @@ void HandleSyobonActionOneLevels()
         scrollx = 4080 * 100;
         PlayerX = 6000;
         PlayerY = 3000;
-        StageColor = ELevelType::UNDERGROUND;
+        LevelType = ELevelType::UNDERGROUND;
 
         ELegacyStageDate stagedatex[17][1001] = {
             {NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -1578,8 +1582,8 @@ void HandleSyobonActionOneLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
         // stagedatex[0][0];
@@ -2079,8 +2083,8 @@ void HandleSyobonActionOneLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
 
@@ -2747,8 +2751,8 @@ void HandleSyobonActionOneLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
 
@@ -2766,7 +2770,7 @@ void HandleSyobonActionOneLevels()
         scrollx = 0 * 100;
         PlayerX = 6000;
         PlayerY = 6000;
-        StageColor = ELevelType::UNDERGROUND;
+        LevelType = ELevelType::UNDERGROUND;
 
         ELegacyStageDate stagedatex[17][1001] = {
             {
@@ -3062,8 +3066,8 @@ void HandleSyobonActionOneLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
 
@@ -3073,7 +3077,7 @@ void HandleSyobonActionOneLevels()
     if (SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 5)
     {
 
-        StageColor = ELevelType::SKY;
+        LevelType = ELevelType::SKY;
         bgmchange(Music[3]);
 
         scrollx = 0 * 100;
@@ -3355,8 +3359,8 @@ void HandleSyobonActionOneLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
 
@@ -3374,7 +3378,7 @@ void HandleSyobonActionOneLevels()
         scrollx = 4400 * 100;
         PlayerX = 12000;
         PlayerY = 6000;
-        StageColor = ELevelType::CASTLE;
+        LevelType = ELevelType::CASTLE;
 
         ELegacyStageDate stagedatex[17][1001] = {//                                                                                                                                                                                     中間
                                      {GROUND_TOP,GROUND_TOP,GROUND_TOP,NONE,NONE,NONE,NONE,GROUND_TOP,GROUND_TOP,GROUND_TOP,GROUND_TOP,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -3887,19 +3891,19 @@ void HandleSyobonActionOneLevels()
         BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 7 * 29 * 100 - 300;
         BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
-        BackgroundType[BackgroundCount] = EDecorationType::LAVA;
+        BackgroundType[BackgroundCount] = EBackgroundType::LAVA;
         BackgroundCount++;
         if (BackgroundCount >= BACKGROUND_MAX)
             BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 41 * 29 * 100 - 300;
         BackgroundY[BackgroundCount] = 14 * 29 * 100 - 1200;
-        BackgroundType[BackgroundCount] = EDecorationType::LAVA;
+        BackgroundType[BackgroundCount] = EBackgroundType::LAVA;
         BackgroundCount++;
         if (BackgroundCount >= BACKGROUND_MAX)
             BackgroundCount = 0;
         BackgroundX[BackgroundCount] = 149 * 29 * 100 - 1100;
         BackgroundY[BackgroundCount] = 10 * 29 * 100 - 600;
-        BackgroundType[BackgroundCount] = EDecorationType::TEXT_51;
+        BackgroundType[BackgroundCount] = EBackgroundType::TEXT_51;
         BackgroundCount++;
         if (BackgroundCount >= BACKGROUND_MAX)
             BackgroundCount = 0;
@@ -3981,8 +3985,8 @@ void HandleSyobonActionOneLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
 
@@ -3996,7 +4000,7 @@ void HandleSyobonActionTwoLevels()
         PlayerX = 5600;
         PlayerY = 32000;
         bgmchange(Music[1]);
-        StageColor = ELevelType::OVERWORLD;
+        LevelType = ELevelType::OVERWORLD;
         scrollx = 2900 * (113 - 19);
         //
         ELegacyStageDate stagedatex[17][1001] = {
@@ -4332,8 +4336,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -4341,7 +4345,7 @@ void HandleSyobonActionTwoLevels()
     if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 0)
     { // 2-2(地上) (2-2 (Above ground))
         bgmchange(Music[1]);
-        StageColor = ELevelType::OVERWORLD;
+        LevelType = ELevelType::OVERWORLD;
         scrollx = 2900 * (19 - 19);
         //
         ELegacyStageDate stagedatex[17][1001] = {
@@ -4398,8 +4402,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -4407,7 +4411,7 @@ void HandleSyobonActionTwoLevels()
     if (SyobonWorld == 2 && SyobonLevel == 2 && SyobonSection == 1)
     { // 2-2(地下) (2-2 (Underground))
         bgmchange(Music[2]);
-        StageColor = ELevelType::UNDERGROUND;
+        LevelType = ELevelType::UNDERGROUND;
         PlayerX = 7500;
         PlayerY = 9000;
         scrollx = 2900 * (137 - 19);
@@ -4872,8 +4876,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -4882,7 +4886,7 @@ void HandleSyobonActionTwoLevels()
     { // 2-2 地上
         //
         bgmchange(Music[1]);
-        StageColor = ELevelType::OVERWORLD;
+        LevelType = ELevelType::OVERWORLD;
         scrollx = 2900 * (36 - 19);
         PlayerX = 7500;
         PlayerY = 3000 * 9;
@@ -5030,8 +5034,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -5041,7 +5045,7 @@ void HandleSyobonActionTwoLevels()
         PlayerX = 7500;
         PlayerY = 3000 * 8;
         bgmchange(Music[1]);
-        StageColor = ELevelType::OVERWORLD;
+        LevelType = ELevelType::OVERWORLD;
         scrollx = 2900 * (126 - 19);
         //
         ELegacyStageDate stagedatex[17][1001] = {
@@ -5394,8 +5398,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -5414,7 +5418,7 @@ void HandleSyobonActionTwoLevels()
             SyobonSection = 0;
         }
         bgmchange(Music[4]);
-        StageColor = ELevelType::CASTLE;
+        LevelType = ELevelType::CASTLE;
         scrollx = 2900 * (40 - 19);
         //
         ELegacyStageDate stagedatex[17][1001] = {
@@ -5546,8 +5550,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -5557,7 +5561,7 @@ void HandleSyobonActionTwoLevels()
         PlayerX = 4500;
         PlayerY = 3000 * 11;
         bgmchange(Music[4]);
-        StageColor = ELevelType::CASTLE;
+        LevelType = ELevelType::CASTLE;
         scrollx = 2900 * (21 - 19);
         //
         ELegacyStageDate stagedatex[17][1001] = {
@@ -5635,8 +5639,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -5646,7 +5650,7 @@ void HandleSyobonActionTwoLevels()
         PlayerX = 4500;
         PlayerY = 3000 * 11;
         bgmchange(Music[4]); // 6
-        StageColor = ELevelType::CASTLE;
+        LevelType = ELevelType::CASTLE;
         scrollx = 2900 * (128 - 19);
         //
         ELegacyStageDate stagedatex[17][1001] = {
@@ -6125,8 +6129,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -6136,7 +6140,7 @@ void HandleSyobonActionTwoLevels()
         PlayerX = 5600;
         PlayerY = 32000;
         bgmchange(Music[6]);
-        StageColor = ELevelType::ICY;
+        LevelType = ELevelType::ICY;
         scrollx = 2900 * (112 - 19);
         ELegacyStageDate stagedatex[17][1001] = {
             {NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
@@ -6464,8 +6468,8 @@ void HandleSyobonActionTwoLevels()
         {
             for (t = 0; t <= 16; t++)
             {
-                stagedate[t][tt] = NONE;
-                stagedate[t][tt] = stagedatex[t][tt];
+                LegacyStageDate[t][tt] = NONE;
+                LegacyStageDate[t][tt] = stagedatex[t][tt];
             }
         }
     }
@@ -6493,7 +6497,7 @@ void HandleSyobonActionThreeLevels()
         ObjectCreate(3, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         ObjectCreate(3 + GAME_X_POS_TO_DOUBLE(500), 9, 2 - GAME_X_POS_TO_DOUBLE(1000), 5, EObjectType::SA3_FAKE_PIPE_BODY, EObjectSubType::NONE);
 
-        CreateBackground(3, 10, EDecorationType::HILL);
+        CreateBackground(3, 10, EBackgroundType::HILL);
         
         //Poison mushroom
         BlockCreate(9, 9, EBlockType::ITEM_BLOCK_OPEN);
@@ -6510,11 +6514,11 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(13, 11, EBlockType::HARD_BLOCK);
         BlockCreate(12, 10, EBlockType::HARD_BLOCK);
 
-        CreateBackground(14, 12, EDecorationType::GRASS);
-        CreateBackground(12, 10 - 5.724, EDecorationType::CLOUD);
-        CreateBackground(2, 3, EDecorationType::CLOUD);
-        CreateBackground(7, 2.5, EDecorationType::CLOUD_SMALL);
-        CreateBackground(15, 1.2, EDecorationType::CLOUD_SMALL);
+        CreateBackground(14, 12, EBackgroundType::GRASS);
+        CreateBackground(12, 10 - 5.724, EBackgroundType::CLOUD);
+        CreateBackground(2, 3, EBackgroundType::CLOUD);
+        CreateBackground(7, 2.5, EBackgroundType::CLOUD_SMALL);
+        CreateBackground(15, 1.2, EBackgroundType::CLOUD_SMALL);
 
         return;
     }
@@ -6582,14 +6586,14 @@ void HandleSyobonActionThreeLevels()
 
         CreateEnemy(27.5, 8, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
 
-        CreateBackground(1, 2.5, EDecorationType::CLOUD);
-        CreateBackground(10, 2.5, EDecorationType::CLOUD_SMALL);
-        CreateBackground(9, 10, EDecorationType::HILL);
-        CreateBackground(23, 1.5, EDecorationType::CLOUD);
-        CreateBackground(32, 2.5, EDecorationType::CLOUD_SMALL);
-        CreateBackground(33.24, 12, EDecorationType::GRASS);
-        CreateBackground(42, 2.5, EDecorationType::CLOUD_SMALL);
-        CreateBackground(44, 10, EDecorationType::HILL);
+        CreateBackground(1, 2.5, EBackgroundType::CLOUD);
+        CreateBackground(10, 2.5, EBackgroundType::CLOUD_SMALL);
+        CreateBackground(9, 10, EBackgroundType::HILL);
+        CreateBackground(23, 1.5, EBackgroundType::CLOUD);
+        CreateBackground(32, 2.5, EBackgroundType::CLOUD_SMALL);
+        CreateBackground(33.24, 12, EBackgroundType::GRASS);
+        CreateBackground(42, 2.5, EBackgroundType::CLOUD_SMALL);
+        CreateBackground(44, 10, EBackgroundType::HILL);
 
         //pipes for each 4 blocks
         for(int i = 0; i < 5; i++)
@@ -6774,7 +6778,7 @@ void HandleSyobonActionThreeLevels()
             }
         }
 
-        CreateBackground(114, 1.5, EDecorationType::CLOUD);
+        CreateBackground(114, 1.5, EBackgroundType::CLOUD);
 
         int ind = ObjectCreate(117, 1, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
         ObjectAI[ind] = first_wall_block;
@@ -6931,34 +6935,34 @@ void HandleSyobonActionThreeLevels()
         ObjectVelY[ind] = 9;
 
         //the rest of backgrounds
-        CreateBackground(125.5, 3, EDecorationType::CLOUD_SMALL);
-        CreateBackground(125.4, 12, EDecorationType::GRASS);
-        CreateBackground(137, 2.9, EDecorationType::CLOUD);
+        CreateBackground(125.5, 3, EBackgroundType::CLOUD_SMALL);
+        CreateBackground(125.4, 12, EBackgroundType::GRASS);
+        CreateBackground(137, 2.9, EBackgroundType::CLOUD);
 
-        CreateBackground(142.5, 1, EDecorationType::CLOUD_SMALL);
-        CreateBackground(149, 1, EDecorationType::CLOUD_SMALL);
-        CreateBackground(160, 12, EDecorationType::GRASS);
-        CreateBackground(162, 0.5, EDecorationType::CLOUD);
-        CreateBackground(164, 10.7, EDecorationType::HILL);
+        CreateBackground(142.5, 1, EBackgroundType::CLOUD_SMALL);
+        CreateBackground(149, 1, EBackgroundType::CLOUD_SMALL);
+        CreateBackground(160, 12, EBackgroundType::GRASS);
+        CreateBackground(162, 0.5, EBackgroundType::CLOUD);
+        CreateBackground(164, 10.7, EBackgroundType::HILL);
 
-        CreateBackground(176.5, 0.5, EDecorationType::CLOUD_SMALL);
+        CreateBackground(176.5, 0.5, EBackgroundType::CLOUD_SMALL);
 
-        CreateBackground(195, 1.9, EDecorationType::CLOUD);
+        CreateBackground(195, 1.9, EBackgroundType::CLOUD);
 
-        CreateBackground(199, 10, EDecorationType::HILL);
+        CreateBackground(199, 10, EBackgroundType::HILL);
 
-        CreateBackground(209, 12, EDecorationType::GRASS);
+        CreateBackground(209, 12, EBackgroundType::GRASS);
 
-        CreateBackground(209, 2.9, EDecorationType::CLOUD_SMALL);
+        CreateBackground(209, 2.9, EBackgroundType::CLOUD_SMALL);
 
-        CreateBackground(204, 10, EDecorationType::CASTLE);
+        CreateBackground(204, 10, EBackgroundType::CASTLE);
     }
     else if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 0)
     {
         scrollx = 800000;
         bgmchange(Music[2]);
 
-        StageColor = ELevelType::UNDERGROUND;
+        LevelType = ELevelType::UNDERGROUND;
 
         PlayerX = DOUBLE_TO_GAME_X_POS(2);
         PlayerY = DOUBLE_TO_GAME_Y_POS(2);
@@ -7014,12 +7018,12 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(19, 11, EBlockType::HARD_BLOCK);
         BlockCreate(19, 12, EBlockType::HARD_BLOCK);
 
-        CreateBackground(10, 13.8, EDecorationType::LAVA);
-        CreateBackground(10, 13, EDecorationType::LAVA);
-        CreateBackground(13, 13.8, EDecorationType::LAVA);
-        CreateBackground(13, 13, EDecorationType::LAVA);
-        CreateBackground(16, 13.8, EDecorationType::LAVA);
-        CreateBackground(16, 13, EDecorationType::LAVA);
+        CreateBackground(10, 13.8, EBackgroundType::LAVA);
+        CreateBackground(10, 13, EBackgroundType::LAVA);
+        CreateBackground(13, 13.8, EBackgroundType::LAVA);
+        CreateBackground(13, 13, EBackgroundType::LAVA);
+        CreateBackground(16, 13.8, EBackgroundType::LAVA);
+        CreateBackground(16, 13, EBackgroundType::LAVA);
 
         //originally it would be at like 24 X position but active enemies is handled differently here
         CreateEnemy(21, 7.5, 0, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
@@ -7317,7 +7321,7 @@ void HandleKaizoSyobonLevels()
         {
             for (int num144 = 0; num144 <= 16; num144++)
             {
-                stagedate[num144][num143] = stagedatexKaizo1[num144][num143];
+                LegacyStageDate[num144][num143] = stagedatexKaizo1[num144][num143];
             }
         }
     }
@@ -7536,7 +7540,7 @@ void HandleKaizoSyobonLevels()
 
         bgmchange(Music[2]);
         PlayerGroundType = EPlayerGroundType::NORMAL;
-        StageColor = ELevelType::UNDERGROUND;
+        LevelType = ELevelType::UNDERGROUND;
         scrollx = 408000;
         BlockCount = 0;
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_3;
@@ -7554,7 +7558,7 @@ void HandleKaizoSyobonLevels()
         {
             for (int num147 = 0; num147 <= 16; num147++)
             {
-                stagedate[num147][num146] = stagedatexKaizo2[num147][num146];
+                LegacyStageDate[num147][num146] = stagedatexKaizo2[num147][num146];
             }
         }
     }
@@ -7599,12 +7603,12 @@ void HandleKaizoSyobonLevels()
         scrollx = 0;
         PlayerX = 6000;
         PlayerY = 3000;
-        StageColor = ELevelType::UNDERGROUND;
+        LevelType = ELevelType::UNDERGROUND;
         for (int num148 = 0; num148 <= 1000; num148++)
         {
             for (int num149 = 0; num149 <= 16; num149++)
             {
-                stagedate[num149][num148] = stagedatexKaizo3[num149][num148];
+                LegacyStageDate[num149][num148] = stagedatexKaizo3[num149][num148];
             }
         }
     }
@@ -7890,7 +7894,7 @@ void HandleKaizoSyobonLevels()
 
         PlayerGroundType = EPlayerGroundType::SLIP;
         bgmchange(Music[1]);
-        StageColor = ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP;
+        LevelType = ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP;
         scrollx = 390000;
         PlayerY = 33720;
         BlockCount = 0;
@@ -8037,7 +8041,7 @@ void HandleKaizoSyobonLevels()
         {
             for (int num152 = 0; num152 <= 16; num152++)
             {
-                stagedate[num152][num151] = stagedatexKaizo5[num152][num151];
+                LegacyStageDate[num152][num151] = stagedatexKaizo5[num152][num151];
             }
         }
     }
@@ -8096,7 +8100,7 @@ void HandleKaizoSyobonLevels()
 				{NONE}
 			};
 
-        StageColor = ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP;
+        LevelType = ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP;
         PlayerGroundType = EPlayerGroundType::SLIP;
         bgmchange(Music[3]);
         scrollx = 0;
@@ -8120,7 +8124,7 @@ void HandleKaizoSyobonLevels()
         {
             for (int num155 = 0; num155 <= 16; num155++)
             {
-                stagedate[num155][num154] = stagedatexKaizo7[num155][num154];
+                LegacyStageDate[num155][num154] = stagedatexKaizo7[num155][num154];
             }
         }
     }
@@ -8440,7 +8444,7 @@ void HandleKaizoSyobonLevels()
         scrollx = 440000;
         PlayerX = 12000;
         PlayerY = 6000;
-        StageColor = ELevelType::CASTLE;
+        LevelType = ELevelType::CASTLE;
         ObjectCount = 0;
         int num156 = ObjectCount;
         BlockSubType[BlockCount] = EBlockSubType::MESSAGE_BLOCK_KAIZO_SYOBON_6;
@@ -8456,7 +8460,7 @@ void HandleKaizoSyobonLevels()
         {
             for (num156 = 0; num156 <= 16; num156++)
             {
-                stagedate[num156][num157] = stagedatexKaizo8[num156][num157];
+                LegacyStageDate[num156][num157] = stagedatexKaizo8[num156][num157];
             }
         }
     }
@@ -8477,8 +8481,8 @@ void HandleSyobonActionJAMLevels()
             BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
         }
 
-        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EDecorationType::GRASS);
-        CreateBackground(0, 10, EDecorationType::HILL);
+        CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EBackgroundType::GRASS);
+        CreateBackground(0, 10, EBackgroundType::HILL);
 
         CreateEnemy(18, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
 
@@ -8493,7 +8497,7 @@ void HandleSyobonActionJAMLevels()
             PlayerX = (2.4 * 30) * 100;
             PlayerY = (12 * 29 - 12 - 6) * 100;
 
-            StageColor = ELevelType::OVERWORLD;
+            LevelType = ELevelType::OVERWORLD;
 
             bgmchange(Music[1]);
 
@@ -8503,8 +8507,8 @@ void HandleSyobonActionJAMLevels()
                 BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
             }
 
-            CreateBackground(0, 10, EDecorationType::HILL);
-            CreateBackground(11, 12, EDecorationType::GRASS);
+            CreateBackground(0, 10, EBackgroundType::HILL);
+            CreateBackground(11, 12, EBackgroundType::GRASS);
 
             CreateEnemy(18, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
 
@@ -8526,10 +8530,10 @@ void HandleSyobonActionJAMLevels()
 
 void StageClear()
 {
-    memset(stagedate, NONE, sizeof(stagedate));
+    memset(LegacyStageDate, NONE, sizeof(LegacyStageDate));
 
     ClearAllBackgrounds();
-    ClearAllExtraGraphics();
+    ClearAllEffects();
     BlockClearAll();
     ClearAllEnemies();
     ObjectClearAll();

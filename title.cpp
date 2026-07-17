@@ -4,9 +4,10 @@
 #include "levels.h"
 #include "player.h"
 #include "entities.h"
-#include "extra_graphics.h"
+#include "effects.h"
 #include "pause.h"
 #include "loadg.h"
+#include "lifts.h"
 
 static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
 static std::string author = "";
@@ -169,7 +170,7 @@ void HandleTitleKeys()
         SyobonState = ESyobonGameState::LIVES_SPLASH;
         InGameInitialized = 0;
         SyobonStateTimer = 0;
-        Lives = 2;
+        PlayerLives = 2;
 
         //fast = 0;
         //TrapDisplay = 0;
@@ -220,11 +221,11 @@ void UpdateTitleScreen()
         InGameInitialized = 1;
         WarpZoneMessageState = 0;
 
-        StageColor = ELevelType::OVERWORLD;
+        LevelType = ELevelType::OVERWORLD;
         PlayerX = 5600;
         PlayerY = 32000;
         PlayerLookingDirection = LOOKING_RIGHT;
-        Health = 1;
+        PlayerHealth = 1;
         PlayerVelX = 0;
         PlayerVelY = 0;
         PlayerSizeX = 3000;
@@ -248,7 +249,7 @@ void UpdateTitleScreen()
 
     HandleLifts();
 
-    HandleExtraGraphics();
+    HandleEffects();
 
     PlaceEnemies();
     HandleEnemies();

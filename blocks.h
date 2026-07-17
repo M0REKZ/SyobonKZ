@@ -4,12 +4,27 @@
 
 #include "level_enums.hpp"
 
-void RenderBlocks();
-void RenderWalls();
-void RenderOverwritePipe();
+//ブロック (Block)
+// @attention +KZ: tmax is now BLOCK_MAX
+#define BLOCK_MAX 641
+// @attention +KZ: int tco is now int BlockCount
+extern int BlockCount;
+// @attention +KZ: int ta[tmax] is now int BlockX[tmax]
+extern int BlockX[BLOCK_MAX];
+// @attention +KZ: int tb[tmax] is now int BlockY[tmax]
+extern int BlockY[BLOCK_MAX];
+//extern int tc[tmax], td[tmax]; //+KZ: unused
+// @attention +KZ: int thp[tmax] is now int BlockAITimer[tmax]
+extern int BlockAITimer[BLOCK_MAX];
+// @attention +KZ: int ttype[tmax] is now EBlockType BlockType[tmax]
+extern EBlockType BlockType[BLOCK_MAX];
+//+KZ: titem[tmax] is specific for Block 112/113 (Coin mass production)
+// @attention +KZ: int titem[tmax] is now int BlockItemCount[tmax]
+extern int BlockItemCount[BLOCK_MAX];
+// @attention +KZ: int txtype[tmax] is now EBlockSubType BlockSubType[tmax]
+extern EBlockSubType BlockSubType[BLOCK_MAX];
 
-//+KZ: added in SyobonKZ
-void RenderObjectsBehind();
+void RenderBlocks();
 
 //+KZ: new functions for easy use.
 // use index -1 to let this function choose block index
@@ -19,12 +34,7 @@ int BlockCreate(double x, double y, EBlockType type, EBlockSubType subtype = EBl
 //+KZ: clear all blocks from memory
 void BlockClearAll();
 
-//+KZ: like BlockCreate but for Objects
-int ObjectCreate(double x, double y, double size_x, double size_y, EObjectType type, EObjectSubType subtype, int index = -1);
-
-//+KZ: clear all objects from memory
-void ObjectClearAll();
-
+//Legacy functions for compatibility
 //ブロック (Block)
 // @attention +KZ: void tyobi() is now void BlockCreateLegacy()
 void BlockCreateLegacy(int x, int y, EBlockType type);

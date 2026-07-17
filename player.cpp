@@ -3,11 +3,33 @@
 #include "main.h"
 #include "player.h"
 #include "entities.h"
-#include "extra_graphics.h"
+#include "effects.h"
 #include "blocks.h"
 #include "title.h"
 #include "config.h"
 #include "loadg.h"
+#include "objects.h"
+#include "backgrounds.h"
+#include "lifts.h"
+
+int PlayerX, PlayerY, PlayerSizeX, PlayerSizeY, PlayerHealth;
+int PlayerVelX, PlayerVelY, atktm, PlayerWalkAnimTimer, PlayerWalkAnim;
+int PlayerLives = 3;
+
+int PlayerState, PlayerSubState, PlayerAITimer, PlayerRocketPipeTrapVelY;
+int PlayerGrounded;
+ELookingDirection PlayerLookingDirection;
+int mjumptm, mkeytm;
+EPlayerGroundType PlayerGroundType;
+int PlayerNoDamageTimer, PlayerInvincibleON;
+//+KZ: these are never set, but are read?
+int mztm, mztype;
+
+int actaon[7];
+//メッセージ
+int PlayerMessageTimer, PlayerMessageType;
+
+int PlayerScrollCenterX = 21000;	//9000
 
 std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 
@@ -176,10 +198,10 @@ void HandlePlayer()
         PlayerNoDamageTimer--;
 
     // HPがなくなったとき (When HP runs out)
-    if (Health <= 0 && Health >= -9)
+    if (PlayerHealth <= 0 && PlayerHealth >= -9)
     {
         mkeytm = 12;
-        Health = -20;
+        PlayerHealth = -20;
         PlayerState = 200;
         PlayerAITimer = 0;
         //SyobonKZHaltChannel(-1);
@@ -194,8 +216,8 @@ void HandlePlayer()
         SyobonKZHaltMusic();
         PlaySound(Sounds[12]);
         //StopSoundMem(Sounds[16]); //+KZ this is not needed since we already halted all channels
-    } // Health
-    // if (Health<=-10){
+    } // PlayerHealth
+    // if (PlayerHealth<=-10){
     if (PlayerState == 200)
     {
         if (PlayerAITimer <= 11)
@@ -218,7 +240,7 @@ void HandlePlayer()
                 SyobonState = ESyobonGameState::LIVES_SPLASH;
             PlayerAITimer = 0;
             mkeytm = 0;
-            Lives--;
+            PlayerLives--;
             if (fast == 1)
                 PlayerState = 0;
         } // mtm>=100
@@ -250,7 +272,7 @@ void HandlePlayer()
         if (PlayerY <= -6000)
         {
             PlayerY = -80000000;
-            Health = 0;
+            PlayerHealth = 0;
         }
     }
     // mtypeによる特殊的な移動 (Special movement using mtype)
@@ -311,7 +333,7 @@ void HandlePlayer()
                 if (PlayerAITimer == 160)
                 {
                     PlayerState = 0;
-                    Health--;
+                    PlayerHealth--;
                 }
             }
             // ふっとばし (Knock it away)
@@ -336,7 +358,7 @@ void HandlePlayer()
                 if (PlayerAITimer >= 48)
                 {
                     PlayerState = 0;
-                    Health--;
+                    PlayerHealth--;
                 }
             }
             else
@@ -353,7 +375,7 @@ void HandlePlayer()
                 }
                 if (PlayerAITimer == 19 && PlayerSubState == 2)
                 {
-                    Health = 0;
+                    PlayerHealth = 0;
                     PlayerState = 2000;
                     PlayerAITimer = 0;
                     PlayerMessageTimer = 30;
@@ -361,7 +383,7 @@ void HandlePlayer()
                 }
                 if (PlayerAITimer == 19 && PlayerSubState == 5)
                 {
-                    Health = 0;
+                    PlayerHealth = 0;
                     PlayerState = 2000;
                     PlayerAITimer = 0;
                     PlayerMessageTimer = 30;
@@ -427,7 +449,7 @@ void HandlePlayer()
                 )
                 {
                     SyobonState = ESyobonGameState::TITLE;
-                    Lives = 2;
+                    PlayerLives = 2;
                     SyobonStateTimer = 0;
                     SyobonLevel = 0;
                     SyobonSection = 0;
@@ -489,13 +511,13 @@ void HandlePlayer()
                 {
                     BackgroundX[BackgroundCount] = 117 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 4 * 29 * 100;
-                    BackgroundType[BackgroundCount] = EDecorationType::TEXT_GAME_CLEAR;
+                    BackgroundType[BackgroundCount] = EBackgroundType::TEXT_GAME_CLEAR;
                     BackgroundCount++;
                     if (BackgroundCount >= BACKGROUND_MAX)
                         BackgroundCount = 0;
                     BackgroundX[BackgroundCount] = 115 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 6 * 29 * 100;
-                    BackgroundType[BackgroundCount] = EDecorationType::TEXT_THANKS_FOR_PLAYING;
+                    BackgroundType[BackgroundCount] = EBackgroundType::TEXT_THANKS_FOR_PLAYING;
                     BackgroundCount++;
                     if (BackgroundCount >= BACKGROUND_MAX)
                         BackgroundCount = 0;
@@ -504,13 +526,13 @@ void HandlePlayer()
                 {
                     BackgroundX[BackgroundCount] = 157 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 4 * 29 * 100;
-                    BackgroundType[BackgroundCount] = EDecorationType::TEXT_GAME_CLEAR;
+                    BackgroundType[BackgroundCount] = EBackgroundType::TEXT_GAME_CLEAR;
                     BackgroundCount++;
                     if (BackgroundCount >= BACKGROUND_MAX)
                         BackgroundCount = 0;
                     BackgroundX[BackgroundCount] = 155 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 6 * 29 * 100;
-                    BackgroundType[BackgroundCount] = EDecorationType::TEXT_THANKS_FOR_PLAYING;
+                    BackgroundType[BackgroundCount] = EBackgroundType::TEXT_THANKS_FOR_PLAYING;
                     BackgroundCount++;
                     if (BackgroundCount >= BACKGROUND_MAX)
                         BackgroundCount = 0;
@@ -641,7 +663,7 @@ void HandlePlayer()
     PlayerGrounded = 0;
 
     // 場外 (Outside the venue)
-    if (PlayerState <= 9 && Health >= 1)
+    if (PlayerState <= 9 && PlayerHealth >= 1)
     {
         if (PlayerX < 100)
         {
@@ -655,15 +677,15 @@ void HandlePlayer()
         }
     }
     // if (mb>=42000){mb=42000;PlayerGrounded=1;}
-    if (PlayerY >= 38000 && Health >= 0 && StageColor == ELevelType::CASTLE)
+    if (PlayerY >= 38000 && PlayerHealth >= 0 && LevelType == ELevelType::CASTLE)
     {
-        Health = -2;
+        PlayerHealth = -2;
         PlayerMessageTimer = 30;
         PlayerMessageType = 55;
     }
-    if (PlayerY >= 52000 && Health >= 0)
+    if (PlayerY >= 52000 && PlayerHealth >= 0)
     {
-        Health = -2;
+        PlayerHealth = -2;
     }
 
     HandlePlayerBlocks();
@@ -703,8 +725,8 @@ void HandlePlayerInput()
     // if (CheckHitKey(KEY_INPUT_Q)==1){mkeytm=0;}
     if (CheckHitKey(KEY_INPUT_O) == 1)
     {
-        if (Health >= 1)
-            Health = 0;
+        if (PlayerHealth >= 1)
+            PlayerHealth = 0;
         if (SyobonSection >= 5)
         {
             SyobonSection = 0;
@@ -809,22 +831,22 @@ void HandlePlayerBlocks()
                                 else if (BlockType[t] == EBlockType::BRICK_BRITTLE)
                                 {
                                     PlaySound(Sounds[3]);
-                                    CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                    CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                           300,
                                           -1000,
-                                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                                    CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                          0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                    CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                           -300,
                                           -1000,
-                                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                                    CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                          0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                    CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                           240,
                                           -1400,
-                                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                                    CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                          0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                    CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                           -240,
                                           -1400,
-                                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                                          0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
                                     BlockBreak(t);
                                 }
                                 // Pスイッチ (P switch)
@@ -906,54 +928,54 @@ void HandlePlayerBlocks()
                                     if (BlockType[t] == EBlockType::BRICK && PlayerGrounded == 0)
                                     {
                                         PlaySound(Sounds[3]);
-                                        CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                        CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                               300,
                                               -1000,
                                               0,
-                                              160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                                        CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                              160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                        CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                               -300,
                                               -1000,
                                               0,
-                                              160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                                        CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                              160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                        CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                               240,
                                               -1400,
                                               0,
-                                              160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                                        CreateExtraGraphicLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                              160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                        CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
                                               -240,
                                               -1400,
                                               0,
-                                              160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                                              160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
                                         BlockBreak(t);
                                     }
                                     // コイン (Coin)
                                     if (BlockType[t] == EBlockType::ITEM_BLOCK_COIN && PlayerGrounded == 0)
                                     {
                                         PlaySound(Sounds[4]);
-                                        CreateExtraGraphicLegacy(BlockX[t] +
+                                        CreateEffectLegacy(BlockX[t] +
                                                   10,
                                               BlockY
                                                   [t],
                                               0,
                                               -800,
                                               0,
-                                              40, 3000, 3000, EExtraGraphicType::COIN, 16);
+                                              40, 3000, 3000, EEffectType::COIN, 16);
                                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                                     }
                                     // 隠し (Hidden)
                                     if (BlockType[t] == EBlockType::ITEM_BLOCK_HIDDEN)
                                     {
                                         PlaySound(Sounds[4]);
-                                        CreateExtraGraphicLegacy(BlockX[t] +
+                                        CreateEffectLegacy(BlockX[t] +
                                                   10,
                                               BlockY
                                                   [t],
                                               0,
                                               -800,
                                               0,
-                                              40, 3000, 3000, EExtraGraphicType::COIN, 16);
+                                              40, 3000, 3000, EEffectType::COIN, 16);
                                         PlayerY = xx[9] + xx[1] + xx[0];
                                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                                         if (PlayerVelY < 0)
@@ -966,7 +988,7 @@ void HandlePlayerBlocks()
                                     {
                                         PlayerMessageTimer = 30;
                                         PlayerMessageType = 3;
-                                        Health--;
+                                        PlayerHealth--;
                                     }
 
                                     //+KZ
@@ -976,7 +998,7 @@ void HandlePlayerBlocks()
                                         {
                                             PlaySound(Sounds[14]);
                                             BlockType[t] = EBlockType::SPIKE;
-                                            Health = 0;
+                                            PlayerHealth = 0;
                                         }
                                     }
                                 }
@@ -1024,7 +1046,7 @@ void HandlePlayerBlocks()
                                     {
                                         PlayerMessageTimer = 30;
                                         PlayerMessageType = 3;
-                                        Health--;
+                                        PlayerHealth--;
                                     }
                                 }
                             }
@@ -1102,8 +1124,8 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1 && BlockSubType[t] == EBlockSubType::ITEM_BLOCK_DODGE_VERTICAL)
                     {
                         PlaySound(Sounds[4]);
-                        CreateExtraGraphicLegacy(BlockX[t] + 10, BlockY[t],
-                              0, -800, 0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
+                        CreateEffectLegacy(BlockX[t] + 10, BlockY[t],
+                              0, -800, 0, 40, 3000, 3000, EEffectType::COIN, 16);
                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                     }
                 } // 100
@@ -1164,7 +1186,7 @@ void HandlePlayerBlocks()
                         {
                             if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_MUSHROOM_SA3_TRAP)
                             {
-                                CreateExtraGraphic(GAME_X_POS_TO_DOUBLE(BlockX[t]), GAME_Y_POS_TO_DOUBLE(BlockY[t]), 0, -0.5, 0, 0, 1, 1, EExtraGraphicType::SA3_MUSHROOM, 50);
+                                CreateEffect(GAME_X_POS_TO_DOUBLE(BlockX[t]), GAME_Y_POS_TO_DOUBLE(BlockY[t]), 0, -0.5, 0, 0, 1, 1, EEffectType::SA3_MUSHROOM, 50);
                                 ObjectCreate(22.5, 0, 4, 13, EObjectType::SA3_TRIGGER_BIG_MUSHROOM_FALL, EObjectSubType::NONE);
                             }
                         }
@@ -1250,8 +1272,8 @@ void HandlePlayerBlocks()
                         BlockAITimer[t] = 0;
                         BlockItemCount[t]++;
                         PlaySound(Sounds[4]);
-                        CreateExtraGraphicLegacy(BlockX[t] + 10, BlockY[t],
-                              0, -800, 0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
+                        CreateEffectLegacy(BlockX[t] + 10, BlockY[t],
+                              0, -800, 0, 40, 3000, 3000, EEffectType::COIN, 16);
                         // ttype[t]=3;
                     }
                 }
@@ -1270,10 +1292,10 @@ void HandlePlayerBlocks()
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_TRAP_HIDDEN_BRITTLE)
                         {
                             PlaySound(Sounds[4]);
-                            CreateExtraGraphicLegacy(BlockX[t] +
+                            CreateEffectLegacy(BlockX[t] +
                                       10,
                                   BlockY[t],
-                                  0, -800, 0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
+                                  0, -800, 0, 40, 3000, 3000, EEffectType::COIN, 16);
                             BlockType[t] = EBlockType::BRICK_BRITTLE;
                             BlockSubType[t] = EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN;
                         }
@@ -1299,12 +1321,12 @@ void HandlePlayerBlocks()
                             else
                             {
                                 PlaySound(Sounds[4]);
-                                CreateExtraGraphicLegacy(BlockX[t] +
+                                CreateEffectLegacy(BlockX[t] +
                                           10,
                                       BlockY
                                           [t],
                                       0,
-                                      -800, 0, 40, 3000, 3000, EExtraGraphicType::COIN, 16);
+                                      -800, 0, 40, 3000, 3000, EEffectType::COIN, 16);
                                 BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                             }
                         }
@@ -1422,18 +1444,18 @@ void HandlePlayerBlocks()
                     if (xx[17] == 1)
                     {
                         PlaySound(Sounds[3]);
-                        CreateExtraGraphicLegacy(BlockX[t] + 1200,
+                        CreateEffectLegacy(BlockX[t] + 1200,
                               BlockY[t] + 1200, 300,
-                              -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                        CreateExtraGraphicLegacy(BlockX[t] + 1200,
+                              -1000, 0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                        CreateEffectLegacy(BlockX[t] + 1200,
                               BlockY[t] + 1200,
-                              -300, -1000, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                        CreateExtraGraphicLegacy(BlockX[t] + 1200,
+                              -300, -1000, 0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                        CreateEffectLegacy(BlockX[t] + 1200,
                               BlockY[t] + 1200, 240,
-                              -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                        CreateExtraGraphicLegacy(BlockX[t] + 1200,
+                              -1400, 0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                        CreateEffectLegacy(BlockX[t] + 1200,
                               BlockY[t] + 1200,
-                              -240, -1400, 0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                              -240, -1400, 0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
                         BlockBreak(t);
                     }
                 } // 300
@@ -1444,18 +1466,18 @@ void HandlePlayerBlocks()
                 {
 
                     PlaySound(Sounds[3]);
-                    CreateExtraGraphicLegacy(BlockX[t] + 1200,
+                    CreateEffectLegacy(BlockX[t] + 1200,
                           BlockY[t] + 1200, 300, -1000,
-                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                    CreateExtraGraphicLegacy(BlockX[t] + 1200,
+                          0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                    CreateEffectLegacy(BlockX[t] + 1200,
                           BlockY[t] + 1200, -300, -1000,
-                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                    CreateExtraGraphicLegacy(BlockX[t] + 1200,
+                          0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                    CreateEffectLegacy(BlockX[t] + 1200,
                           BlockY[t] + 1200, 240, -1400,
-                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
-                    CreateExtraGraphicLegacy(BlockX[t] + 1200,
+                          0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                    CreateEffectLegacy(BlockX[t] + 1200,
                           BlockY[t] + 1200, -240, -1400,
-                          0, 160, 1000, 1000, EExtraGraphicType::BLOCK_FRAGMENT, 120);
+                          0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
                     BlockBreak(t);
                 }
             }
@@ -1549,12 +1571,12 @@ void HandlePlayerWalls()
                         ObjectAI[t] = 1;
                         ObjectVelY[t] = 0;
                     }
-                    if (ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2 && ObjectY[28] >= 48000 /* +KZ: this is SYOBONKZ_SCREEN_SIZE_X * 100 */ && t != 28 && ObjectAI[t] == 0 && Health >= 1)
+                    if (ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_UNDERGROUND_BRICK_LEVEL_1_2 && ObjectY[28] >= 48000 /* +KZ: this is SYOBONKZ_SCREEN_SIZE_X * 100 */ && t != 28 && ObjectAI[t] == 0 && PlayerHealth >= 1)
                     {
                         ObjectAI[t] = 1;
                         ObjectVelY[t] = 0;
                     }
-                    if ((ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP && PlayerY >= 30000 || ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4 && PlayerY >= 25000) && ObjectAI[t] == 0 && Health >= 1 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 3000 - 300 && PlayerX < xx[8] + ObjectSizeX[t] - xx[0])
+                    if ((ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP && PlayerY >= 30000 || ObjectSubType[t] == EObjectSubType::FALLING_BLOCKS_CASTLE_GROUND_TOP_4 && PlayerY >= 25000) && ObjectAI[t] == 0 && PlayerHealth >= 1 && PlayerX + PlayerSizeX > xx[8] + xx[0] + 3000 - 300 && PlayerX < xx[8] + ObjectSizeX[t] - xx[0])
                     {
                         ObjectAI[t] = 1;
                         ObjectVelY[t] = 0;
@@ -1572,7 +1594,7 @@ void HandlePlayerWalls()
                         ObjectY[t] += ObjectVelY[t];
                         if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + ObjectSizeX[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY < xx[9] + ObjectSizeY[t] + xx[0])
                         {
-                            Health--;
+                            PlayerHealth--;
                             xx[7] = 1;
                         }
                     }
@@ -1886,7 +1908,7 @@ void HandlePlayerWalls()
                             ObjectX[t] = -8000000;
                     }
 
-                    if (ObjectType[t] == EObjectType::GOAL_POLE && PlayerState == 0 && PlayerY < xx[9] + ObjectSizeY[t] + xx[0] - 3000 && Health >= 1)
+                    if (ObjectType[t] == EObjectType::GOAL_POLE && PlayerState == 0 && PlayerY < xx[9] + ObjectSizeY[t] + xx[0] - 3000 && PlayerHealth >= 1)
                     {
                         SyobonKZHaltMusic();
                         PlayerState = 300;
@@ -1895,7 +1917,7 @@ void HandlePlayerWalls()
                         PlaySound(Sounds[11]);
                     }
                     // 中間ゲート (Intermediate gate)
-                    if (ObjectType[t] == EObjectType::CHECKPOINT && PlayerState == 0 && Health >= 1)
+                    if (ObjectType[t] == EObjectType::CHECKPOINT && PlayerState == 0 && PlayerHealth >= 1)
                     {
                         CurrentPlayerCheckpoint += 1;
                         ObjectX[t] = -80000000;
@@ -1933,7 +1955,7 @@ void HandlePlayerWalls()
                         {
                             ObjectSubType[t] = EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE;
                         }
-                        else if(ObjectType[t] == EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1 && Health > 0)
+                        else if(ObjectType[t] == EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1 && PlayerHealth > 0)
                         {
                             CreateEnemy(126, 1, -0.2, 0, EEnemyType::SA3_BIG_STONE, EEnemySubType::NONE);
                             CreateEnemy(126, 7, -0.2, 0, EEnemyType::SA3_BIG_STONE, EEnemySubType::NONE);
@@ -1963,7 +1985,7 @@ void HandlePlayerWalls()
 
                 if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
                 {
-                    if(Health > 0 && ObjectType[t] == EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1 &&
+                    if(PlayerHealth > 0 && ObjectType[t] == EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1 &&
                         ObjectSubType[t] == EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE)
                     {
                         //ObjectAI should be the first trap wall block

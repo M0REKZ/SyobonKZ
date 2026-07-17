@@ -153,18 +153,24 @@ set(SOURCE_FILES_SYOBON
     DxLib.cpp
 
     # files added by +KZ to split the code
+    backgrounds.h
+    backgrounds.cpp
     blocks.h
     blocks.cpp
     config.h
     config.cpp
     entities.h
     entities.cpp
-    extra_graphics.h
-    extra_graphics.cpp
+    effects.h
+    effects.cpp
     global_vars.h
     global_vars.cpp
     levels.h
     levels.cpp
+    lifts.h
+    lifts.cpp
+    objects.h
+    objects.cpp
     pause.h
     pause.cpp
     player.h

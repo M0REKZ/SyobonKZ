@@ -4,6 +4,8 @@
 #ifndef LEVEL_ENUMS_H
 #define LEVEL_ENUMS_H
 
+#include <cstdint>
+
 // Names here are NOT meant to be accurate to character names' here
 // I want this to be understandable by anyone reading.
 
@@ -58,7 +60,7 @@ enum class EBlockType : int
     // it just happened that you can "hack" the block type to make it choose
     // that sprite instead (and it only works in specific level types).
     //
-    // It's also funny that this ID is valid in stagedate IDs
+    // It's also funny that this ID is valid in LegacyStageDate IDs
     TRAMPOLINE_HACK_OVERWORLD = 16,
 
     // A fake item block that you can't hit
@@ -215,7 +217,7 @@ enum class EEnemyType : int
 // Decoration Types (ntypes)
 // -------------------------
 
-enum class EDecorationType : int
+enum class EBackgroundType : int
 {
     HILL = 0,
     GRASS = 1,
@@ -338,7 +340,7 @@ enum ELegacyStageDate : uint8_t
 {
     //only IDs from 1 to 255 (unsigned char)
     //many IDs were not even used though and many things are missing
-    //i would not recommend using that stagedate thing to mod this game
+    //i would not recommend using that LegacyStageDate thing to mod this game
     NONE = 0,
 
     //1-19 are Blocks
@@ -351,7 +353,7 @@ enum ELegacyStageDate : uint8_t
     GROUND_BOTTOM = 6,
     ITEM_BLOCK_HIDDEN = 7, // Has a coin inside
     CLOUD_BLOCK = 8, // Only visible in overworld or sky stages
-    COIN = 9, //9 makes a coin in stagedate!!
+    COIN = 9, //9 makes a coin in LegacyStageDate!!
     SPIKE = 10,
     TRAMPOLINE_HACK_OVERWORLD = 16, // A trampoline that you can't interact with
 
@@ -401,7 +403,7 @@ enum ELegacyStageDate : uint8_t
     //99 is the finish pole
     GOAL_POLE = 99,
 
-    //and... these were all the ids used in stagedate...
+    //and... these were all the ids used in LegacyStageDate...
     //the following IDs are used but they are useless or
     //its purpose is unknown
 
@@ -409,10 +411,10 @@ enum ELegacyStageDate : uint8_t
     STAGEDATE_98 = 98,
 };
 
-enum class EExtraGraphicType : int
+enum class EEffectType : int
 {
     COIN = 0,
-    BLOCK_FRAGMENT = 1, //color depends on StageColor
+    BLOCK_FRAGMENT = 1, //color depends on LevelType
     LIFT_FRAGMENT_LEFT = 2,
     LIFT_FRAGMENT_RIGHT = 3,
     GOAL_POLE = 4,
