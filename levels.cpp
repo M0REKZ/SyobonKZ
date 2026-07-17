@@ -6778,6 +6778,7 @@ void HandleSyobonActionThreeLevels()
 
         int ind = ObjectCreate(117, 1, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
         ObjectAI[ind] = first_wall_block;
+        ObjectVelY[ind] = 6;
         ind = ObjectCreate(121, 10.5, 1, 4.5, EObjectType::SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1, EObjectSubType::NONE);
         ObjectAI[ind] = -1;
 
@@ -6822,6 +6823,7 @@ void HandleSyobonActionThreeLevels()
 
         ObjectCreate(171, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
 
+        BlockCreate(173, 9, EBlockType::ITEM_BLOCK_HIDDEN);
         BlockCreate(174, 9, EBlockType::ITEM_BLOCK_HIDDEN);
         ObjectCreate(175, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         ObjectCreate(175 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
@@ -6836,7 +6838,7 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(174, 2.5, EBlockType::ITEM_BLOCK_HIDDEN);
         for(int x_pos = 176; x_pos <= 184; x_pos++)
         {
-            BlockCreate(x_pos, 2.5, EBlockType::ITEM_BLOCK_HIDDEN);
+            BlockCreate(x_pos, 2.5, EBlockType::ITEM_BLOCK_HIDDEN, EBlockSubType::ITEM_BLOCK_HIDDEN_SA3_NO_SHELL);
         }
         
         BlockCreate(175, 5.5, EBlockType::ITEM_BLOCK_HIDDEN);
@@ -6912,12 +6914,112 @@ void HandleSyobonActionThreeLevels()
 
         BlockCreate(190.5, 7, EBlockType::ITEM_BLOCK_HIDDEN);
 
-        CreateBackground(204, 10, EDecorationType::CASTLE);
+        for(double y_pos = -6.5; y_pos < 3; y_pos++)
+        {
+            if(y_pos < -6.0)
+            {
+                first_wall_block = BlockCreate(196, y_pos - 5, EBlockType::ITEM_BLOCK_OPEN);
+            }
+            else
+            {
+                BlockCreate(196, y_pos - 5, EBlockType::ITEM_BLOCK_OPEN);
+            }
+        }
 
-        //REMOVE ME
-        ObjectCreate(149, 1, 0, 0, EObjectType::CHECKPOINT, EObjectSubType::NONE);
-        CurrentPlayerCheckpoint = 2;
-        printf("enemy count %d\n",EnemyCount);
+        ind = ObjectCreate(192, -15, 1, 16, EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1, EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_WAITING);
+        ObjectAI[ind] = first_wall_block;
+        ObjectVelY[ind] = 9;
+
+        //the rest of backgrounds
+        CreateBackground(125.5, 3, EDecorationType::CLOUD_SMALL);
+        CreateBackground(125.4, 12, EDecorationType::GRASS);
+        CreateBackground(137, 2.9, EDecorationType::CLOUD);
+
+        CreateBackground(142.5, 1, EDecorationType::CLOUD_SMALL);
+        CreateBackground(149, 1, EDecorationType::CLOUD_SMALL);
+        CreateBackground(160, 12, EDecorationType::GRASS);
+        CreateBackground(162, 0.5, EDecorationType::CLOUD);
+        CreateBackground(164, 10.7, EDecorationType::HILL);
+
+        CreateBackground(176.5, 0.5, EDecorationType::CLOUD_SMALL);
+
+        CreateBackground(195, 1.9, EDecorationType::CLOUD);
+
+        CreateBackground(199, 10, EDecorationType::HILL);
+
+        CreateBackground(209, 12, EDecorationType::GRASS);
+
+        CreateBackground(209, 2.9, EDecorationType::CLOUD_SMALL);
+
+        CreateBackground(204, 10, EDecorationType::CASTLE);
+    }
+    else if (SyobonWorld == 1 && SyobonLevel == 2 && SyobonSection == 0)
+    {
+        scrollx = 800000;
+        bgmchange(Music[2]);
+
+        StageColor = ELevelType::UNDERGROUND;
+
+        PlayerX = DOUBLE_TO_GAME_X_POS(2);
+        PlayerY = DOUBLE_TO_GAME_Y_POS(2);
+
+        //Create all the ground
+        for(int grounds = 0; grounds <= 200; grounds++)
+        {
+            if(
+                (grounds >= 10 && grounds <= 18)
+            )
+            {
+                BlockCreate(grounds, 9, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_BRICK);
+                continue;
+            }
+
+            if(grounds == 0)
+            {
+                for(int y_pos = 0; y_pos < 13; y_pos++)
+                {
+                    BlockCreate(grounds, y_pos, EBlockType::BRICK);
+                }
+            }
+
+            if(
+                grounds >= 1 && grounds <= 4
+            )
+            {
+                //TODO: it should be ground top and ground bottom
+                BlockCreate(grounds, 13, EBlockType::BRICK_BRITTLE);
+                BlockCreate(grounds, 14, EBlockType::BRICK_BRITTLE);
+                continue;
+            }
+
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
+        }
+
+        for(int roofs = 4; roofs <= 200; roofs++)
+        {
+            BlockCreate(roofs, 1, EBlockType::BRICK);
+        }
+
+        BlockCreate(2, 11.5, EBlockType::COIN);
+        BlockCreate(3, 11.5, EBlockType::COIN);
+
+        BlockCreate(9, 9, EBlockType::HARD_BLOCK);
+        BlockCreate(9, 10, EBlockType::HARD_BLOCK);
+        BlockCreate(9, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(9, 12, EBlockType::HARD_BLOCK);
+
+        BlockCreate(19, 9, EBlockType::HARD_BLOCK);
+        BlockCreate(19, 10, EBlockType::HARD_BLOCK);
+        BlockCreate(19, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(19, 12, EBlockType::HARD_BLOCK);
+
+        CreateBackground(10, 13.8, EDecorationType::LAVA);
+        CreateBackground(10, 13, EDecorationType::LAVA);
+        CreateBackground(13, 13.8, EDecorationType::LAVA);
+        CreateBackground(13, 13, EDecorationType::LAVA);
+        CreateBackground(16, 13.8, EDecorationType::LAVA);
+        CreateBackground(16, 13, EDecorationType::LAVA);
     }
 }
 

@@ -2030,9 +2030,10 @@ void HandlePlayerWalls()
                     else if(ObjectType[t] == EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1 &&
                         ObjectSubType[t] == EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_ACTIVE)
                     {
-                        if(ObjectAI[t] >= 0 && ObjectAI[t] < BLOCK_MAX - 6)
+                        if(ObjectVelY[t] >= 0 && ObjectVelY[t] <= BLOCK_MAX && 
+                            ObjectAI[t] >= 0 && ObjectAI[t] < BLOCK_MAX - ObjectVelY[t])
                         {
-                            for(int wall_offset = 0; wall_offset < 6; wall_offset++)
+                            for(int wall_offset = 0; wall_offset < ObjectVelY[t]; wall_offset++)
                             {
                                 int id = ObjectAI[t] + wall_offset;
                                 if(id >= BLOCK_MAX)
@@ -2043,7 +2044,7 @@ void HandlePlayerWalls()
                             if(BlockY[ObjectAI[t]] > DOUBLE_TO_GAME_X_POS(-0.6))
                             {
                                 ObjectSubType[t] = EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_FINISHED;
-                                for(int wall_offset = 0; wall_offset < 6; wall_offset++)
+                                for(int wall_offset = 0; wall_offset < ObjectVelY[t]; wall_offset++)
                                 {
                                     int id = ObjectAI[t] + wall_offset;
                                     if(id >= BLOCK_MAX)
