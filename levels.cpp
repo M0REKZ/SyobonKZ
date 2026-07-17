@@ -7020,6 +7020,9 @@ void HandleSyobonActionThreeLevels()
         CreateBackground(13, 13, EDecorationType::LAVA);
         CreateBackground(16, 13.8, EDecorationType::LAVA);
         CreateBackground(16, 13, EDecorationType::LAVA);
+
+        //originally it would be at like 24 X position but active enemies is handled differently here
+        CreateEnemy(21, 7.5, 0, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
     }
 }
 
