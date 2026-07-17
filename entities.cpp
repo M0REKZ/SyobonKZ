@@ -2605,6 +2605,10 @@ int CreateEnemy(double PosX, double PosY, double VelX, double VelY, EEnemyType E
         EnemyType[index] = EntityType;
         EnemySubType[index] = EntitySubType;
 
+        EnemyLookingDirection[index] = LookingDirection;
+
+        EnemyPlayerNoInteractTimer[index] = PlayerNoInteractTimer;
+
         EnemyAITimer[index] = 0;
 
         EnemyMovementType[index] = 1;

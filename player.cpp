@@ -1129,6 +1129,19 @@ void HandlePlayerBlocks()
                                              400,
                                          BlockY[t] - 1600, 0, 0, 0, EEnemyType::DEFRAG, EEnemySubType::DEFRAG_NORMAL);
                         }
+                        if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                        {
+                            if(BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_SAJAM_BALL_NORMAL_BELOW)
+                            {
+                                int ind = CreateEnemy(GAME_X_POS_TO_DOUBLE(BlockX[t]), GAME_Y_POS_TO_DOUBLE(BlockY[t]) + 1, 0, 0,
+                                    EEnemyType::BALL, EEnemySubType::BALL_NORMAL, ELookingDirection::LOOKING_RIGHT, 8);
+
+                                if(ind >= 0)
+                                {
+                                    EnemyBlockAppearTimer[ind] = 0;
+                                }
+                            }
+                        }
                     }
                 } // 101
 
