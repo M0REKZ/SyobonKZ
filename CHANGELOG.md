@@ -5,22 +5,26 @@ Release Changelog
 * Improve code for readability
 * Rename executable to "SyobonKZ"
 * Add functions to help modding the game
-* Working on Syobon Action 3 by DakaArts
-    * If you want to try it or help me developing it, use ```--dev-games``` parameter
+* Working on Syobon Action 3 by DakaArts, Syobon Action JAM by StudsX.. And my own Syobon Action game :P
+    * If you want to try current progress or help me developing them, use ```--dev-games``` parameter
 * Add Kaizo Syobon by Zokalal (with permission https://github.com/M0REKZ/SyobonKZ/issues/4)
-* Make input more responsive
+* Make input more responsive by using **input buffering**
+* Make macOS binary be in a App Bundle (SyobonKZ.app)
 * Add Pause menu
 * Add Options menu (for now only has "Fullscreen" option)
 * Save progress and add level selection menu (still not added in SDL 1.2 version)
     * This also allows playing Level 9 in Android!
+* Add basic Screenshot and GIF Recorder keys (Desktop SDL3 only)
 * Add new parameters:
+    * ```--dev-games```: Check the above changes in this list for more information
     * ```--trap-display```: Cheating
     * ```--fast-death```: Dont do death animation
 * Fix key keeping pressed after message box in SDL3
-* Fix mismatches from the original games:
+* Fix mismatches/bugs from the original games:
     * General:
         * Now title screen will toggle Enter key text between Chiku's and Bluvel's
         * Restored no-text Checkpoint sprite for Syobon Action 1 levels
+        * Use a version of field.ogg that loops correctly
     * Level 1-3:
         * Fixed finish sound still being played after Defrag grabs the pole
     * Level 2-3:

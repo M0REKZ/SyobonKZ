@@ -37,11 +37,16 @@ SyobonKZ includes the following game remakes/ports:
     * The original game made by Chiku, here is packed as the same game along Bluvel's modification.
 * Shobon Action (Modified by Bluvel):
     * The "World 2" expansion made by Bluvel, also the most played and popular Syobon Action version thanks to OpenSyobonAction.
-* Syobon Action 3 (Remake):
-    * Custom sequel made by DakaArts (Daka256xr), now remade with original Syobon Action code and physics!
-    * **Work in progress, use ```--dev-games``` to try the current state, expect bugs**
 * Kaizo Syobon:
     * Kaizo Syobon by Zokalal, directly ported from Syobon Action: All Stars!
+
+The following are currently work in progress, but you can use the ```--dev-games``` parameter to try the current state (expect bugs and missing things):
+* Syobon Action 3 (Remake):
+    * Custom sequel made by DakaArts (Daka256xr), now remade with original Syobon Action code and physics!
+* Syobon Action JAM (Remake):
+    * Custom NES rom hack made by StudsX, he made a cool effort to match the original game design, so why not remake it back into the original game code with original physics?
+* SyobonKZ: True Action:
+    * Im porting games from others, why cant i make my own? >:D
 
 Supported platforms:
 -----
