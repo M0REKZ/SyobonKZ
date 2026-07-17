@@ -8599,7 +8599,7 @@ void HandleSyobonKZTrueActionLevels()
             CreateEnemy(16, 11.7, -1, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
 
             CreateEnemy(4, 10, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
-            CreateEnemy(6, 8.5, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
+            CreateEnemy(5.6, 8.5, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
 
             BlockCreate(6.5, 13, EBlockType::GROUND_TOP);
             BlockCreate(6.5, 14, EBlockType::GROUND_BOTTOM);
