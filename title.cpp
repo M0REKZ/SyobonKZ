@@ -1,7 +1,7 @@
 #include "global_vars.h"
 #include "main.h"
 #include "title.h"
-#include "levels.h"
+#include <levels/levels.h>
 #include "player.h"
 #include "entities.h"
 #include "effects.h"

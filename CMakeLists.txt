@@ -165,8 +165,14 @@ set(SOURCE_FILES_SYOBON
     effects.cpp
     global_vars.h
     global_vars.cpp
-    levels.h
-    levels.cpp
+    levels/kaizosa.cpp
+    levels/levels.h
+    levels/levels.cpp
+    levels/sa1.cpp
+    levels/sa2.cpp
+    levels/sa3.cpp
+    levels/sajam.cpp
+    levels/skztrueaction.cpp
     lifts.h
     lifts.cpp
     objects.h
@@ -195,6 +201,10 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Android")
 else()
     add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES_SYOBON})
 endif()
+
+target_include_directories(${EXECUTABLE_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 # make app bundle on macOS
 if(APPLE)

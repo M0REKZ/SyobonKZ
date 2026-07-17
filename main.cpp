@@ -1,6 +1,6 @@
 
 #include "global_vars.h"
-#include "levels.h"
+#include <levels/levels.h>
 #include "main.h"
 #include "entities.h"
 #include "title.h"
