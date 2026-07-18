@@ -41,8 +41,8 @@ void HandleSyobonKZTrueActionLevels()
 
         CreateEnemy(16, 11.7, -1, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
 
-        BlockCreate(6, 13, EBlockType::GROUND_TOP);
-        BlockCreate(6, 14, EBlockType::GROUND_BOTTOM);
+        BlockCreate(6.7, 13, EBlockType::GROUND_TOP);
+        BlockCreate(6.7, 14, EBlockType::GROUND_BOTTOM);
 
         return;
     }
@@ -77,10 +77,8 @@ void HandleSyobonKZTrueActionLevels()
             CreateEnemy(4, 10, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
             CreateEnemy(5.6, 8.5, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
 
-            BlockCreate(6.5, 13, EBlockType::GROUND_TOP);
-            BlockCreate(6.5, 14, EBlockType::GROUND_BOTTOM);
-
-            CreateLift(0, 5, 3, 0, ELiftType::PILLAR, 0);
+            BlockCreate(6.7, 13, EBlockType::GROUND_TOP);
+            BlockCreate(6.7, 14, EBlockType::GROUND_BOTTOM);
 
             BlockCreate(17, 13, EBlockType::GROUND_TOP);
             BlockCreate(17, 14, EBlockType::GROUND_BOTTOM);
@@ -122,6 +120,23 @@ void HandleSyobonKZTrueActionLevels()
 
             BlockCreate(49, 6, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
             BlockCreate(50, 6, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
+
+            CreateLift(61, 10, 1.5, 0, ELiftType::BREAKING, 0);
+
+            QueueEnemyAppear(67.3, 8.5, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
+            CreateLift(67.75, 10, 1, 0, ELiftType::BREAKING, 0);
+
+            BlockCreate(71, 10, EBlockType::NOTE_BLOCK, EBlockSubType::NOTE_BLOCK_WHITE_VISIBLE);
+
+            for(int y_pos = 0; y_pos < 8; y_pos++)
+            {
+                BlockCreate(75, y_pos, EBlockType::SA3_GRAY_SPIKE_LEFT);
+                BlockCreate(76, y_pos, EBlockType::HARD_BLOCK);
+            }
+            BlockCreate(76, 8, EBlockType::SPIKE);
+
+            ObjectCreate(76, 11, 1, 2, EObjectType::CHECKPOINT, EObjectSubType::NONE);
+            BlockCreate(76, 13, EBlockType::CLOUD_BLOCK);
         }
     }
 }

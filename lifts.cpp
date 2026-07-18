@@ -407,7 +407,7 @@ int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Ty
         LiftY[index] = (int)PosY;
         LiftType[index] = Type;
         LiftVelY[index] = VelY;
-        LiftSizeX[index] = GAME_X_POS_TO_DOUBLE(Width);
+        LiftSizeX[index] = DOUBLE_TO_GAME_X_POS(Width);
         LiftMovementType[index] = MovementType;
 
         LiftInteractType[index] = 0;
