@@ -85,6 +85,33 @@ void RenderBackground()
                                  GetColor(255, 255,
                                           255),
                                  "プレイしてくれてありがとー");
+
+            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+            {
+                switch(BackgroundType[t])
+                {
+                    case EBackgroundType::SA3_FAKE_GROUND_TOP:
+                    {
+                        int offset_index = 0;
+                        if (LevelType == ELevelType::UNDERGROUND)
+                        {
+                            offset_index = 30;
+                        }
+                        if (LevelType == ELevelType::CASTLE)
+                        {
+                            offset_index = 60;
+                        }
+                        if (LevelType == ELevelType::ICY)
+                        {
+                            offset_index = 90;
+                        }
+                        DrawGraphZ((BackgroundX[t] - fx) / 100, (BackgroundY[t] - fy) / 100, Sliced_GFX[offset_index + 5 /* GROUND_TOP */][1]);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
         }
     } // t
 }

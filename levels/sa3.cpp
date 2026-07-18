@@ -508,6 +508,13 @@ void HandleSyobonActionThreeLevels()
         for(int grounds = 0; grounds <= 200; grounds++)
         {
             if(
+                grounds >= 32 && grounds <= 47
+            )
+            {
+                continue;
+            }
+
+            if(
                 (grounds >= 10 && grounds <= 18)
             )
             {
@@ -528,8 +535,8 @@ void HandleSyobonActionThreeLevels()
             )
             {
                 //TODO: it should be ground top and ground bottom
-                BlockCreate(grounds, 13, EBlockType::BRICK_BRITTLE);
-                BlockCreate(grounds, 14, EBlockType::BRICK_BRITTLE);
+                BlockCreate(grounds, 13, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_SA3_GROUND_TOP);
+                BlockCreate(grounds, 14, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_SA3_GROUND_BOTTOM);
                 continue;
             }
 
@@ -562,7 +569,59 @@ void HandleSyobonActionThreeLevels()
         CreateBackground(16, 13.8, EBackgroundType::LAVA);
         CreateBackground(16, 13, EBackgroundType::LAVA);
 
-        //originally it would be at like 24 X position but active enemies is handled differently here
-        CreateEnemy(21, 7.5, 0, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
+        CreateEnemy(24, 7.5, 0, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
+
+        for(int x_pos = 28; x_pos <= 34; x_pos++)
+        {
+            BlockCreate(x_pos, 2, EBlockType::SA3_WHITE_SPIKE_DOWN);
+        }
+
+        BlockCreate(30.9, 12, EBlockType::TRAMPOLINE);
+
+    
+        CreateBackground(32, 13, EBackgroundType::SA3_FAKE_GROUND_TOP);
+        BlockCreate(32, 14, EBlockType::GROUND_BOTTOM);
+        for(int x_pos = 33; x_pos <= 46; x_pos++)
+        {
+            BlockCreate(x_pos, 11.5, EBlockType::BRICK);
+            CreateBackground(x_pos, 13, EBackgroundType::SA3_FAKE_GROUND_TOP);
+            BlockCreate(x_pos, 14, EBlockType::GROUND_BOTTOM);
+        }
+        CreateBackground(47, 13, EBackgroundType::SA3_FAKE_GROUND_TOP);
+        ObjectCreate(47, 14, 1, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
+
+        CreateEnemy(45, 3.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+
+        BlockCreate(46, 4.5, EBlockType::HARD_BLOCK);
+        BlockCreate(46, 5.5, EBlockType::HARD_BLOCK);
+        BlockCreate(46, 6.5, EBlockType::HARD_BLOCK);
+        BlockCreate(46, 7.5, EBlockType::HARD_BLOCK);
+        BlockCreate(46, 8.5, EBlockType::HARD_BLOCK);
+        BlockCreate(46, 9.5, EBlockType::HARD_BLOCK);
+        BlockCreate(46, 10.5, EBlockType::HARD_BLOCK);
+
+        BlockCreate(47, 8.5, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        BlockCreate(48, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(48, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(49, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(49, 11, EBlockType::HARD_BLOCK);
+        BlockCreate(50, 12, EBlockType::HARD_BLOCK);
+        BlockCreate(50, 11, EBlockType::HARD_BLOCK);
+
+        CreateEnemy(52, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+        CreateEnemy(54, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+        CreateEnemy(56, 11, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+        CreateEnemy(58, 10, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+
+        BlockCreate(56, 12, EBlockType::BRICK);
+        BlockCreate(57, 12, EBlockType::BRICK);
+        BlockCreate(57, 11, EBlockType::BRICK);
+        BlockCreate(58, 12, EBlockType::BRICK);
+        BlockCreate(58, 11, EBlockType::BRICK);
+        BlockCreate(59, 10, EBlockType::BRICK);
+
+        CreateEnemy(61, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+        CreateEnemy(63, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
     }
 }

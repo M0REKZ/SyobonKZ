@@ -127,17 +127,34 @@ void RenderBlocks()
 
             if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
             {
-                if(BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT ||
-                    BlockType[t] == EBlockType::SA3_GRAY_SPIKE_RIGHT)
+                switch(BlockType[t])
                 {
-                    if(BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT)
-                    {
-                        DrawTurnGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[2]);
-                    }
-                    else
-                    {
-                        DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[2]);
-                    }
+                    case EBlockType::SA3_GRAY_SPIKE_LEFT:
+                    case EBlockType::SA3_GRAY_SPIKE_RIGHT:
+                        if(BlockType[t] == EBlockType::SA3_GRAY_SPIKE_LEFT)
+                        {
+                            DrawTurnGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[2]);
+                        }
+                        else
+                        {
+                            DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[2]);
+                        }
+                        break;
+                    case EBlockType::SA3_WHITE_SPIKE_DOWN:
+                        DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[16]);
+                        break;
+                    case EBlockType::BRICK_BRITTLE:
+                        if(BlockSubType[t] == EBlockSubType::BRICK_BRITTLE_SA3_GROUND_TOP)
+                        {
+                            DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Sliced_GFX[xx[9] + 5 /* GROUND_TOP */][1]);
+                        }
+                        else if(BlockSubType[t] == EBlockSubType::BRICK_BRITTLE_SA3_GROUND_BOTTOM)
+                        {
+                            DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Sliced_GFX[xx[9] + 6 /* GROUND_BOTTOM */][1]);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         }

@@ -984,7 +984,11 @@ void HandlePlayerBlocks()
                                         }
                                     }
                                     // トゲ (Spikes)
-                                    if (BlockType[t] == EBlockType::SPIKE)
+                                    if (BlockType[t] == EBlockType::SPIKE || 
+                                        (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
+                                            (BlockType[t] == EBlockType::SA3_WHITE_SPIKE_DOWN)
+                                        )
+                                    )
                                     {
                                         PlayerMessageTimer = 30;
                                         PlayerMessageType = 3;

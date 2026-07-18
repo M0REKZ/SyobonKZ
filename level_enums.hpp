@@ -124,6 +124,7 @@ enum class EBlockType : int
     //Syobon Action 3
     SA3_GRAY_SPIKE_LEFT,
     SA3_GRAY_SPIKE_RIGHT,
+    SA3_WHITE_SPIKE_DOWN,
 
     //+KZ
     SYOBONKZ_HIDDEN_BLOCK,
@@ -234,6 +235,8 @@ enum class EBackgroundType : int
     TEXT_51 = 100,
     TEXT_GAME_CLEAR = 101,
     TEXT_THANKS_FOR_PLAYING = 102,
+
+    SA3_FAKE_GROUND_TOP,
 };
 
 
@@ -527,6 +530,8 @@ enum class EBlockSubType : int
     BRICK_BRITTLE_ITEM_BLOCK_OPEN = 0,
     BRICK_BRITTLE_BRICK = 1,
     BRICK_BRITTLE_BRICK_3 = 3, //same as BRICK_BRITTLE_BRICK
+    BRICK_BRITTLE_SA3_GROUND_TOP, //for Syobon Action 3
+    BRICK_BRITTLE_SA3_GROUND_BOTTOM, //for Syobon Action 3
 
     ON_BLOCK_LOCKED = 1, //can not be disabled
     ON_BLOCK_UNLOCKED = 2,
