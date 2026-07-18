@@ -43,6 +43,8 @@ extern int LiftPlayerFatigueX[LIFT_MAX];
 void HandleLifts();
 void RenderLifts();
 
+int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Type, int MovementType ,int index = -1);
+
 //+KZ: clear all lifts from memory
 void ClearAllLifts();
 

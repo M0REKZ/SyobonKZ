@@ -80,6 +80,7 @@ void HandleSyobonKZTrueActionLevels()
             BlockCreate(6.5, 13, EBlockType::GROUND_TOP);
             BlockCreate(6.5, 14, EBlockType::GROUND_BOTTOM);
 
+            CreateLift(0, 5, 3, 0, ELiftType::PILLAR, 0);
 
             BlockCreate(17, 13, EBlockType::GROUND_TOP);
             BlockCreate(17, 14, EBlockType::GROUND_BOTTOM);
@@ -106,6 +107,21 @@ void HandleSyobonKZTrueActionLevels()
             QueueEnemyAppear(31, 8, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES);
 
             BlockCreate(38, 9, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
+
+            BlockCreate(41, 10.5, EBlockType::HARD_BLOCK);
+            BlockCreate(42, 10.5, EBlockType::HARD_BLOCK);
+            QueueEnemyAppear(43, 10.5, EEnemyType::SPIKY_BLOCK, EEnemySubType::SPIKY_BLOCK_HARD_BLOCK);
+            QueueEnemyAppear(44, 10.5, EEnemyType::SPIKY_BLOCK, EEnemySubType::SPIKY_BLOCK_HARD_BLOCK);
+            QueueEnemyAppear(45, 10.5, EEnemyType::SPIKY_BLOCK, EEnemySubType::SPIKY_BLOCK_HARD_BLOCK);
+
+            BlockCreate(48, 8.5, EBlockType::HARD_BLOCK);
+            BlockCreate(49, 8.5, EBlockType::HARD_BLOCK);
+            QueueEnemyAppear(50, 8.5, EEnemyType::SPIKY_BLOCK, EEnemySubType::SPIKY_BLOCK_HARD_BLOCK);
+            BlockCreate(51, 8.5, EBlockType::HARD_BLOCK);
+            BlockCreate(52, 8.5, EBlockType::HARD_BLOCK);
+
+            BlockCreate(49, 6, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
+            BlockCreate(50, 6, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
         }
     }
 }

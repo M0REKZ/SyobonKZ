@@ -381,6 +381,50 @@ void RenderLifts()
     } // t
 }
 
+int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Type, int MovementType ,int index)
+{
+    PosX *= BLOCK_DEFAULT_SIZE;
+    PosY *= BLOCK_DEFAULT_SIZE;
+
+    PosY -= 12; //stage() does -12
+
+    //the game simulates floating point numbers
+    //by multiplying all positions by 100
+    PosX *= 100;
+    PosY *= 100;
+
+    if(index < 0)
+    {
+        //use BlockCount to keep compat with BlockCreateLegacy()
+        index = LiftCount++;
+        if(LiftCount == LIFT_MAX)
+            LiftCount = 0;
+    }
+
+    if(index >= 0 && index < LIFT_MAX)
+    {
+        LiftX[index] = (int)PosX;
+        LiftY[index] = (int)PosY;
+        LiftType[index] = Type;
+        LiftVelY[index] = VelY;
+        LiftSizeX[index] = GAME_X_POS_TO_DOUBLE(Width);
+        LiftMovementType[index] = MovementType;
+
+        LiftInteractType[index] = 0;
+        LiftVelX[index] = 0;
+        LiftDirection[index] = 0;
+        LiftFrictionY[index] = 0;
+        LiftON[index] = 0;
+        LiftPlayerFatigueX[index] = 0;
+    }
+    else
+    {
+        fprintf(stderr, "CreateLift - Could not create lift %d at %d %d! (index %d)", Type, (int)PosX, (int)PosY, index);
+    }
+
+    return index;
+}
+
 void ClearAllLifts()
 {
     for (int i = 0; i < LIFT_MAX; i++)
