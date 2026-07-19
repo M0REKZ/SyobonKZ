@@ -128,6 +128,27 @@ void SyobonKZSetFontFile(int id)
     }
 }
 
+void SyobonKZDrawVertTurnGraph(int a, int b, SDL_Surface *mx)
+{
+     if (mx)
+    {
+        SDL_Rect srcrect;
+        srcrect.x = srcrect.y = 0;
+        srcrect.w = mx->w;
+        srcrect.h = mx->h;
+
+        SDL_Rect offset;
+        offset.x = a;
+        offset.y = b;
+
+        SDL_Surface *flipped = SyobonKZZoomSurface(mx, -1, -1, 0);
+        SyobonKZSetColorKey(flipped,
+                        SYOBON_COLOR_KEY(flipped->format));
+        SDL_BlitSurface(flipped, &srcrect, screen, &offset);
+        SyobonKZFreeImage(flipped);
+    }
+}
+
 // Strings
 void SetFontSize(Uint8 size)
 {

@@ -6,7 +6,9 @@
 
 //ブロック (Block)
 // @attention +KZ: tmax is now BLOCK_MAX
-#define BLOCK_MAX 641
+// +KZ: had to increase it to support SA3
+#define LEGACY_BLOCK_MAX 641
+#define BLOCK_MAX 900
 // @attention +KZ: int tco is now int BlockCount
 extern int BlockCount;
 // @attention +KZ: int ta[tmax] is now int BlockX[tmax]

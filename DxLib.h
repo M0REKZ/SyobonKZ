@@ -81,5 +81,6 @@ extern bool sound;
 void SyobonKZDrawGraphScaled(int x, int y, int scale_x, int scale_y, SDL_Surface * psurface);
 SyobonKZChunk * SyobonKZGetLastSoundInChannel(int channel);
 void SyobonKZSetFontFile(int id);
+void SyobonKZDrawVertTurnGraph(int a, int b, SDL_Surface * mx);
 
 #endif

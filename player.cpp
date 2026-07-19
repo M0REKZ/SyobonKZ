@@ -888,6 +888,42 @@ void HandlePlayerBlocks()
                                     PlayerState = 3;
                                     PlayerAITimer = 0;
                                 }
+                                if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                                {
+                                    switch(BlockType[t])
+                                    {
+                                        case EBlockType::SA3_WHITE_SPIKE_UP:
+                                            PlayerMessageTimer = 30;
+                                            PlayerMessageType = 3;
+                                            PlayerHealth--;
+                                            break;
+                                        case EBlockType::SA3_BRICK_BRITTLE:
+                                            if(prev_player_vel_y > 0 && prev_player_grounded == 0)
+                                            {
+                                                PlaySound(Sounds[3]);
+                                                CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                                    300,
+                                                    -1000,
+                                                    0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                                CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                                    -300,
+                                                    -1000,
+                                                    0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                                CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                                    240,
+                                                    -1400,
+                                                    0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                                CreateEffectLegacy(BlockX[t] + 1200, BlockY[t] + 1200,
+                                                    -240,
+                                                    -1400,
+                                                    0, 160, 1000, 1000, EEffectType::BLOCK_FRAGMENT, 120);
+                                                BlockBreak(t);
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
                             }
                         }
                     } //!
@@ -922,7 +958,10 @@ void HandlePlayerBlocks()
                                     PlayerY = xx[9] + xx[1] + xx[0];
                                     if (PlayerVelY < 0)
                                     {
-                                        PlayerVelY = -PlayerVelY * 2 / 3;
+                                        if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                                            PlayerVelY = 0;
+                                        else
+                                            PlayerVelY = -PlayerVelY * 2 / 3;
                                     } //}
                                     // 壊れる (Break)
                                     if (BlockType[t] == EBlockType::BRICK && PlayerGrounded == 0)
@@ -1160,7 +1199,7 @@ void HandlePlayerBlocks()
                             if(BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_SAJAM_BALL_NORMAL_BELOW)
                             {
                                 int ind = CreateEnemy(GAME_X_POS_TO_DOUBLE(BlockX[t]), GAME_Y_POS_TO_DOUBLE(BlockY[t]) + 1, 0, 0,
-                                    EEnemyType::BALL, EEnemySubType::BALL_NORMAL, ELookingDirection::LOOKING_RIGHT, 8);
+                                    EEnemyType::BALL, EEnemySubType::BALL_NORMAL, ELookingDirection::LOOKING_RIGHT, 2);
 
                                 if(ind >= 0)
                                 {
@@ -1347,12 +1386,6 @@ void HandlePlayerBlocks()
                         }
                     }
                 } // 114
-
-                // もろいブロック (Fragile block)
-                if (BlockType[t] == EBlockType::BRICK_BRITTLE)
-                {
-
-                } // 115
 
                 // Pスイッチ (P switch)
                 if (BlockType[t] == EBlockType::ITEM_BLOCK_PSWITCH)
@@ -1621,6 +1654,32 @@ void HandlePlayerWalls()
                             ObjectVelY[t] = 1600;
                         }
                         ObjectY[t] += ObjectVelY[t];
+                    }
+                }
+
+                if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                {
+                    if(ObjectType[t] == EObjectType::SA3_UNTOUCHABLE_FALLING_FLOOR)
+                    {
+                        if (ObjectAI[t] == 0 && PlayerX + PlayerSizeX + fx > ObjectX[t] && PlayerX + fx < ObjectX[t] + ObjectSizeX[t] && PlayerY + PlayerSizeY + PlayerVelY > xx[9] - 3000)
+                        {
+                            ObjectAI[t] = 1;
+                            ObjectVelY[t] = 0;
+                        }
+                        if (ObjectAI[t] == 1)
+                        {
+                            if(ObjectY[t] < fy + PlayerY + PlayerSizeY + PlayerVelY)
+                            {
+                                ObjectY[t] = fy + PlayerY + PlayerSizeY + PlayerVelY;
+                            }
+
+                            ObjectVelY[t] += 120;
+                            if (ObjectVelY[t] >= 1600)
+                            {
+                                ObjectVelY[t] = 1600;
+                            }
+                            ObjectY[t] += ObjectVelY[t];
+                        }
                     }
                 }
                 // 通常地面 (Normal Ground)

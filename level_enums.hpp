@@ -125,6 +125,9 @@ enum class EBlockType : int
     SA3_GRAY_SPIKE_LEFT,
     SA3_GRAY_SPIKE_RIGHT,
     SA3_WHITE_SPIKE_DOWN,
+    SA3_WHITE_SPIKE_UP,
+    SA3_BRICK_BRITTLE, //requires player Y speed
+    SA3_ITEM_BLOCK_OPEN_OVERWORLD,
 
     //+KZ
     SYOBONKZ_HIDDEN_BLOCK,
@@ -318,6 +321,7 @@ enum class EObjectType : int
     //Syobon Action 3
     SA3_FAKE_PIPE_BODY,
     SA3_FALLING_FLOOR, //requires player vel y > 0 to activate
+    SA3_UNTOUCHABLE_FALLING_FLOOR, //player cant reach this floor
 
     SA3_TRIGGER_START,
     SA3_TRIGGER_FAST_SEAL_UP = SA3_TRIGGER_START,
@@ -453,6 +457,7 @@ enum class EEnemySubType : int
     BALL_ROCKET_BACKWARDS,
     BALL_ROCKET_UPWARDS,
     BALL_ROCKET_DOWNWARDS,
+    BALL_ROCKET_SA3_GIANT, //Syobon Action 3 Level 2 giant cannon jien
 
     FLAME_NORMAL = 0,
     FLAME_BACKWARDS,
@@ -633,6 +638,16 @@ enum class EObjectSubType : int
     TRIGGER_PLATFORM_SPLIT_TIMER_END = 3, //it uses subtype as a timer, in 1-4 it starts on 0
 
     //Syobon Action 3
+    SA3_FALLING_FLOOR_GROUND_TOP_BOTTOM = 0, //draws GROUND_BOTTOM below, but that is not solid
+    SA3_FALLING_FLOOR_BRICK = 1,
+    SA3_FALLING_FLOOR_GROUND_TOP = 2,
+    SA3_FALLING_FLOOR_GROUND_BOTTOM = 2,
+
+    SA3_UNTOUCHABLE_FALLING_FLOOR_GROUND_TOP_BOTTOM = 0, //draws GROUND_BOTTOM below, but that is not solid
+    SA3_UNTOUCHABLE_FALLING_FLOOR_BRICK = 1,
+    SA3_UNTOUCHABLE_FALLING_FLOOR_GROUND_TOP = 2,
+    SA3_UNTOUCHABLE_FALLING_FLOOR_GROUND_BOTTOM = 2,
+
     SA3_TRIGGER_FAST_SEAL_UP_1_SEAL = 0,
     SA3_TRIGGER_FAST_SEAL_UP_4_SEALS = 1,
 

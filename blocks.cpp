@@ -68,7 +68,12 @@ void RenderBlocks()
                               xx[0] / 100, xx[1] / 100);
                 }
 
-                if (BlockType[t] == EBlockType::ITEM_BLOCK_POISON_OPEN || BlockType[t] == EBlockType::ITEM_BLOCK_COINS_OPEN || BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN || BlockType[t] == EBlockType::FIREBAR_GROW)
+                if (
+                    BlockType[t] == EBlockType::ITEM_BLOCK_POISON_OPEN ||
+                    BlockType[t] == EBlockType::ITEM_BLOCK_COINS_OPEN ||
+                    BlockType[t] == EBlockType::BRICK_BRITTLE && BlockSubType[t] == EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN ||
+                    BlockType[t] == EBlockType::FIREBAR_GROW            
+                )
                 {
                     xx[6] = 3 + xx[9];
                     drawimage(Sliced_GFX[xx[6]][1],
@@ -142,6 +147,15 @@ void RenderBlocks()
                         break;
                     case EBlockType::SA3_WHITE_SPIKE_DOWN:
                         DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[16]);
+                        break;
+                    case EBlockType::SA3_WHITE_SPIKE_UP:
+                        SyobonKZDrawVertTurnGraph((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[16]);
+                        break;
+                    case EBlockType::SA3_BRICK_BRITTLE:
+                        DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Main_GFX_KZ[17]);
+                        break;
+                    case EBlockType::SA3_ITEM_BLOCK_OPEN_OVERWORLD:
+                        DrawGraphZ((BlockX[t] - fx) / 100, (BlockY[t] - fy) / 100, Sliced_GFX[3][1]);
                         break;
                     case EBlockType::BRICK_BRITTLE:
                         if(BlockSubType[t] == EBlockSubType::BRICK_BRITTLE_SA3_GROUND_TOP)

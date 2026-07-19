@@ -332,8 +332,7 @@ void HandleSyobonActionThreeLevels()
         {
             BlockCreate(x_coin, 11.5, EBlockType::COIN);
         }
-        //TODO: you should not be able to even touch this floor
-        ObjectCreate(132, 13, 8, 2, EObjectType::FALLING_FLOOR, EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM);
+        ObjectCreate(132, 13, 8, 2, EObjectType::SA3_UNTOUCHABLE_FALLING_FLOOR, EObjectSubType::SA3_UNTOUCHABLE_FALLING_FLOOR_GROUND_TOP_BOTTOM);
 
         ObjectCreate(140, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         ObjectCreate(140 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
@@ -508,7 +507,8 @@ void HandleSyobonActionThreeLevels()
         for(int grounds = 0; grounds <= 200; grounds++)
         {
             if(
-                grounds >= 32 && grounds <= 47
+                (grounds >= 32 && grounds <= 47) ||
+                (grounds == 68)
             )
             {
                 continue;
@@ -534,9 +534,18 @@ void HandleSyobonActionThreeLevels()
                 grounds >= 1 && grounds <= 4
             )
             {
-                //TODO: it should be ground top and ground bottom
                 BlockCreate(grounds, 13, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_SA3_GROUND_TOP);
                 BlockCreate(grounds, 14, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_SA3_GROUND_BOTTOM);
+                continue;
+            }
+
+            if(grounds >= 81 && grounds <= 96)
+            {
+                if(grounds != 81 && grounds <= 91)
+                {
+                    BlockCreate(grounds, 13, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_SA3_GROUND_TOP);
+                    BlockCreate(grounds, 14, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_SA3_GROUND_BOTTOM);
+                }
                 continue;
             }
 
@@ -546,6 +555,16 @@ void HandleSyobonActionThreeLevels()
 
         for(int roofs = 4; roofs <= 200; roofs++)
         {
+            if(roofs == 98)
+            {
+                continue;
+            }
+
+            if(roofs == 68)
+            {
+                BlockCreate(roofs, 1, EBlockType::SA3_BRICK_BRITTLE);
+                continue;
+            }
             BlockCreate(roofs, 1, EBlockType::BRICK);
         }
 
@@ -588,7 +607,7 @@ void HandleSyobonActionThreeLevels()
             BlockCreate(x_pos, 14, EBlockType::GROUND_BOTTOM);
         }
         CreateBackground(47, 13, EBackgroundType::SA3_FAKE_GROUND_TOP);
-        ObjectCreate(47, 14, 1, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
+        ObjectCreate(47, 14, 1, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::SA3_FALLING_FLOOR_GROUND_BOTTOM);
 
         CreateEnemy(45, 3.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
 
@@ -623,5 +642,85 @@ void HandleSyobonActionThreeLevels()
 
         CreateEnemy(61, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
         CreateEnemy(63, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+
+        BlockCreate(67, 12, EBlockType::SA3_WHITE_SPIKE_UP);
+        BlockCreate(68, 13, EBlockType::SA3_WHITE_SPIKE_UP);
+        BlockCreate(68, 14, EBlockType::GROUND_BOTTOM);
+        BlockCreate(69, 12, EBlockType::SA3_WHITE_SPIKE_UP);
+
+        BlockCreate(67, 5.5, EBlockType::SA3_WHITE_SPIKE_UP);
+        BlockCreate(69, 5.5, EBlockType::SA3_WHITE_SPIKE_UP);
+        BlockCreate(67, 6.5, EBlockType::HARD_BLOCK);
+        BlockCreate(69, 6.5, EBlockType::HARD_BLOCK);
+        BlockCreate(68, 7.5, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        for(int y_pos = 12; y_pos >= 5; y_pos--)
+        {
+            BlockCreate(79, y_pos, EBlockType::HARD_BLOCK);
+        }
+
+        BlockCreate(70, 6.5, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(71, 6.5, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(72, 6.5, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(73, 6.5, EBlockType::ITEM_BLOCK_HIDDEN);
+
+
+
+        BlockCreate(77, 6.5, EBlockType::ITEM_BLOCK_HIDDEN);
+        BlockCreate(78, 6.5, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        CreateEnemy(94, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+
+        BlockCreate(81, 9, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        ObjectCreate(92, 13, 4, 2, EObjectType::SA3_UNTOUCHABLE_FALLING_FLOOR, EObjectSubType::SA3_UNTOUCHABLE_FALLING_FLOOR_GROUND_TOP_BOTTOM);
+
+        ObjectCreate(98, 11, 1, 2, EObjectType::CHECKPOINT, EObjectSubType::NONE);
+
+        BlockCreate(97, 2, EBlockType::BRICK);
+        BlockCreate(99, 2, EBlockType::BRICK);
+        BlockCreate(98, 3.7, EBlockType::COIN);
+
+        BlockCreate(99, -6, EBlockType::ITEM_BLOCK_OPEN);
+        BlockCreate(99, -5, EBlockType::ITEM_BLOCK_OPEN);
+        BlockCreate(99, -4, EBlockType::ITEM_BLOCK_OPEN);
+        BlockCreate(99, -3, EBlockType::ITEM_BLOCK_OPEN);
+        BlockCreate(99, -2, EBlockType::ITEM_BLOCK_OPEN);
+        BlockCreate(99, -1, EBlockType::ITEM_BLOCK_OPEN);
+        BlockCreate(99, 0, EBlockType::ITEM_BLOCK_OPEN);
+
+        CreateEnemy(97.4, 3.4, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
+
+        ObjectCreate(101, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+        ObjectCreate(101 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
+
+        //REMOVE ME
+        CurrentPlayerCheckpoint = 1;
+
+        CreateEnemy(121, 7, 0, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_SA3_GIANT);
+
+        BlockCreate(109, 7.5, EBlockType::ITEM_BLOCK_HIDDEN);
+
+        {
+            int start = BlockCreate(103, -11, EBlockType::ITEM_BLOCK_HIDDEN);
+            int countblocks = 1;
+            for(int y_pos = 2; y_pos >= -10; y_pos--)
+            {
+                if(BlockCreate(103, y_pos, EBlockType::SA3_ITEM_BLOCK_OPEN_OVERWORLD) >= 0)
+                {
+                    countblocks++;
+                }
+            }
+            if(start >= 0)
+            {
+                int obj_ind = ObjectCreate(108, 0, 1, 14, EObjectType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1, EObjectSubType::SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_WAITING);
+                if(obj_ind >= 0)
+                {
+                    ObjectAI[obj_ind] = start;
+                    ObjectVelY[obj_ind] = countblocks;
+                }
+            }
+
+        }
     }
 }

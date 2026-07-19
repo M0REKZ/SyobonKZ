@@ -230,6 +230,32 @@ void HandleEnemies()
                     }
                 }
                 break;
+
+            case EEnemyType::BALL_ROCKET:
+                if(EnemySubType[t] == EEnemySubType::BALL_ROCKET_SA3_GIANT)
+                {
+                    EnemySizeX[t] = DOUBLE_TO_GAME_X_POS(5);
+                    EnemySizeY[t] = DOUBLE_TO_GAME_X_POS(5);
+
+                    if(EnemyX[t] + EnemySizeX[t] * 2 > fx && (EnemyAITimer[t] == 1 || EnemyX[t] < fx + fxmax))
+                    {
+                        EnemyAITimer[t] = 1;
+                        EnemyX[t] -= 400;
+
+                        if(PlayerHealth > 0 && player_pos_x + PlayerSizeX >= EnemyX[t] && player_pos_x <= EnemyX[t] + EnemySizeX[t] &&
+                        player_pos_y + PlayerSizeY >= EnemyY[t] && player_pos_y <= EnemyY[t] + EnemySizeY[t])
+                        {
+                            PlayerHealth--;
+
+                            //set his message
+                            EnemyMessageTimer[t] = 60;
+                            EnemyMessageType[t] = SyobonRand(7) + 1 + 1000 + (SyobonLevel - 1) * 10;
+                        }
+                    }
+
+                    handled = true;
+                }    
+                break;
             
             default:
                 break;
@@ -1857,6 +1883,11 @@ void RenderEnemies()
                 {
                     DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[10]);
                 }
+                continue;
+            }
+            else if(EnemyType[t] == EEnemyType::BALL_ROCKET && EnemySubType[t] == EEnemySubType::BALL_ROCKET_SA3_GIANT)
+            {
+                SyobonKZDrawGraphScaled((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, 5, 5, Sliced_GFX[ 7 /* BALL_ROCKET */][3]);
                 continue;
             }
             else if(EnemyType[t] == EEnemyType::MUSHROOM && EnemySubType[t] == EEnemySubType::MUSHROOM_SA3_1UP)
