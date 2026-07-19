@@ -366,7 +366,7 @@ void Mainprogram()
 			PlayerSizeX = 3000;
 			PlayerSizeY = 3600;
 
-			PlayerState = 0;
+			PlayerState = EPlayerState::PLAYING;
 
 			fx = 0;
 			fy = 0;

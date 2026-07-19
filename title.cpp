@@ -231,7 +231,7 @@ void UpdateTitleScreen()
         PlayerSizeX = 3000;
         PlayerSizeY = 3600;
 
-        PlayerState = 0;
+        PlayerState = EPlayerState::PLAYING;
 
         fx = 0;
         fy = 0;
@@ -334,7 +334,7 @@ void RenderTitleScreen()
         drawimage(Main_GFX_KZ[13], 240 - Main_GFX_KZ[13]->w / 2, 20);
 
         setcolor(170, 0, 0);
-        if(PlayerState != 200)
+        if(PlayerState != EPlayerState::DEATH_ANIMATION)
             str("Press Enter to save Shobon!", 240 - 8 * 20 / 2, 250);
         else
             str("You're too slow... ._.", 240 - 8 * 20 / 2, 250);

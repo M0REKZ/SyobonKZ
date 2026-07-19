@@ -29,8 +29,23 @@ extern int PlayerWalkAnim;
 // @attention +KZ: int nokori is now int PlayerLives;
 extern int PlayerLives;
 
-// @attention +KZ: int mactp is now int PlayerState
-extern int PlayerState;
+enum class EPlayerState : int
+{
+    PLAYING = 0,
+    BIG_PLAYER = 1,
+    NOTE_BLOCK_RED_WARP = 2,
+    TRAMPOLINE_TRAP = 3,
+    END_NORMAL_STATES = 10, //9 or 10 seems to be some kind of "limit"
+    ENTERING_PIPE = 100,
+    DEATH_ANIMATION = 200,
+    LEVEL_FINISH_ANIMATION = 300,
+    SWORD_ENDING_ANIMATION = 301,
+    MELON_ENDING_ANIMATION = 302,
+    UNKNOWN_2000 = 2000,
+};
+
+// @attention +KZ: int mactp is now EPlayerState PlayerState
+extern EPlayerState PlayerState;
 // @attention +KZ: int mactp is now int PlayerSubState
 extern int PlayerSubState;
 // @attention +KZ: int mactp is now int PlayerAITimer
@@ -40,7 +55,7 @@ extern int PlayerAITimer;
 extern int PlayerRocketPipeTrapVelY;
 // @attention +KZ: int mzimen is now int PlayerGrounded
 extern int PlayerGrounded;
-enum class EPlayerGroundType
+enum class EPlayerGroundType : int
 {
     NORMAL = 0,
     SLIP = 1,

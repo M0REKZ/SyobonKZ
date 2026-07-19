@@ -413,7 +413,7 @@ void HandleEnemies()
                         {
                             PlayerX = xx[0];
                             PlayerY = xx[1] - 3000;
-                            PlayerState = 0;
+                            PlayerState = EPlayerState::PLAYING;
                         }
                         xx[10] = 0;
                         if (EnemyAITimer[t] == 20)
@@ -466,9 +466,9 @@ void HandleEnemies()
                                   10 * 3000 - 1500,
                               0, 0, 0, 0, 1000,
                               10 * 3000 - 1200, EEffectType::GOAL_POLE, 20);
-                        if (PlayerState == 300)
+                        if (PlayerState == EPlayerState::LEVEL_FINISH_ANIMATION)
                         {
-                            PlayerState = 0;
+                            PlayerState = EPlayerState::PLAYING;
                             StopSoundMem(Sounds[11]);
                             bgmchange(Music[1]);
                         }
@@ -997,7 +997,7 @@ void HandleEnemies()
 
             if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 && PlayerX < xx[8] + EnemySizeX[t] - xx[0] * 2 && PlayerY + PlayerSizeY > xx[9] - xx[5] && PlayerY + PlayerSizeY < xx[9] + xx[1] + xx[12] && (PlayerNoDamageTimer <= 0 || PlayerVelY >= 100) && EnemyBlockAppearTimer[t] <= 0)
             {
-                if (EnemyType[t] != EEnemyType::BALL_SPIKY && EnemyType[t] != EEnemyType::MAGMA && EnemyType[t] != EEnemyType::FLAME && ((int)EnemyType[t] <= 78 || EnemyType[t] == EEnemyType::FAKE_POLE) && PlayerGrounded != 1 && PlayerState != 200)
+                if (EnemyType[t] != EEnemyType::BALL_SPIKY && EnemyType[t] != EEnemyType::MAGMA && EnemyType[t] != EEnemyType::FLAME && ((int)EnemyType[t] <= 78 || EnemyType[t] == EEnemyType::FAKE_POLE) && PlayerGrounded != 1 && PlayerState != EPlayerState::DEATH_ANIMATION)
                 { // && atype[t]!=4 && atype[t]!=7){
 
                     if (EnemyType[t] == EEnemyType::BALL)
@@ -1128,7 +1128,7 @@ void HandleEnemies()
                 }
                 if (PlayerNoDamageTimer <= 0 && ((int)EnemyType[t] <= 99 || (int)EnemyType[t] >= 200))
                 {
-                    if (PlayerInvincibleON != 1 && PlayerState != 200)
+                    if (PlayerInvincibleON != 1 && PlayerState != EPlayerState::DEATH_ANIMATION)
                     {
                         // if (mmutekitm<=0)
 
@@ -1285,7 +1285,7 @@ void HandleEnemies()
                         PlaySound(Sounds[9]);
                         PlayerX -= 1100;
                         PlayerY -= 4000;
-                        PlayerState = 1;
+                        PlayerState = EPlayerState::BIG_PLAYER;
                         PlayerHealth = 50000000;
                     }
                     if (EnemyType[t] == EEnemyType::MUSHROOM && EnemySubType[t] == EEnemySubType::MUSHROOM_SA3_1UP)

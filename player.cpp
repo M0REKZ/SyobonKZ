@@ -16,7 +16,8 @@ int PlayerX, PlayerY, PlayerSizeX, PlayerSizeY, PlayerHealth;
 int PlayerVelX, PlayerVelY, atktm, PlayerWalkAnimTimer, PlayerWalkAnim;
 int PlayerLives = 3;
 
-int PlayerState, PlayerSubState, PlayerAITimer, PlayerRocketPipeTrapVelY;
+EPlayerState PlayerState;
+int PlayerSubState, PlayerAITimer, PlayerRocketPipeTrapVelY;
 int PlayerGrounded;
 ELookingDirection PlayerLookingDirection;
 int mjumptm, mkeytm;
@@ -202,7 +203,7 @@ void HandlePlayer()
     {
         mkeytm = 12;
         PlayerHealth = -20;
-        PlayerState = 200;
+        PlayerState = EPlayerState::DEATH_ANIMATION;
         PlayerAITimer = 0;
         //SyobonKZHaltChannel(-1);
         //+KZ: halt all channels except some sounds
@@ -218,7 +219,7 @@ void HandlePlayer()
         //StopSoundMem(Sounds[16]); //+KZ this is not needed since we already halted all channels
     } // PlayerHealth
     // if (PlayerHealth<=-10){
-    if (PlayerState == 200)
+    if (PlayerState == EPlayerState::DEATH_ANIMATION)
     {
         if (PlayerAITimer <= 11)
         {
@@ -242,12 +243,12 @@ void HandlePlayer()
             mkeytm = 0;
             PlayerLives--;
             if (fast == 1)
-                PlayerState = 0;
+                PlayerState = EPlayerState::PLAYING;
         } // mtm>=100
     } // mtype==200
 
     // 音符によるワープ (Warp using musical notes)
-    if (PlayerState == 2)
+    if (PlayerState == EPlayerState::NOTE_BLOCK_RED_WARP)
     {
         PlayerAITimer++;
 
@@ -260,13 +261,13 @@ void HandlePlayer()
             SyobonSection += 5;
             SyobonKZHaltMusic();
             PlayerAITimer = 0;
-            PlayerState = 0;
+            PlayerState = EPlayerState::PLAYING;
             mkeytm = -1;
         }
     } // 2
 
     // ジャンプ台アウト
-    if (PlayerState == 3)
+    if (PlayerState == EPlayerState::TRAMPOLINE_TRAP)
     {
         PlayerVelY = -2400;
         if (PlayerY <= -6000)
@@ -276,13 +277,13 @@ void HandlePlayer()
         }
     }
     // mtypeによる特殊的な移動 (Special movement using mtype)
-    if (PlayerState >= 100)
+    if (PlayerState >= EPlayerState::ENTERING_PIPE)
     {
         PlayerAITimer++;
 
         // 普通の土管 (ordinary drainpipe)
         //+KZ: did google translated it wrong? anyways this is where all pipes are handled
-        if (PlayerState == 100)
+        if (PlayerState == EPlayerState::ENTERING_PIPE)
         {
             if (PlayerSubState == 0)
             {
@@ -332,7 +333,7 @@ void HandlePlayer()
                 }
                 if (PlayerAITimer == 160)
                 {
-                    PlayerState = 0;
+                    PlayerState = EPlayerState::PLAYING;
                     PlayerHealth--;
                 }
             }
@@ -357,7 +358,7 @@ void HandlePlayer()
                 }
                 if (PlayerAITimer >= 48)
                 {
-                    PlayerState = 0;
+                    PlayerState = EPlayerState::PLAYING;
                     PlayerHealth--;
                 }
             }
@@ -376,7 +377,7 @@ void HandlePlayer()
                 if (PlayerAITimer == 19 && PlayerSubState == 2)
                 {
                     PlayerHealth = 0;
-                    PlayerState = 2000;
+                    PlayerState = EPlayerState::UNKNOWN_2000;
                     PlayerAITimer = 0;
                     PlayerMessageTimer = 30;
                     PlayerMessageType = 51;
@@ -384,7 +385,7 @@ void HandlePlayer()
                 if (PlayerAITimer == 19 && PlayerSubState == 5)
                 {
                     PlayerHealth = 0;
-                    PlayerState = 2000;
+                    PlayerState = EPlayerState::UNKNOWN_2000;
                     PlayerAITimer = 0;
                     PlayerMessageTimer = 30;
                     PlayerMessageType = 52;
@@ -408,7 +409,7 @@ void HandlePlayer()
             }
         } // 00
 
-        if (PlayerState == 300)
+        if (PlayerState == EPlayerState::LEVEL_FINISH_ANIMATION)
         {
             mkeytm = 3;
             if (PlayerAITimer <= 1)
@@ -469,7 +470,7 @@ void HandlePlayer()
             }
         } // mtype==300
 
-        if (PlayerState == 301 || PlayerState == 302)
+        if (PlayerState == EPlayerState::SWORD_ENDING_ANIMATION || PlayerState == EPlayerState::MELON_ENDING_ANIMATION)
         {
             mkeytm = 3;
 
@@ -479,7 +480,11 @@ void HandlePlayer()
                 PlayerVelY = 0;
             }
 
-            if (PlayerAITimer >= 2 && (PlayerState == 301 && PlayerAITimer <= 102 || PlayerState == 302 && PlayerAITimer <= 60))
+            if (
+                PlayerAITimer >= 2 &&
+                (PlayerState == EPlayerState::SWORD_ENDING_ANIMATION && PlayerAITimer <= 102 ||
+                    PlayerState == EPlayerState::MELON_ENDING_ANIMATION && PlayerAITimer <= 60)
+            )
             {
                 xx[5] = 500;
                 PlayerX -= xx[5];
@@ -495,9 +500,9 @@ void HandlePlayer()
                 (currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && SyobonRandomMode == 0 &&
                 SyobonWorld == 1 && SyobonLevel == 4 && SyobonSection == 0)
                 ?
-                (PlayerState == 301 || (PlayerState == 302 && PlayerAITimer >= 2 && PlayerAITimer <= 100)) //Original Syobon Action
+                (PlayerState == EPlayerState::SWORD_ENDING_ANIMATION || (PlayerState == EPlayerState::MELON_ENDING_ANIMATION && PlayerAITimer >= 2 && PlayerAITimer <= 100)) //Original Syobon Action
                 :
-                ((PlayerState == 301 || PlayerState == 302) && PlayerAITimer >= 2 && PlayerAITimer <= 100) //Syobon Action 2
+                ((PlayerState == EPlayerState::SWORD_ENDING_ANIMATION || PlayerState == EPlayerState::MELON_ENDING_ANIMATION) && PlayerAITimer >= 2 && PlayerAITimer <= 100) //Syobon Action 2
             )
             {
                 PlayerVelX = 250;
@@ -507,7 +512,7 @@ void HandlePlayer()
             if (PlayerAITimer == 200)
             {
                 PlaySound(Sounds[17]);
-                if (PlayerState == 301)
+                if (PlayerState == EPlayerState::SWORD_ENDING_ANIMATION)
                 {
                     BackgroundX[BackgroundCount] = 117 * 29 * 100 - 1100;
                     BackgroundY[BackgroundCount] = 4 * 29 * 100;
@@ -546,7 +551,7 @@ void HandlePlayer()
                 SyobonGlobalConfig.LevelsFinished.insert({currentGame, SyobonWorld, SyobonLevel});
                 SaveConfig();
 
-                if (PlayerState == 301)
+                if (PlayerState == EPlayerState::SWORD_ENDING_ANIMATION)
                 {
                     ending = 1;
                 }
@@ -586,11 +591,17 @@ void HandlePlayer()
     if (PlayerVelX >= 0)
         PlayerWalkAnimTimer += PlayerVelX;
 
-    if (PlayerState <= 9 || PlayerState == 200 || PlayerState == 300 || PlayerState == 301 || PlayerState == 302)
+    if (
+        PlayerState < EPlayerState::END_NORMAL_STATES ||
+        PlayerState == EPlayerState::DEATH_ANIMATION ||
+        PlayerState == EPlayerState::LEVEL_FINISH_ANIMATION ||
+        PlayerState == EPlayerState::SWORD_ENDING_ANIMATION ||
+        PlayerState == EPlayerState::MELON_ENDING_ANIMATION
+    )
         PlayerVelY += 100;
 
     // 走る際の最大値 (Maximum value when running)
-    if (PlayerState == 0)
+    if (PlayerState == EPlayerState::PLAYING)
     {
         xx[0] = 800;
         xx[1] = 1600;
@@ -619,7 +630,12 @@ void HandlePlayer()
     // 地面の摩擦 (Ground friction)
     if (PlayerGrounded == 1 && actaon[0] != 3)
     {
-        if ((PlayerState <= 9) || PlayerState == 300 || PlayerState == 301 || PlayerState == 302)
+        if (
+            (PlayerState < EPlayerState::END_NORMAL_STATES) ||
+            PlayerState == EPlayerState::LEVEL_FINISH_ANIMATION ||
+            PlayerState == EPlayerState::SWORD_ENDING_ANIMATION ||
+            PlayerState == EPlayerState::MELON_ENDING_ANIMATION
+        )
         {
             if (PlayerGroundType == EPlayerGroundType::NORMAL)
             {
@@ -663,7 +679,7 @@ void HandlePlayer()
     PlayerGrounded = 0;
 
     // 場外 (Outside the venue)
-    if (PlayerState <= 9 && PlayerHealth >= 1)
+    if (PlayerState < EPlayerState::END_NORMAL_STATES && PlayerHealth >= 1)
     {
         if (PlayerX < 100)
         {
@@ -793,7 +809,7 @@ void HandlePlayerBlocks()
         xx[9] = BlockY[t] - fy; // xx[15]=0;
         if (BlockX[t] - fx + xx[1] >= -10 - xx[3] && BlockX[t] - fx <= fxmax + 12000 + xx[3])
         {
-            if (PlayerState != 200 && PlayerState != 1 && PlayerState != 2)
+            if (PlayerState != EPlayerState::DEATH_ANIMATION && PlayerState != EPlayerState::BIG_PLAYER && PlayerState != EPlayerState::NOTE_BLOCK_RED_WARP)
             {
                 if ((int)BlockType[t] < 1000 && BlockType[t] != EBlockType::COIN && BlockType[t] != EBlockType::SWORD && BlockType[t] != EBlockType::BRIDGE_ROPE)
                 { // && ttype[t]!=5){
@@ -869,11 +885,11 @@ void HandlePlayerBlocks()
                                 {
                                     PlaySound(Sounds[14]);
                                     PlayerVelY = -1500;
-                                    PlayerState = 2;
+                                    PlayerState = EPlayerState::NOTE_BLOCK_RED_WARP;
                                     PlayerAITimer = 0;
-                                    if (BlockSubType[t] >= EBlockSubType::NOTE_BLOCK_WHITE_HIDDEN && PlayerState == 2)
+                                    if (BlockSubType[t] >= EBlockSubType::NOTE_BLOCK_WHITE_HIDDEN && PlayerState == EPlayerState::NOTE_BLOCK_RED_WARP)
                                     {
-                                        PlayerState = 0;
+                                        PlayerState = EPlayerState::PLAYING;
                                         PlayerVelY = -1600;
                                         BlockSubType[t] = EBlockSubType::NOTE_BLOCK_WHITE_VISIBLE;
                                     }
@@ -885,7 +901,7 @@ void HandlePlayerBlocks()
                                 {
                                     // txtype[t]=0;
                                     PlayerVelY = -2400;
-                                    PlayerState = 3;
+                                    PlayerState = EPlayerState::TRAMPOLINE_TRAP;
                                     PlayerAITimer = 0;
                                 }
                                 if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
@@ -949,7 +965,7 @@ void HandlePlayerBlocks()
                         {
 
                             // 下 (Below)
-                            if (t3 == xx[21] && PlayerState != 100 && BlockType[t] != EBlockType::NOTE_BLOCK)
+                            if (t3 == xx[21] && PlayerState != EPlayerState::ENTERING_PIPE && BlockType[t] != EBlockType::NOTE_BLOCK)
                             { // && xx[12]==0){
                                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 + 800 && PlayerX < xx[8] + xx[1] - xx[0] * 2 - 800 && PlayerY > xx[9] - xx[0] * 2 && PlayerY < xx[9] + xx[1] - xx[0] * 2 && PlayerVelY <= 0)
                                 {
@@ -1127,7 +1143,7 @@ void HandlePlayerBlocks()
                         LiftMovementType[20] = 1;
                         LiftON[20] = 1;
                         SyobonKZHaltMusic();
-                        PlayerState = 301;
+                        PlayerState = EPlayerState::SWORD_ENDING_ANIMATION;
                         PlayerAITimer = 0;
                         PlaySound(Sounds[16]);
                     }
@@ -1497,7 +1513,7 @@ void HandlePlayerBlocks()
                     }
                 } // 300
             }
-            else if (PlayerState == 1)
+            else if (PlayerState == EPlayerState::BIG_PLAYER)
             {
                 if (PlayerX + PlayerSizeX > xx[8] && PlayerX < xx[8] + xx[1] && PlayerY + PlayerSizeY > xx[9] && PlayerY < xx[9] + xx[1])
                 {
@@ -1576,7 +1592,7 @@ void HandlePlayerWalls()
                 :
                 (ObjectType[t] < EObjectType::TRIGGERS_START /* +KZ: it was <= 99 */ ||
                 ObjectType[t] == EObjectType::CASTLE_BRICKS)
-             ) && PlayerState < 10)
+             ) && PlayerState < EPlayerState::END_NORMAL_STATES)
             {
 
                 // おちるブロック (Falling blocks)
@@ -1718,12 +1734,12 @@ void HandlePlayerWalls()
                 // 入る土管 (Entering a pipe)
                 if (ObjectType[t] == EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD)
                 {
-                    if (PlayerX + PlayerSizeX > xx[8] + 2800 && PlayerX < xx[8] + ObjectSizeX[t] - 3000 && PlayerY + PlayerSizeY > xx[9] - 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && actaon[3] == 1 && PlayerState == 0)
+                    if (PlayerX + PlayerSizeX > xx[8] + 2800 && PlayerX < xx[8] + ObjectSizeX[t] - 3000 && PlayerY + PlayerSizeY > xx[9] - 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && actaon[3] == 1 && PlayerState == EPlayerState::PLAYING)
                     {
                         // 飛び出し (Jumping out) //+KZ: ??
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_ROCKET)
                         {
-                            PlayerState = 100;
+                            PlayerState = EPlayerState::ENTERING_PIPE;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 0;
@@ -1731,7 +1747,7 @@ void HandlePlayerWalls()
                         // 普通 (Normal)
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION)
                         {
-                            PlayerState = 100;
+                            PlayerState = EPlayerState::ENTERING_PIPE;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 1;
@@ -1739,22 +1755,22 @@ void HandlePlayerWalls()
                         // 普通 (Normal)
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_LAVA)
                         {
-                            PlayerState = 100;
+                            PlayerState = EPlayerState::ENTERING_PIPE;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 2;
                         }
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_WARP_ZONE)
                         {
-                            PlayerState = 100;
+                            PlayerState = EPlayerState::ENTERING_PIPE;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 5;
                         }
-                        // ループ (Loop) //+KZ: ????
+                        // ループ (Loop) //+KZ: Pipe from 2-4
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_PLUS_10_SECTION)
                         {
-                            PlayerState = 100;
+                            PlayerState = EPlayerState::ENTERING_PIPE;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 6;
@@ -1765,15 +1781,15 @@ void HandlePlayerWalls()
                 // 入る土管(左から) (Pipes to enter (from left))
                 if (ObjectType[t] == EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD)
                 {
-                    if (PlayerX + PlayerSizeX > xx[8] - 300 && PlayerX < xx[8] + ObjectSizeX[t] - 1000 && PlayerY > xx[9] + 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && actaon[4] == 1 && PlayerState == 0)
+                    if (PlayerX + PlayerSizeX > xx[8] - 300 && PlayerX < xx[8] + ObjectSizeX[t] - 1000 && PlayerY > xx[9] + 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && actaon[4] == 1 && PlayerState == EPlayerState::PLAYING)
                     { // end();
                         // 飛び出し (Jumping out)
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON)
                         {
-                            PlayerState = 500;
+                            //PlayerState = 500; //+KZ: useless line
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]); // mxtype=1;
-                            PlayerState = 100;
+                            PlayerState = EPlayerState::ENTERING_PIPE;
                             PlayerSubState = 10;
                         }
 
@@ -1782,12 +1798,12 @@ void HandlePlayerWalls()
                             PlayerSubState = 3;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]); // mxtype=1;
-                            PlayerState = 100;
+                            PlayerState = EPlayerState::ENTERING_PIPE;
                         }
-                        // ループ (Loop) //+KZ: ????????????
+                        // ループ (Loop) //+KZ: ???????????? this is unused
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON_UNUSED)
                         {
-                            PlayerState = 3;
+                            PlayerState = EPlayerState::TRAMPOLINE_TRAP;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[7]);
                             PlayerSubState = 6;
@@ -1912,7 +1928,7 @@ void HandlePlayerWalls()
                             ObjectX[t] = -80000000;
                             PlayerVelY = 0;
                             SyobonKZHaltMusic();
-                            PlayerState = 302;
+                            PlayerState = EPlayerState::MELON_ENDING_ANIMATION;
                             PlayerAITimer = 0;
                             PlaySound(Sounds[16]);
                         }
@@ -1971,16 +1987,16 @@ void HandlePlayerWalls()
                             ObjectX[t] = -8000000;
                     }
 
-                    if (ObjectType[t] == EObjectType::GOAL_POLE && PlayerState == 0 && PlayerY < xx[9] + ObjectSizeY[t] + xx[0] - 3000 && PlayerHealth >= 1)
+                    if (ObjectType[t] == EObjectType::GOAL_POLE && PlayerState == EPlayerState::PLAYING && PlayerY < xx[9] + ObjectSizeY[t] + xx[0] - 3000 && PlayerHealth >= 1)
                     {
                         SyobonKZHaltMusic();
-                        PlayerState = 300;
+                        PlayerState = EPlayerState::LEVEL_FINISH_ANIMATION;
                         PlayerAITimer = 0;
                         PlayerX = ObjectX[t] - fx - 2000;
                         PlaySound(Sounds[11]);
                     }
                     // 中間ゲート (Intermediate gate)
-                    if (ObjectType[t] == EObjectType::CHECKPOINT && PlayerState == 0 && PlayerHealth >= 1)
+                    if (ObjectType[t] == EObjectType::CHECKPOINT && PlayerState == EPlayerState::PLAYING && PlayerHealth >= 1)
                     {
                         CurrentPlayerCheckpoint += 1;
                         ObjectX[t] = -80000000;
@@ -2226,7 +2242,7 @@ void RenderPlayer()
     if (PlayerLookingDirection == 0)
         mirror = 1;
 
-    if (PlayerState != 200 && PlayerState != 1)
+    if (PlayerState != EPlayerState::DEATH_ANIMATION && PlayerState != EPlayerState::BIG_PLAYER)
     {
         if (PlayerGrounded == 1)
         {
@@ -2242,12 +2258,12 @@ void RenderPlayer()
         }
     }
     // 巨大化 (Huge)
-    else if (PlayerState == 1)
+    else if (PlayerState == EPlayerState::BIG_PLAYER)
     {
         drawimage(Sliced_GFX[41][0], PlayerX / 100, PlayerY / 100);
     }
 
-    else if (PlayerState == 200)
+    else if (PlayerState == EPlayerState::DEATH_ANIMATION)
     {
         drawimage(Sliced_GFX[3][0], PlayerX / 100, PlayerY / 100);
     }
