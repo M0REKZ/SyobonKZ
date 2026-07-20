@@ -901,8 +901,17 @@ void HandlePlayerBlocks()
                                 {
                                     // txtype[t]=0;
                                     PlayerVelY = -2400;
-                                    PlayerState = EPlayerState::TRAMPOLINE_TRAP;
-                                    PlayerAITimer = 0;
+                                    if(
+                                        currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||
+                                        (
+                                            currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
+                                            BlockSubType[t] != EBlockSubType::TRAMPOLINE_SYOBONKZ_STRONG
+                                        )
+                                    )
+                                    {
+                                        PlayerState = EPlayerState::TRAMPOLINE_TRAP;
+                                        PlayerAITimer = 0;
+                                    }
                                 }
                                 if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                                 {
@@ -1568,6 +1577,42 @@ void HandlePlayerWalls()
     // 壁 (Wall)
     for (t = 0; t < OBJECT_MAX; t++)
     {
+        if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+        {
+            if(ObjectType[t] == EObjectType::GOAL_POLE)
+            {
+                if(
+                    PlayerState == EPlayerState::LEVEL_FINISH_ANIMATION &&
+                    ObjectSubType[t] == EObjectSubType::GOAL_POLE_NEED_CASTLE &&
+                    ObjectAI[t] == 1
+                )
+                {
+                    //+KZ: hacks, instead of doing it properly of course :PPP
+                    if(PlayerAITimer > 50 && PlayerAITimer < 60)
+                        PlayerAITimer = 50;
+                }
+            }
+
+            if(ObjectType[t] == EObjectType::GOAL_CASTLE)
+            {
+                if(ObjectSubType[t] == EObjectSubType::GOAL_CASTLE_NORMAL)
+                {
+                    //check if player is inside the door
+                    if(
+                        PlayerState == EPlayerState::LEVEL_FINISH_ANIMATION &&
+                        PlayerX + fx >= ObjectX[t] + DOUBLE_TO_GAME_X_POS(0.9) &&
+                        PlayerX + PlayerSizeX + fx <= ObjectX[t] + DOUBLE_TO_GAME_X_POS(2.1) &&
+                        PlayerY + fy >= ObjectY[t] + DOUBLE_TO_GAME_X_POS(0.9) &&
+                        PlayerY + PlayerSizeY + fy <= ObjectY[t] + DOUBLE_TO_GAME_X_POS(3.5)
+                    )
+                    {
+                        if(PlayerAITimer < 109)
+                            PlayerAITimer = 109;
+                    }
+                }
+            }
+        }
+
         if (ObjectX[t] - fx + ObjectSizeX[t] >= -12000 && ObjectX[t] - fx <= fxmax)
         {
             xx[0] = 200;
@@ -1987,13 +2032,25 @@ void HandlePlayerWalls()
                             ObjectX[t] = -8000000;
                     }
 
-                    if (ObjectType[t] == EObjectType::GOAL_POLE && PlayerState == EPlayerState::PLAYING && PlayerY < xx[9] + ObjectSizeY[t] + xx[0] - 3000 && PlayerHealth >= 1)
+                    if (ObjectType[t] == EObjectType::GOAL_POLE)
                     {
-                        SyobonKZHaltMusic();
-                        PlayerState = EPlayerState::LEVEL_FINISH_ANIMATION;
-                        PlayerAITimer = 0;
-                        PlayerX = ObjectX[t] - fx - 2000;
-                        PlaySound(Sounds[11]);
+                        if(PlayerState == EPlayerState::PLAYING && PlayerY < xx[9] + ObjectSizeY[t] + xx[0] - 3000 && PlayerHealth >= 1)
+                        {
+                            SyobonKZHaltMusic();
+                            PlayerState = EPlayerState::LEVEL_FINISH_ANIMATION;
+                            PlayerAITimer = 0;
+                            PlayerX = ObjectX[t] - fx - 2000;
+                            PlaySound(Sounds[11]);
+
+                            //SyobonKZ
+                            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                            {
+                                if(ObjectSubType[t] == EObjectSubType::GOAL_POLE_NEED_CASTLE)
+                                {
+                                    ObjectAI[t] = 1;
+                                }
+                            }
+                        }
                     }
                     // 中間ゲート (Intermediate gate)
                     if (ObjectType[t] == EObjectType::CHECKPOINT && PlayerState == EPlayerState::PLAYING && PlayerHealth >= 1)
@@ -2062,7 +2119,7 @@ void HandlePlayerWalls()
                     }
                 }
 
-                if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                 {
                     if(PlayerHealth > 0 && ObjectType[t] == EObjectType::SA3_TRIGGER_SPIKES_LEVEL_1_1 &&
                         ObjectSubType[t] == EObjectSubType::SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE)

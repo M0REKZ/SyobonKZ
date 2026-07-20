@@ -103,6 +103,7 @@ void ClearAllEnemies();
 
 //+KZ: for new entities
 void HandleEnemiesBlocksKZ();
+void HandleEnemyPlayerCollisionKZ(int enemy_index);
 
 //Legacy functions for compatibility
 //敵キャラ (Enemy character)

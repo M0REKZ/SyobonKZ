@@ -203,6 +203,33 @@ void HandleEnemies()
                 handled = true;
 
                 break;
+            case EEnemyType::SA3_FLYING_SHELLED_JIEN:
+                if(EnemyX[t] <= -900000)
+                    break;
+
+                if(EnemyFloatingTimer[t] < 100)
+                {
+                    EnemyVelY[t] = DOUBLE_TO_GAME_X_POS(0.05);
+                }
+                else if(EnemyFloatingTimer[t] >= 100 && EnemyFloatingTimer[t] < 200)
+                {
+                    EnemyVelY[t] = DOUBLE_TO_GAME_X_POS(-0.05);
+                }
+                else
+                {
+                    EnemyFloatingTimer[t] = 0;
+                    EnemyVelY[t] = DOUBLE_TO_GAME_X_POS(0.05);
+                }
+                EnemyFloatingTimer[t]++;
+
+                EnemyY[t] += EnemyVelY[t];
+                EnemySizeX[t] = DOUBLE_TO_GAME_X_POS(2);
+                EnemySizeY[t] = DOUBLE_TO_GAME_X_POS(1.3);
+
+                HandleEnemyPlayerCollisionKZ(t);
+
+                handled = true;
+                break;
 
             case EEnemyType::SEAL:
                 //fast seals some times wont kill the player
@@ -1018,7 +1045,37 @@ void HandleEnemies()
                     {
                         EnemyType[t] = EEnemyType::SHELL;
                         EnemySizeY[t] = 3000;
-                        EnemySubType[t] = EEnemySubType::SHELL_STAY;
+                        if(
+                            currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||
+                            (
+                                currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
+                                EnemySubType[t] != EEnemySubType::BALL_SHELLED_INSTANT_KICK
+                            )
+                        )
+                        {
+                            EnemySubType[t] = EEnemySubType::SHELL_STAY;
+                        }
+                        else if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
+                            EnemySubType[t] == EEnemySubType::BALL_SHELLED_INSTANT_KICK)
+                        {
+                            EnemyY[t] += 1300; //otherwise some collision issues will happen
+
+                            if (PlayerX +
+                                        PlayerSizeX >
+                                    xx[8] +
+                                        xx[0] * 2 &&
+                                PlayerX <
+                                    xx[8] + EnemySizeX[t] / 2 - xx[0] * 4)
+                            {
+                                EnemySubType[t] = EEnemySubType::SHELL_MOVING;
+                                EnemyLookingDirection[t] = LOOKING_RIGHT;
+                            }
+                            else
+                            {
+                                EnemySubType[t] = EEnemySubType::SHELL_MOVING;
+                                EnemyLookingDirection[t] = LOOKING_LEFT;
+                            }
+                        }
                     }
                     // こうら (Shell)
                     else if (EnemyType[t] == EEnemyType::SHELL && PlayerVelY >= 0)
@@ -1093,7 +1150,7 @@ void HandleEnemies()
                     }
 
                     if (actaon[2] == 1 &&
-                        //+KZ: you are ont able to jump on seal in other games
+                        //+KZ: you are not able to jump on seal in other games
                         (currentGame == ESyobonActionGame::SYOBON_ACTION_3 ?
                         EnemyType[t] != EEnemyType::SEAL
                         :
@@ -1885,6 +1942,17 @@ void RenderEnemies()
                 }
                 continue;
             }
+            else if(EnemyType[t] == EEnemyType::SA3_FLYING_SHELLED_JIEN)
+            {
+                if(GetNowCount() % 1000 < 900)
+                {
+                    DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[19]);
+                }
+                else
+                {
+                    DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[18]);
+                }
+            }
             else if(EnemyType[t] == EEnemyType::BALL_ROCKET && EnemySubType[t] == EEnemySubType::BALL_ROCKET_SA3_GIANT)
             {
                 SyobonKZDrawGraphScaled((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, 5, 5, Sliced_GFX[ 7 /* BALL_ROCKET */][3]);
@@ -2260,6 +2328,67 @@ void HandleEnemiesBlocksKZ()
 			} */
 		}
 	}
+}
+
+void HandleEnemyPlayerCollisionKZ(int enemy_index)
+{
+    if(PlayerState == EPlayerState::DEATH_ANIMATION)
+        return;
+
+    //above of the enemy
+    if (
+        PlayerX + PlayerSizeX + fx > EnemyX[enemy_index] + 500 &&
+        PlayerX + fx < EnemyX[enemy_index] + EnemySizeX[enemy_index] - 500 &&
+        PlayerY + PlayerSizeY + fy > EnemyY[enemy_index] + 800 &&
+        PlayerY + PlayerSizeY + fy < EnemyY[enemy_index] + 1600 + (PlayerVelY >= 100 ? PlayerVelY : 0) &&
+        (PlayerNoDamageTimer <= 0 || PlayerVelY >= 100) &&
+        EnemyBlockAppearTimer[enemy_index] <= 0
+    )
+    {
+        bool can_jump_key_bounce = false;
+        switch(EnemyType[enemy_index])
+        {
+            case EEnemyType::SA3_FLYING_SHELLED_JIEN:
+                PlaySound(Sounds[5]);
+                EnemyType[enemy_index] = EEnemyType::BALL_SHELLED;
+                PlayerY = (EnemyY[enemy_index] - 900 - EnemySizeY[enemy_index]) - fy;
+                PlayerVelY = -1000;
+                can_jump_key_bounce = true;
+                break;
+            
+            default:
+                break;
+        }
+
+        if(can_jump_key_bounce)
+        {
+            if (actaon[2] == 1)
+            {
+                PlayerVelY = -1600;
+                actaon[2] = 0;
+            }
+        }
+    }
+
+    if(
+        PlayerX + PlayerSizeX + fx > EnemyX[t] + 500 &&
+        PlayerX + fx < EnemyX[t] + EnemySizeX[t] - 500 &&
+        PlayerY + fy < EnemyY[t] + EnemySizeY[t] - 500 &&
+        PlayerY + PlayerSizeY + fy > EnemyY[t] + EnemySizeY[t] - 250 /* + 0 xx[16] is 0 for most types */ &&
+        EnemyPlayerNoInteractTimer[t] <= 0 &&
+        EnemyBlockAppearTimer[t] <= 0
+    )
+    {
+        switch(EnemyType[enemy_index])
+        {
+            case EEnemyType::SA3_FLYING_SHELLED_JIEN:
+                PlayerHealth = 0;
+                break;
+            
+            default:
+                break;
+        }
+    }
 }
 
 int CreateEnemy(double PosX, double PosY, double VelX, double VelY, EEnemyType EntityType,

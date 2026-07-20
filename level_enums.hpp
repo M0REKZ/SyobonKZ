@@ -212,6 +212,7 @@ enum class EEnemyType : int
     SA3_SHARK,
     SA3_BIG_STONE,
     SA3_JUMPSCARE_PLANT,
+    SA3_FLYING_SHELLED_JIEN,
 };
 
 
@@ -317,6 +318,9 @@ enum class EObjectType : int
     CHECKPOINT = 500,
 
     LAST_LEGACY_OBJECT = CHECKPOINT,
+
+    //SyobonKZ
+    GOAL_CASTLE,
 
     //Syobon Action 3
     SA3_FAKE_PIPE_BODY,
@@ -497,6 +501,9 @@ enum class EEnemySubType : int
 
     UNKNOWN_ID_50_1 = 1,
 
+    //Added in SyobonKZ
+    BALL_SHELLED_NORMAL = 0, //normal shobon no action shelled jien
+    BALL_SHELLED_INSTANT_KICK = 1, //Syobon Action 3 cutscene
 };
 
 enum class EBlockSubType : int
@@ -552,6 +559,8 @@ enum class EBlockSubType : int
     TRAMPOLINE_VISIBLE = 0,
     TRAMPOLINE_HIDDEN = 1, //unused, but may appear in random mode
     TRAMPOLINE_VISIBLE_3 = 3, //same as TRAMPOLINE_VISIBLE
+    //Added in SyobonKZ
+    TRAMPOLINE_SYOBONKZ_STRONG, //+KZ: to replicate some SA3 parts, but wont kill the player
 
     //triggers text box for specific levels...
     //had a lot of magic numbers
@@ -582,7 +591,7 @@ enum class EBlockSubType : int
     MESSAGE_BLOCK_1_3_0_4_WAIT_START = 500,
     MESSAGE_BLOCK_1_3_0_4_WAIT_END = 540,
     MESSAGE_BLOCK_1_3_0_4_SHOW_MESSAGE = 541,
-
+    
     //+KZ
     SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN = 0,
 };
@@ -636,6 +645,12 @@ enum class EObjectSubType : int
     TRIGGER_MULTI_LASER_ACTIVE = 0, //does not work if subtype is not 0
 
     TRIGGER_PLATFORM_SPLIT_TIMER_END = 3, //it uses subtype as a timer, in 1-4 it starts on 0
+
+    //Added in SyobonKZ
+    GOAL_POLE_LEGACY = 0,
+    GOAL_POLE_NEED_CASTLE = 1, //SA3, SA4, SA5....
+
+    GOAL_CASTLE_NORMAL = 0, //SA3, player must be inside the door (after touching goal pole) to finish the level
 
     //Syobon Action 3
     SA3_FALLING_FLOOR_GROUND_TOP_BOTTOM = 0, //draws GROUND_BOTTOM below, but that is not solid

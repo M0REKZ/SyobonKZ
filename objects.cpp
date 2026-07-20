@@ -287,9 +287,9 @@ void RenderWalls()
             }
 
             //Syobon Action 3
-            if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
             {
-                //empty for now
+                
             }
         }
     } // t
@@ -361,23 +361,28 @@ void RenderOverwritePipe()
 
 void RenderObjectsBehind()
 {
+    if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+        return;
+
     for (int ground_index = 0; ground_index < OBJECT_MAX; ground_index++)
     {
         if (ObjectX[ground_index] - fx + ObjectSizeX[ground_index] >= -10 && ObjectX[ground_index] - fx <= fxmax + 1100)
         {
-            if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+            if (ObjectType[ground_index] == EObjectType::SA3_FAKE_PIPE_BODY)
             {
-                if (ObjectType[ground_index] == EObjectType::SA3_FAKE_PIPE_BODY)
-                {
-                    setcolor(0, 230, 0);
-                    fillrect((ObjectX[ground_index] - fx) / 100,
-                            (ObjectY[ground_index] - fy) / 100,
-                            ObjectSizeX[ground_index] / 100, ObjectSizeY[ground_index] / 100);
-                    setc0();
-                    drawrect((ObjectX[ground_index] - fx) / 100,
-                            (ObjectY[ground_index] - fy) / 100,
-                            ObjectSizeX[ground_index] / 100, ObjectSizeY[ground_index] / 100);
-                }
+                setcolor(0, 230, 0);
+                fillrect((ObjectX[ground_index] - fx) / 100,
+                        (ObjectY[ground_index] - fy) / 100,
+                        ObjectSizeX[ground_index] / 100, ObjectSizeY[ground_index] / 100);
+                setc0();
+                drawrect((ObjectX[ground_index] - fx) / 100,
+                        (ObjectY[ground_index] - fy) / 100,
+                        ObjectSizeX[ground_index] / 100, ObjectSizeY[ground_index] / 100);
+            }
+            if(ObjectType[ground_index] == EObjectType::GOAL_CASTLE)
+            {
+                drawimage(Sliced_GFX[3][4],
+                        (ObjectX[ground_index] - fx) / 100 - 5, (ObjectY[ground_index] - fy) / 100);
             }
         }
     }
