@@ -270,14 +270,14 @@ endif()
 
 # copy syobon action data
 if(NOT APPLE)
-    add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
+    add_custom_target(SYOBONKZ_DATA ALL
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/BGM/ ${CMAKE_BINARY_DIR}/BGM/
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/res/ ${CMAKE_BINARY_DIR}/res/
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/SE/ ${CMAKE_BINARY_DIR}/SE/
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/text/ ${CMAKE_BINARY_DIR}/text/
     )
 else()
-    add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
+    add_custom_target(SYOBONKZ_DATA ALL
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/BGM/ $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/BGM/
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/res/ $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/res/
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/SE/ $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/SE/
@@ -287,3 +287,5 @@ else()
         COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/icon.icns $<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_NAME}>/Resources/icon.icns
     )
 endif()
+
+add_dependencies(${EXECUTABLE_NAME} SYOBONKZ_DATA)
