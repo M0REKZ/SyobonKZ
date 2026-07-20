@@ -40,11 +40,11 @@ void RenderBackground()
                 case ELevelType::ICY:
                     if(BackgroundType[t] == EBackgroundType::GRASS)
                     {
-                        drawimage(Sliced_GFX[31][4], xx[0] / 100, xx[1] / 100);
+                        drawimage(Sliced_GFX_KZ[0], xx[0] / 100, xx[1] / 100);
                     }
                     else if(BackgroundType[t] == EBackgroundType::CLOUD)
                     {
-                        drawimage(Sliced_GFX[32][4], xx[0] / 100, xx[1] / 100);
+                        drawimage(Sliced_GFX_KZ[1], xx[0] / 100, xx[1] / 100);
                     }
                     break;
                 
