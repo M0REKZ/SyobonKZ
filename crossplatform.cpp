@@ -9,6 +9,11 @@ std::unordered_set<Uint32> QueuedReleasedKeys;
 
 #ifdef __EMSCRIPTEN__ // Emscripten
 
+void MainLoop()
+{
+    emscripten_set_main_loop(MainloopEmscripten, 30, 1);
+}
+
 void MainloopEmscripten()
 {
     ReleaseKeys();
@@ -482,6 +487,9 @@ const char *GetSavePath()
 {
     #ifdef SYOBONKZ_USE_SDL3
         return SDL_GetPrefPath("m0rekz.github.io","SyobonKZ");
+    #elif defined(__EMSCRIPTEN__)
+        //Emscripten requires some extra code, check the other functions
+        return SYOBONKZ_EMSCRIPTEN_SAVEPATH;
     #else
         return nullptr;
     #endif

@@ -24,7 +24,6 @@
 
     //+KZ: Loop works differently
     void MainloopEmscripten();
-    #define MainLoop() emscripten_set_main_loop(MainloopEmscripten, 30, 1)
 
     //+KZ: Emscripten does not implement SDL_SetColorKey
     //Empscripten_SetColorKey is a cheap (which means bad :p) replacement for it
@@ -33,6 +32,8 @@
 
     //+KZ: we must put WaitKey in a different place
     #define SYOBON_WAIT_KEY_MSGBOX_FIX
+
+    #define SYOBONKZ_EMSCRIPTEN_SAVEPATH "/SyobonKZ"
 
 #else //Everything else
 
@@ -43,10 +44,9 @@
     #endif
 
     #define SyobonWait(i) SDL_Delay(i)
-
-    void MainLoop();
 #endif
 
+void MainLoop();
 void UpdateKeys();
 void ReleaseKeys();
 const char * GetSavePath();
