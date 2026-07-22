@@ -1,4 +1,5 @@
 #include <string>
+#include <limits>
 #include "level_enums.hpp"
 #include "DxLib.h"
 
