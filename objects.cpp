@@ -162,7 +162,11 @@ void RenderWalls()
 
                 for (t3 = 0; t3 <= ObjectSizeX[t] / 3000; t3++)
                 {
-                    if (ObjectSubType[t] == EObjectSubType::SA3_FALLING_FLOOR_GROUND_TOP_BOTTOM)
+                    if (
+                        ObjectSubType[t] == EObjectSubType::FALLING_FLOOR_GROUND_TOP_BOTTOM ||
+                        (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
+                        ObjectSubType[t] == EObjectSubType::SA3_FALLING_FLOOR_GROUND_TOP_BOTTOM)
+                        )
                     {
                         drawimage(Sliced_GFX[5 + xx[29]][1],
                                   (ObjectX[t] -
@@ -191,7 +195,11 @@ void RenderWalls()
                                               100 + 29);
                         }
                     }
-                    if (ObjectSubType[t] == EObjectSubType::SA3_FALLING_FLOOR_BRICK)
+                    if (
+                        ObjectSubType[t] == EObjectSubType::FALLING_FLOOR_BRICK ||
+                        (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
+                        ObjectSubType[t] == EObjectSubType::SA3_FALLING_FLOOR_BRICK)
+                        )
                     {
                         for (t2 = 0; t2 <= ObjectSizeY[t] / 3000; t2++)
                         {
@@ -206,7 +214,10 @@ void RenderWalls()
                         }
                     }
 
-                    if (ObjectSubType[t] == EObjectSubType::SA3_FALLING_FLOOR_GROUND_TOP)
+                    if (ObjectSubType[t] == EObjectSubType::FALLING_FLOOR_GROUND_TOP ||
+                        (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
+                        ObjectSubType[t] == EObjectSubType::SA3_FALLING_FLOOR_GROUND_TOP)
+                        )
                     {
                         for (t2 = 0; t2 <= ObjectSizeY[t] / 3000; t2++)
                         {
@@ -221,7 +232,10 @@ void RenderWalls()
                         }
                     }
 
-                    if (ObjectSubType[t] == EObjectSubType::SA3_FALLING_FLOOR_GROUND_BOTTOM)
+                    if (
+                        currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
+                        ObjectSubType[t] == EObjectSubType::SA3_FALLING_FLOOR_GROUND_BOTTOM
+                        )
                     {
                         for (t2 = 0; t2 <= ObjectSizeY[t] / 3000; t2++)
                         {
