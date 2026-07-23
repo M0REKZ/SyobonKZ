@@ -1,7 +1,7 @@
 Release Changelog
 -----------------
 
-**SyobonKZ V2 (In Development)**
+**SyobonKZ V2**
 * Improve code for readability
 * Rename executable to "SyobonKZ"
 * Add functions to help modding the game
