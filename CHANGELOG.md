@@ -1,6 +1,9 @@
 Release Changelog
 -----------------
 
+**SyobonKZ V2.1**
+* Fix wrong graphics for some falling floor traps
+
 **SyobonKZ V2**
 * Improve code for readability
 * Rename executable to "SyobonKZ"
