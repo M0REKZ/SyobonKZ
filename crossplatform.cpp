@@ -486,7 +486,21 @@ void ReleaseKeys()
 const char *GetSavePath()
 {
     #ifdef SYOBONKZ_USE_SDL3
-        return SDL_GetPrefPath("m0rekz.github.io","SyobonKZ");
+        static std::string PrefPath;
+        if(PrefPath.empty())
+        {
+            char * ppath = SDL_GetPrefPath("m0rekz.github.io","SyobonKZ");
+            if(ppath)
+            {
+                PrefPath = ppath;
+                SDL_free(ppath);
+            }
+            else
+            {
+                return nullptr;
+            }
+        }
+        return PrefPath.c_str();
     #elif defined(__EMSCRIPTEN__)
         //Emscripten requires some extra code, check the other functions
         return SYOBONKZ_EMSCRIPTEN_SAVEPATH;
