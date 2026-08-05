@@ -39,6 +39,14 @@ extern int LiftVelX[LIFT_MAX];
 // +KZ: kills the player if he has high speed in the green lift for too much time, probably to avoid softlocks
 extern int LiftPlayerFatigueX[LIFT_MAX];
 
+//from SA: All Stars
+// tm
+extern int LiftTimer[LIFT_MAX];
+// tmmax
+extern int LiftTimerMax[LIFT_MAX];
+// b落ちる
+extern bool LiftTouchSpeedUp[LIFT_MAX];
+
 //Lifts
 void HandleLifts();
 void RenderLifts();

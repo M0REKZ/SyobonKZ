@@ -921,7 +921,7 @@ void HandleKaizoSyobonLevels()
         LiftMovementType[LiftCount] = 1;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
-        LiftY[LiftCount] = false;
+        LiftTouchSpeedUp[LiftCount] = false;
         LiftCount++;
         LiftX[LiftCount] = 29000;
         LiftY[LiftCount] = 13300;
@@ -930,7 +930,7 @@ void HandleKaizoSyobonLevels()
         LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR_BOUNCY;
-        LiftY[LiftCount] = false;
+        LiftTouchSpeedUp[LiftCount] = false;
         LiftCount++;
         LiftX[LiftCount] = 52200;
         LiftY[LiftCount] = 16200;
@@ -939,7 +939,7 @@ void HandleKaizoSyobonLevels()
         LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
-        LiftY[LiftCount] = false;
+        LiftTouchSpeedUp[LiftCount] = false;
         LiftCount++;
         LiftX[LiftCount] = 75400;
         LiftY[LiftCount] = 19100;
@@ -972,7 +972,7 @@ void HandleKaizoSyobonLevels()
         LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
-        LiftY[LiftCount] = false;
+        LiftTouchSpeedUp[LiftCount] = false;
         LiftCount++;
         LiftX[LiftCount] = 304500;
         LiftY[LiftCount] = 24900;
@@ -981,7 +981,7 @@ void HandleKaizoSyobonLevels()
         LiftMovementType[LiftCount] = 0;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::KAIZO_SYOBON_UNKNOWN_13;
-        LiftY[LiftCount] = false;
+        LiftTouchSpeedUp[LiftCount] = false;
         LiftCount++;
         BlockCreateLegacy(522, 394, EBlockType::NOTE_BLOCK);
         BlockCreateLegacy(551, 394, EBlockType::NOTE_BLOCK);

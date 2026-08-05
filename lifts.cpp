@@ -15,6 +15,11 @@ ELiftType LiftType[LIFT_MAX];
 int LiftDirection[LIFT_MAX], LiftON[LIFT_MAX];
 int LiftVelX[LIFT_MAX], LiftPlayerFatigueX[LIFT_MAX];
 
+//from SA: All Stars
+int LiftTimer[LIFT_MAX];
+int LiftTimerMax[LIFT_MAX];
+bool LiftTouchSpeedUp[LIFT_MAX];
+
 void HandleLifts()
 {
     // リフト (Lift)
@@ -36,14 +41,12 @@ void HandleLifts()
             {
                 xx[1] = 900 + PlayerVelY;
             }
-            // if (srtype[t]==1){xx[0]=600;}
+
             if (PlayerVelY > xx[1])
                 xx[1] = PlayerVelY + 100;
-            // xx[18]=0;
 
             LiftY[t] += LiftVelY[t];
             LiftVelY[t] += LiftFrictionY[t];
-            // if (srf[t]>=500)srf[t]=0;
 
             // 動き (Movement)
             switch (LiftMovementType[t])
@@ -55,26 +58,48 @@ void HandleLifts()
                 break;
 
             case 2:
-                /*
-                if (sra[t]<=srmovep[t]-srmove[t])srmuki[t]=1;
-                if (sra[t]>=srmovep[t]+srmove[t])srmuki[t]=0;
-                */
+                //from SA: All Stars
+                if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                {
+                    LiftTimer[t]++;
+					if (LiftTimer[t] == LiftTimerMax[t])
+					{
+						LiftTimer[t] = 0;
+						LiftDirection[t] ^= 1;
+					}
+					if (LiftDirection[t] == 0)
+					{
+						LiftX[t] -= LiftVelX[t];
+					}
+					else
+					{
+						LiftX[t] += LiftVelX[t];
+					}
+					break;
+                }
                 break;
 
             case 3:
-                /*
-                if (srb[t]<=srmovep[t]-srmove[t])srmuki[t]=1;
-                if (srb[t]>=srmovep[t]+srmove[t])srmuki[t]=0;
-                */
+                //from SA: All Stars
+                if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                {
+                    LiftTimer[t]++;
+					if (LiftTimer[t] == LiftTimerMax[t])
+					{
+						LiftTimer[t] = 0;
+						LiftDirection[t] ^= 1;
+					}
+					if (LiftDirection[t] == 0)
+					{
+						LiftY[t] -= LiftVelX[t];
+					}
+					else
+					{
+						LiftY[t] += LiftVelX[t];
+					}
+					break;
+                }
                 break;
-
-                /*
-                case 4:
-                if (srmove[t]==0){srmuki[t]=0;}else{srmuki[t]=1;}
-                if (sra[t]-fx<-1100-src[t]){sra[t]=fymax+fx+scrollx;}
-                if (sra[t]-fx>24000+scrollx){sra[t]=-1100-src[t]+fx;}
-                break;
-                */
 
             case 5:
                 if (LiftPlayerFatigueX[t] == 0)
@@ -105,20 +130,28 @@ void HandleLifts()
 
             } // sw
 
-            // if (srtype[t]==1){sre[10]=300;sre[11]=300;}
-
             // 乗ったとき (When I got on)
             if (!(mztm >= 1 && mztype == 1 && actaon[3] == 1) && PlayerHealth >= 1)
             {
                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY + PlayerSizeY < xx[9] + xx[1] && PlayerVelY >= -100)
                 {
                     PlayerY = xx[9] - PlayerSizeY + 100;
-                    // if (sracttype[t]!=7)PlayerGrounded=1;
 
                     if (LiftInteractType[t] == 1)
                     {
-                        LiftVelY[10] = 900;
-                        LiftVelY[11] = 900;
+                        if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                        {
+                            LiftVelY[10] = 900;
+                            LiftVelY[11] = 900;
+                        }
+                        else
+                        {
+                            for(int i = 0; i < LIFT_MAX; i++)
+                            {
+                                if(LiftTouchSpeedUp[i])
+                                    LiftVelY[i] = 900;
+                            }
+                        }
                     }
 
                     if (LiftType[t] != ELiftType::PILLAR_BOUNCY)
@@ -129,19 +162,8 @@ void HandleLifts()
                     else
                     {
                         // すべり (Slip)
-                        // md=0;ObjectType=1;PlayerGrounded=1;
                         PlayerVelY = -800;
                     }
-
-                    /*
-                    md=0;
-                    if ((sracttype[t]==1 || sracttype[t]==6) && sron[t]==1)mb+=sre[t];
-
-                    if (sracttype[t]==2 || sracttype[t]==4){
-                    if (srmuki[t]==0)ma-=srsok[t];
-                    if (srmuki[t]==1)ma+=srsok[t];
-                    }
-                    */
 
                     // 落下 (Falling)
                     if ((LiftMovementType[t] == 1) && LiftON[t] == 0)
@@ -150,11 +172,22 @@ void HandleLifts()
                     if (LiftMovementType[t] == 1 && LiftON[t] == 1 || LiftMovementType[t] == 3 || LiftMovementType[t] == 5)
                     {
                         PlayerY += LiftVelY[t];
-                        // if (srmuki[t]==0)
-                        // if (srf[t]<0)
-                        // if (srmuki[t]==1)
-                        // if (srf[t]>0)
-                        // mb+=srsok[t];
+                    }
+
+                    //From Syobon Action: All Stars
+                    if (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                    {
+                        if(LiftMovementType[t] == 2)
+                        {
+                            if (LiftDirection[t] != 0)
+                            {
+                                PlayerX += LiftVelX[t] + 100;
+                            }
+                            else
+                            {
+                                PlayerX -= LiftVelX[t] + 100;
+                            }
+                        }
                     }
 
                     if (LiftMovementType[t] == 7)
@@ -210,7 +243,6 @@ void HandleLifts()
                             LiftPlayerFatigueX[t] = -5000;
                         }
                     }
-                    // if (srtype[t]==1){md=-600;mb-=610;PlayerHealth-=1;if (mmutekion!=1)mmutekitm=40;}
                 } // 判定内 (Within the judgment)
 
                 // 疲れ初期化 (Fatigue reset)
@@ -226,7 +258,7 @@ void HandleLifts()
                         PlayerX < xx[8] + xx[12] - xx[0])
                     {
                         LiftON[t] = 1;
-                    } // && mb+mnobib>xx[9]-1000 && mb+mnobib<xx[9]+xx[1]+2000)
+                    }
                     if (LiftON[t] == 1)
                     {
                         LiftFrictionY[t] = 60;
@@ -250,24 +282,12 @@ void HandleLifts()
                     }
                 }
                 // 落下 (Falling)
-                if (LiftMovementType[t] == 6)
+                if (LiftMovementType[t] == 6 && PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0])
                 {
-                    if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0])
-                    {
-                        LiftON[t] = 1;
-                    }
+                    LiftON[t] = 1;
                 }
 
             } //!
-
-            /*
-            //ジャンプ台
-            if (sracttype[t]==7){
-            if (ma+mnobia>xx[8]+xx[0] && ma<xx[8]+xx[12]-xx[0] && mb+mnobib>xx[9]+xx[1]/2 && mb+mnobib<xx[9]+xx[1]*3/2 && md>=-100){
-            if (actaon[2]!=1){md=-600;mb-=810;}
-            if (actaon[2]==1){mb-=400;md=-1400;mjumptm=10;}
-            }}
-            */
 
             if (LiftMovementType[t] == 2 || LiftMovementType[t] == 4)
             {
@@ -441,6 +461,10 @@ void ClearAllLifts()
 		LiftType[i] = ELiftType::YELLOW;
         LiftInteractType[i] = 0;
         LiftMovementType[i] = 0;
+
+        LiftTimer[i] = 0;
+        LiftTimerMax[i] = 0;
+        LiftTouchSpeedUp[i] = false;
     }
 
     LiftCount = 0;
