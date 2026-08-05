@@ -1206,10 +1206,10 @@ void HandlePlayerBlocks()
                         PlaySound(Sounds[8]);
                         BlockType[t] = EBlockType::ITEM_BLOCK_OPEN;
                         EnemyBlockAppearTimer[EnemyCount] = 16;
-                        if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_BALL_NORMAL)
-                            CreateEnemyLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
-                        if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_BALL_SPIKY_NORMAL)
-                            CreateEnemyLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+                        if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_JIEN_NORMAL)
+                            CreateEnemyLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
+                        if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_SUPER_JIEN_NORMAL)
+                            CreateEnemyLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_BURNING_FLOWER || BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_BURNING_FLOWER_10)
                             CreateEnemyLegacy(BlockX[t], BlockY[t], 0, 0, 0, EEnemyType::BURNING_FLOWER, EEnemySubType::NONE);
                         if (BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_DEFRAG_NORMAL)
@@ -1221,10 +1221,10 @@ void HandlePlayerBlocks()
                         }
                         if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                         {
-                            if(BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_SAJAM_BALL_NORMAL_BELOW)
+                            if(BlockSubType[t] == EBlockSubType::ITEM_BLOCK_ENEMY_SAJAM_JIEN_NORMAL_BELOW)
                             {
                                 int ind = CreateEnemy(GAME_X_POS_TO_DOUBLE(BlockX[t]), GAME_Y_POS_TO_DOUBLE(BlockY[t]) + 1, 0, 0,
-                                    EEnemyType::BALL, EEnemySubType::BALL_NORMAL, ELookingDirection::LOOKING_RIGHT, 2);
+                                    EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL, ELookingDirection::LOOKING_RIGHT, 2);
 
                                 if(ind >= 0)
                                 {
@@ -1861,37 +1861,37 @@ void HandlePlayerWalls()
             {
                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + ObjectSizeX[t] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY < xx[9] + ObjectSizeY[t] + xx[0])
                 {
-                    if (ObjectType[t] == EObjectType::TRIGGER_SEAL_UP)
+                    if (ObjectType[t] == EObjectType::TRIGGER_ARAMAKI_UP)
                     {
-                        if (ObjectSubType[t] == EObjectSubType::TRIGGER_SEAL_UP_NORMAL || ObjectSubType[t] == EObjectSubType::TRIGGER_SEAL_UP_LEVEL_1_2 && BlockType[1] != EBlockType::ITEM_BLOCK_OPEN)
+                        if (ObjectSubType[t] == EObjectSubType::TRIGGER_ARAMAKI_UP_NORMAL || ObjectSubType[t] == EObjectSubType::TRIGGER_ARAMAKI_UP_LEVEL_1_2 && BlockType[1] != EBlockType::ITEM_BLOCK_OPEN)
                         {
-                            CreateEnemyLegacy(ObjectX[t] + 1000, 32000, 0, 0, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
+                            CreateEnemyLegacy(ObjectX[t] + 1000, 32000, 0, 0, 0, EEnemyType::ARAMAKI, EEnemySubType::ARAMAKI_UP);
                             ObjectX[t] = -800000000;
                             PlaySound(Sounds[10]);
                         }
                     }
-                    if (ObjectType[t] == EObjectType::TRIGGER_SEAL_DOWN)
+                    if (ObjectType[t] == EObjectType::TRIGGER_ARAMAKI_DOWN)
                     {
-                        CreateEnemyLegacy(ObjectX[t] + 6000, -4000, 0, 0, 0, EEnemyType::SEAL, EEnemySubType::SEAL_DOWN);
+                        CreateEnemyLegacy(ObjectX[t] + 6000, -4000, 0, 0, 0, EEnemyType::ARAMAKI, EEnemySubType::ARAMAKI_DOWN);
                         ObjectX[t] = -800000000;
                         PlaySound(Sounds[10]);
                     }
                     if (ObjectType[t] == EObjectType::TRIGGER_GENERIC_1)
                     {
-                        if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_4_BALLS)
+                        if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_4_JIENS)
                         {
                             for (t3 = 0; t3 <= 3; t3++)
                             {
                                 CreateEnemyLegacy(ObjectX[t] +
                                                  t3 * 3000,
-                                             -3000, 0, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+                                             -3000, 0, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
                             }
                         }
-                        if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP && PlayerY >= 16000)
+                        if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SUPER_JIEN_JUMP && PlayerY >= 16000)
                         {
                             CreateEnemyLegacy(ObjectX[t] +
                                              1500,
-                                         44000, 0, -2000, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+                                         44000, 0, -2000, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
                         }
                         else if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_FIRST_KUMA)
                         {
@@ -1919,7 +1919,7 @@ void HandlePlayerWalls()
                             //which will teleport this trigger object out of bounds
                             //
                             //why chiku didnt just did that here like in other subtypes?
-                            ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_4_BALLS;
+                            ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_4_JIENS;
                         }
 
                         else if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE)
@@ -1934,7 +1934,7 @@ void HandlePlayerWalls()
                                          26000, 0, -1600, 0, EEnemyType::KUMA, EEnemySubType::NONE);
                             PlaySound(Sounds[10]);
                         }
-                        else if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THREE_SEALS)
+                        else if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_THREE_ARAMAKIS)
                         {
                             for (t3 = 0; t3 <= 2; t3++)
                             {
@@ -1942,13 +1942,13 @@ void HandlePlayerWalls()
                                                  t3 *
                                                      3000 +
                                                  3000,
-                                             48000 /* +KZ: this is SYOBONKZ_SCREEN_SIZE_X * 100 */, 0, -6000, 0, EEnemyType::SEAL, EEnemySubType::SEAL_UP);
+                                             48000 /* +KZ: this is SYOBONKZ_SCREEN_SIZE_X * 100 */, 0, -6000, 0, EEnemyType::ARAMAKI, EEnemySubType::ARAMAKI_UP);
                             }
                         }
-                        if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN)
+                        if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ARAMAKI_DOWN)
                         {
                             ObjectX[t] -= 5 * 30 * 100;
-                            ObjectType[t] = EObjectType::TRIGGER_SEAL_DOWN;
+                            ObjectType[t] = EObjectType::TRIGGER_ARAMAKI_DOWN;
                         }
 
                         if (ObjectSubType[t] == EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA)
@@ -1980,7 +1980,7 @@ void HandlePlayerWalls()
 
                         if (ObjectSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA &&
                             ObjectSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA
-                            && ObjectSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN)
+                            && ObjectSubType[t] != EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ARAMAKI_DOWN)
                         {
                             ObjectX[t] = -800000000;
                         }
@@ -2062,19 +2062,19 @@ void HandlePlayerWalls()
                     //Syobon Action 3
                     if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                     {
-                        if(ObjectType[t] == EObjectType::SA3_TRIGGER_FAST_SEAL_UP)
+                        if(ObjectType[t] == EObjectType::SA3_TRIGGER_FAST_ARAMAKI_UP)
                         {
                             {
-                                if(ObjectSubType[t] == EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS)
+                                if(ObjectSubType[t] == EObjectSubType::SA3_TRIGGER_FAST_ARAMAKI_UP_4_ARAMAKIS)
                                 {
-                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 1, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
-                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 3.25, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
-                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t]) + 0.75, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 1, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
-                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t]) + 0.75, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 3.25, 0, -1.25, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 1, 0, -1.25, EEnemyType::ARAMAKI, EEnemySubType::ARAMAKI_SYOBONKZ_VERTICAL);
+                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t]) - 0.25, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 3.25, 0, -1.25, EEnemyType::ARAMAKI, EEnemySubType::ARAMAKI_SYOBONKZ_VERTICAL);
+                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t]) + 0.75, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 1, 0, -1.25, EEnemyType::ARAMAKI, EEnemySubType::ARAMAKI_SYOBONKZ_VERTICAL);
+                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t]) + 0.75, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 3.25, 0, -1.25, EEnemyType::ARAMAKI, EEnemySubType::ARAMAKI_SYOBONKZ_VERTICAL);
                                 }
                                 else
                                 {
-                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t] + ObjectSizeX[t] / 2) - 0.5, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 1, 0, -1, EEnemyType::SEAL, EEnemySubType::SEAL_SYOBONKZ_VERTICAL);
+                                    CreateEnemy(GAME_X_POS_TO_DOUBLE(ObjectX[t] + ObjectSizeX[t] / 2) - 0.5, GAME_X_POS_TO_DOUBLE(ObjectY[t] + ObjectSizeY[t]) + 1, 0, -1, EEnemyType::ARAMAKI, EEnemySubType::ARAMAKI_SYOBONKZ_VERTICAL);
                                 }
                                 ObjectX[t] = -800000000;
                                 PlaySound(Sounds[10]);

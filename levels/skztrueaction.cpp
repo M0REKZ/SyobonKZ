@@ -39,7 +39,7 @@ void HandleSyobonKZTrueActionLevels()
             BlockCreate(1 + x_pos, 14, EBlockType::GROUND_BOTTOM);
         }
 
-        CreateEnemy(16, 11.7, -1, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
+        CreateEnemy(16, 11.7, -1, 0, EEnemyType::CANNON_JIEN, EEnemySubType::CANNON_JIEN_NORMAL);
 
         BlockCreate(6.7, 13, EBlockType::GROUND_TOP);
         BlockCreate(6.7, 14, EBlockType::GROUND_BOTTOM);
@@ -72,7 +72,7 @@ void HandleSyobonKZTrueActionLevels()
                 //BlockCreate(1 + x_pos, 14, EBlockType::GROUND_BOTTOM);
             }
 
-            CreateEnemy(16, 11.7, -1, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
+            CreateEnemy(16, 11.7, -1, 0, EEnemyType::CANNON_JIEN, EEnemySubType::CANNON_JIEN_NORMAL);
 
             CreateEnemy(4, 10, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
             CreateEnemy(5.6, 8.5, 0, 0, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
@@ -87,7 +87,7 @@ void HandleSyobonKZTrueActionLevels()
             BlockCreate(17, 15, EBlockType::GROUND_BOTTOM);
             BlockCreate(17, 16, EBlockType::GROUND_BOTTOM);
 
-            QueueEnemyAppear(22, 11, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_JUMPER);
+            QueueEnemyAppear(22, 11, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_JUMPER);
             ObjectCreate(18, 13, 20, 1, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
 
             //weird thing to avoid that jumping ball glitching through the fake floor
@@ -102,7 +102,7 @@ void HandleSyobonKZTrueActionLevels()
             BlockCreate(29, 10, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN);
             BlockCreate(30, 10, EBlockType::BRICK_BRITTLE, EBlockSubType::BRICK_BRITTLE_ITEM_BLOCK_OPEN);
 
-            QueueEnemyAppear(31, 8, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES);
+            QueueEnemyAppear(31, 8, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_SA3_HIDE_SPIKES);
 
             BlockCreate(38, 9, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
 

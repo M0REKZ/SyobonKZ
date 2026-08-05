@@ -115,13 +115,13 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(17, 4.5, EBlockType::BRICK);
         
         //replace the copyright plant trap with a seal
-        ObjectCreate(0.25, 8.75, 0.50, 5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
+        ObjectCreate(0.25, 8.75, 0.50, 5, EObjectType::SA3_TRIGGER_FAST_ARAMAKI_UP, EObjectSubType::SA3_TRIGGER_FAST_ARAMAKI_UP_1_ARAMAKI);
 
-        CreateEnemy(12.5, 7.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
-        CreateEnemy(6.5, 11.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::NONE);
-        CreateEnemy(15.5, 3.5, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
+        CreateEnemy(12.5, 7.5, 0, 0, EEnemyType::JIEN, EEnemySubType::NONE);
+        CreateEnemy(6.5, 11.5, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::NONE);
+        CreateEnemy(15.5, 3.5, 0, 0, EEnemyType::JIEN, EEnemySubType::NONE);
 
-        CreateEnemy(27.5, 8, 0, 0, EEnemyType::BALL, EEnemySubType::NONE);
+        CreateEnemy(27.5, 8, 0, 0, EEnemyType::JIEN, EEnemySubType::NONE);
 
         CreateBackground(1, 2.5, EBackgroundType::CLOUD);
         CreateBackground(10, 2.5, EBackgroundType::CLOUD_SMALL);
@@ -149,7 +149,7 @@ void HandleSyobonActionThreeLevels()
                 }
                 else
                 {
-                    ObjectCreate(27.25 + (i * 4), 0, 1.5, 8.5, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_4_SEALS);
+                    ObjectCreate(27.25 + (i * 4), 0, 1.5, 8.5, EObjectType::SA3_TRIGGER_FAST_ARAMAKI_UP, EObjectSubType::SA3_TRIGGER_FAST_ARAMAKI_UP_4_ARAMAKIS);
                 }
             }
 
@@ -202,7 +202,7 @@ void HandleSyobonActionThreeLevels()
             BlockCreate(i, 6, EBlockType::BRICK);
         }
 
-        CreateEnemy(75.5, 5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+        CreateEnemy(75.5, 5, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
 
         BlockCreate(80.9, 12, EBlockType::TRAMPOLINE, EBlockSubType::TRAMPOLINE_VISIBLE);
 
@@ -259,21 +259,21 @@ void HandleSyobonActionThreeLevels()
             {
                 if(x_pos == 107 || x_pos == 111 || x_pos == 113 || x_pos == 117)
                 {
-                    CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+                    CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
                 }
                 else
                 {
-                    CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+                    CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
                 }
             }
 
             if(x_pos == 122)
             {
-                CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+                CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
             }
             else if(x_pos == 124)
             {
-                CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+                CreateEnemy(x_pos + 0.5, 8.5, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
             }
 
             if(x_pos >= 106)
@@ -336,7 +336,7 @@ void HandleSyobonActionThreeLevels()
 
         ObjectCreate(140, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         ObjectCreate(140 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
-        ObjectCreate(140, 0, 2, 11, EObjectType::SA3_TRIGGER_FAST_SEAL_UP, EObjectSubType::SA3_TRIGGER_FAST_SEAL_UP_1_SEAL);
+        ObjectCreate(140, 0, 2, 11, EObjectType::SA3_TRIGGER_FAST_ARAMAKI_UP, EObjectSubType::SA3_TRIGGER_FAST_ARAMAKI_UP_1_ARAMAKI);
 
         //plant
         BlockCreate(148, 12, EBlockType::HARD_BLOCK);
@@ -359,7 +359,7 @@ void HandleSyobonActionThreeLevels()
 
         ObjectCreate(154, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
 
-        CreateEnemy(168, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES);
+        CreateEnemy(168, 12, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_SA3_HIDE_SPIKES);
 
         ObjectCreate(171, 13, 4, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::NONE);
 
@@ -368,7 +368,7 @@ void HandleSyobonActionThreeLevels()
         ObjectCreate(175, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         ObjectCreate(175 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
 
-        CreateEnemy(171, 1.5, 0, 0, EEnemyType::BALL_SHELLED, EEnemySubType::NONE);
+        CreateEnemy(171, 1.5, 0, 0, EEnemyType::SHELL_JIEN, EEnemySubType::NONE);
         for(int x_pos = 169; x_pos <= 173; x_pos++)
         {
             BlockCreate(x_pos, 2.5, EBlockType::BRICK);
@@ -622,7 +622,7 @@ void HandleSyobonActionThreeLevels()
         CreateBackground(16, 13.8, EBackgroundType::LAVA);
         CreateBackground(16, 13, EBackgroundType::LAVA);
 
-        CreateEnemy(24, 7.5, 0, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
+        CreateEnemy(24, 7.5, 0, 0, EEnemyType::CANNON_JIEN, EEnemySubType::CANNON_JIEN_NORMAL);
 
         for(int x_pos = 28; x_pos <= 34; x_pos++)
         {
@@ -643,7 +643,7 @@ void HandleSyobonActionThreeLevels()
         CreateBackground(47, 13, EBackgroundType::SA3_FAKE_GROUND_TOP);
         ObjectCreate(47, 14, 1, 2, EObjectType::SA3_FALLING_FLOOR, EObjectSubType::SA3_FALLING_FLOOR_GROUND_BOTTOM);
 
-        CreateEnemy(45, 3.5, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+        CreateEnemy(45, 3.5, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
 
         BlockCreate(46, 4.5, EBlockType::HARD_BLOCK);
         BlockCreate(46, 5.5, EBlockType::HARD_BLOCK);
@@ -662,10 +662,10 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(50, 12, EBlockType::HARD_BLOCK);
         BlockCreate(50, 11, EBlockType::HARD_BLOCK);
 
-        CreateEnemy(52, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
-        CreateEnemy(54, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
-        CreateEnemy(56, 11, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
-        CreateEnemy(58, 10, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+        CreateEnemy(52, 12, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
+        CreateEnemy(54, 12, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
+        CreateEnemy(56, 11, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
+        CreateEnemy(58, 10, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
 
         BlockCreate(56, 12, EBlockType::BRICK);
         BlockCreate(57, 12, EBlockType::BRICK);
@@ -674,8 +674,8 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(58, 11, EBlockType::BRICK);
         BlockCreate(59, 10, EBlockType::BRICK);
 
-        CreateEnemy(61, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
-        CreateEnemy(63, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+        CreateEnemy(61, 12, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
+        CreateEnemy(63, 12, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
 
         BlockCreate(67, 12, EBlockType::SA3_WHITE_SPIKE_UP);
         BlockCreate(68, 13, EBlockType::SA3_WHITE_SPIKE_UP);
@@ -703,7 +703,7 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(77, 6.5, EBlockType::ITEM_BLOCK_HIDDEN);
         BlockCreate(78, 6.5, EBlockType::ITEM_BLOCK_HIDDEN);
 
-        CreateEnemy(94, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+        CreateEnemy(94, 12, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
 
         BlockCreate(81, 9, EBlockType::ITEM_BLOCK_HIDDEN);
 
@@ -728,7 +728,7 @@ void HandleSyobonActionThreeLevels()
         ObjectCreate(101, 9, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
         ObjectCreate(101 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
 
-        CreateEnemy(121, 7, 0, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_SA3_GIANT);
+        CreateEnemy(121, 7, 0, 0, EEnemyType::CANNON_JIEN, EEnemySubType::CANNON_JIEN_SA3_GIANT);
 
         BlockCreate(109, 8.5, EBlockType::ITEM_BLOCK_HIDDEN);
 
@@ -756,7 +756,7 @@ void HandleSyobonActionThreeLevels()
 
         BlockCreate(143, 6, EBlockType::COIN);
 
-        CreateEnemy(140, 9, 0, 0, EEnemyType::SA3_FLYING_SHELLED_JIEN, EEnemySubType::NONE);
+        CreateEnemy(140, 9, 0, 0, EEnemyType::SA3_FLYING_SHELL_JIEN, EEnemySubType::NONE);
 
         ObjectCreate(151, 2, 1, 10.35, EObjectType::GOAL_POLE, EObjectSubType::GOAL_POLE_NEED_CASTLE);
 
@@ -766,7 +766,7 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(148, 4, EBlockType::ITEM_BLOCK_HIDDEN);
 
         
-        CreateEnemy(159, 13, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+        CreateEnemy(159, 13, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
 
         BlockCreate(160, 12, EBlockType::TRAMPOLINE, EBlockSubType::TRAMPOLINE_SYOBONKZ_STRONG);
 
@@ -779,7 +779,7 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(164, 8, EBlockType::BRICK);
 
         BlockCreate(165, 12, EBlockType::BRICK);
-        CreateEnemy(166.3, 11, 0, 0, EEnemyType::BALL_SHELLED, EEnemySubType::BALL_SHELLED_INSTANT_KICK);
+        CreateEnemy(166.3, 11, 0, 0, EEnemyType::SHELL_JIEN, EEnemySubType::SHELL_JIEN_INSTANT_KICK);
         BlockCreate(167.5, 12, EBlockType::BRICK);
         BlockCreate(168.2, 12, EBlockType::ITEM_BLOCK_HIDDEN);
 
@@ -802,13 +802,13 @@ void HandleSyobonActionThreeLevels()
         BlockCreate(177, 12, EBlockType::HARD_BLOCK);
         BlockCreate(178, 12, EBlockType::HARD_BLOCK);
         BlockCreate(179, 12, EBlockType::HARD_BLOCK);
-        CreateEnemy(180, 12, 0, 0, EEnemyType::BALL, EEnemySubType::BALL_NORMAL);
+        CreateEnemy(180, 12, 0, 0, EEnemyType::JIEN, EEnemySubType::JIEN_NORMAL);
         BlockCreate(181, 12, EBlockType::HARD_BLOCK);
 
-        CreateEnemy(182, 9, 0, 0, EEnemyType::SA3_FLYING_SHELLED_JIEN, EEnemySubType::NONE);
-        CreateEnemy(183.5, 9, 0, 0, EEnemyType::SA3_FLYING_SHELLED_JIEN, EEnemySubType::NONE);
-        CreateEnemy(184.8, 9, 0, 0, EEnemyType::SA3_FLYING_SHELLED_JIEN, EEnemySubType::NONE);
-        CreateEnemy(186, 9, 0, 0, EEnemyType::SA3_FLYING_SHELLED_JIEN, EEnemySubType::NONE);
+        CreateEnemy(182, 9, 0, 0, EEnemyType::SA3_FLYING_SHELL_JIEN, EEnemySubType::NONE);
+        CreateEnemy(183.5, 9, 0, 0, EEnemyType::SA3_FLYING_SHELL_JIEN, EEnemySubType::NONE);
+        CreateEnemy(184.8, 9, 0, 0, EEnemyType::SA3_FLYING_SHELL_JIEN, EEnemySubType::NONE);
+        CreateEnemy(186, 9, 0, 0, EEnemyType::SA3_FLYING_SHELL_JIEN, EEnemySubType::NONE);
 
         CreateBackground(182, 13.7, EBackgroundType::LAVA);
         CreateBackground(185, 13.7, EBackgroundType::LAVA);
@@ -862,7 +862,7 @@ void HandleSyobonActionThreeLevels()
         ObjectCreate(202, 9, 2, 1, EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD, EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_GO_NEXT_SECTION);
         ObjectCreate(202 + GAME_X_POS_TO_DOUBLE(500), 10, 2 - GAME_X_POS_TO_DOUBLE(1000), 3, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
 
-        CreateEnemy(206, 14, 0, 0, EEnemyType::BALL_ROCKET, EEnemySubType::BALL_ROCKET_NORMAL);
+        CreateEnemy(206, 14, 0, 0, EEnemyType::CANNON_JIEN, EEnemySubType::CANNON_JIEN_NORMAL);
 
         BlockCreate(206, 8.5, EBlockType::ITEM_BLOCK_HIDDEN);
     }

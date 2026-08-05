@@ -1,6 +1,6 @@
 //By: pipocalio
 //From: https://discord.com/channels/966688863005339708/977225388906381332/1427056101962022942
-//Modified by +KZ
+//Modified by +KZ, added more enums, ids, comments, etc...
 #ifndef LEVEL_ENUMS_H
 #define LEVEL_ENUMS_H
 
@@ -67,7 +67,7 @@ enum class EBlockType : int
     // (block at the start of 1-1)
     ITEM_BLOCK_DODGE = 100,
 
-    ITEM_BLOCK_ENEMY = 101,      // Item block with a enemy (ball, spiky ball, burning flower, defrag)
+    ITEM_BLOCK_ENEMY = 101,      // Item block with a enemy (jien, super jien, burning flower, defrag)
     ITEM_BLOCK_MUSHROOM = 102,   // "Delicious!"
     ITEM_BLOCK_MUSHROOM_2 = 103, // "Not poisonous, but..."
     ITEM_BLOCK_STAR = 104,
@@ -142,77 +142,77 @@ enum class EBlockType : int
 
 enum class EEnemyType : int
 {
-    BALL = 0,
-    BALL_SHELLED = 1,
-    SHELL = 2,
-    SEAL = 3,
-    BALL_SPIKY = 4,
-    KUMA = 5,
-    DEFRAG = 6,
-    BALL_ROCKET = 7,
-    SUPER_BOON = 8, //CAPE_GUY (+KZ: when stomped it turns into NORMAL_BOON)
+    JIEN = 0,
+    SHELL_JIEN = 1,  // こうらの敵 (Shell enemy)
+    SHELL = 2, // こうら (Shell)
+    ARAMAKI = 3, // あらまき (Aramaki)
+    SUPER_JIEN = 4, // スーパージエン (Super Jien)
+    KUMA = 5, // クマー (Kuma)
+    DEFRAG = 6, // デフラグさん (Defrag-san)
+    CANNON_JIEN = 7, // ジエン大砲 (Jien Cannon)
+    SUPER_BOON = 8, // スーパーブーン (Super Boon)
     
-    MAGMA = 9,
-    FLAME = 10,
+    MAGMA = 9, // ファイアー玉 (Fireball)
+    FLAME = 10, // ファイアー (Fire)
 
-    // Enemy at the end of 1-4 on the bridge
-    // Called "ボス" (boss) in Chiku's comments
-    MOLALLA = 30,
+    MOLALLA = 30, // モララー (Morarā) or ボス (Boss) //+KZ: also known as Moralar, Molalla
 
-    KUKKURU = 31,
+    KUKKURU = 31, // クックル (Kukkuru)
 
     // ID exists in the code but doesn't do anything??
+    //+KZ: probably it was intended to be ENTRANCE_VERTICAL_PIPE_HEAD (object 50),
+    // since ObjectCount increments after using this in the original stagep() code
     UNKNOWN_ID_50 = 50,
 
-    LASER = 79,
+    LASER = 79, // レーザー (Laser)
     
-    EVIL_CLOUD = 80,
-    EVIL_CLOUD_TOUCHED = 81,
+    EVIL_CLOUD = 80, // 雲の敵 (Enemy of the Clouds) or 雲 (Cloud)
+    EVIL_CLOUD_TOUCHED = 81, // ステルス雲 (Stealth cloud)
 
-    SPIKY_BLOCK = 82,
+    SPIKY_BLOCK = 82, // ブロックもどき (Block lookalike)
     SPIKY_BLOCK_TOUCHED = 83,
     LAVA_FROM_PIPE = 84,
 
-    FAKE_POLE = 85,
+    FAKE_POLE = 85, // 偽ポール (Fake Pole)
 
     // falls and breaks blocks below
-    FALLING_CAT = 86,
+    NYASSUN = 86, // ニャッスン (Nyassun)
 
-    FIREBAR_CLOCKWISE = 87,
+    FIREBAR_CLOCKWISE = 87, // ファイアバー (Fire Bar)
     FIREBAR_COUNTERCLOCKWISE = 88,
 
-    BALL_BIG = 90, //+KZ: added this
-    MUSHROOM = 100, //+KZ: added this
-    BURNING_FLOWER = 101, //+KZ: added this
-    MUSHROOM_POISONOUS = 102, //+KZ: added this
+    BIG_JIEN = 90,
+    MUSHROOM = 100, // おいしいキノコ (Delicious mushrooms)
+    BURNING_FLOWER = 101,
+    MUSHROOM_POISONOUS = 102, // 毒キノコ (Poisonous mushrooms)
 
     // green "?" ball
-    MYSTERY_BALL = 105,
+    MYSTERY_BALL = 105, //?ボール (? Ball)
 
-    BAD_STAR = 110, //+KZ: added this
+    BAD_STAR = 110, // 悪スター (Bad Star)
 
-    NORMAL_BOON = 151, //+KZ: SUPER_BOON but without cape
+    NORMAL_BOON = 151, // ノーマルブーン (Normal Boon) //+KZ: SUPER_BOON but without cape
 
     // The same as BALL but goes
     // right through the floor??
-    BALL_NO_COLLISION = 200,
+    JIEN_NO_COLLISION = 200, //+KZ: unused
 
     //end of legacy enemy types
     //types below were added in SyobonKZ
     //must NOT be created with a Legacy function or you may get
     //memory access bugs
-    LAST_LEGACY_ENEMY = BALL_NO_COLLISION,
+    LAST_LEGACY_ENEMY = JIEN_NO_COLLISION,
 
     // -------------------------
     // Syobon Action 3 EnemyTypes
     // -------------------------
 
     SA3_BIG_MUSHROOM_FALLING,
-    SA3_BIG_BALL_ROCKET,
+    SA3_BIG_CANNON_JIEN,
     SA3_SHARK,
     SA3_BIG_STONE,
     SA3_JUMPSCARE_PLANT,
-    SA3_FLYING_SHELLED_JIEN,
+    SA3_FLYING_SHELL_JIEN,
 };
 
 
@@ -247,7 +247,7 @@ enum class EBackgroundType : int
 
 
 // -------------------------
-// Platform types (srtypes) //+KZ: it is srsp
+// Platform types (srsp)
 // -------------------------
 
 enum class ELiftType : int
@@ -265,7 +265,7 @@ enum class ELiftType : int
     PILLAR_FALL = 11,
 
     PILLAR_BOUNCY = 12,
-    KAIZO_SYOBON_UNKNOWN_13 = 13, //+KZ: from SA:All Stars, but seems like a invalid type?
+    KAIZO_SYOBON_UNKNOWN_13 = 13, //+KZ: from SA:All Stars, works like PILLAR_FALL???
     PILLAR_BRICKS = 15,
 
     GRAY = 21,
@@ -281,9 +281,7 @@ enum class ELiftType : int
 
 enum class EObjectType : int
 {
-    // not sure what this is
-    // +KZ: it is the same as PIPE_BODY :D
-    GREEN_OUTLINE_PIPE_PART = 0, //used in 2-2 and 2-4 as the body of the exit pipes
+    GREEN_OUTLINE_PIPE_PART = 0, //+KZ: used in 2-2 and 2-4 as the body of the exit pipes
     BLACK_OUTLINE_PIPE_PART = 1,
     VERTICAL_PIPE_BODY = 2,
     HORIZONTAL_PIPE_BODY = 5,
@@ -299,8 +297,8 @@ enum class EObjectType : int
     TRIGGERS_START = 100, //+KZ: TrapDisplay shows traps with types from 100 to 299
     TRIGGERS_END = 299,
 
-    TRIGGER_SEAL_UP = 100,
-    TRIGGER_SEAL_DOWN = 101,
+    TRIGGER_ARAMAKI_UP = 100,
+    TRIGGER_ARAMAKI_DOWN = 101,
     TRIGGER_GENERIC_1 = 102,
     TRIGGER_LASER = 103,
     // 1-3 and 2-4 multi laser trap
@@ -328,7 +326,7 @@ enum class EObjectType : int
     SA3_UNTOUCHABLE_FALLING_FLOOR, //player cant reach this floor
 
     SA3_TRIGGER_START,
-    SA3_TRIGGER_FAST_SEAL_UP = SA3_TRIGGER_START,
+    SA3_TRIGGER_FAST_ARAMAKI_UP = SA3_TRIGGER_START,
     SA3_TRIGGER_BIG_MUSHROOM_FALL,
     SA3_TRIGGER_SPIKES_LEVEL_1_1,
     SA3_TRIGGER_BIG_STONE_BALL_LEVEL_1_1,
@@ -387,17 +385,17 @@ enum ELegacyStageDate : uint8_t
     // 50-79 will create enemies/entities
     // the enemy will have type ID minus 50 from this list
     // check stage() function
-    BALL = 50,
-    BALL_SHELLED = 51,
-    SHELL = 52,
-    SEAL = 53,
-    BALL_SPIKY = 54,
-    KUMA = 55,
-    DEFRAG = 56,
-    BALL_ROCKET = 57,
-    SUPER_BOON = 58, //CAPE_GUY (+KZ: when stomped it turns into NORMAL_BOON)
-    MAGMA = 59,
-    FLAME = 60,
+    JIEN = 50,
+    SHELL_JIEN = 51, // こうらの敵 (Shell enemy)
+    SHELL = 52, // こうら (Shell)
+    ARAMAKI = 53, // あらまき (Aramaki)
+    SUPER_JIEN = 54, // スーパージエン (Super Jien)
+    KUMA = 55, // クマー (Kuma)
+    DEFRAG = 56, // デフラグさん (Defrag-san)
+    CANNON_JIEN = 57, // ジエン大砲 (Jien Cannon)
+    SUPER_BOON = 58, // スーパーブーン (Super Boon)
+    MAGMA = 59, // ファイアー玉 (Fireball)
+    FLAME = 60, // ファイアー (Fire)
 
     ENEMIES_END = 79,
     //80-89 will make background decorations
@@ -439,29 +437,29 @@ enum class EEnemySubType : int
 {
     NONE = 0, //"none" wildcard for most enemy types
 
-    BALL_NORMAL = 0,
-    BALL_UNSTOMPABLE = 1,
+    JIEN_NORMAL = 0,
+    JIEN_UNSTOMPABLE = 1,
 
     SHELL_STAY = 0,
     SHELL_MOVING,
     SHELL_MOVING_2, //unknown purpose
 
-    SEAL_UP = 0,
-    SEAL_DOWN,
-    SEAL_SYOBONKZ_VERTICAL,
+    ARAMAKI_UP = 0,
+    ARAMAKI_DOWN,
+    ARAMAKI_SYOBONKZ_VERTICAL,
 
-    BALL_SPIKY_NORMAL = 0,
-    BALL_SPIKY_JUMPER = 1,
-    BALL_SPIKY_SA3_HIDE_SPIKES,
+    SUPER_JIEN_NORMAL = 0,
+    SUPER_JIEN_JUMPER = 1,
+    SUPER_JIEN_SA3_HIDE_SPIKES,
 
     DEFRAG_NORMAL = 0,
     DEFRAG_GRAB_POLE,
 
-    BALL_ROCKET_NORMAL = 0,
-    BALL_ROCKET_BACKWARDS,
-    BALL_ROCKET_UPWARDS,
-    BALL_ROCKET_DOWNWARDS,
-    BALL_ROCKET_SA3_GIANT, //Syobon Action 3 Level 2 giant cannon jien
+    CANNON_JIEN_NORMAL = 0,
+    CANNON_JIEN_BACKWARDS,
+    CANNON_JIEN_UPWARDS,
+    CANNON_JIEN_DOWNWARDS,
+    CANNON_JIEN_SA3_GIANT, //Syobon Action 3 Level 2 giant cannon jien
 
     FLAME_NORMAL = 0,
     FLAME_BACKWARDS,
@@ -502,8 +500,8 @@ enum class EEnemySubType : int
     UNKNOWN_ID_50_1 = 1,
 
     //Added in SyobonKZ
-    BALL_SHELLED_NORMAL = 0, //normal shobon no action shelled jien
-    BALL_SHELLED_INSTANT_KICK = 1, //Syobon Action 3 cutscene
+    SHELL_JIEN_NORMAL = 0, //normal shobon no action shelled jien
+    SHELL_JIEN_INSTANT_KICK = 1, //Syobon Action 3 cutscene
 };
 
 enum class EBlockSubType : int
@@ -515,12 +513,12 @@ enum class EBlockSubType : int
     ITEM_BLOCK_DODGE_VERTICAL = 0,
     ITEM_BLOCK_DODGE_HORIZONTAL = 1, //unused, but may appear in random mode
 
-    ITEM_BLOCK_ENEMY_BALL_NORMAL = 0,
-    ITEM_BLOCK_ENEMY_BALL_SPIKY_NORMAL = 1,
+    ITEM_BLOCK_ENEMY_JIEN_NORMAL = 0,
+    ITEM_BLOCK_ENEMY_SUPER_JIEN_NORMAL = 1,
     ITEM_BLOCK_ENEMY_BURNING_FLOWER = 3,
     ITEM_BLOCK_ENEMY_DEFRAG_NORMAL = 4,
     ITEM_BLOCK_ENEMY_BURNING_FLOWER_10 = 10, //unused, same as ITEM_BLOCK_ENEMY_BURNING_FLOWER
-    ITEM_BLOCK_ENEMY_SAJAM_BALL_NORMAL_BELOW, //+KZ: for Syobon Action JAM
+    ITEM_BLOCK_ENEMY_SAJAM_JIEN_NORMAL_BELOW, //+KZ: for Syobon Action JAM
 
     ITEM_BLOCK_MUSHROOM_DELICIOUS = 0,
     ITEM_BLOCK_MUSHROOM_GROW = 2,
@@ -623,18 +621,18 @@ enum class EObjectSubType : int
     ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON_UNUSED = 6, //unused, code is similar to 2-4 go back trap pipe but horizontal and kills the player?
 
     //Triggers
-    TRIGGER_SEAL_UP_NORMAL = 0,
-    TRIGGER_SEAL_UP_LEVEL_1_2, //does not appear if the poison mushroom block is open
+    TRIGGER_ARAMAKI_UP_NORMAL = 0,
+    TRIGGER_ARAMAKI_UP_LEVEL_1_2, //does not appear if the poison mushroom block is open
 
-    TRIGGER_GENERIC_1_SUBTYPE_4_BALLS = 0, //1-1 4 balls trap
-    TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP, //1-2 spiky ball jumps from the hole
+    TRIGGER_GENERIC_1_SUBTYPE_4_JIENS = 0, //1-1 4 jiens trap
+    TRIGGER_GENERIC_1_SUBTYPE_SUPER_JIEN_JUMP, //1-2 super jien jumps from the hole
     TRIGGER_GENERIC_1_SUBTYPE_FIRST_KUMA, //1-2 first kuma appear, will become next type after triggering
     TRIGGER_GENERIC_1_SUBTYPE_ENABLE_SECOND_KUMA, //1-2 enables the second kuma trigger
     TRIGGER_GENERIC_1_SUBTYPE_SECOND_KUMA, //1-2 second kuma appear
     TRIGGER_GENERIC_1_SUBTYPE_WARP_ZONE = 7, //1-2 appears WARP ZONE message
     TRIGGER_GENERIC_1_SUBTYPE_THIRD_KUMA, //1-2 overworld kuma
-    TRIGGER_GENERIC_1_SUBTYPE_THREE_SEALS, //??? is this unused?
-    TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN, //appears a falling seal
+    TRIGGER_GENERIC_1_SUBTYPE_THREE_ARAMAKIS, //??? is this unused?
+    TRIGGER_GENERIC_1_SUBTYPE_ARAMAKI_DOWN, //appears a falling aramaki
     TRIGGER_GENERIC_1_SUBTYPE_SURPRISE_MAGMA = 12, //1-4 surprise magma
     TRIGGER_GENERIC_1_SUBTYPE_SCROLLING_OFF = 20, //turn off scrolling by setting scrollx to 0
     TRIGGER_GENERIC_1_SUBTYPE_CLEAR_GAME = 30, //1-4 finish the game (get the melon)
@@ -663,8 +661,8 @@ enum class EObjectSubType : int
     SA3_UNTOUCHABLE_FALLING_FLOOR_GROUND_TOP = 2,
     SA3_UNTOUCHABLE_FALLING_FLOOR_GROUND_BOTTOM = 3,
 
-    SA3_TRIGGER_FAST_SEAL_UP_1_SEAL = 0,
-    SA3_TRIGGER_FAST_SEAL_UP_4_SEALS = 1,
+    SA3_TRIGGER_FAST_ARAMAKI_UP_1_ARAMAKI = 0,
+    SA3_TRIGGER_FAST_ARAMAKI_UP_4_ARAMAKIS = 1,
 
     SA3_TRIGGER_SPIKES_LEVEL_1_1_WAITING = 0,
     SA3_TRIGGER_SPIKES_LEVEL_1_1_ACTIVE = 1,

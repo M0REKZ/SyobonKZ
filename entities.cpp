@@ -203,7 +203,7 @@ void HandleEnemies()
                 handled = true;
 
                 break;
-            case EEnemyType::SA3_FLYING_SHELLED_JIEN:
+            case EEnemyType::SA3_FLYING_SHELL_JIEN:
                 if(EnemyX[t] <= -900000)
                     break;
 
@@ -231,7 +231,7 @@ void HandleEnemies()
                 handled = true;
                 break;
 
-            case EEnemyType::SEAL:
+            case EEnemyType::ARAMAKI:
                 //fast seals some times wont kill the player
                 if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
                 {
@@ -247,19 +247,19 @@ void HandleEnemies()
                 }
                 break;
 
-            case EEnemyType::BALL_SPIKY:
-                if(EnemySubType[t] == EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES)
+            case EEnemyType::SUPER_JIEN:
+                if(EnemySubType[t] == EEnemySubType::SUPER_JIEN_SA3_HIDE_SPIKES)
                 {
                     if(player_pos_x + PlayerSizeX >= EnemyX[t] && player_pos_x <= EnemyX[t] + EnemySizeX[t] &&
                         player_pos_y + PlayerSizeY >= EnemyY[t] && player_pos_y <= EnemyY[t] + EnemySizeY[t])
                     {
-                        EnemySubType[t] = EEnemySubType::BALL_SPIKY_NORMAL;
+                        EnemySubType[t] = EEnemySubType::SUPER_JIEN_NORMAL;
                     }
                 }
                 break;
 
-            case EEnemyType::BALL_ROCKET:
-                if(EnemySubType[t] == EEnemySubType::BALL_ROCKET_SA3_GIANT)
+            case EEnemyType::CANNON_JIEN:
+                if(EnemySubType[t] == EEnemySubType::CANNON_JIEN_SA3_GIANT)
                 {
                     EnemySizeX[t] = DOUBLE_TO_GAME_X_POS(5);
                     EnemySizeY[t] = DOUBLE_TO_GAME_X_POS(5);
@@ -315,12 +315,12 @@ void HandleEnemies()
             default:
                 break;
 
-            case EEnemyType::BALL:
+            case EEnemyType::JIEN:
                 xx[10] = 100;
                 break;
 
                 // こうらの敵 (Shell enemy)
-            case EEnemyType::BALL_SHELLED:
+            case EEnemyType::SHELL_JIEN:
                 xx[10] = 100;
                 break;
 
@@ -373,17 +373,17 @@ void HandleEnemies()
                 break;
 
                 // あらまき (Aramaki)
-            case EEnemyType::SEAL:
+            case EEnemyType::ARAMAKI:
                 EnemyMovementType[t] = 0; // end();
-                if (EnemySubType[t] == EEnemySubType::SEAL_UP)
+                if (EnemySubType[t] == EEnemySubType::ARAMAKI_UP)
                 {
                     EnemyY[t] -= 800;
                 }
-                if (EnemySubType[t] == EEnemySubType::SEAL_DOWN)
+                if (EnemySubType[t] == EEnemySubType::ARAMAKI_DOWN)
                     EnemyY[t] += 1200;
                 if(currentGame == ESyobonActionGame::SYOBON_ACTION_3)
                 {
-                    if(EnemySubType[t] == EEnemySubType::SEAL_SYOBONKZ_VERTICAL)
+                    if(EnemySubType[t] == EEnemySubType::ARAMAKI_SYOBONKZ_VERTICAL)
                     {
                         EnemyY[t] += EnemyVelY[t];
                     }
@@ -393,7 +393,7 @@ void HandleEnemies()
                 break;
 
                 // スーパージエン (Super Jien)
-            case EEnemyType::BALL_SPIKY:
+            case EEnemyType::SUPER_JIEN:
                 //+KZ: Spiky ball is slower in SA3
                 xx[10] = currentGame != ESyobonActionGame::SYOBON_ACTION_3 ? 120 : 100;
                 xx[0] = 250;
@@ -407,7 +407,7 @@ void HandleEnemies()
                            xx[0] * 2) < 3000*/
                     && PlayerVelY <= -600 && EnemyAITimer[t] <= 0)
                 {
-                    if (EnemySubType[t] == EEnemySubType::BALL_SPIKY_JUMPER && PlayerGrounded == 0 && EnemyGrounded[t] == 1)
+                    if (EnemySubType[t] == EEnemySubType::SUPER_JIEN_JUMPER && PlayerGrounded == 0 && EnemyGrounded[t] == 1)
                     {
                         EnemyVelY[t] = -1600;
                         EnemyAITimer[t] = 40;
@@ -416,7 +416,7 @@ void HandleEnemies()
                 } //
                 break;
 
-                // クマー (Bear)
+                // クマー (Kuma)
             case EEnemyType::KUMA:
                 xx[10] = 160;
                 // azimentype[t]=2;
@@ -560,17 +560,17 @@ void HandleEnemies()
                 break;
 
                 // ジエン大砲 (Jien Cannon) //+KZ: or "Cannon Jien" i guess, google translate is weird sometimes
-            case EEnemyType::BALL_ROCKET:
+            case EEnemyType::CANNON_JIEN:
                 EnemyMovementType[t] = 0;
                 xx[10] = 0;
                 xx[11] = 400;
-                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_NORMAL)
+                if (EnemySubType[t] == EEnemySubType::CANNON_JIEN_NORMAL)
                     xx[10] = 400;
-                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_BACKWARDS)
+                if (EnemySubType[t] == EEnemySubType::CANNON_JIEN_BACKWARDS)
                     xx[10] = -400;
-                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_UPWARDS)
+                if (EnemySubType[t] == EEnemySubType::CANNON_JIEN_UPWARDS)
                     EnemyY[t] -= 400;
-                if (EnemySubType[t] == EEnemySubType::BALL_ROCKET_DOWNWARDS)
+                if (EnemySubType[t] == EEnemySubType::CANNON_JIEN_DOWNWARDS)
                     EnemyY[t] += 400;
                 break;
 
@@ -754,7 +754,7 @@ void HandleEnemies()
                     xx[10] = xx[23];
                 break;
 
-            case EEnemyType::FALLING_CAT:
+            case EEnemyType::NYASSUN:
                 EnemyMovementType[t] = 4;
                 xx[23] = 1000;
                 if (PlayerX >= EnemyX[t] - fx - PlayerSizeX - xx[26] && PlayerX <= EnemyX[t] - fx + EnemySizeX[t] + xx[26])
@@ -839,7 +839,7 @@ void HandleEnemies()
 
                 break;
 
-            case EEnemyType::BALL_BIG:
+            case EEnemyType::BIG_JIEN:
                 xx[10] = 160;
                 // azimentype[t]=0;
                 break;
@@ -880,9 +880,9 @@ void HandleEnemies()
                                         fy <
                                     xx[9] + xx[1] * 3 + xx[12])
                             {
-                                if (EnemyType[tt] == EEnemyType::BALL || EnemyType[tt] == EEnemyType::BALL_SPIKY)
+                                if (EnemyType[tt] == EEnemyType::JIEN || EnemyType[tt] == EEnemyType::SUPER_JIEN)
                                 {
-                                    EnemyType[tt] = EEnemyType::BALL_BIG; // PlaySound(Sounds[6]);
+                                    EnemyType[tt] = EEnemyType::BIG_JIEN; // PlaySound(Sounds[6]);
                                     EnemySizeX[tt] = 6400;
                                     EnemySizeY[tt] = 6300;
                                     EnemySubType[tt] = EEnemySubType::NONE;
@@ -917,7 +917,7 @@ void HandleEnemies()
                 }
                 break;
 
-            case EEnemyType::BALL_NO_COLLISION:
+            case EEnemyType::JIEN_NO_COLLISION:
                 EnemyMovementType[t] = 1;
                 xx[10] = 100;
                 break;
@@ -1024,14 +1024,14 @@ void HandleEnemies()
 
             if (PlayerX + PlayerSizeX > xx[8] + xx[0] * 2 && PlayerX < xx[8] + EnemySizeX[t] - xx[0] * 2 && PlayerY + PlayerSizeY > xx[9] - xx[5] && PlayerY + PlayerSizeY < xx[9] + xx[1] + xx[12] && (PlayerNoDamageTimer <= 0 || PlayerVelY >= 100) && EnemyBlockAppearTimer[t] <= 0)
             {
-                if (EnemyType[t] != EEnemyType::BALL_SPIKY && EnemyType[t] != EEnemyType::MAGMA && EnemyType[t] != EEnemyType::FLAME && ((int)EnemyType[t] <= 78 || EnemyType[t] == EEnemyType::FAKE_POLE) && PlayerGrounded != 1 && PlayerState != EPlayerState::DEATH_ANIMATION)
+                if (EnemyType[t] != EEnemyType::SUPER_JIEN && EnemyType[t] != EEnemyType::MAGMA && EnemyType[t] != EEnemyType::FLAME && ((int)EnemyType[t] <= 78 || EnemyType[t] == EEnemyType::FAKE_POLE) && PlayerGrounded != 1 && PlayerState != EPlayerState::DEATH_ANIMATION)
                 { // && atype[t]!=4 && atype[t]!=7){
 
-                    if (EnemyType[t] == EEnemyType::BALL)
+                    if (EnemyType[t] == EEnemyType::JIEN)
                     {
-                        if (EnemySubType[t] == EEnemySubType::BALL_NORMAL)
+                        if (EnemySubType[t] == EEnemySubType::JIEN_NORMAL)
                             EnemyX[t] = -900000;
-                        if (EnemySubType[t] == EEnemySubType::BALL_UNSTOMPABLE)
+                        if (EnemySubType[t] == EEnemySubType::JIEN_UNSTOMPABLE)
                         {
                             PlaySound(Sounds[5]);
                             PlayerY = xx[9] - 900 - EnemySizeY[t];
@@ -1041,7 +1041,7 @@ void HandleEnemies()
                         }
                     }
 
-                    if (EnemyType[t] == EEnemyType::BALL_SHELLED)
+                    if (EnemyType[t] == EEnemyType::SHELL_JIEN)
                     {
                         EnemyType[t] = EEnemyType::SHELL;
                         EnemySizeY[t] = 3000;
@@ -1049,14 +1049,14 @@ void HandleEnemies()
                             currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||
                             (
                                 currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
-                                EnemySubType[t] != EEnemySubType::BALL_SHELLED_INSTANT_KICK
+                                EnemySubType[t] != EEnemySubType::SHELL_JIEN_INSTANT_KICK
                             )
                         )
                         {
                             EnemySubType[t] = EEnemySubType::SHELL_STAY;
                         }
                         else if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 &&
-                            EnemySubType[t] == EEnemySubType::BALL_SHELLED_INSTANT_KICK)
+                            EnemySubType[t] == EEnemySubType::SHELL_JIEN_INSTANT_KICK)
                         {
                             EnemyY[t] += 1300; //otherwise some collision issues will happen
 
@@ -1103,7 +1103,7 @@ void HandleEnemies()
                             }
                         }
                     }
-                    if (EnemyType[t] == EEnemyType::SEAL)
+                    if (EnemyType[t] == EEnemyType::ARAMAKI)
                     {
                         xx[25] = 1;
                     }
@@ -1115,7 +1115,7 @@ void HandleEnemies()
                         actaon[2] = 0;
                     }
 
-                    if (EnemyType[t] == EEnemyType::BALL_ROCKET)
+                    if (EnemyType[t] == EEnemyType::CANNON_JIEN)
                     {
                         EnemyX[t] = -900000;
                     }
@@ -1152,7 +1152,7 @@ void HandleEnemies()
                     if (actaon[2] == 1 &&
                         //+KZ: you are not able to jump on seal in other games
                         (currentGame == ESyobonActionGame::SYOBON_ACTION_3 ?
-                        EnemyType[t] != EEnemyType::SEAL
+                        EnemyType[t] != EEnemyType::ARAMAKI
                         :
                         true
                         )
@@ -1171,7 +1171,7 @@ void HandleEnemies()
 
             // プレイヤーに触れた時 (When the player touches it)
             xx[16] = 0;
-            if (EnemyType[t] == EEnemyType::BALL_SPIKY || EnemyType[t] == EEnemyType::MAGMA || EnemyType[t] == EEnemyType::FLAME)
+            if (EnemyType[t] == EEnemyType::SUPER_JIEN || EnemyType[t] == EEnemyType::MAGMA || EnemyType[t] == EEnemyType::FLAME)
                 xx[16] = -3000;
             if (EnemyType[t] == EEnemyType::SPIKY_BLOCK || EnemyType[t] == EEnemyType::SPIKY_BLOCK_TOUCHED || EnemyType[t] == EEnemyType::LAVA_FROM_PIPE)
                 xx[16] = -3200;
@@ -1207,13 +1207,13 @@ void HandleEnemies()
                         if (PlayerHealth == 0)
                         {
 
-                            if (EnemyType[t] == EEnemyType::BALL || EnemyType[t] == EEnemyType::BALL_ROCKET)
+                            if (EnemyType[t] == EEnemyType::JIEN || EnemyType[t] == EEnemyType::CANNON_JIEN)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = SyobonRand(7) + 1 + 1000 + (SyobonLevel - 1) * 10;
                             }
 
-                            if (EnemyType[t] == EEnemyType::BALL_SHELLED)
+                            if (EnemyType[t] == EEnemyType::SHELL_JIEN)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = SyobonRand(2) + 15;
@@ -1225,13 +1225,13 @@ void HandleEnemies()
                                 EnemyMessageType[t] = 18;
                             }
 
-                            if (EnemyType[t] == EEnemyType::SEAL)
+                            if (EnemyType[t] == EEnemyType::ARAMAKI)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = 20;
                             }
 
-                            if (EnemyType[t] == EEnemyType::BALL_SPIKY)
+                            if (EnemyType[t] == EEnemyType::SUPER_JIEN)
                             {
                                 EnemyMessageTimer[t] = 60;
                                 EnemyMessageType[t] = SyobonRand(7) + 1 + 1000 + (SyobonLevel - 1) * 10;
@@ -1733,7 +1733,7 @@ void HandleEnemiesBlocks()
 		xx[9] = BlockY[tt] - fy;
 		if (BlockX[tt] - fx + xx[1] >= -12010 && BlockX[tt] - fx <= fxmax + 12000)
 		{
-			if (EnemyType[t] != EEnemyType::FALLING_CAT && EnemyType[t] != EEnemyType::BALL_BIG && BlockType[tt] != EBlockType::SWORD)
+			if (EnemyType[t] != EEnemyType::NYASSUN && EnemyType[t] != EEnemyType::BIG_JIEN && BlockType[tt] != EBlockType::SWORD)
 			{
 
 				// 上 (Above)
@@ -1879,7 +1879,7 @@ void HandleEnemiesBlocks()
 					}
 				}
 			}
-			if (EnemyType[t] == EEnemyType::FALLING_CAT || EnemyType[t] == EEnemyType::BALL_BIG)
+			if (EnemyType[t] == EEnemyType::NYASSUN || EnemyType[t] == EEnemyType::BIG_JIEN)
 			{
 				if (EnemyX[t] + EnemySizeX[t] - fx > xx[8] && EnemyX[t] - fx < xx[8] + xx[1] && EnemyY[t] + EnemySizeY[t] - fy > xx[9] && EnemyY[t] - fy < xx[9] + xx[1])
 				{
@@ -1940,7 +1940,7 @@ void RenderEnemies()
                 }
                 continue;
             }
-            else if(EnemyType[t] == EEnemyType::SA3_FLYING_SHELLED_JIEN)
+            else if(EnemyType[t] == EEnemyType::SA3_FLYING_SHELL_JIEN)
             {
                 if(GetNowCount() % 1000 < 900)
                 {
@@ -1951,7 +1951,7 @@ void RenderEnemies()
                     DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[18]);
                 }
             }
-            else if(EnemyType[t] == EEnemyType::BALL_ROCKET && EnemySubType[t] == EEnemySubType::BALL_ROCKET_SA3_GIANT)
+            else if(EnemyType[t] == EEnemyType::CANNON_JIEN && EnemySubType[t] == EEnemySubType::CANNON_JIEN_SA3_GIANT)
             {
                 SyobonKZDrawGraphScaled((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, 5, 5, Sliced_GFX[ 7 /* BALL_ROCKET */][3]);
                 continue;
@@ -1975,14 +1975,14 @@ void RenderEnemies()
             {
                 mirror = 1;
             }
-            if (EnemyType[t] == EEnemyType::SEAL && (EnemySubType[t] == EEnemySubType::SEAL_DOWN) ||
-                (currentGame != ESyobonActionGame::SYOBON_ACTION_3 && EnemyType[t] == EEnemyType::SEAL &&
-                    EnemySubType[t] == EEnemySubType::SEAL_SYOBONKZ_VERTICAL &&
+            if (EnemyType[t] == EEnemyType::ARAMAKI && (EnemySubType[t] == EEnemySubType::ARAMAKI_DOWN) ||
+                (currentGame != ESyobonActionGame::SYOBON_ACTION_3 && EnemyType[t] == EEnemyType::ARAMAKI &&
+                    EnemySubType[t] == EEnemySubType::ARAMAKI_SYOBONKZ_VERTICAL &&
                     EnemyVelY[t] > 0)
             )
             {
                 DrawVertTurnGraph(xx[0] / 100 + 13,
-                                  xx[1] / 100 + 15, Sliced_GFX[(int)EEnemyType::SEAL][3]);
+                                  xx[1] / 100 + 15, Sliced_GFX[(int)EEnemyType::ARAMAKI][3]);
                 xx[16] = 1;
             }
             if (EnemyType[t] == EEnemyType::MAGMA && EnemyVelY[t] >= 1)
@@ -1995,12 +1995,12 @@ void RenderEnemies()
                 mirror = 0;
 
             // メイン (main)
-            if ((int)EnemyType[t] < 200 && xx[16] == 0 && EnemyType[t] != EEnemyType::DEFRAG && EnemyType[t] != EEnemyType::LASER && EnemyType[t] != EEnemyType::FALLING_CAT && EnemyType[t] != EEnemyType::MOLALLA)
+            if ((int)EnemyType[t] < 200 && xx[16] == 0 && EnemyType[t] != EEnemyType::DEFRAG && EnemyType[t] != EEnemyType::LASER && EnemyType[t] != EEnemyType::NYASSUN && EnemyType[t] != EEnemyType::MOLALLA)
             {
                 if (!((EnemyType[t] == EEnemyType::EVIL_CLOUD || EnemyType[t] == EEnemyType::EVIL_CLOUD_TOUCHED) && EnemySubType[t] == EEnemySubType::EVIL_CLOUD_HIDDEN))
                 {
                     //+KZ for SA3 spiky ball
-                    if(EnemyType[t] == EEnemyType::BALL_SPIKY && EnemySubType[t] == EEnemySubType::BALL_SPIKY_SA3_HIDE_SPIKES)
+                    if(EnemyType[t] == EEnemyType::SUPER_JIEN && EnemySubType[t] == EEnemySubType::SUPER_JIEN_SA3_HIDE_SPIKES)
                     {
                         drawimage(Sliced_GFX[0][3],
                                 xx[0] / 100, (xx[1] / 100) + 6);
@@ -2152,7 +2152,7 @@ void RenderEnemies()
             } // 85
 
             // ニャッスン (Nyassun)
-            if (EnemyType[t] == EEnemyType::FALLING_CAT)
+            if (EnemyType[t] == EEnemyType::NYASSUN)
             {
                 if (PlayerX >= EnemyX[t] - fx - PlayerSizeX - 4000 && PlayerX <= EnemyX[t] - fx + EnemySizeX[t] + 4000)
                 {
@@ -2164,7 +2164,7 @@ void RenderEnemies()
                 }
             }
 
-            if (EnemyType[t] == EEnemyType::BALL_NO_COLLISION)
+            if (EnemyType[t] == EEnemyType::JIEN_NO_COLLISION)
                 drawimage(Sliced_GFX[0][3], xx[0] / 100, xx[1] / 100);
 
             mirror = 0;
@@ -2346,9 +2346,9 @@ void HandleEnemyPlayerCollisionKZ(int enemy_index)
         bool can_jump_key_bounce = false;
         switch(EnemyType[enemy_index])
         {
-            case EEnemyType::SA3_FLYING_SHELLED_JIEN:
+            case EEnemyType::SA3_FLYING_SHELL_JIEN:
                 PlaySound(Sounds[5]);
-                EnemyType[enemy_index] = EEnemyType::BALL_SHELLED;
+                EnemyType[enemy_index] = EEnemyType::SHELL_JIEN;
                 PlayerY = (EnemyY[enemy_index] - 900 - EnemySizeY[enemy_index]) - fy;
                 PlayerVelY = -1000;
                 can_jump_key_bounce = true;
@@ -2379,7 +2379,7 @@ void HandleEnemyPlayerCollisionKZ(int enemy_index)
     {
         switch(EnemyType[enemy_index])
         {
-            case EEnemyType::SA3_FLYING_SHELLED_JIEN:
+            case EEnemyType::SA3_FLYING_SHELL_JIEN:
                 PlayerHealth = 0;
                 break;
             
@@ -2512,7 +2512,7 @@ void ClearAllEnemies()
         EnemyGrounded[i] = 0;
 
         //the player will ignore a extremely high block type
-        EnemyType[i] = EEnemyType::BALL;
+        EnemyType[i] = EEnemyType::JIEN;
 
         EnemySubType[i] = EEnemySubType::NONE;
 
@@ -2532,7 +2532,7 @@ void ClearAllEnemies()
         //the player will ignore a extremely high block type
         EnemyAppearTimer[i] = 0;
 
-        EnemyAppearType[i] = EEnemyType::BALL;
+        EnemyAppearType[i] = EEnemyType::JIEN;
         EnemyAppearSubType[i] = EEnemySubType::NONE;
 
         EnemyAppearMustPlace[i] = 1;
@@ -2590,7 +2590,7 @@ void CreateEnemyLegacy(
             EnemySizeY[EnemyCount] = EnemyDefaultSizeY[(int)EnemyType[EnemyCount]];
 
             // 大砲音 (Cannon sound)
-            if (EntityType == EEnemyType::BALL_ROCKET && CheckSoundMem(Sounds[10]) == 0)
+            if (EntityType == EEnemyType::CANNON_JIEN && CheckSoundMem(Sounds[10]) == 0)
             {
                 PlaySound(Sounds[10]);
             }

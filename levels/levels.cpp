@@ -57,7 +57,7 @@ void stagecls()
 		EnemyVelX[t] = 0;
 		EnemyVelY[t] = 1;
 		EnemyMovementType[t] = 0;
-		EnemyType[t] = EEnemyType::BALL;
+		EnemyType[t] = EEnemyType::JIEN;
 		EnemySubType[t] = EEnemySubType::NONE;
 		EnemyFloatingTimer[t] = 0;
 		EnemyAITimer[t] = 0;
@@ -196,11 +196,11 @@ void stage()
 					ObjectCount = 0;
 			}
 			// これなぜかバグの原因ｗ (For some reason, this is the cause of the bug lol)
-			if (local_xx_10 >= BALL && local_xx_10 <= ENEMIES_END)
+			if (local_xx_10 >= JIEN && local_xx_10 <= ENEMIES_END)
 			{
 				EnemyAppearX[EnemyAppearCount] = xx[21] * 100;
 				EnemyAppearY[EnemyAppearCount] = xx[22] * 100;
-				EnemyAppearType[EnemyAppearCount] = (EEnemyType)(xx[23] - BALL);
+				EnemyAppearType[EnemyAppearCount] = (EEnemyType)(xx[23] - JIEN);
 				EnemyAppearCount++;
 				if (EnemyAppearCount >= ENEMY_APPEAR_MAX)
 					EnemyAppearCount = 0;

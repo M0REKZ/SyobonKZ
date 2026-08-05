@@ -30,7 +30,7 @@ void HandleSyobonActionJAMLevels()
         CreateBackground(GAME_X_POS_TO_DOUBLE(6 * 30 * 100), 12, EBackgroundType::GRASS);
         CreateBackground(0, 10, EBackgroundType::HILL);
 
-        CreateEnemy(18, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+        CreateEnemy(18, 12, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
 
         return;
     }
@@ -56,19 +56,19 @@ void HandleSyobonActionJAMLevels()
             CreateBackground(0, 10, EBackgroundType::HILL);
             CreateBackground(11, 12, EBackgroundType::GRASS);
 
-            CreateEnemy(18, 12, 0, 0, EEnemyType::BALL_SPIKY, EEnemySubType::BALL_SPIKY_NORMAL);
+            CreateEnemy(18, 12, 0, 0, EEnemyType::SUPER_JIEN, EEnemySubType::SUPER_JIEN_NORMAL);
 
             BlockCreate(16, 9, EBlockType::ITEM_BLOCK_COIN);
 
             BlockCreate(20, 9, EBlockType::BRICK);
-            BlockCreate(21, 9, EBlockType::ITEM_BLOCK_ENEMY, EBlockSubType::ITEM_BLOCK_ENEMY_SAJAM_BALL_NORMAL_BELOW);
+            BlockCreate(21, 9, EBlockType::ITEM_BLOCK_ENEMY, EBlockSubType::ITEM_BLOCK_ENEMY_SAJAM_JIEN_NORMAL_BELOW);
             BlockCreate(22, 9, EBlockType::BRICK);
             BlockCreate(23, 9, EBlockType::ITEM_BLOCK_COIN);
             BlockCreate(24, 9, EBlockType::BRICK);
 
             ObjectCreate(28 + GAME_X_POS_TO_DOUBLE(500), 11, 2 - GAME_X_POS_TO_DOUBLE(1000), 2, EObjectType::VERTICAL_PIPE_BODY, EObjectSubType::NONE);
             ObjectCreate(28, 11, 2, 1, EObjectType::BLACK_OUTLINE_PIPE_PART, EObjectSubType::NONE);
-            ObjectCreate(28, 0, 2, 10.5, EObjectType::TRIGGER_SEAL_UP, EObjectSubType::NONE);
+            ObjectCreate(28, 0, 2, 10.5, EObjectType::TRIGGER_ARAMAKI_UP, EObjectSubType::NONE);
         }
     }
 

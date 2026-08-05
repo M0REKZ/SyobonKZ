@@ -94,7 +94,7 @@ void HandleSyobonActionOneLevels()
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE, NONE,
              NONE, NONE,
-             NONE, NONE, NONE, NONE, NONE, NONE, BALL, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
+             NONE, NONE, NONE, NONE, NONE, NONE, JIEN, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE,
              NONE, NONE, NONE,
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
@@ -159,7 +159,7 @@ void HandleSyobonActionOneLevels()
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE, NONE,
              NONE, NONE,
-             NONE, NONE, BALL, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
+             NONE, NONE, JIEN, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE,
             CHECKPOINT, NONE,
              NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
@@ -238,19 +238,19 @@ void HandleSyobonActionOneLevels()
             HARD_BLOCK,HARD_BLOCK,
             HARD_BLOCK,HARD_BLOCK,HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE},
-            {NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, BALL, NONE, NONE, NONE, NONE, NONE, BALL, NONE,
+            {NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, JIEN, NONE, NONE, NONE, NONE, NONE, JIEN, NONE,
              NONE,GRASS,
             VERTICAL_PIPE_BODY, NONE,
              NONE, NONE, NONE, NONE,GRASS, STAGEDATE_98, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,
              NONE, NONE,
              NONE, NONE,
-             NONE, NONE,GRASS, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, BALL,
-             NONE, BALL,
+             NONE, NONE,GRASS, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, JIEN,
+             NONE, JIEN,
              NONE, NONE,
-             BALL_SHELLED, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,GRASS, NONE, NONE, NONE,HARD_BLOCK,HARD_BLOCK,
+             SHELL_JIEN, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE,GRASS, NONE, NONE, NONE,HARD_BLOCK,HARD_BLOCK,
             HARD_BLOCK, NONE,
              NONE, NONE,
-            HARD_BLOCK,HARD_BLOCK, NONE, NONE, NONE, NONE, NONE,VERTICAL_PIPE_BODY, NONE, NONE, NONE, NONE, NONE, BALL, NONE, BALL, NONE,
+            HARD_BLOCK,HARD_BLOCK, NONE, NONE, NONE, NONE, NONE,VERTICAL_PIPE_BODY, NONE, NONE, NONE, NONE, NONE, JIEN, NONE, JIEN, NONE,
              NONE,VERTICAL_PIPE_BODY,
              NONE,HARD_BLOCK,HARD_BLOCK,
             HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK, NONE, NONE, NONE, NONE, NONE, NONE,HARD_BLOCK,GRASS, NONE, NONE, NONE,
@@ -313,7 +313,7 @@ void HandleSyobonActionOneLevels()
         BlockCreateLegacy(8 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_DODGE);
         //BlockSubType[BlockCount] = 2; //+KZ: In Syobon Action by Chiku this block gives a useless mushroom
         BlockCreateLegacy(13 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM);
-        BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_BALL_NORMAL;
+        BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_JIEN_NORMAL;
         BlockCreateLegacy(14 * 29, 5 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY);
         BlockCreateLegacy(35 * 29, 8 * 29 - 12, EBlockType::ITEM_BLOCK_POISON_HIDDEN);
         BlockCreateLegacy(47 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_MUSHROOM_2);
@@ -326,14 +326,14 @@ void HandleSyobonActionOneLevels()
         ObjectY[t] = -6000;
         ObjectSizeX[t] = 5000;
         ObjectSizeY[t] = 70000;
-        ObjectType[t] = EObjectType::TRIGGER_SEAL_UP;
+        ObjectType[t] = EObjectType::TRIGGER_ARAMAKI_UP;
         ObjectCount++;
         t = ObjectCount;
         ObjectX[t] = 54 * 29 * 100 - 500;
         ObjectY[t] = -6000;
         ObjectSizeX[t] = 7000;
         ObjectSizeY[t] = 70000;
-        ObjectType[t] = EObjectType::TRIGGER_SEAL_DOWN;
+        ObjectType[t] = EObjectType::TRIGGER_ARAMAKI_DOWN;
         ObjectCount++;
         t = ObjectCount;
         ObjectX[t] = 112 * 29 * 100 + 1000;
@@ -354,7 +354,7 @@ void HandleSyobonActionOneLevels()
         ObjectY[t] = -6000;
         ObjectSizeX[t] = 9000;
         ObjectSizeY[t] = 70000;
-        ObjectType[t] = EObjectType::TRIGGER_SEAL_DOWN;
+        ObjectType[t] = EObjectType::TRIGGER_ARAMAKI_DOWN;
         ObjectCount++;
         // t=sco;sa[t]=77*29*100;sb[t]=(6*29-12)*100-1500;sc[t]=12000;sd[t]=3000;stype[t]=103;sco++;
         t = 28;
@@ -384,8 +384,8 @@ void HandleSyobonActionOneLevels()
         t = EnemyAppearCount;
         EnemyAppearX[t] = 27 * 29 * 100;
         EnemyAppearY[t] = (9 * 29 - 12) * 100;
-        EnemyAppearType[t] = EEnemyType::BALL;
-        EnemyAppearSubType[t] = EEnemySubType::BALL_UNSTOMPABLE; //+KZ: In Syobon Action by Chiku you can not stomp this enemy
+        EnemyAppearType[t] = EEnemyType::JIEN;
+        EnemyAppearSubType[t] = EEnemySubType::JIEN_UNSTOMPABLE; //+KZ: In Syobon Action by Chiku you can not stomp this enemy
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 103 * 29 * 100;
@@ -700,8 +700,8 @@ void HandleSyobonActionOneLevels()
         ObjectY[t] = -6000;
         ObjectSizeX[t] = 5000;
         ObjectSizeY[t] = 70000;
-        ObjectType[t] = EObjectType::TRIGGER_SEAL_UP;
-        ObjectSubType[t] = EObjectSubType::TRIGGER_SEAL_UP_LEVEL_1_2;
+        ObjectType[t] = EObjectType::TRIGGER_ARAMAKI_UP;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_ARAMAKI_UP_LEVEL_1_2;
         ObjectCount++;
 
         // ブロックもどき
@@ -900,7 +900,7 @@ void HandleSyobonActionOneLevels()
             NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
             NONE,NONE,NONE,
             NONE,NONE,
-            NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,BRICK,NONE,NONE,BALL_SPIKY,NONE,BRICK,
+            NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,BRICK,NONE,NONE,SUPER_JIEN,NONE,BRICK,
             NONE,NONE,
             NONE,NONE,NONE,
             NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, STAGEDATE_97,NONE,
@@ -935,7 +935,7 @@ void HandleSyobonActionOneLevels()
             {BRICK,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
             NONE,NONE,HARD_BLOCK,
             NONE,NONE,
-            NONE,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE, BALL_SHELLED,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
+            NONE,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE, SHELL_JIEN,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
             NONE,NONE,
             NONE,NONE,NONE,
             NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -973,10 +973,10 @@ void HandleSyobonActionOneLevels()
             BRICK,BRICK,BRICK,BRICK,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
             NONE,NONE,BRICK,
             NONE},
-            {BRICK,NONE, ITEM_BLOCK_HIDDEN,NONE,NONE,NONE,NONE,NONE,NONE,NONE, BALL,NONE, BALL,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,
+            {BRICK,NONE, ITEM_BLOCK_HIDDEN,NONE,NONE,NONE,NONE,NONE,NONE,NONE, JIEN,NONE, JIEN,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,
             HARD_BLOCK,NONE,
             HARD_BLOCK,NONE,
-             BALL,NONE,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,NONE,NONE,NONE, BALL, BALL, BALL,
+             JIEN,NONE,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,HARD_BLOCK,NONE,NONE,NONE,NONE, JIEN, JIEN, JIEN,
              ITEM_BLOCK_HIDDEN,NONE,
             NONE,NONE,NONE,
             NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, VERTICAL_PIPE_BODY,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -1101,7 +1101,7 @@ void HandleSyobonActionOneLevels()
         ObjectSizeX[t] = 3000;
         ObjectSizeY[t] = 70000;
         ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
-        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_BALL_SPIKY_JUMP;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SUPER_JIEN_JUMP;
         ObjectCount++;
         t = ObjectCount;
         ObjectX[t] = 53 * 29 * 100 + 500;
@@ -1854,7 +1854,7 @@ void HandleSyobonActionOneLevels()
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
                                      NONE,NONE,NONE,
                                      NONE,NONE,
-                                     NONE,NONE,NONE,NONE,BALL_ROCKET,NONE,NONE,NONE,CLOUD_SMALL,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
+                                     NONE,NONE,NONE,NONE,CANNON_JIEN,NONE,NONE,NONE,CLOUD_SMALL,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
                                      NONE,NONE,
                                      NONE,NONE,
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,CLOUD_SMALL,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -1864,7 +1864,7 @@ void HandleSyobonActionOneLevels()
                                      {NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
                                      NONE,NONE,NONE,
                                      NONE,NONE,
-                                     NONE,NONE,NONE,BALL_SPIKY,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
+                                     NONE,NONE,NONE,SUPER_JIEN,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
                                      NONE,NONE,
                                      NONE,NONE,NONE,
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -1876,7 +1876,7 @@ void HandleSyobonActionOneLevels()
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
                                      NONE,NONE,NONE,
                                      NONE,NONE,
-                                     NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, BALL_SHELLED,NONE,NONE,NONE,CLOUD_SMALL,
+                                     NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, SHELL_JIEN,NONE,NONE,NONE,CLOUD_SMALL,
                                      NONE,NONE,
                                      NONE,NONE,
                                      NONE, GOAL_POLE,NONE,NONE,NONE,NONE,NONE,NONE,CLOUD,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE},
@@ -1930,7 +1930,7 @@ void HandleSyobonActionOneLevels()
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
                                      NONE,NONE,
                                      STAGEDATE_97,NONE,NONE,
-                                     NONE,NONE,NONE,NONE,BALL_ROCKET,NONE,NONE,NONE,NONE,NONE,NONE,NONE,STAGEDATE_97,NONE,NONE,NONE,NONE,NONE,
+                                     NONE,NONE,NONE,NONE,CANNON_JIEN,NONE,NONE,NONE,NONE,NONE,NONE,NONE,STAGEDATE_97,NONE,NONE,NONE,NONE,NONE,
                                      NONE,NONE,
                                      NONE,NONE,
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE, SUPER_BOON,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -2060,7 +2060,7 @@ void HandleSyobonActionOneLevels()
                                      NONE,NONE,NONE,NONE,NONE,NONE,GRASS,NONE,NONE,NONE,NONE,BRICK,BRICK,NONE,NONE,NONE,NONE,NONE,
                                      GRASS,NONE,
                                      NONE,NONE,
-                                     NONE,BALL,NONE,BALL,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,
+                                     NONE,JIEN,NONE,JIEN,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,HARD_BLOCK,
                                      NONE,NONE,
                                      NONE,NONE,
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -2273,7 +2273,7 @@ void HandleSyobonActionOneLevels()
         BlockCreateLegacy(18 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
         BlockCreateLegacy(19 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
         BlockCreateLegacy(20 * 29, 14 * 29 - 12, EBlockType::NOTE_BLOCK);
-        BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_BALL_SPIKY_NORMAL;
+        BlockSubType[BlockCount] = EBlockSubType::ITEM_BLOCK_ENEMY_SUPER_JIEN_NORMAL;
         BlockCreateLegacy(61 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_ENEMY); // 5
         BlockCreateLegacy(74 * 29, 9 * 29 - 12, EBlockType::ITEM_BLOCK_HIDDEN);   // 6
 
@@ -2309,8 +2309,8 @@ void HandleSyobonActionOneLevels()
         t = EnemyAppearCount;
         EnemyAppearX[t] = 101 * 29 * 100;
         EnemyAppearY[t] = (5 * 29 - 12) * 100;
-        EnemyAppearType[t] = EEnemyType::BALL_SPIKY;
-        EnemyAppearSubType[t] = EEnemySubType::BALL_SPIKY_JUMPER;
+        EnemyAppearType[t] = EEnemyType::SUPER_JIEN;
+        EnemyAppearSubType[t] = EEnemySubType::SUPER_JIEN_JUMPER;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 146 * 29 * 100;
@@ -2354,7 +2354,7 @@ void HandleSyobonActionOneLevels()
         ObjectSizeX[t] = 9000;
         ObjectSizeY[t] = 70000;
         ObjectType[t] = EObjectType::TRIGGER_GENERIC_1;
-        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_SEAL_DOWN;
+        ObjectSubType[t] = EObjectSubType::TRIGGER_GENERIC_1_SUBTYPE_ARAMAKI_DOWN;
         ObjectCount++;
         // ポール砲
         t = ObjectCount;
@@ -2704,21 +2704,21 @@ void HandleSyobonActionOneLevels()
             },
             {
                BRICK,
-               BALL_SPIKY,
+               SUPER_JIEN,
                NONE,
-               BALL_SPIKY,
+               SUPER_JIEN,
                NONE,
-               BALL_SPIKY,
+               SUPER_JIEN,
                NONE,
-               BALL_SPIKY,
+               SUPER_JIEN,
                NONE,
-               BALL_SPIKY,
+               SUPER_JIEN,
                NONE,
-               BALL_SPIKY,
+               SUPER_JIEN,
                NONE,
-               BALL_SPIKY,
+               SUPER_JIEN,
                NONE,
-               BALL_SPIKY,
+               SUPER_JIEN,
                BRICK,
                NONE,
             },
@@ -3239,7 +3239,7 @@ void HandleSyobonActionOneLevels()
                                      NONE,GROUND_TOP,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
                                      NONE,NONE,NONE,
                                      NONE,NONE,
-                                     NONE,GROUND_TOP,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,BALL,NONE,GROUND_TOP,NONE,NONE,
+                                     NONE,GROUND_TOP,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,JIEN,NONE,GROUND_TOP,NONE,NONE,
                                      GROUND_TOP,NONE,
                                      NONE,NONE,NONE,
                                      NONE,NONE,NONE,NONE,NONE,NONE,NONE,FLAME,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
@@ -3533,13 +3533,13 @@ void HandleSyobonActionOneLevels()
         t = EnemyAppearCount;
         EnemyAppearX[t] = 8 * 29 * 100 - 1400;
         EnemyAppearY[t] = (2 * 29 - 12) * 100 + 500;
-        EnemyAppearType[t] = EEnemyType::FALLING_CAT;
+        EnemyAppearType[t] = EEnemyType::NYASSUN;
         EnemyAppearSubType[t] = EEnemySubType::NONE;
         EnemyAppearCount++;
         t = EnemyAppearCount;
         EnemyAppearX[t] = 42 * 29 * 100 - 1400;
         EnemyAppearY[t] = (-2 * 29 - 12) * 100 + 500;
-        EnemyAppearType[t] = EEnemyType::FALLING_CAT;
+        EnemyAppearType[t] = EEnemyType::NYASSUN;
         EnemyAppearSubType[t] = EEnemySubType::NONE;
         EnemyAppearCount++;
         t = EnemyAppearCount;
