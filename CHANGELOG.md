@@ -5,8 +5,9 @@ Release Changelog
 * Add SyobonKZ credits screen
 * Fix some memory that was not being freed after use
 * Fix some enemies collision with objects
-* Try to make Android app easy to update
+* Try to fix updating installed Android app
 * Fix Kaizo Syobon level 3 mushroom(?) platforms
+* Rename some enemies in enums (level_enums.hpp) to match original names
 
 **SyobonKZ V2.1**
 * Fix wrong graphics for some falling floor traps
