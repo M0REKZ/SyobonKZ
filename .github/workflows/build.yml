@@ -143,13 +143,21 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install ninja-build openssl cmake
+
+      - name: Restore keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > release.jks
       
       # Github ubuntu 22.04 runner already has a android SDK (27 by default)
       - name: Build SyobonKZ
         run: |
           export PATH="$PATH:$ANDROID_HOME/platform-tools/"
           export JAVA_HOME="$JAVA_HOME_17_X64"
-          cd android-project && ./gradlew build
+          cd android-project && ./gradlew build \
+            -Pandroid.injected.signing.store.file=release.jks \
+            -Pandroid.injected.signing.store.password="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" \
+            -Pandroid.injected.signing.key.alias="${{ secrets.ANDROID_KEY_ALIAS }}" \
+            -Pandroid.injected.signing.key.password="${{ secrets.ANDROID_KEY_PASSWORD }}"
 
       - name: Prepare artifact
         run: |
