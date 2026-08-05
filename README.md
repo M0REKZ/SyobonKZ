@@ -100,7 +100,6 @@ Controls (Keyboard)
 * O: Self-destruction
 * Escape: Exit
 * F1: Return to title screen
-* 1-9 (while at the title screen): Select level
 * 0 at the title screen: Mystery Dungeon (there is a possibility that some bugs may occur)
 
 Bugs
