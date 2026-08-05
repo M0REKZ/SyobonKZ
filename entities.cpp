@@ -1647,21 +1647,19 @@ void HandleEnemiesBlocks()
 	// 壁 (Wall)
 	for (tt = 0; tt < OBJECT_MAX; tt++)
 	{
-        if(((int)ObjectType[tt] > 99) &&
+        if(
             (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ?
                 (
-                    (
-                        ObjectType[tt] > EObjectType::LAST_LEGACY_OBJECT &&
-                        (
-                            ObjectType[tt] >= EObjectType::SA3_TRIGGER_START &&
-                            ObjectType[tt] <= EObjectType::SA3_TRIGGER_END
-                        )
-                    )
+                    (((int)ObjectType[tt] > 99) &&
+                    ObjectType[tt] <= EObjectType::LAST_LEGACY_OBJECT)
+                    ||
+                    (ObjectType[tt] >= EObjectType::SA3_TRIGGER_START &&
+                    ObjectType[tt] <= EObjectType::SA3_TRIGGER_END)
                     ||
                     ObjectType[tt] == EObjectType::SA3_FAKE_PIPE_BODY
                 )
                 :
-                true
+                ((int)ObjectType[tt] > 99)
             )
         )
             continue;
