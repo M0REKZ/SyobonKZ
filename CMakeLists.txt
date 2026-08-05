@@ -172,6 +172,7 @@ set(SOURCE_FILES_SYOBON
     levels/sa2.cpp
     levels/sa3.cpp
     levels/sajam.cpp
+    levels/skzcredits.cpp
     levels/skztrueaction.cpp
     lifts.h
     lifts.cpp

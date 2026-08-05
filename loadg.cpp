@@ -82,6 +82,7 @@ void loadg(void)
     Main_GFX_KZ[17] = LoadGraph("res/sa3/brick_brittle.png", false);
     Main_GFX_KZ[18] = LoadGraph("res/sa3/flying_shell_jien_1.png", false);
     Main_GFX_KZ[19] = LoadGraph("res/sa3/flying_shell_jien_2.png", false);
+    Main_GFX_KZ[19] = LoadGraph("res/kz/logo_main.png", false);
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
     Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);

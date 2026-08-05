@@ -70,6 +70,13 @@ const char *pLevelSelectSyobonKZTrueAction[] = {
     nullptr,
 };
 
+const char *pNotActuallyLevelSelectSyobonKZCredits[] = {
+    "Mod By +KZ",
+    "m0rekz.github.io",
+    "Based on OpenSyobonAction RC3",
+    nullptr,
+};
+
 bool OptionsAvailable[] = {
     true,
     true,
@@ -233,6 +240,11 @@ const char ** GetCurrentLabels()
         case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
             return pLevelSelectSyobonKZTrueAction;
             break;
+
+        //SyobonKZ Credits
+        case ESyobonActionGame::SYOBONKZ_CREDITS:
+            return pNotActuallyLevelSelectSyobonKZCredits;
+            break;
         }
     }
     return nullptr;
@@ -278,8 +290,8 @@ void ChangeToPauseState(EPauseState newstate)
             optionavailable = false;
         }
 
-        //level 1 is always available
-        OptionsAvailable[0] = true;
+        //level 1 is always available for games
+        OptionsAvailable[0] = currentGame != ESyobonActionGame::SYOBONKZ_CREDITS ? true : false;
         OptionsAvailable[8] = currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ? true : false;
 
         //check for finished levels
@@ -355,6 +367,8 @@ void ChangeToPauseState(EPauseState newstate)
                         ShowLevelAsFinished[lvl - 1] = true;
                     }
                 }
+                break;
+            case ESyobonActionGame::SYOBONKZ_CREDITS:
                 break;
             }
         }
@@ -482,6 +496,10 @@ void HandlePauseState()
                             SyobonSection = 0;
                         }
                         break;
+
+                    //should never be handled
+                    case ESyobonActionGame::SYOBONKZ_CREDITS:
+                        break;
                     }
 
                     startgame = true;
@@ -505,7 +523,12 @@ void RenderPauseState()
     setc1();
 
     if(PauseState == EPauseState::LEVEL_SELECT)
-        DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Select level:") - 1) * 9) / 2, 30, "Select level:", color);
+    {
+        if(currentGame == ESyobonActionGame::SYOBONKZ_CREDITS)
+            DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Credits:") - 1) * 9) / 2, 30, "Credits:", color);
+        else
+            DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Select level:") - 1) * 9) / 2, 30, "Select level:", color);
+    }
     else
         DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Paused") - 1) * 9) / 2, 50, "Paused", color);
 

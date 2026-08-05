@@ -499,6 +499,10 @@ void Mainprogram()
 				if(PlayerX < 0)
 					PlayerX = 0;
 				break;
+
+			//should be never handled
+			case ESyobonActionGame::SYOBONKZ_CREDITS:
+				break;
 			}
 		} // kscroll
 

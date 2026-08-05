@@ -171,8 +171,11 @@ enum class ESyobonActionGame : int
     KAIZO_SYOBON = 1500,
     SYOBONKZ_TRUE_ACTION = 3000, //+KZ
 
+    //not actually a game
+    SYOBONKZ_CREDITS = 50000, //+KZ
+
     FIRST = SHOBON_NO_ACTION_1_AND_2,
-    LAST = SYOBONKZ_TRUE_ACTION,
+    LAST = SYOBONKZ_CREDITS,
 };
 extern ESyobonActionGame currentGame;
 extern bool SADevGamesEnabled;

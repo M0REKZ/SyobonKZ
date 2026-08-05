@@ -293,6 +293,10 @@ void stagep()
     case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
         HandleSyobonKZTrueActionLevels();
         break;
+
+	case ESyobonActionGame::SYOBONKZ_CREDITS:
+		HandleSyobonKZCredits();
+		break;
     }
 
 } // stagep

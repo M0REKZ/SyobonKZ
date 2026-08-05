@@ -123,7 +123,8 @@ void HandleTitleKeys()
         currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||   \
         (currentGame == ESyobonActionGame::SYOBON_ACTION_JAM && SADevGamesEnabled) ||  \
         currentGame == ESyobonActionGame::KAIZO_SYOBON ||   \
-        (currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION && SADevGamesEnabled)  \
+        (currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION && SADevGamesEnabled) ||  \
+        currentGame == ESyobonActionGame::SYOBONKZ_CREDITS \
     )
 
     static bool change_game_key_pressed = false;
@@ -208,6 +209,10 @@ void UpdateTitleScreen()
 
         case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
             author = "By +KZ";
+            break;
+
+        case ESyobonActionGame::SYOBONKZ_CREDITS:
+            author = "Mod By +KZ";
             break;
         }
 
@@ -340,6 +345,17 @@ void RenderTitleScreen()
             str("You're too slow... ._.", 240 - 8 * 20 / 2, 250);
 
         author_y = 130;
+        setc0();
+        str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
+        break;
+    case ESyobonActionGame::SYOBONKZ_CREDITS:
+
+        drawimage(Main_GFX_KZ[19], 240 - Main_GFX_KZ[13]->w / 2, 80);
+
+        setcolor(0, 0, 0);
+        str("m0rekz.github.io", 240 - 7 * 20 / 2, 278);
+
+        author_y = 220;
         setc0();
         str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
         break;

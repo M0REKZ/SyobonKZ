@@ -22,5 +22,6 @@ void HandleSyobonActionJAMLevels();
 //+KZ
 void StageClear();
 void HandleSyobonKZTrueActionLevels();
+void HandleSyobonKZCredits();
 
 #endif

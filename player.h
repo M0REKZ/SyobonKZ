@@ -2,6 +2,8 @@
 #ifndef SYOBON_PLAYER_H
 #define SYOBON_PLAYER_H
 
+#include <level_enums.hpp>
+
 //プレイヤー (Player)
 // mainmsgtype is not really player related, moved above (and renamed)
 // @attention +KZ: int ma is now int PlayerX
