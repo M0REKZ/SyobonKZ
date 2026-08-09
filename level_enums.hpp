@@ -592,6 +592,9 @@ enum class EBlockSubType : int
     
     //+KZ
     SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN = 0,
+
+    CLOUD_BLOCK_NORMAL = 0,
+    CLOUD_BLOCK_SYOBONKZ_EYES_OPEN = 1, //for better graphics (sprite was not used in original games)
 };
 
 enum class EObjectSubType : int

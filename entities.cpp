@@ -8,6 +8,7 @@
 #include "lifts.h"
 #include "player.h"
 #include "objects.h"
+#include "config.h"
 
 //敵キャラ
 int EnemyCount;
@@ -2007,8 +2008,44 @@ void RenderEnemies()
                     }
                     else //Syobon Action
                     {
-                        drawimage(Sliced_GFX[(int)EnemyType[t]][3],
-                                xx[0] / 100, xx[1] / 100);
+                        bool spriteoverriden = false;
+                        if(SyobonGlobalConfig.BetterGraphics)
+                        {
+                            if(EnemyType[t] == EEnemyType::JIEN)
+                            {
+                                drawimage(Main_GFX_KZ[21], xx[0] / 100, xx[1] / 100 + 2);
+                                spriteoverriden = true;
+                            }
+                            else if(EnemyType[t] == EEnemyType::SHELL_JIEN)
+                            {
+                                drawimage(Main_GFX_KZ[22], xx[0] / 100, xx[1] / 100 + 2);
+                                spriteoverriden = true;
+                            }
+                            else if(EnemyType[t] == EEnemyType::SUPER_JIEN)
+                            {
+                                if(GetNowCount() % 2000 < 1000)
+                                {
+                                    drawimage(Main_GFX_KZ[23], xx[0] / 100, xx[1] / 100 + 1);
+                                }
+                                else
+                                {
+                                    drawimage(Main_GFX_KZ[24], xx[0] / 100, xx[1] / 100 + 1);
+                                }
+                                spriteoverriden = true;
+                            }
+                            else if(EnemyType[t] == EEnemyType::KUMA)
+                            {
+                                if(GetNowCount() % 1000 < 500)
+                                {
+                                    drawimage(Main_GFX_KZ[25], xx[0] / 100 + (mirror ? 3 : 4), xx[1] / 100 + 1);
+                                    spriteoverriden = true;
+                                }                           
+                            }
+                        }
+                        
+                        if(!spriteoverriden)
+                            drawimage(Sliced_GFX[(int)EnemyType[t]][3],
+                                    xx[0] / 100, xx[1] / 100);
                     }
                 }
             }
@@ -2017,11 +2054,25 @@ void RenderEnemies()
             {
                 if (EnemyAITimer[t] >= 10 && EnemyAITimer[t] <= 19 || EnemyAITimer[t] >= 100 && EnemyAITimer[t] <= 119 || EnemyAITimer[t] >= 200)
                 {
-                    drawimage(Sliced_GFX[150][3], xx[0] / 100, xx[1] / 100);
+                    if(SyobonGlobalConfig.BetterGraphics)
+                    {
+                        drawimage(Main_GFX_KZ[27], xx[0] / 100, xx[1] / 100);
+                    }
+                    else
+                    {
+                        drawimage(Sliced_GFX[150][3], xx[0] / 100, xx[1] / 100);
+                    }
                 }
                 else
                 {
-                    drawimage(Sliced_GFX[6][3], xx[0] / 100, xx[1] / 100);
+                    if(SyobonGlobalConfig.BetterGraphics)
+                    {
+                        drawimage(Main_GFX_KZ[26], xx[0] / 100, xx[1] / 100);
+                    }
+                    else
+                    {
+                        drawimage(Sliced_GFX[6][3], xx[0] / 100, xx[1] / 100);
+                    }
                 }
             }
             // モララー (Molalla)

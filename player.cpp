@@ -801,6 +801,15 @@ void HandlePlayerBlocks()
     xx[15] = 0;
     for (t = 0; t < BLOCK_MAX; t++)
     {
+
+        if(SyobonGlobalConfig.BetterGraphics)
+        {
+            if(BlockType[t] == EBlockType::CLOUD_BLOCK)
+            {
+                BlockSubType[t] = EBlockSubType::CLOUD_BLOCK_NORMAL;
+            }
+        }
+
         xx[0] = 200;
         xx[1] = 3000;
         xx[2] = 1000;
@@ -913,6 +922,15 @@ void HandlePlayerBlocks()
                                         PlayerAITimer = 0;
                                     }
                                 }
+
+                                if(SyobonGlobalConfig.BetterGraphics)
+                                {
+                                    if(BlockType[t] == EBlockType::CLOUD_BLOCK)
+                                    {
+                                        BlockSubType[t] = EBlockSubType::CLOUD_BLOCK_SYOBONKZ_EYES_OPEN;
+                                    }
+                                }
+
                                 if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                                 {
                                     switch(BlockType[t])

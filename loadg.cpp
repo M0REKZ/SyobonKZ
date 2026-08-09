@@ -82,7 +82,14 @@ void loadg(void)
     Main_GFX_KZ[17] = LoadGraph("res/sa3/brick_brittle.png", false);
     Main_GFX_KZ[18] = LoadGraph("res/sa3/flying_shell_jien_1.png", false);
     Main_GFX_KZ[19] = LoadGraph("res/sa3/flying_shell_jien_2.png", false);
-    Main_GFX_KZ[19] = LoadGraph("res/kz/logo_main.png", false);
+    Main_GFX_KZ[20] = LoadGraph("res/kz/logo_main.png", false);
+    Main_GFX_KZ[21] = LoadGraph("res/better/jien_super_shobon.png", false);
+    Main_GFX_KZ[22] = LoadGraph("res/better/shell_jien_super_shobon.png", false);
+    Main_GFX_KZ[23] = LoadGraph("res/better/super_jien_super_shobon_1.png", false);
+    Main_GFX_KZ[24] = LoadGraph("res/better/super_jien_super_shobon_2.png", false);
+    Main_GFX_KZ[25] = LoadGraph("res/better/kuma_super_shobon_2.png", false);
+    Main_GFX_KZ[26] = LoadGraph("res/better/defrag_super_shobon_1.png", false);
+    Main_GFX_KZ[27] = LoadGraph("res/better/defrag_super_shobon_2.png", false);
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
     Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);
@@ -91,6 +98,7 @@ void loadg(void)
     Sliced_GFX_KZ[4] = DerivationGraph(38, 0, 19, 19, Main_GFX_KZ[11]);
     Sliced_GFX_KZ[5] = DerivationGraph(32, 35, 30, 30, Main_GFX[2]);
     Sliced_GFX_KZ[6] = DerivationGraph( 0, 182, 40, 60, Main_GFX[4]); //Syobon Action 1 Checkpoint flag
+    Sliced_GFX_KZ[7] = DerivationGraph(33 * 8, 0, 30, 30, Main_GFX[1]); //Open eyes cloud block
 
     // プレイヤー読み込み (Player loading)
     Sliced_GFX[40][0] = DerivationGraph(0, 0, 30, 36, Main_GFX[0]);

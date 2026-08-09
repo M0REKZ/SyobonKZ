@@ -38,6 +38,7 @@ struct SConfig
 {
     std::set<SSyobonGameLevel> LevelsFinished;
     int Fullscreen = false;
+    int BetterGraphics = true; //use some better graphics/animations like in other versions
 };
 
 extern SConfig SyobonGlobalConfig;

@@ -2,6 +2,7 @@
 #include "global_vars.h"
 #include "loadg.h"
 #include "blocks.h"
+#include "config.h"
 
 //ブロック
 int BlockCount;
@@ -39,7 +40,19 @@ void RenderBlocks()
             if ((int)BlockType[t] < 100)
             {
                 xx[6] = (int)BlockType[t] + xx[9];
-                drawimage(Sliced_GFX[xx[6]][1], xx[0] / 100, xx[1] / 100);
+
+                if(
+                    SyobonGlobalConfig.BetterGraphics &&
+                    BlockType[t] == EBlockType::CLOUD_BLOCK &&
+                    BlockSubType[t] == EBlockSubType::CLOUD_BLOCK_SYOBONKZ_EYES_OPEN
+                )
+                {
+                    drawimage(Sliced_GFX_KZ[7], xx[0] / 100, xx[1] / 100);
+                }
+                else
+                {
+                    drawimage(Sliced_GFX[xx[6]][1], xx[0] / 100, xx[1] / 100);
+                }
             }
 
             if (BlockSubType[t] != EBlockSubType::ITEM_BLOCK_UNKNOWN_10)

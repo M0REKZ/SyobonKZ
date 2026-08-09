@@ -104,6 +104,8 @@ void stagecls()
 // ステージロード (Stage Load)
 void stage()
 {
+	//some globals may keep their value through levels, which may not be wanted
+	ClearOtherGamesGlobalData();
 
 	// fzx=6000*100;
 	scrollx = 3600 * 100;
@@ -300,6 +302,18 @@ void stagep()
     }
 
 } // stagep
+
+void ClearOtherGamesGlobalData()
+{
+	static ESyobonActionGame prevgame = ESyobonActionGame::SYOBONKZ_CREDITS;
+
+	if(prevgame != currentGame)
+	{
+		stagepoint = 0; //used for red note block trap
+
+		prevgame = currentGame;
+	}
+}
 
 void StageClear()
 {

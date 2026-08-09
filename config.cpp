@@ -50,6 +50,7 @@ void SaveConfig()
             file << "LEVEL_FINISHED " << (int)LevelFinished.Game <<  " " << LevelFinished.World <<  " " << LevelFinished.Level << std::endl;
         }
         file << "FULLSCREEN " << (int)SyobonKZIsFullscreen() << std::endl;
+        file << "BETTER_GRAPHICS " << (int)SyobonGlobalConfig.BetterGraphics << std::endl;
 
         file.close();
 
@@ -90,6 +91,10 @@ void LoadConfig()
             if(strstr(line.c_str(), "FULLSCREEN"))
             {
                 sscanf(line.c_str(), "FULLSCREEN %d", &SyobonGlobalConfig.Fullscreen);
+            }
+            if(strstr(line.c_str(), "BETTER_GRAPHICS"))
+            {
+                sscanf(line.c_str(), "BETTER_GRAPHICS %d", &SyobonGlobalConfig.BetterGraphics);
             }
         }
 

@@ -350,7 +350,7 @@ void RenderTitleScreen()
         break;
     case ESyobonActionGame::SYOBONKZ_CREDITS:
 
-        drawimage(Main_GFX_KZ[19], 240 - Main_GFX_KZ[13]->w / 2, 80);
+        drawimage(Main_GFX_KZ[20], 240 - Main_GFX_KZ[13]->w / 2, 80);
 
         setcolor(0, 0, 0);
         str("m0rekz.github.io", 240 - 7 * 20 / 2, 278);

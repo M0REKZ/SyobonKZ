@@ -20,6 +20,7 @@ void HandleKaizoSyobonLevels();
 void HandleSyobonActionJAMLevels();
 
 //+KZ
+void ClearOtherGamesGlobalData(); //some globals may keep their value through levels
 void StageClear();
 void HandleSyobonKZTrueActionLevels();
 void HandleSyobonKZCredits();

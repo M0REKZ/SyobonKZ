@@ -21,8 +21,12 @@ const char *pTitleLabels[] = {
     nullptr,
 };
 
+const char *pBetterSpritesONText = "Use better sprites: ON";
+const char *pBetterSpritesOFFText = "Use better sprites: OFF";
+
 const char *pOptionsLabels[] = {
     "Toggle fullscreen",
+    pBetterSpritesONText,
     "Save changes",
     nullptr,
 };
@@ -386,6 +390,12 @@ void ChangeToPauseState(EPauseState newstate)
 
 void HandlePauseState()
 {
+    //TODO: this should be done only 1 time, not every loop
+    if(PauseState == EPauseState::OPTIONS)
+    {
+        pOptionsLabels[1] = SyobonGlobalConfig.BetterGraphics ? pBetterSpritesONText : pBetterSpritesOFFText;
+    }
+
     HandlePauseKeys();
 
     if(Selected)
@@ -433,6 +443,14 @@ void HandlePauseState()
                 else if(SELECTED_LABEL("Toggle fullscreen"))
                 {
                     SyobonKZToggleFullscreen();
+                }
+                else if(SELECTED_LABEL("Use better sprites: ON"))
+                {
+                    SyobonGlobalConfig.BetterGraphics = false;
+                }
+                else if(SELECTED_LABEL("Use better sprites: OFF"))
+                {
+                    SyobonGlobalConfig.BetterGraphics = true;
                 }
             }
             else if(PauseState == EPauseState::LEVEL_SELECT)
