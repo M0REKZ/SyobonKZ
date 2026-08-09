@@ -307,7 +307,7 @@ enum class EObjectType : int
     TRIGGER_PLATFORM_SPLIT = 105,
 
     // Makes lava come out of the pipe in 1-2
-    TRIGGER_LAVA_SPAWNER = 180,
+    LAVA_SPAWNER = 180,
 
     CASTLE_BRICKS = 200,
 

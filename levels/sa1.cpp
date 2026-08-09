@@ -1164,7 +1164,7 @@ void HandleSyobonActionOneLevels()
         ObjectY[t] = (9 * 29 - 12) * 100 - 2000;
         ObjectSizeX[t] = 3000;
         ObjectSizeY[t] = 3000;
-        ObjectType[t] = EObjectType::TRIGGER_LAVA_SPAWNER;
+        ObjectType[t] = EObjectType::LAVA_SPAWNER;
         ObjectSubType[t] = EObjectSubType::NONE;
         ObjectVelY[t] = 0;
         ObjectAI[t] = 48;

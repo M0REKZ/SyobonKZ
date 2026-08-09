@@ -2125,7 +2125,7 @@ void HandlePlayerWalls()
                     }
                 }
 
-                if (ObjectType[t] == EObjectType::TRIGGER_LAVA_SPAWNER)
+                if (ObjectType[t] == EObjectType::LAVA_SPAWNER)
                 {
                     ObjectVelY[t]++;
                     if (ObjectVelY[t] >= ObjectAI[t])
