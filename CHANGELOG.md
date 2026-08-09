@@ -1,6 +1,10 @@
 Release Changelog
 -----------------
 
+**SyobonKZ V2.3**
+* Add optional improved sprites (enabled by default)
+* Fix a variable used by red note block warp that was not being reset when changing game
+
 **SyobonKZ V2.2**
 * Add SyobonKZ credits screen
 * Fix some memory that was not being freed after use
