@@ -415,8 +415,8 @@ void Mainprogram()
 				LiftX[t] = PlayerX + fx;
 				LiftY[t] = (13 * 29 - 12) * 100;
 				LiftSizeX[t] = 30 * 100;
-				LiftInteractType[t] = 0;
-				LiftMovementType[t] = 0;
+				LiftInteractType[t] = ELiftInteractType::NONE;
+				LiftMovementType[t] = ELiftMovementType::NONE;
 				LiftVelY[t] = 0;
 				LiftType[t] = ELiftType::YELLOW;
 				LiftCount++;

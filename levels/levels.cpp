@@ -136,7 +136,7 @@ void stage()
 				LiftX[LiftCount] = xx[21] * 100;
 				LiftY[LiftCount] = xx[22] * 100;
 				LiftSizeX[LiftCount] = 3000;
-				LiftInteractType[LiftCount] = 0;
+				LiftInteractType[LiftCount] = ELiftInteractType::NONE;
 				LiftCount++;
 				if (LiftCount >= LIFT_MAX)
 					LiftCount = 0;

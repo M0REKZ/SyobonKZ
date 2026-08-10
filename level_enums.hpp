@@ -676,4 +676,23 @@ enum class EObjectSubType : int
     SA3_TRIGGER_STONE_BALL_WALL_LEVEL_1_1_FINISHED = 2,
 };
 
+enum class ELiftInteractType : int
+{
+    NONE = 0,
+    TRIGGER_VERTICAL_SPEEDUP = 1, //used in 1-2, touching them will speedup all lifts with LiftTouchSpeedUp set to true (or lifts 10 and 11 in the original game)
+    SPIKES_BELOW = 2, // トゲ(下) (Spikes (below)) (unused)
+};
+
+enum class ELiftMovementType : int
+{
+    NONE = 0,
+    FALL = 1,
+    SA_ALL_STARS_HORIZONTAL_MOVEMENT = 2, //used in some All Stars games
+    SA_ALL_STARS_VERTICAL_MOVEMENT = 3, //used in some All Stars games
+    HORIZONTAL_MOVEMENT_UNUSED = 4, //unused
+    WRAP_VERTICALLY = 5,
+    FALL_UNUSED = 6, //unused
+    BOUNCY_UNUSED = 7, //unused
+};
+
 #endif

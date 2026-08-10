@@ -10,7 +10,8 @@
 //リフト
 int LiftCount;
 int LiftX[LIFT_MAX], LiftY[LIFT_MAX], LiftSizeX[LIFT_MAX], LiftVelY[LIFT_MAX], LiftFrictionY[LIFT_MAX];
-int LiftInteractType[LIFT_MAX], LiftMovementType[LIFT_MAX];
+ELiftInteractType LiftInteractType[LIFT_MAX];
+ELiftMovementType LiftMovementType[LIFT_MAX];
 ELiftType LiftType[LIFT_MAX];
 int LiftDirection[LIFT_MAX], LiftON[LIFT_MAX];
 int LiftVelX[LIFT_MAX], LiftPlayerFatigueX[LIFT_MAX];
@@ -52,12 +53,12 @@ void HandleLifts()
             switch (LiftMovementType[t])
             {
 
-            case 1:
+            case ELiftMovementType::FALL:
                 if (LiftON[t] == 1)
                     LiftFrictionY[t] = 60;
                 break;
 
-            case 2:
+            case ELiftMovementType::SA_ALL_STARS_HORIZONTAL_MOVEMENT:
                 //from SA: All Stars
                 if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                 {
@@ -79,7 +80,7 @@ void HandleLifts()
                 }
                 break;
 
-            case 3:
+            case ELiftMovementType::SA_ALL_STARS_VERTICAL_MOVEMENT:
                 //from SA: All Stars
                 if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                 {
@@ -101,7 +102,7 @@ void HandleLifts()
                 }
                 break;
 
-            case 5:
+            case ELiftMovementType::WRAP_VERTICALLY:
                 if (LiftPlayerFatigueX[t] == 0)
                 {
                     LiftDirection[t] = 0;
@@ -120,14 +121,16 @@ void HandleLifts()
                 }
                 break;
 
-            case 6:
+            case ELiftMovementType::FALL_UNUSED:
                 if (LiftON[t] == 1)
                     LiftFrictionY[t] = 40;
                 break;
 
-            case 7:
+            case ELiftMovementType::BOUNCY_UNUSED:
                 break;
 
+            default:
+                break;
             } // sw
 
             // 乗ったとき (When I got on)
@@ -137,7 +140,7 @@ void HandleLifts()
                 {
                     PlayerY = xx[9] - PlayerSizeY + 100;
 
-                    if (LiftInteractType[t] == 1)
+                    if (LiftInteractType[t] == ELiftInteractType::TRIGGER_VERTICAL_SPEEDUP)
                     {
                         if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                         {
@@ -166,10 +169,14 @@ void HandleLifts()
                     }
 
                     // 落下 (Falling)
-                    if ((LiftMovementType[t] == 1) && LiftON[t] == 0)
+                    if ((LiftMovementType[t] == ELiftMovementType::FALL) && LiftON[t] == 0)
                         LiftON[t] = 1;
 
-                    if (LiftMovementType[t] == 1 && LiftON[t] == 1 || LiftMovementType[t] == 3 || LiftMovementType[t] == 5)
+                    if (
+                        LiftMovementType[t] == ELiftMovementType::FALL && LiftON[t] == 1 ||
+                        LiftMovementType[t] == ELiftMovementType::SA_ALL_STARS_VERTICAL_MOVEMENT ||
+                        LiftMovementType[t] == ELiftMovementType::WRAP_VERTICALLY
+                    )
                     {
                         PlayerY += LiftVelY[t];
                     }
@@ -177,7 +184,7 @@ void HandleLifts()
                     //From Syobon Action: All Stars
                     if (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
                     {
-                        if(LiftMovementType[t] == 2)
+                        if(LiftMovementType[t] == ELiftMovementType::SA_ALL_STARS_HORIZONTAL_MOVEMENT)
                         {
                             if (LiftDirection[t] != 0)
                             {
@@ -190,7 +197,7 @@ void HandleLifts()
                         }
                     }
 
-                    if (LiftMovementType[t] == 7)
+                    if (LiftMovementType[t] == ELiftMovementType::BOUNCY_UNUSED)
                     {
                         if (actaon[2] != 1)
                         {
@@ -268,7 +275,7 @@ void HandleLifts()
                 // トゲ(下) (Spikes (below))
                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0] && PlayerY > xx[9] - xx[1] / 2 && PlayerY < xx[9] + xx[1] / 2)
                 {
-                    if (LiftInteractType[t] == 2)
+                    if (LiftInteractType[t] == ELiftInteractType::SPIKES_BELOW)
                     {
                         if (PlayerVelY < 0)
                         {
@@ -282,21 +289,21 @@ void HandleLifts()
                     }
                 }
                 // 落下 (Falling)
-                if (LiftMovementType[t] == 6 && PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0])
+                if (LiftMovementType[t] == ELiftMovementType::FALL_UNUSED && PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0])
                 {
                     LiftON[t] = 1;
                 }
 
             } //!
 
-            if (LiftMovementType[t] == 2 || LiftMovementType[t] == 4)
+            if (LiftMovementType[t] == ELiftMovementType::SA_ALL_STARS_HORIZONTAL_MOVEMENT || LiftMovementType[t] == ELiftMovementType::HORIZONTAL_MOVEMENT_UNUSED)
             {
                 if (LiftDirection[t] == 0)
                     LiftX[t] -= LiftVelX[t];
                 if (LiftDirection[t] == 1)
                     LiftX[t] += LiftVelX[t];
             }
-            if (LiftMovementType[t] == 3 || LiftMovementType[t] == 5)
+            if (LiftMovementType[t] == ELiftMovementType::SA_ALL_STARS_VERTICAL_MOVEMENT || LiftMovementType[t] == ELiftMovementType::WRAP_VERTICALLY)
             {
                 if (LiftDirection[t] == 0)
                     LiftY[t] -= LiftVelX[t];
@@ -401,7 +408,7 @@ void RenderLifts()
     } // t
 }
 
-int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Type, int MovementType ,int index)
+int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Type, ELiftMovementType MovementType ,int index)
 {
     PosX *= BLOCK_DEFAULT_SIZE;
     PosY *= BLOCK_DEFAULT_SIZE;
@@ -430,7 +437,7 @@ int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Ty
         LiftSizeX[index] = DOUBLE_TO_GAME_X_POS(Width);
         LiftMovementType[index] = MovementType;
 
-        LiftInteractType[index] = 0;
+        LiftInteractType[index] = ELiftInteractType::NONE;
         LiftVelX[index] = 0;
         LiftDirection[index] = 0;
         LiftFrictionY[index] = 0;
@@ -459,8 +466,8 @@ void ClearAllLifts()
 		LiftON[i] = 0;
 		LiftPlayerFatigueX[i] = 0;
 		LiftType[i] = ELiftType::YELLOW;
-        LiftInteractType[i] = 0;
-        LiftMovementType[i] = 0;
+        LiftInteractType[i] = ELiftInteractType::NONE;
+        LiftMovementType[i] = ELiftMovementType::NONE;
 
         LiftTimer[i] = 0;
         LiftTimerMax[i] = 0;

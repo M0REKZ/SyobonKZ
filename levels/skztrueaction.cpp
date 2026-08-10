@@ -121,10 +121,10 @@ void HandleSyobonKZTrueActionLevels()
             BlockCreate(49, 6, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
             BlockCreate(50, 6, EBlockType::SYOBONKZ_HIDDEN_BLOCK, EBlockSubType::SYOBONKZ_HIDDEN_BLOCK_SPIKE_DOWN);
 
-            CreateLift(61, 10, 1.5, 0, ELiftType::BREAKING, 0);
+            CreateLift(61, 10, 1.5, 0, ELiftType::BREAKING, ELiftMovementType::NONE);
 
             QueueEnemyAppear(67.3, 8.5, EEnemyType::EVIL_CLOUD, EEnemySubType::EVIL_CLOUD_HIDDEN);
-            CreateLift(67.75, 10, 1, 0, ELiftType::BREAKING, 0);
+            CreateLift(67.75, 10, 1, 0, ELiftType::BREAKING, ELiftMovementType::NONE);
 
             BlockCreate(71, 10, EBlockType::NOTE_BLOCK, EBlockSubType::NOTE_BLOCK_WHITE_VISIBLE);
 

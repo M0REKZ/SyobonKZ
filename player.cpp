@@ -1167,7 +1167,7 @@ void HandlePlayerBlocks()
                         PlayerX + PlayerSizeX > xx[8] - 400 && PlayerX < xx[8] + xx[1])
                     {
                         BlockX[t] = -800000; // PlaySound(Sounds[4]);
-                        LiftMovementType[20] = 1;
+                        LiftMovementType[20] = ELiftMovementType::FALL;
                         LiftON[20] = 1;
                         SyobonKZHaltMusic();
                         PlayerState = EPlayerState::SWORD_ENDING_ANIMATION;

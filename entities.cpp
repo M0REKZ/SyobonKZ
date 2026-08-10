@@ -1903,7 +1903,7 @@ void HandleEnemiesBlocks()
 			if (EnemyY[t] - fy > xx[9] - xx[0] * 2 - 2000 && EnemyY[t] - fy < xx[9] + xx[1] - xx[0] * 2 + 2000 && EnemyX[t] + EnemySizeX[t] - fx > xx[8] - 400 && EnemyX[t] - fx < xx[8] + xx[1])
 			{
 				BlockX[tt] = -800000; // PlaySound(Sounds[4]);
-				LiftMovementType[20] = 1;
+				LiftMovementType[20] = ELiftMovementType::FALL;
 				LiftON[20] = 1;
 			}
 		}

@@ -19,10 +19,10 @@ extern int LiftVelY[LIFT_MAX];
 extern int LiftFrictionY[LIFT_MAX];
 // @attention +KZ int srtype[srmax] is now int LiftInteractType[srmax]
 // +KZ: Only type 0 and 1 are used, seems that 2 kills the player but is not used anywhere
-extern int LiftInteractType[LIFT_MAX];
+extern ELiftInteractType LiftInteractType[LIFT_MAX];
 //extern int srgtype[srmax]; //+KZ: unused
 // @attention +KZ int sracttype[srmax] is now int LiftMovementType[srmax]
-extern int LiftMovementType[LIFT_MAX];
+extern ELiftMovementType LiftMovementType[LIFT_MAX];
 // @attention +KZ int srsp[srmax] is now ELiftType LiftType[srmax]
 // +KZ: This is confusing, there are like 3 or more variables indicating the type of the lifts,
 extern ELiftType LiftType[LIFT_MAX];
@@ -51,7 +51,7 @@ extern bool LiftTouchSpeedUp[LIFT_MAX];
 void HandleLifts();
 void RenderLifts();
 
-int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Type, int MovementType ,int index = -1);
+int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Type, ELiftMovementType MovementType ,int index = -1);
 
 //+KZ: clear all lifts from memory
 void ClearAllLifts();

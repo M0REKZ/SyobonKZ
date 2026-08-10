@@ -1371,8 +1371,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 1 * 29 * 100;
         LiftY[LiftCount] = (10 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 5 * 3000;
-        LiftInteractType[LiftCount] = 0;
-        LiftMovementType[LiftCount] = 1;
+        LiftInteractType[LiftCount] = ELiftInteractType::NONE;
+        LiftMovementType[LiftCount] = ELiftMovementType::FALL;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
@@ -1380,8 +1380,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 18 * 29 * 100;
         LiftY[LiftCount] = (4 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 3 * 3000;
-        LiftInteractType[LiftCount] = 0;
-        LiftMovementType[LiftCount] = 0;
+        LiftInteractType[LiftCount] = ELiftInteractType::NONE;
+        LiftMovementType[LiftCount] = ELiftMovementType::NONE;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
@@ -1389,8 +1389,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 35 * 29 * 100;
         LiftY[LiftCount] = (4 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 5 * 3000;
-        LiftInteractType[LiftCount] = 0;
-        LiftMovementType[LiftCount] = 0;
+        LiftInteractType[LiftCount] = ELiftInteractType::NONE;
+        LiftMovementType[LiftCount] = ELiftMovementType::NONE;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
@@ -1398,8 +1398,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 35 * 29 * 100;
         LiftY[LiftCount] = (8 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 5 * 3000;
-        LiftInteractType[LiftCount] = 0;
-        LiftMovementType[LiftCount] = 0;
+        LiftInteractType[LiftCount] = ELiftInteractType::NONE;
+        LiftMovementType[LiftCount] = ELiftMovementType::NONE;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PILLAR;
         LiftCount++;
@@ -1407,8 +1407,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 94 * 29 * 100;
         LiftY[LiftCount] = (6 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 3 * 3000;
-        LiftInteractType[LiftCount] = 0;
-        LiftMovementType[LiftCount] = 0;
+        LiftInteractType[LiftCount] = ELiftInteractType::NONE;
+        LiftMovementType[LiftCount] = ELiftMovementType::NONE;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::BREAKING;
         LiftCount++;
@@ -2129,8 +2129,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 74 * 29 * 100 - 1500;
         LiftY[LiftCount] = (7 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 2 * 3000;
-        LiftInteractType[LiftCount] = 0;
-        LiftMovementType[LiftCount] = 1;
+        LiftInteractType[LiftCount] = ELiftInteractType::NONE;
+        LiftMovementType[LiftCount] = ELiftMovementType::FALL;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::YELLOW;
         LiftCount = 20;
@@ -2138,8 +2138,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 97 * 29 * 100;
         LiftY[LiftCount] = (12 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 12 * 3000;
-        LiftInteractType[LiftCount] = 0;
-        LiftMovementType[LiftCount] = 0;
+        LiftInteractType[LiftCount] = ELiftInteractType::NONE;
+        LiftMovementType[LiftCount] = ELiftMovementType::NONE;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::GRAY;
         LiftCount += 1;
@@ -2477,8 +2477,8 @@ void HandleSyobonActionTwoLevels()
         LiftX[LiftCount] = 41 * 29 * 100;
         LiftY[LiftCount] = (3 * 29 - 12) * 100;
         LiftSizeX[LiftCount] = 3 * 3000;
-        LiftInteractType[LiftCount] = 0;
-        LiftMovementType[LiftCount] = 0;
+        LiftInteractType[LiftCount] = ELiftInteractType::NONE;
+        LiftMovementType[LiftCount] = ELiftMovementType::NONE;
         LiftVelY[LiftCount] = 0;
         LiftType[LiftCount] = ELiftType::PUSH_RIGHT;
         LiftCount = 0;
