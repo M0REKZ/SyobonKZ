@@ -20,15 +20,16 @@
 >
 > *+KZ*
 
-SyobonKZ is a cross-platform port of the unforgiving Japanese platformer ***Syobon Action***.
+SyobonKZ is a cross-platform port of the unforgiving Japanese platformer ***Shobon's Action***, a rage parody of a very famous NES game.
 
 It is also known as:
+* Syobon Action
 * しょぼんのアクション
 * Cat Mario
-* Shobon no Action
 * Neko Mario
+* Gato Bros
 * Cat MeOUCHio
-* *and other names.....*
+* *and many other names.....*
 
 Included games:
 -----
@@ -41,13 +42,11 @@ SyobonKZ includes the following game remakes/ports:
 * Kaizo Syobon:
     * Kaizo Syobon by Zokalal, directly ported from Syobon Action: All Stars!
 
-The following are currently work in progress, but you can use the ```--dev-games``` parameter to try the current state (expect bugs and missing things):
+The following are currently work in progress (depending on my time and motivation, feel free to contribute), you can use the ```--dev-games``` parameter to try the current state (expect bugs and missing things):
 * Syobon Action 3 (Remake):
     * Custom sequel made by DakaArts (Daka256xr), now remade with original Syobon Action code and physics!
 * Syobon Action JAM (Remake):
     * Custom NES rom hack made by StudsX, he made a cool effort to match the original game design, so why not remake it back into the original game code with original physics?
-* SyobonKZ: True Action:
-    * Im porting games from others, why cant i make my own? >:D
 
 Supported platforms:
 -----
@@ -79,8 +78,7 @@ Feel free to modify it as you like.
 However, please refrain from distributing the source code as is.
 ```
 
-So, as you can see, Syobon Action mods based on the original code can NOT use a open source license, due to the amount of developers that modified it and the unclear license situation.
-
+So, as you can see, the license situation is unclear... However since OpenSyobonAction source code was released under GPLv2 that license is maintained in this mod, but keep a note that the assets used in this mod may be under different terms.
 
 Notes
 -----
@@ -162,13 +160,14 @@ cmake -DSYOBONKZ_USE_SDL3=OFF ..
 
 Gamepad Notes
 -------------
-Your gamepad or joystick may not work by default with Open Syobon Action. Check joyconfig.h for more information.
+Your gamepad or joystick may not work by default with SyobonKZ. Check joyconfig.h for more information.
 
 TODO:
 -------------
 * Font thickness (Not really important)
 * Port to other operating systems (iOS, etc.) M0REKZ/SyobonKZ#3
 * Port more classic Syobon Action versions M0REKZ/SyobonKZ#4
+* Actually good gamepad/joystick support M0REKZ/SyobonKZ#14
 
 Release Changelog
 -----------------

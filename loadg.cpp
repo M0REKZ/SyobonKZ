@@ -282,24 +282,24 @@ void loadg(void)
                                                // Music[6]=LoadMusicMem( "BGM/last.ogg");
     // ChangeVolumeSoundMem(50, Music[6]);
 
-    Sounds[1] = LoadSoundMem("SE/jump.ogg");
+    Sounds[1] = LoadSoundMem("SE/jump.wav");
     // Sounds[2] = LoadSoundMem("SE/brockcoin.ogg");
-    Sounds[3] = LoadSoundMem("SE/brockbreak.ogg");
-    Sounds[4] = LoadSoundMem("SE/coin.ogg");
-    Sounds[5] = LoadSoundMem("SE/humi.ogg");
-    Sounds[6] = LoadSoundMem("SE/koura.ogg");
-    Sounds[7] = LoadSoundMem("SE/dokan.ogg");
-    Sounds[8] = LoadSoundMem("SE/brockkinoko.ogg");
-    Sounds[9] = LoadSoundMem("SE/powerup.ogg");
-    Sounds[10] = LoadSoundMem("SE/kirra.ogg");
+    Sounds[3] = LoadSoundMem("SE/brockbreak.wav");
+    Sounds[4] = LoadSoundMem("SE/coin.wav");
+    Sounds[5] = LoadSoundMem("SE/humi.wav");
+    Sounds[6] = LoadSoundMem("SE/koura.wav");
+    Sounds[7] = LoadSoundMem("SE/dokan.wav");
+    Sounds[8] = LoadSoundMem("SE/brockkinoko.wav");
+    Sounds[9] = LoadSoundMem("SE/powerup.wav");
+    Sounds[10] = LoadSoundMem("SE/kirra.wav");
     Sounds[11] = LoadSoundMem("SE/goal.ogg");
-    Sounds[12] = LoadSoundMem("SE/death.ogg");
-    Sounds[13] = LoadSoundMem("SE/Pswitch.ogg");
-    Sounds[14] = LoadSoundMem("SE/jumpBlock.ogg");
-    Sounds[15] = LoadSoundMem("SE/hintBlock.ogg");
-    Sounds[16] = LoadSoundMem("SE/4-clear.ogg");
-    Sounds[17] = LoadSoundMem("SE/allclear.ogg");
-    Sounds[18] = LoadSoundMem("SE/tekifire.ogg");
+    Sounds[12] = LoadSoundMem("SE/death.wav");
+    Sounds[13] = LoadSoundMem("SE/Pswitch.wav");
+    Sounds[14] = LoadSoundMem("SE/jumpBlock.wav");
+    Sounds[15] = LoadSoundMem("SE/hintBlock.wav");
+    Sounds[16] = LoadSoundMem("SE/4-clear.wav");
+    Sounds[17] = LoadSoundMem("SE/allclear.wav");
+    Sounds[18] = LoadSoundMem("SE/tekifire.wav");
 
     //+KZ
     Sounds_KZ[0] = LoadSoundMem("SE/sa3/so_piranhaeat.wav");

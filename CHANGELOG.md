@@ -2,6 +2,8 @@ Release Changelog
 -----------------
 
 **SyobonKZ V2.3**
+* Use same license as OpenSyobonAction (GPLv2)
+* Replace some sound effects with free license counterparts
 * Add optional improved sprites (enabled by default)
 * Fix a variable used by red note block warp that was not being reset when changing game
 

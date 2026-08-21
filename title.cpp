@@ -123,7 +123,7 @@ void HandleTitleKeys()
         currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||   \
         (currentGame == ESyobonActionGame::SYOBON_ACTION_JAM && SADevGamesEnabled) ||  \
         currentGame == ESyobonActionGame::KAIZO_SYOBON ||   \
-        (currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION && SADevGamesEnabled) ||  \
+        (currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION && false /* Cancelled, i better do my own game xd */ ) ||  \
         currentGame == ESyobonActionGame::SYOBONKZ_CREDITS \
     )
 
