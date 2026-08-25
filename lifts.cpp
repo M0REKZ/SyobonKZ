@@ -415,7 +415,7 @@ int CreateLift(double PosX, double PosY, double Width, double VelY, ELiftType Ty
 
     PosY -= 12; //stage() does -12
 
-    //the game simulates floating point numbers
+    //the game uses fixed point numbers
     //by multiplying all positions by 100
     PosX *= 100;
     PosY *= 100;

@@ -123,7 +123,7 @@ int CreateBackground(double PosX, double PosY, EBackgroundType Type, int index)
 
     PosY -= 12; //stage() does -12 to blocks, lets be consistent
 
-    //the game simulates floating point numbers
+    //the game uses fixed point numbers
     //by multiplying all positions by 100
     PosX *= 100;
     PosY *= 100;

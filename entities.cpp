@@ -2448,7 +2448,7 @@ int CreateEnemy(double PosX, double PosY, double VelX, double VelY, EEnemyType E
 
     PosY -= 12; //stage() does -12 to blocks, lets be consistent
 
-    //the game simulates floating point numbers
+    //the game uses fixed point numbers
     //by multiplying all positions by 100
     PosX *= 100;
     PosY *= 100;
@@ -2510,7 +2510,7 @@ int QueueEnemyAppear(double PosX, double PosY, EEnemyType EntityType, EEnemySubT
 
     PosY -= 12; //stage() does -12 to blocks, lets be consistent
 
-    //the game simulates floating point numbers
+    //the game uses fixed point numbers
     //by multiplying all positions by 100
     PosX *= 100;
     PosY *= 100;
