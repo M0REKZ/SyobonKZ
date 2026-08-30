@@ -2,8 +2,8 @@
 ==================
 [Website](https://m0rekz.github.io/SyobonKZ/)
 ###### Original games developers: 
-* ###### Chiku (ちく) for Syobon Action
-* ###### Bluvel (大川和樹) for Syobon Action 2
+* ###### Chiku/Tiku (ちく) for Syobon Action
+* ###### Bluvel (大川和樹, @NS-Kazuki) for Syobon Action 2
 * ###### Zokalal for Kaizo Syobon
 ###### Open Syobon Action developer: Mathew Velasquez
 ###### Developer/maintainer of this fork: +KZ (@M0REKZ)
