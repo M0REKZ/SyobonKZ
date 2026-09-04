@@ -6,6 +6,7 @@
 * ###### Bluvel (大川和樹, @NS-Kazuki) for Syobon Action 2
 * ###### Zokalal for Kaizo Syobon
 ###### Open Syobon Action developer: Mathew Velasquez
+###### Open Syobon Action RC3 developer: Karen/明美 (@akemin-dayo)
 ###### Developer/maintainer of this fork: +KZ (@M0REKZ)
 ###### [Syobon Action 2 readme (japanese)](readme_ja.txt)
 

@@ -75,9 +75,19 @@ const char *pLevelSelectSyobonKZTrueAction[] = {
 };
 
 const char *pNotActuallyLevelSelectSyobonKZCredits[] = {
+    "SyobonKZ:",
     "Mod By +KZ",
     "m0rekz.github.io",
     "Based on OpenSyobonAction RC3",
+    "Games Credits:",
+    "Shobon Action by Chiku (ちく)",
+    "Shobon Action 2 by Bluvel",
+    "Syobon Action 3 by DakaArts",
+    "Syobon Action JAM by StudsX",
+    "Kaizo Syobon by Zokalal",
+    "OpenSyobonAction Credits:",
+    "Mathew Velasquez",
+    "akemin-dayo",
     nullptr,
 };
 
