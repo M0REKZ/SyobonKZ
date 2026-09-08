@@ -208,7 +208,7 @@ void HandleLifts()
                         {
                             PlayerY -= 400;
                             PlayerVelY = -1400;
-                            mjumptm = 10;
+                            PlayerJumpTimer = 10;
                         }
                     }
                     // 特殊 (Special)

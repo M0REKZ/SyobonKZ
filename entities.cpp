@@ -447,7 +447,7 @@ void HandleEnemies()
                         if (EnemyAITimer[t] == 20)
                         {
                             PlayerVelX = 700;
-                            mkeytm = 24;
+                            PlayerInputTimer = 24;
                             PlayerVelY = -1200;
                             PlayerY = xx[1] - 1000 - 3000;
                             EnemyLookingDirection[t] = LOOKING_RIGHT;

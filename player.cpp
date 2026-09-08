@@ -20,7 +20,7 @@ EPlayerState PlayerState;
 int PlayerSubState, PlayerAITimer, PlayerRocketPipeTrapVelY;
 int PlayerGrounded;
 ELookingDirection PlayerLookingDirection;
-int mjumptm, mkeytm;
+int PlayerJumpTimer, PlayerInputTimer;
 EPlayerGroundType PlayerGroundType;
 int PlayerNoDamageTimer, PlayerInvincibleON;
 //+KZ: these are never set, but are read?
@@ -159,13 +159,13 @@ void HandlePlayer()
         PlayerGroundType = EPlayerGroundType::NORMAL;
 
     // ジャンプ (Jump)
-    if (mjumptm >= 0)
-        mjumptm--;
+    if (PlayerJumpTimer >= 0)
+        PlayerJumpTimer--;
     if (actaon[1] == 1 && PlayerGrounded == 1)
     {
         PlayerY -= 400;
         PlayerVelY = -1200;
-        mjumptm = 10;
+        PlayerJumpTimer = 10;
 
         // PlaySound( "jump.mp3" , DX_PLAYTYPE_NORMAL ) ;
 
@@ -201,7 +201,7 @@ void HandlePlayer()
     // HPがなくなったとき (When HP runs out)
     if (PlayerHealth <= 0 && PlayerHealth >= -9)
     {
-        mkeytm = 12;
+        PlayerInputTimer = 12;
         PlayerHealth = -20;
         PlayerState = EPlayerState::DEATH_ANIMATION;
         PlayerAITimer = 0;
@@ -240,7 +240,7 @@ void HandlePlayer()
             if(SyobonState != ESyobonGameState::TITLE)
                 SyobonState = ESyobonGameState::LIVES_SPLASH;
             PlayerAITimer = 0;
-            mkeytm = 0;
+            PlayerInputTimer = 0;
             PlayerLives--;
             if (fast == 1)
                 PlayerState = EPlayerState::PLAYING;
@@ -252,7 +252,7 @@ void HandlePlayer()
     {
         PlayerAITimer++;
 
-        mkeytm = 2;
+        PlayerInputTimer = 2;
         PlayerVelY = -1500;
         if (PlayerY <= -6000)
         {
@@ -262,7 +262,7 @@ void HandlePlayer()
             SyobonKZHaltMusic();
             PlayerAITimer = 0;
             PlayerState = EPlayerState::PLAYING;
-            mkeytm = -1;
+            PlayerInputTimer = -1;
         }
     } // 2
 
@@ -411,7 +411,7 @@ void HandlePlayer()
 
         if (PlayerState == EPlayerState::LEVEL_FINISH_ANIMATION)
         {
-            mkeytm = 3;
+            PlayerInputTimer = 3;
             if (PlayerAITimer <= 1)
             {
                 PlayerVelX = 0;
@@ -472,7 +472,7 @@ void HandlePlayer()
 
         if (PlayerState == EPlayerState::SWORD_ENDING_ANIMATION || PlayerState == EPlayerState::MELON_ENDING_ANIMATION)
         {
-            mkeytm = 3;
+            PlayerInputTimer = 3;
 
             if (PlayerAITimer <= 1)
             {
@@ -580,9 +580,9 @@ void HandlePlayer()
     } // mtype>=100
 
     // 移動 (Move)
-    if (mkeytm >= 1)
+    if (PlayerInputTimer >= 1)
     {
-        mkeytm--;
+        PlayerInputTimer--;
     } // mc=0;}
     PlayerX += PlayerVelX;
     PlayerY += PlayerVelY;
@@ -711,10 +711,11 @@ void HandlePlayer()
 void HandlePlayerInput()
 {
     // プレイヤーの移動 (Player movement)
-    xx[0] = 0;
+    //xx[0] = 0;
+    int local_xx_0 = 0;
     actaon[2] = 0;
     actaon[3] = 0;
-    if (mkeytm <= 0)
+    if (PlayerInputTimer <= 0)
     {
         if (CheckHitKey(KEY_INPUT_LEFT))
         {
@@ -750,14 +751,14 @@ void HandlePlayerInput()
         }
     }
 
-    if (mkeytm <= 0)
+    if (PlayerInputTimer <= 0)
     {
         if (CheckHitKey(KEY_INPUT_Z) == 1 || CheckHitKey(KEY_INPUT_UP) == 1 || SyobonKZJoystickGetButton(joystick, JOYSTICK_JUMP))
         {
             if (actaon[1] == 10)
             {
                 actaon[1] = 1;
-                xx[0] = 1;
+                local_xx_0 = 1;
             }
             actaon[2] = 1;
         }
@@ -765,12 +766,12 @@ void HandlePlayerInput()
 
     if (CheckHitKey(KEY_INPUT_Z) == 1 || CheckHitKey(KEY_INPUT_UP) == 1 || SyobonKZJoystickGetButton(joystick, JOYSTICK_JUMP))
     {
-        if (mjumptm == 8 && PlayerVelY >= -900)
+        if (PlayerJumpTimer == 8 && PlayerVelY >= -900)
         {
             PlayerVelY = -1300;
             // ダッシュ中
-            xx[22] = 200;
-            if (PlayerVelX >= xx[22] || PlayerVelX <= -xx[22])
+            //xx[22] = 200;
+            if (PlayerVelX >= 200 || PlayerVelX <= -200)
             {
                 PlayerVelY = -1400;
             }
@@ -783,7 +784,7 @@ void HandlePlayerInput()
         // && xx[0]==0 && md<=-10
 
         // if (mjumptm==7 && md>=-900){}
-        if (xx[0] == 0)
+        if (local_xx_0 == 0)
             actaon[1] = 10;
     }
     // if (( key & PAD_INPUT_UP) && keytm<=0){actaon[0]=-1;PlayerLookingDirection=0;}
@@ -983,7 +984,7 @@ void HandlePlayerBlocks()
                                     Ill disable it for SA3 for now since this breaks some hidden block traps
                             */
                            (currentGame != ESyobonActionGame::SYOBON_ACTION_3) ?
-                            (PlayerGrounded == 1 || mjumptm >= 10) : (PlayerGrounded == 1))
+                            (PlayerGrounded == 1 || PlayerJumpTimer >= 10) : (PlayerGrounded == 1))
                         {
                             xx[21] = 3;
                             xx[22] = 0;

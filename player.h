@@ -73,7 +73,14 @@ extern ELookingDirection PlayerLookingDirection;
 //the following were used but also were useless:
 //  * mkasok
 
-extern int mjumptm, mkeytm;
+// @attention +KZ: int mjumptm is now int PlayerJumpTimer
+// +KZ: Seems to limit jumping spam, but also allows to ignore roof collision in the original games
+extern int PlayerJumpTimer;
+
+// @attention +KZ: int mkeytm is now int PlayerInputTimer
+// +KZ: Seems to disable some inputs when > 0
+extern int PlayerInputTimer;
+
 // @attention +KZ: int mmutekitm is now int PlayerNoDamageTimer
 // +KZ: It is enabled for 5 ticks after kicking a shell
 extern int PlayerNoDamageTimer;
@@ -84,7 +91,10 @@ extern int PlayerInvincibleON;
 //+KZ: these are never set, but are read?
 extern int mztm, mztype;
 
+// +KZ: Used for input related things?
+// actaon[1]: Handles player jump input, when pressing the jump key it toggles between 1 and 0 all the time??????
 extern int actaon[7];
+
 //メッセージ (Message)
 // @attention +KZ: int mmsgtm is now int PlayerMessageTimer
 extern int PlayerMessageTimer;
