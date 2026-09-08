@@ -13,7 +13,7 @@
 #include "lifts.h"
 
 int PlayerX, PlayerY, PlayerSizeX, PlayerSizeY, PlayerHealth;
-int PlayerVelX, PlayerVelY, atktm, PlayerWalkAnimTimer, PlayerWalkAnim;
+int PlayerVelX, PlayerVelY, PlayerWalkAnimTimer, PlayerWalkAnim;
 int PlayerLives = 3;
 
 EPlayerState PlayerState;
@@ -98,7 +98,7 @@ void HandlePlayer()
                     PlayerVelX = -xx[9] - 1;
                 }
             }
-            if (PlayerVelX < -xx[9] && atktm <= 0)
+            if (PlayerVelX < -xx[9]) // && atktm <= 0) // +KZ: variable was unused/buggy
                 PlayerVelX -= xx[0] / 10;
         }
         if (PlayerGroundType != EPlayerGroundType::SLIP)
@@ -131,7 +131,7 @@ void HandlePlayer()
                     PlayerVelX = xx[9] + 1;
                 }
             }
-            if (PlayerVelX > xx[9] && atktm <= 0)
+            if (PlayerVelX > xx[9]) // && atktm <= 0) // +KZ: variable was unused/buggy
                 PlayerVelX += xx[0] / 10;
         }
         if (PlayerGroundType != EPlayerGroundType::SLIP)

@@ -22,7 +22,14 @@ extern int PlayerVelX;
 // @attention +KZ: int md is now int PlayerVelY
 extern int PlayerVelY;
 //extern int macttype, atkon; //+KZ unused
-extern int atktm; //+KZ: never set, but still read?
+
+//+KZ: Never set, but read.
+//  Seems to be a leftover timer variable that can make your player dont accelerate,
+//  this makes harder being able to skip some traps like the 2cnd aramaki from level 1-1.
+//  I decided to remove it for consistent gameplay
+//
+//  extern int atktm;
+
 //extern int mactsok, msstar;//+KZ unused
 // @attention +KZ: int mactp is now int PlayerWalkAnimTimer
 extern int PlayerWalkAnimTimer;
