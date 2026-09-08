@@ -103,7 +103,7 @@ extern int PlayerInvincibleON;
 //  extern int mztm, mztype;
 
 // +KZ: Used for input related things?
-// actaon[1]: Handles player jump input, when pressing the jump key it toggles between 1 and 0 all the time??????
+// actaon[1]: Handles player jump input, when pressing the jump key it toggles between 1 and 10 all the time??????
 extern int actaon[7];
 
 //メッセージ (Message)
