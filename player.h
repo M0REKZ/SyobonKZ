@@ -88,8 +88,12 @@ extern int PlayerNoDamageTimer;
 // +KZ: It is never initialized, but if PlayerInvincibleON == 1 player will kill any enemy it touches
 extern int PlayerInvincibleON;
 
-//+KZ: these are never set, but are read?
-extern int mztm, mztype;
+//+KZ: Never set, but read.
+//  Seems to be leftover variables that would make the player have no collision for certain amount of time
+//  but originally they are not initalized and for them to work mztype must be 1 and mztm > 0...
+//  i decided to remove them since they can be very random and give weird gameplay bugs (even if the chance of mztype being 1 is very weird)
+//
+//  extern int mztm, mztype;
 
 // +KZ: Used for input related things?
 // actaon[1]: Handles player jump input, when pressing the jump key it toggles between 1 and 0 all the time??????

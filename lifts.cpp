@@ -134,7 +134,10 @@ void HandleLifts()
             } // sw
 
             // 乗ったとき (When I got on)
-            if (!(mztm >= 1 && mztype == 1 && actaon[3] == 1) && PlayerHealth >= 1)
+            if (
+                //!(mztm >= 1 && mztype == 1 && actaon[3] == 1) && // +KZ: variables were useless/buggy
+                PlayerHealth >= 1
+            )
             {
                 if (PlayerX + PlayerSizeX > xx[8] + xx[0] && PlayerX < xx[8] + xx[12] - xx[0] && PlayerY + PlayerSizeY > xx[9] && PlayerY + PlayerSizeY < xx[9] + xx[1] && PlayerVelY >= -100)
                 {

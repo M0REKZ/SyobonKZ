@@ -23,8 +23,6 @@ ELookingDirection PlayerLookingDirection;
 int PlayerJumpTimer, PlayerInputTimer;
 EPlayerGroundType PlayerGroundType;
 int PlayerNoDamageTimer, PlayerInvincibleON;
-//+KZ: these are never set, but are read?
-int mztm, mztype;
 
 int actaon[7];
 //メッセージ
@@ -825,7 +823,7 @@ void HandlePlayerBlocks()
                 { // && ttype[t]!=5){
 
                     // if (!(mztm>=1 && mztype==1 && actaon[3]==1)){
-                    if (!(mztype == 1))
+                    //if (!(mztype == 1)) // +KZ: variable was useless/buggy
                     {
                         xx[16] = 0;
                         xx[17] = 0;
@@ -974,7 +972,7 @@ void HandlePlayerBlocks()
 
                     // sstr=""+mjumptm;
                     // ブロック判定の入れ替え
-                    if (!(mztm >= 1 && mztype == 1))
+                    //if (!(mztm >= 1 && mztype == 1)) // +KZ: variables were useless/buggy
                     {
                         xx[21] = 0;
                         xx[22] = 1; // xx[12]=0;
