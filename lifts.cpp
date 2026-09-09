@@ -202,12 +202,12 @@ void HandleLifts()
 
                     if (LiftMovementType[t] == ELiftMovementType::BOUNCY_UNUSED)
                     {
-                        if (actaon[2] != 1)
+                        if (PlayerAction.StompBounce != 1)
                         {
                             PlayerVelY = -600;
                             PlayerY -= 810;
                         }
-                        if (actaon[2] == 1)
+                        if (PlayerAction.StompBounce == 1)
                         {
                             PlayerY -= 400;
                             PlayerVelY = -1400;

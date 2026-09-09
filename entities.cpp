@@ -1038,7 +1038,7 @@ void HandleEnemies()
                             PlayerY = xx[9] - 900 - EnemySizeY[t];
                             PlayerVelY = -2100;
                             xx[25] = 1;
-                            actaon[2] = 0;
+                            PlayerAction.StompBounce = 0;
                         }
                     }
 
@@ -1113,7 +1113,7 @@ void HandleEnemies()
                     {
                         EnemyAITimer[t] = 10;
                         PlayerVelY = 0;
-                        actaon[2] = 0;
+                        PlayerAction.StompBounce = 0;
                     }
 
                     if (EnemyType[t] == EEnemyType::CANNON_JIEN)
@@ -1150,7 +1150,7 @@ void HandleEnemies()
                         }
                     }
 
-                    if (actaon[2] == 1 &&
+                    if (PlayerAction.StompBounce == 1 &&
                         //+KZ: you are not able to jump on seal in other games
                         (currentGame == ESyobonActionGame::SYOBON_ACTION_3 ?
                         EnemyType[t] != EEnemyType::ARAMAKI
@@ -1160,7 +1160,7 @@ void HandleEnemies()
                     )
                     {
                         PlayerVelY = -1600;
-                        actaon[2] = 0;
+                        PlayerAction.StompBounce = 0;
                     }
                 }
                 // if (atype[t]==200){mb=xx[9]-900-anobib[t];md=-2400;}
@@ -2411,10 +2411,10 @@ void HandleEnemyPlayerCollisionKZ(int enemy_index)
 
         if(can_jump_key_bounce)
         {
-            if (actaon[2] == 1)
+            if (PlayerAction.StompBounce == 1)
             {
                 PlayerVelY = -1600;
-                actaon[2] = 0;
+                PlayerAction.StompBounce = 0;
             }
         }
     }

@@ -24,7 +24,7 @@ int PlayerJumpTimer, PlayerInputTimer;
 EPlayerGroundType PlayerGroundType;
 int PlayerNoDamageTimer, PlayerInvincibleON;
 
-int actaon[7];
+SPlayerAction PlayerAction;
 //メッセージ
 int PlayerMessageTimer, PlayerMessageType;
 
@@ -86,7 +86,7 @@ void HandlePlayer()
         xx[13] = 10;
     }
     // if (PlayerGrounded==0){xx[0]-=15;}
-    if (actaon[0] == -1)
+    if (PlayerAction.Accel == -1)
     {
         if (!(PlayerGrounded == 0 && PlayerVelX < -xx[8]))
         {
@@ -115,11 +115,11 @@ void HandlePlayer()
                     PlayerVelX -= xx[0] * 1 / 2;
                 }
             }
-            actaon[0] = 3;
+            PlayerAction.Accel = 3;
         }
     }
 
-    if (actaon[0] == 1)
+    if (PlayerAction.Accel == 1)
     {
         if (!(PlayerGrounded == 0 && PlayerVelX > xx[8]))
         {
@@ -148,7 +148,7 @@ void HandlePlayer()
                     PlayerVelX += xx[0] * 1 / 2;
                 }
             }
-            actaon[0] = 3;
+            PlayerAction.Accel = 3;
         }
     }
 
@@ -159,7 +159,7 @@ void HandlePlayer()
     // ジャンプ (Jump)
     if (PlayerJumpTimer >= 0)
         PlayerJumpTimer--;
-    if (actaon[1] == 1 && PlayerGrounded == 1)
+    if (PlayerAction.CanJump == 1 && PlayerGrounded == 1)
     {
         PlayerY -= 400;
         PlayerVelY = -1200;
@@ -186,8 +186,8 @@ void HandlePlayer()
 
         PlayerGrounded = 0;
     }
-    if (actaon[1] <= 9)
-        actaon[1] = 0;
+    if (PlayerAction.CanJump <= 9)
+        PlayerAction.CanJump = 0;
 
     // if (actaon[1]==1){my+=xx[1];actaon[1]=0;}
 
@@ -626,7 +626,7 @@ void HandlePlayer()
     }
     // プレイヤー (Player)
     // 地面の摩擦 (Ground friction)
-    if (PlayerGrounded == 1 && actaon[0] != 3)
+    if (PlayerGrounded == 1 && PlayerAction.Accel != 3)
     {
         if (
             (PlayerState < EPlayerState::END_NORMAL_STATES) ||
@@ -711,25 +711,25 @@ void HandlePlayerInput()
     // プレイヤーの移動 (Player movement)
     //xx[0] = 0;
     int local_xx_0 = 0;
-    actaon[2] = 0;
-    actaon[3] = 0;
+    PlayerAction.StompBounce = 0;
+    PlayerAction.PressingDown = 0;
     if (PlayerInputTimer <= 0)
     {
         if (CheckHitKey(KEY_INPUT_LEFT))
         {
-            actaon[0] = -1;
+            PlayerAction.Accel = -1;
             PlayerLookingDirection = LOOKING_LEFT;
-            actaon[4] = -1;
+            PlayerAction.PressingDirection = -1;
         }
         if (CheckHitKey(KEY_INPUT_RIGHT))
         {
-            actaon[0] = 1;
+            PlayerAction.Accel = 1;
             PlayerLookingDirection = LOOKING_RIGHT;
-            actaon[4] = 1;
+            PlayerAction.PressingDirection = 1;
         }
         if (CheckHitKey(KEY_INPUT_DOWN))
         {
-            actaon[3] = 1;
+            PlayerAction.PressingDown = 1;
         }
     }
     // if (CheckHitKey(KEY_INPUT_F1)==1){end();}
@@ -753,12 +753,12 @@ void HandlePlayerInput()
     {
         if (CheckHitKey(KEY_INPUT_Z) == 1 || CheckHitKey(KEY_INPUT_UP) == 1 || SyobonKZJoystickGetButton(joystick, JOYSTICK_JUMP))
         {
-            if (actaon[1] == 10)
+            if (PlayerAction.CanJump == 10)
             {
-                actaon[1] = 1;
+                PlayerAction.CanJump = 1;
                 local_xx_0 = 1;
             }
-            actaon[2] = 1;
+            PlayerAction.StompBounce = 1;
         }
     }
 
@@ -783,7 +783,7 @@ void HandlePlayerInput()
 
         // if (mjumptm==7 && md>=-900){}
         if (local_xx_0 == 0)
-            actaon[1] = 10;
+            PlayerAction.CanJump = 10;
     }
     // if (( key & PAD_INPUT_UP) && keytm<=0){actaon[0]=-1;PlayerLookingDirection=0;}
 
@@ -1796,7 +1796,7 @@ void HandlePlayerWalls()
                 // 入る土管 (Entering a pipe)
                 if (ObjectType[t] == EObjectType::ENTRANCE_VERTICAL_PIPE_HEAD)
                 {
-                    if (PlayerX + PlayerSizeX > xx[8] + 2800 && PlayerX < xx[8] + ObjectSizeX[t] - 3000 && PlayerY + PlayerSizeY > xx[9] - 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && actaon[3] == 1 && PlayerState == EPlayerState::PLAYING)
+                    if (PlayerX + PlayerSizeX > xx[8] + 2800 && PlayerX < xx[8] + ObjectSizeX[t] - 3000 && PlayerY + PlayerSizeY > xx[9] - 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 3000 && PlayerGrounded == 1 && PlayerAction.PressingDown == 1 && PlayerState == EPlayerState::PLAYING)
                     {
                         // 飛び出し (Jumping out) //+KZ: ??
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_VERTICAL_PIPE_HEAD_KILL_PLAYER_ROCKET)
@@ -1843,7 +1843,7 @@ void HandlePlayerWalls()
                 // 入る土管(左から) (Pipes to enter (from left))
                 if (ObjectType[t] == EObjectType::ENTRANCE_HORIZONTAL_PIPE_HEAD)
                 {
-                    if (PlayerX + PlayerSizeX > xx[8] - 300 && PlayerX < xx[8] + ObjectSizeX[t] - 1000 && PlayerY > xx[9] + 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && actaon[4] == 1 && PlayerState == EPlayerState::PLAYING)
+                    if (PlayerX + PlayerSizeX > xx[8] - 300 && PlayerX < xx[8] + ObjectSizeX[t] - 1000 && PlayerY > xx[9] + 1000 && PlayerY + PlayerSizeY < xx[9] + xx[1] + 4000 && PlayerGrounded == 1 && PlayerAction.PressingDirection == 1 && PlayerState == EPlayerState::PLAYING)
                     { // end();
                         // 飛び出し (Jumping out)
                         if (ObjectSubType[t] == EObjectSubType::ENTRACE_HORIZONTAL_PIPE_HEAD_KILL_PLAYER_CANNON)

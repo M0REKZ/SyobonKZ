@@ -249,8 +249,8 @@ void UpdateTitleScreen()
 
     HandlePlayer();
 
-    actaon[0] = 0;
-    actaon[4] = 0;
+    PlayerAction.Accel = 0;
+    PlayerAction.PressingDirection = 0;
 
     HandleLifts();
 

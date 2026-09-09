@@ -102,10 +102,31 @@ extern int PlayerInvincibleON;
 //
 //  extern int mztm, mztype;
 
-// +KZ: Used for player input capabilities?
-// actaon[1]: Handles player being able to jump, when pressing the jump key it toggles between 1 and 10 all the time??????
-// actaon[2]: Handles player being able to bounce higher when pressing jump while stomping some enemies.
-extern int actaon[7];
+// @attention +KZ: int actaon[7] is now SPlayerAction PlayerAction
+// +KZ: Used for player input -> game interaction, actaon[5] and actaon[6] were unused
+struct SPlayerAction
+{
+    // actaon[0]:
+    //  Handles player input acceleration (left and right), toggles between 1/3 and -1/-3 when playing on icy stages, delaying input effect.
+    int Accel;
+
+    // actaon[1]:
+    //  Handles player being able to jump, when pressing the jump key it toggles between 1 and 10 all the time?? D:
+    int CanJump;
+
+    // actaon[2]:
+    //  Handles player being able to bounce higher when pressing jump while stomping some enemies.
+    int StompBounce;
+
+    // actaon[3]:
+    //  Detects player pressing down key, used for entering pipes from above.
+    int PressingDown;
+
+    // actaon[4]:
+    //  Detects player pressing left key or right key, used for entering pipes from left.
+    int PressingDirection;
+};
+extern SPlayerAction PlayerAction;
 
 //メッセージ (Message)
 // @attention +KZ: int mmsgtm is now int PlayerMessageTimer

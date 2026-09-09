@@ -431,8 +431,8 @@ void Mainprogram()
 
 		// キー入力初期化 (Key input initialization)
 		// for (t=0;t<=6;t++)
-		actaon[0] = 0;
-		actaon[4] = 0;
+		PlayerAction.Accel = 0;
+		PlayerAction.PressingDirection = 0;
 
 		HandleLifts();
 
