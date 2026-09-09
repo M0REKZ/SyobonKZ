@@ -92,7 +92,7 @@ extern int PlayerInputTimer;
 // +KZ: It is enabled for 5 ticks after kicking a shell
 extern int PlayerNoDamageTimer;
 // @attention +KZ: int mmutekion is now int PlayerInvincibleON
-// +KZ: It is never initialized, but if PlayerInvincibleON == 1 player will kill any enemy it touches
+// +KZ: Originally it was not initialized, but if PlayerInvincibleON == 1 player will kill any enemy it touches
 extern int PlayerInvincibleON;
 
 //+KZ: Never set, but read.

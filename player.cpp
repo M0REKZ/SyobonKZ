@@ -22,7 +22,8 @@ int PlayerGrounded;
 ELookingDirection PlayerLookingDirection;
 int PlayerJumpTimer, PlayerInputTimer;
 EPlayerGroundType PlayerGroundType;
-int PlayerNoDamageTimer, PlayerInvincibleON;
+int PlayerNoDamageTimer;
+int PlayerInvincibleON = 0; // +KZ: i set it to 0, originally was not initialized
 
 SPlayerAction PlayerAction;
 //メッセージ
