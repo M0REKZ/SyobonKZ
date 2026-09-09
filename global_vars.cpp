@@ -72,7 +72,7 @@ int InGameInitialized;//, zzxon; //+KZ: zzxon is unused
 //int key;//, keytm; //+KZ: keytm is useless... no wait both are useless/unused
 
 //三角関数
-double pai = 3.1415926535;
+//double pai = 3.1415926535; //+KZ: converted to #define SYOBONKZ_PAI
 
 
 
@@ -112,8 +112,8 @@ int blacktm = 1, blackx = 0;
 
 //自由な値
 int xx[91];
-double xd[11];
-std::string xs[31];
+//double xd[11]; //+KZ: optimized
+//std::string xs[31]; //+KZ: optimized
 
 
 //タイマー測定

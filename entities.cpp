@@ -786,13 +786,14 @@ void HandleEnemies()
                 for (tt = 0; tt <= (int)EnemySubType[t] % 100; tt++)
                 {
                     xx[26] = 18;
-                    xd[4] = tt * xx[26] * cos(EnemyAITimer[t] * pai / 180 / 2);
-                    xd[5] = tt * xx[26] * sin(EnemyAITimer[t] * pai / 180 / 2);
+                    double local_xd_4, local_xd_5;
+                    local_xd_4 = tt * xx[26] * cos(EnemyAITimer[t] * SYOBONKZ_PAI / 180 / 2);
+                    local_xd_5 = tt * xx[26] * sin(EnemyAITimer[t] * SYOBONKZ_PAI / 180 / 2);
 
                     xx[4] = 1800;
                     xx[5] = 800;
-                    xx[8] = EnemyX[t] - fx + int(xd[4]) * 100 - xx[4] / 2;
-                    xx[9] = EnemyY[t] - fy + int(xd[5]) * 100 - xx[4] / 2;
+                    xx[8] = EnemyX[t] - fx + int(local_xd_4) * 100 - xx[4] / 2;
+                    xx[9] = EnemyY[t] - fy + int(local_xd_5) * 100 - xx[4] / 2;
 
                     if (PlayerX + PlayerSizeX > xx[8] + xx[5] && PlayerX < xx[8] + xx[4] - xx[5] && PlayerY + PlayerSizeY > xx[9] + xx[5] && PlayerY < xx[9] + xx[4] - xx[5])
                     {
@@ -822,13 +823,14 @@ void HandleEnemies()
                 for (tt = 0; tt <= (int)EnemySubType[t] % 100; tt++)
                 {
                     xx[26] = 18;
-                    xd[4] = -tt * xx[26] * cos(EnemyAITimer[t] * pai / 180 / 2);
-                    xd[5] = tt * xx[26] * sin(EnemyAITimer[t] * pai / 180 / 2);
+                    double local_xd_4, local_xd_5;
+                    local_xd_4 = -tt * xx[26] * cos(EnemyAITimer[t] * SYOBONKZ_PAI / 180 / 2);
+                    local_xd_5 = tt * xx[26] * sin(EnemyAITimer[t] * SYOBONKZ_PAI / 180 / 2);
 
                     xx[4] = 1800;
                     xx[5] = 800;
-                    xx[8] = EnemyX[t] - fx + int(xd[4]) * 100 - xx[4] / 2;
-                    xx[9] = EnemyY[t] - fy + int(xd[5]) * 100 - xx[4] / 2;
+                    xx[8] = EnemyX[t] - fx + int(local_xd_4) * 100 - xx[4] / 2;
+                    xx[9] = EnemyY[t] - fy + int(local_xd_5) * 100 - xx[4] / 2;
 
                     if (PlayerX + PlayerSizeX > xx[8] + xx[5] && PlayerX < xx[8] + xx[4] - xx[5] && PlayerY + PlayerSizeY > xx[9] + xx[5] && PlayerY < xx[9] + xx[4] - xx[5])
                     {
@@ -1518,108 +1520,109 @@ void HandleEnemiesMessages()
         {
             EnemyMessageTimer[t]--; // end();
 
-            xs[0] = "";
+            std::string local_xs_0;
+            local_xs_0 = "";
 
             // +KZ: Syobon Action 2 replaced many strings with duplicated ones for some reason
             // ill try to replace some duplicates with some of the original strings
             if (EnemyMessageType[t] == 1001)
-                xs[0] = "遅すぎるんだよ!!"; //From original Syobon Action
+                local_xs_0 = "遅すぎるんだよ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1002)
-                xs[0] = "無駄無駄無駄無駄ァ!!"; //From original Syobon Action
+                local_xs_0 = "無駄無駄無駄無駄ァ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1003)
-                xs[0] = "性能の差だな…"; //From original Syobon Action
+                local_xs_0 = "性能の差だな…"; //From original Syobon Action
             if (EnemyMessageType[t] == 1004)
-                xs[0] = "ぷー クスクス"; //From original Syobon Action
+                local_xs_0 = "ぷー クスクス"; //From original Syobon Action
             if (EnemyMessageType[t] == 1005)
-                xs[0] = "俺、最強!!";
+                local_xs_0 = "俺、最強!!";
             if (EnemyMessageType[t] == 1006)
-                xs[0] = "一昨日来やがれ!!";
+                local_xs_0 = "一昨日来やがれ!!";
             if (EnemyMessageType[t] == 1007)
-                xs[0] = "漢に後退の二文字は無い!!";
+                local_xs_0 = "漢に後退の二文字は無い!!";
             if (EnemyMessageType[t] == 1008)
-                xs[0] = "ハッハァ!!";
+                local_xs_0 = "ハッハァ!!";
 
             if (EnemyMessageType[t] == 1011)
-                xs[0] = "嘘だ!!"; //From original Syobon Action
+                local_xs_0 = "嘘だ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1012)
-                xs[0] = "HE☆TA☆RE"; //From original Syobon Action
+                local_xs_0 = "HE☆TA☆RE"; //From original Syobon Action
             if (EnemyMessageType[t] == 1013)
-                xs[0] = "ごめんねぇ 強くてさぁ!!"; //From original Syobon Action
+                local_xs_0 = "ごめんねぇ 強くてさぁ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1014)
-                xs[0] = "貴様 それでも軍人か!?"; //From original Syobon Action
+                local_xs_0 = "貴様 それでも軍人か!?"; //From original Syobon Action
             if (EnemyMessageType[t] == 1015)
-                xs[0] = "ゆとりはいい 想像を絶する"; //From original Syobon Action
+                local_xs_0 = "ゆとりはいい 想像を絶する"; //From original Syobon Action
             if (EnemyMessageType[t] == 1016)
-                xs[0] = "粛清してやる!!"; //From original Syobon Action
+                local_xs_0 = "粛清してやる!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1017)
-                xs[0] = "さぁ 悪い子はどんどん(ry"; //From original Syobon Action
+                local_xs_0 = "さぁ 悪い子はどんどん(ry"; //From original Syobon Action
             if (EnemyMessageType[t] == 1018)
-                xs[0] = "戦闘力 1 のごみくずが…"; //From original Syobon Action
+                local_xs_0 = "戦闘力 1 のごみくずが…"; //From original Syobon Action
 
             if (EnemyMessageType[t] == 1021)
-                xs[0] = "グゥレイトォ!!"; //From original Syobon Action
+                local_xs_0 = "グゥレイトォ!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1022)
-                xs[0] = "これぞ 必 殺!!"; //From original Syobon Action
+                local_xs_0 = "これぞ 必 殺!!"; //From original Syobon Action
             if (EnemyMessageType[t] == 1023)
-                xs[0] = "二度と会う事もないだろう";
+                local_xs_0 = "二度と会う事もないだろう";
             if (EnemyMessageType[t] == 1024)
-                xs[0] = "フハハハハハハ"; //From original Syobon Action
+                local_xs_0 = "フハハハハハハ"; //From original Syobon Action
             if (EnemyMessageType[t] == 1025)
-                xs[0] = "僕は……負けない!!";
+                local_xs_0 = "僕は……負けない!!";
             if (EnemyMessageType[t] == 1026)
-                xs[0] = "貴様に見切れる筋は無い";
+                local_xs_0 = "貴様に見切れる筋は無い";
             if (EnemyMessageType[t] == 1027)
-                xs[0] =
+                local_xs_0 =
                     "今死ね、すぐ死ね、骨まで砕けろ!!";
             if (EnemyMessageType[t] == 1028)
-                xs[0] = "任務完了!!";
+                local_xs_0 = "任務完了!!";
 
             if (EnemyMessageType[t] == 1031)
-                xs[0] = "ヤッフー!!";
+                local_xs_0 = "ヤッフー!!";
             if (EnemyMessageType[t] == 1032)
-                xs[0] = "え?俺勝っちゃったの?";
+                local_xs_0 = "え?俺勝っちゃったの?";
             if (EnemyMessageType[t] == 1033)
-                xs[0] = "貴様の死に場所はここだ!";
+                local_xs_0 = "貴様の死に場所はここだ!";
             if (EnemyMessageType[t] == 1034)
-                xs[0] = "身の程知らずが……";
+                local_xs_0 = "身の程知らずが……";
             if (EnemyMessageType[t] == 1035)
-                xs[0] = "油断が死を招く";
+                local_xs_0 = "油断が死を招く";
             if (EnemyMessageType[t] == 1036)
-                xs[0] = "おめでたい奴だ";
+                local_xs_0 = "おめでたい奴だ";
             if (EnemyMessageType[t] == 1037)
-                xs[0] = "屑が!!";
+                local_xs_0 = "屑が!!";
             if (EnemyMessageType[t] == 1038)
-                xs[0] = "無謀な……";
+                local_xs_0 = "無謀な……";
 
             if (EnemyMessageType[t] == 15)
-                xs[0] = "鉄壁!!よって、無敵!!";
+                local_xs_0 = "鉄壁!!よって、無敵!!";
             if (EnemyMessageType[t] == 16)
-                xs[0] = "丸腰で勝てるとでも?";
+                local_xs_0 = "丸腰で勝てるとでも?";
             if (EnemyMessageType[t] == 17)
-                xs[0] = "パリイ!!";
+                local_xs_0 = "パリイ!!";
             if (EnemyMessageType[t] == 18)
-                xs[0] = "自業自得だ";
+                local_xs_0 = "自業自得だ";
             if (EnemyMessageType[t] == 20)
-                xs[0] = "Zzz";
+                local_xs_0 = "Zzz";
             if (EnemyMessageType[t] == 21)
-                xs[0] = "ク、クマー";
+                local_xs_0 = "ク、クマー";
             if (EnemyMessageType[t] == 24)
-                xs[0] = "？"; //From original Syobon Action
+                local_xs_0 = "？"; //From original Syobon Action
             if (EnemyMessageType[t] == 25)
-                xs[0] = "食べるべきではなかった!!";
+                local_xs_0 = "食べるべきではなかった!!";
             if (EnemyMessageType[t] == 30)
-                xs[0] = "うめぇ!!";
+                local_xs_0 = "うめぇ!!";
             if (EnemyMessageType[t] == 31)
-                xs[0] = "ブロックを侮ったな?";
+                local_xs_0 = "ブロックを侮ったな?";
             if (EnemyMessageType[t] == 32)
-                xs[0] = "シャキーン";
+                local_xs_0 = "シャキーン";
 
             if (EnemyMessageType[t] == 50)
-                xs[0] = "波動砲!!";
+                local_xs_0 = "波動砲!!";
             if (EnemyMessageType[t] == 85)
-                xs[0] = "裏切られたとでも思ったか?";
+                local_xs_0 = "裏切られたとでも思ったか?";
             if (EnemyMessageType[t] == 86)
-                xs[0] = "ポールアターック!!";
+                local_xs_0 = "ポールアターック!!";
 
             if (EnemyMessageType[t] != 31)
             {
@@ -1634,9 +1637,9 @@ void HandleEnemiesMessages()
 
             /*ChangeFontType(DX_FONTTYPE_EDGE);
             setc1();
-            str(xs[0], xx[5], xx[6]);
+            str(local_xs_0, xx[5], xx[6]);
             ChangeFontType(DX_FONTTYPE_NORMAL);*/
-            DrawGraphZ(xx[5], xx[6], apEnemyMessages[xs[0]]);
+            DrawGraphZ(xx[5], xx[6], apEnemyMessages[local_xs_0]);
 
         } // amsgtm
     } // amax
@@ -2241,10 +2244,11 @@ void RenderEnemiesTwo()
                 for (tt = 0; tt <= (int)EnemySubType[t] % 100; tt++)
                 {
                     xx[26] = 18;
-                    xd[4] = tt * xx[26] * cos(EnemyAITimer[t] * pai / 180 / 2);
-                    xd[5] = tt * xx[26] * sin(EnemyAITimer[t] * pai / 180 / 2);
-                    xx[24] = (int)xd[4];
-                    xx[25] = (int)xd[5];
+                    double local_xd_4, local_xd_5;
+                    local_xd_4 = tt * xx[26] * cos(EnemyAITimer[t] * SYOBONKZ_PAI / 180 / 2);
+                    local_xd_5 = tt * xx[26] * sin(EnemyAITimer[t] * SYOBONKZ_PAI / 180 / 2);
+                    xx[24] = (int)local_xd_4;
+                    xx[25] = (int)local_xd_5;
                     setcolor(230, 120, 0);
                     xx[23] = 8;
                     //+KZ: this checks rotation direction, was added in Syobon Action 2

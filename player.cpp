@@ -2261,38 +2261,39 @@ void HandlePlayerMessage()
     if (PlayerMessageTimer >= 1)
     {
         PlayerMessageTimer--;
-        xs[0] = "";
+        std::string local_xs_0;
+        local_xs_0 = "";
 
         if (PlayerMessageType == 1)
-            xs[0] = "お、おいしい!!";
+            local_xs_0 = "お、おいしい!!";
         if (PlayerMessageType == 2)
-            xs[0] = "毒は無いが……";
+            local_xs_0 = "毒は無いが……";
         if (PlayerMessageType == 3)
-            xs[0] = "刺さった!!";
+            local_xs_0 = "刺さった!!";
         if (PlayerMessageType == 10)
-            xs[0] = "食べるべきではなかった!!";
+            local_xs_0 = "食べるべきではなかった!!";
         if (PlayerMessageType == 11)
-            xs[0] = "俺は燃える男だ!!";
+            local_xs_0 = "俺は燃える男だ!!";
         if (PlayerMessageType == 50)
-            xs[0] = "体が……焼ける……";
+            local_xs_0 = "体が……焼ける……";
         if (PlayerMessageType == 51)
-            xs[0] = "たーまやー!!";
+            local_xs_0 = "たーまやー!!";
         if (PlayerMessageType == 52)
-            xs[0] = "見事にオワタ";
+            local_xs_0 = "見事にオワタ";
         if (PlayerMessageType == 53)
-            xs[0] = "足が、足がぁ!!";
+            local_xs_0 = "足が、足がぁ!!";
         if (PlayerMessageType == 54)
-            xs[0] = "流石は摂氏800度!!";
+            local_xs_0 = "流石は摂氏800度!!";
         if (PlayerMessageType == 55)
-            xs[0] = "溶岩と合体したい……";
+            local_xs_0 = "溶岩と合体したい……";
 
         /*setc0();
-        str(xs[0], (PlayerX + PlayerSizeX + 300) / 100 - 1, PlayerY / 100 - 1);
-        str(xs[0], (PlayerX + PlayerSizeX + 300) / 100 + 1, PlayerY / 100 + 1);
+        str(local_xs_0, (PlayerX + PlayerSizeX + 300) / 100 - 1, PlayerY / 100 - 1);
+        str(local_xs_0, (PlayerX + PlayerSizeX + 300) / 100 + 1, PlayerY / 100 + 1);
         setc1();
-        str(xs[0], (PlayerX + PlayerSizeX + 300) / 100, PlayerY / 100);*/
+        str(local_xs_0, (PlayerX + PlayerSizeX + 300) / 100, PlayerY / 100);*/
         setc1();
-        DrawGraphZ((PlayerX + PlayerSizeX + 300) / 100, PlayerY / 100, apPlayerMessages[xs[0].c_str()]);
+        DrawGraphZ((PlayerX + PlayerSizeX + 300) / 100, PlayerY / 100, apPlayerMessages[local_xs_0.c_str()]);
 
     } // PlayerMessageTimer
 }

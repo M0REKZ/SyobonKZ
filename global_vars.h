@@ -89,7 +89,8 @@ extern int InGameInitialized;//, zzxon; //+KZ: zzxon is unused
 //extern int key;//, keytm; //+KZ: keytm is useless... no wait both are useless/unused
 
 //三角関数 (Trigonometric functions)
-extern double pai;
+// @attention +KZ: converted double pai = 3.1415926535 into #define SYOBONKZ_PAI 3.1415926535
+#define SYOBONKZ_PAI 3.1415926535
 
 //@attention +KZ: int mainmsgtype is now int WarpZoneMessageState
 extern int WarpZoneMessageState;
@@ -138,8 +139,8 @@ extern int blacktm, blackx;
 //  it wont break anything in the game.
 //自由な値 (Free value)
 extern int xx[91];
-extern double xd[11];
-extern std::string xs[31];
+//extern double xd[11]; //+KZ: optimized
+//extern std::string xs[31]; //+KZ: optimized
 //ループ (Loop)
 extern int t, tt, t1, t2, t3, t4;
 
