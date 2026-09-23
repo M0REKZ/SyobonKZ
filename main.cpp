@@ -887,7 +887,7 @@ void ttmsg()
 	{
 		// フォント
 		// From Syobon Action All Stars
-		if (currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+		if (currentGame == EShobonActionGame::SYOBON_ACTION_3)
 		{
 			setfont(18, 11);
 		}

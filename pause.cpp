@@ -40,7 +40,7 @@ const char *pLevelSelectSA_1_AND_2[] = {
     "Bluvel Shobon Action Level 2",
     "Bluvel Shobon Action Level 3",
     "Bluvel Shobon Action Level 4",
-    "Bluvel Shobon Action \"Special Level 9\"",
+    "Bluvel Shobon Action \"Special Level\"",
     nullptr,
 };
 

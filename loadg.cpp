@@ -336,7 +336,7 @@ void parseArgs(int argc, char *argv[])
             !memcmp(argv[i], "-h", sizeof("-h"))
         )
         {
-            printf("SyobonKZ -- Syobon Action +KZ Edition\n");
+            printf("SyobonKZ -- Shobon Action +KZ Edition\n");
             printf("\n");
             printf("Usage: SyobonAction [--option]\n");
             printf("\n");

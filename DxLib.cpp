@@ -62,7 +62,7 @@ int DxLib_Init()
         return -1;
     }
 
-    SyobonKZSetWindowTitle("Syobon Action - +KZ Edition!",
+    SyobonKZSetWindowTitle("Shobon Action - +KZ Edition!",
                       NULL);
     SyobonKZShowCursor(SYOBONKZ_SDL_DISABLE);
 
