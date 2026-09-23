@@ -338,7 +338,7 @@ void parseArgs(int argc, char *argv[])
         {
             printf("SyobonKZ -- Shobon Action +KZ Edition\n");
             printf("\n");
-            printf("Usage: SyobonAction [--option]\n");
+            printf("Usage: SyobonKZ [--option]\n");
             printf("\n");
             printf("Options:\n");
             printf("    -h, --help               Shows this screen\n");
