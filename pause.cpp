@@ -32,15 +32,15 @@ const char *pOptionsLabels[] = {
 };
 
 const char *pLevelSelectSA_1_AND_2[] = {
-    "Shobon no Action Level 1",
-    "Shobon no Action Level 2",
-    "Shobon no Action Level 3",
-    "Shobon no Action Level 4",
-    "Shobon no Action 2 Level 1",
-    "Shobon no Action 2 Level 2",
-    "Shobon no Action 2 Level 3",
-    "Shobon no Action 2 Level 4",
-    "Shobon no Action 2 \"Special Level 9\"",
+    "Shobon Action Level 1",
+    "Shobon Action Level 2",
+    "Shobon Action Level 3",
+    "Shobon Action Level 4",
+    "Bluvel Shobon Action Level 1",
+    "Bluvel Shobon Action Level 2",
+    "Bluvel Shobon Action Level 3",
+    "Bluvel Shobon Action Level 4",
+    "Bluvel Shobon Action \"Special Level 9\"",
     nullptr,
 };
 
@@ -81,7 +81,7 @@ const char *pNotActuallyLevelSelectSyobonKZCredits[] = {
     "Based on OpenSyobonAction RC3",
     "Games Credits:",
     "Shobon Action by Chiku (ちく)",
-    "Shobon Action 2 by Bluvel",
+    "Shobon Action (Modified) by Bluvel",
     "Syobon Action 3 by DakaArts",
     "Syobon Action JAM by StudsX",
     "Kaizo Syobon by Zokalal",
