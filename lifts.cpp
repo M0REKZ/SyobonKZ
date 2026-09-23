@@ -60,7 +60,7 @@ void HandleLifts()
 
             case ELiftMovementType::SA_ALL_STARS_HORIZONTAL_MOVEMENT:
                 //from SA: All Stars
-                if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                if(currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2)
                 {
                     LiftTimer[t]++;
 					if (LiftTimer[t] == LiftTimerMax[t])
@@ -82,7 +82,7 @@ void HandleLifts()
 
             case ELiftMovementType::SA_ALL_STARS_VERTICAL_MOVEMENT:
                 //from SA: All Stars
-                if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                if(currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2)
                 {
                     LiftTimer[t]++;
 					if (LiftTimer[t] == LiftTimerMax[t])
@@ -145,7 +145,7 @@ void HandleLifts()
 
                     if (LiftInteractType[t] == ELiftInteractType::TRIGGER_VERTICAL_SPEEDUP)
                     {
-                        if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                        if(currentGame == EShobonActionGame::SHOBON_ACTION_1_AND_2)
                         {
                             LiftVelY[10] = 900;
                             LiftVelY[11] = 900;
@@ -185,7 +185,7 @@ void HandleLifts()
                     }
 
                     //From Syobon Action: All Stars
-                    if (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+                    if (currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2)
                     {
                         if(LiftMovementType[t] == ELiftMovementType::SA_ALL_STARS_HORIZONTAL_MOVEMENT)
                         {

@@ -85,7 +85,7 @@ void LoadConfig()
                 SSyobonGameLevel temp;
                 int game;
                 sscanf(line.c_str(), "LEVEL_FINISHED %d %d %d", &game, &temp.World, &temp.Level);
-                temp.Game = (ESyobonActionGame)game;
+                temp.Game = (EShobonActionGame)game;
                 SyobonGlobalConfig.LevelsFinished.insert(temp);
             }
             if(strstr(line.c_str(), "FULLSCREEN"))

@@ -239,24 +239,24 @@ const char ** GetCurrentLabels()
     {
         switch (currentGame)
         {
-        case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
+        case EShobonActionGame::SHOBON_ACTION_1_AND_2:
             return pLevelSelectSA_1_AND_2;
             break;
-        case ESyobonActionGame::SYOBON_ACTION_3:
+        case EShobonActionGame::SYOBON_ACTION_3:
             return pLevelSelectSA_3;
             break;
-        case ESyobonActionGame::SYOBON_ACTION_JAM:
+        case EShobonActionGame::SYOBON_ACTION_JAM:
             return pLevelSelectSAJAM;
             break;
-        case ESyobonActionGame::KAIZO_SYOBON:
+        case EShobonActionGame::KAIZO_SYOBON:
             return pLevelSelectKaizoSyobon;
             break;
-        case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+        case EShobonActionGame::SYOBONKZ_TRUE_ACTION:
             return pLevelSelectSyobonKZTrueAction;
             break;
 
         //SyobonKZ Credits
-        case ESyobonActionGame::SYOBONKZ_CREDITS:
+        case EShobonActionGame::SYOBONKZ_CREDITS:
             return pNotActuallyLevelSelectSyobonKZCredits;
             break;
         }
@@ -305,8 +305,8 @@ void ChangeToPauseState(EPauseState newstate)
         }
 
         //level 1 is always available for games
-        OptionsAvailable[0] = currentGame != ESyobonActionGame::SYOBONKZ_CREDITS ? true : false;
-        OptionsAvailable[8] = currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ? true : false;
+        OptionsAvailable[0] = currentGame != EShobonActionGame::SYOBONKZ_CREDITS ? true : false;
+        OptionsAvailable[8] = currentGame == EShobonActionGame::SHOBON_ACTION_1_AND_2 ? true : false;
 
         //check for finished levels
         for(auto finishedlevel : SyobonGlobalConfig.LevelsFinished)
@@ -316,7 +316,7 @@ void ChangeToPauseState(EPauseState newstate)
             
             switch (currentGame)
             {
-            case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
+            case EShobonActionGame::SHOBON_ACTION_1_AND_2:
             
                 //Syobon Action 1
                 for(int lvl = 1; lvl < 5; lvl++)
@@ -346,7 +346,7 @@ void ChangeToPauseState(EPauseState newstate)
                 }
                 break;
             
-            case ESyobonActionGame::SYOBON_ACTION_3:
+            case EShobonActionGame::SYOBON_ACTION_3:
                 for(int lvl = 1; lvl < 6; lvl++)
                 {
                     if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
@@ -356,7 +356,7 @@ void ChangeToPauseState(EPauseState newstate)
                     }
                 }
                 break;
-            case ESyobonActionGame::KAIZO_SYOBON:
+            case EShobonActionGame::KAIZO_SYOBON:
                 for(int lvl = 1; lvl < 5; lvl++)
                 {
                     if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
@@ -366,13 +366,13 @@ void ChangeToPauseState(EPauseState newstate)
                     }
                 }
                 break;
-            case ESyobonActionGame::SYOBON_ACTION_JAM: 
+            case EShobonActionGame::SYOBON_ACTION_JAM: 
                 if(finishedlevel.World == 1 && finishedlevel.Level == 1)
                 {
                     ShowLevelAsFinished[0] = true;
                 }
                 break;
-            case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+            case EShobonActionGame::SYOBONKZ_TRUE_ACTION:
                 for(int lvl = 1; lvl < 5; lvl++)
                 {
                     if(finishedlevel.World == 1 && finishedlevel.Level == lvl)
@@ -382,7 +382,7 @@ void ChangeToPauseState(EPauseState newstate)
                     }
                 }
                 break;
-            case ESyobonActionGame::SYOBONKZ_CREDITS:
+            case EShobonActionGame::SYOBONKZ_CREDITS:
                 break;
             }
         }
@@ -472,7 +472,7 @@ void HandlePauseState()
                     //get level from selection
                     switch(currentGame)
                     {
-                    case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
+                    case EShobonActionGame::SHOBON_ACTION_1_AND_2:
                         if(CurrentSelection >= 0 && CurrentSelection < 4)
                         {
                             SyobonWorld = 1;
@@ -492,7 +492,7 @@ void HandlePauseState()
                             SyobonSection = 0;
                         }
                         break;
-                    case ESyobonActionGame::SYOBON_ACTION_3:
+                    case EShobonActionGame::SYOBON_ACTION_3:
                         if(CurrentSelection >= 0 && CurrentSelection < 5)
                         {
                             SyobonWorld = 1;
@@ -500,7 +500,7 @@ void HandlePauseState()
                             SyobonSection = 0;
                         }
                         break;
-                    case ESyobonActionGame::KAIZO_SYOBON:
+                    case EShobonActionGame::KAIZO_SYOBON:
                         if(CurrentSelection >= 0 && CurrentSelection < 4)
                         {
                             SyobonWorld = 1;
@@ -508,7 +508,7 @@ void HandlePauseState()
                             SyobonSection = 0;
                         }
                         break;
-                    case ESyobonActionGame::SYOBON_ACTION_JAM:
+                    case EShobonActionGame::SYOBON_ACTION_JAM:
                         if(CurrentSelection == 0)
                         {
                             SyobonWorld = 1;
@@ -516,7 +516,7 @@ void HandlePauseState()
                             SyobonSection = 0;
                         }
                         break;
-                    case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+                    case EShobonActionGame::SYOBONKZ_TRUE_ACTION:
                         if(CurrentSelection >= 0 && CurrentSelection < 4)
                         {
                             SyobonWorld = 1;
@@ -526,7 +526,7 @@ void HandlePauseState()
                         break;
 
                     //should never be handled
-                    case ESyobonActionGame::SYOBONKZ_CREDITS:
+                    case EShobonActionGame::SYOBONKZ_CREDITS:
                         break;
                     }
 
@@ -552,7 +552,7 @@ void RenderPauseState()
 
     if(PauseState == EPauseState::LEVEL_SELECT)
     {
-        if(currentGame == ESyobonActionGame::SYOBONKZ_CREDITS)
+        if(currentGame == EShobonActionGame::SYOBONKZ_CREDITS)
             DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Credits:") - 1) * 9) / 2, 30, "Credits:", color);
         else
             DrawString(SYOBONKZ_SCREEN_SIZE_X / 2 - ((sizeof("Select level:") - 1) * 9) / 2, 30, "Select level:", color);

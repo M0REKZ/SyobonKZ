@@ -275,28 +275,28 @@ void stagep()
 
     switch (currentGame)
     {
-    case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
+    case EShobonActionGame::SHOBON_ACTION_1_AND_2:
         HandleSyobonActionOneLevels();
 		HandleSyobonActionTwoLevels();
         break;
     
-    case ESyobonActionGame::SYOBON_ACTION_3:
+    case EShobonActionGame::SYOBON_ACTION_3:
         HandleSyobonActionThreeLevels();
         break;
 
-    case ESyobonActionGame::KAIZO_SYOBON:
+    case EShobonActionGame::KAIZO_SYOBON:
         HandleKaizoSyobonLevels();
         break;
 
-    case ESyobonActionGame::SYOBON_ACTION_JAM:
+    case EShobonActionGame::SYOBON_ACTION_JAM:
         HandleSyobonActionJAMLevels();
         break;
 
-    case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+    case EShobonActionGame::SYOBONKZ_TRUE_ACTION:
         HandleSyobonKZTrueActionLevels();
         break;
 
-	case ESyobonActionGame::SYOBONKZ_CREDITS:
+	case EShobonActionGame::SYOBONKZ_CREDITS:
 		HandleSyobonKZCredits();
 		break;
     }
@@ -305,7 +305,7 @@ void stagep()
 
 void ClearOtherGamesGlobalData()
 {
-	static ESyobonActionGame prevgame = ESyobonActionGame::SYOBONKZ_CREDITS;
+	static EShobonActionGame prevgame = EShobonActionGame::SYOBONKZ_CREDITS;
 
 	if(prevgame != currentGame)
 	{

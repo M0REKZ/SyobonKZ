@@ -448,9 +448,9 @@ void Mainprogram()
 		{
 			switch(currentGame)
 			{
-			case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
-			case ESyobonActionGame::KAIZO_SYOBON:
-			case ESyobonActionGame::SYOBON_ACTION_JAM:
+			case EShobonActionGame::SHOBON_ACTION_1_AND_2:
+			case EShobonActionGame::KAIZO_SYOBON:
+			case EShobonActionGame::SYOBON_ACTION_JAM:
 				xx[2] = PlayerScrollCenterX;
 				xx[3] = 0;
 				xx[1] = xx[2];
@@ -465,8 +465,8 @@ void Mainprogram()
 				}
 				break;
 			//SA3 camera can go back
-			case ESyobonActionGame::SYOBON_ACTION_3:
-			case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+			case EShobonActionGame::SYOBON_ACTION_3:
+			case EShobonActionGame::SYOBONKZ_TRUE_ACTION:
 				xx[2] = PlayerScrollCenterX;
 				xx[3] = 0;
 				xx[1] = xx[2];
@@ -501,7 +501,7 @@ void Mainprogram()
 				break;
 
 			//should be never handled
-			case ESyobonActionGame::SYOBONKZ_CREDITS:
+			case EShobonActionGame::SYOBONKZ_CREDITS:
 				break;
 			}
 		} // kscroll

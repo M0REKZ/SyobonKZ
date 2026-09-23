@@ -2,13 +2,13 @@
 ==================
 [Website](https://m0rekz.github.io/SyobonKZ/)
 ###### Original games developers: 
-* ###### Chiku/Tiku (ちく) for Syobon Action
-* ###### Bluvel (大川和樹, @NS-Kazuki) for Syobon Action 2
+* ###### Chiku/Tiku (ちく) for Shobon Action
+* ###### Bluvel (大川和樹, @NS-Kazuki) for Shobon Action (Modified by Bluvel)
 * ###### Zokalal for Kaizo Syobon
 ###### Open Syobon Action developer: Mathew Velasquez
 ###### Open Syobon Action RC3 developer: Karen/明美 (@akemin-dayo)
 ###### Developer/maintainer of this fork: +KZ (@M0REKZ)
-###### [Syobon Action 2 readme (japanese)](readme_ja.txt)
+###### [Bluvel's Shobon Action readme (japanese)](readme_ja.txt)
 
 > [!NOTE]
 > **For modders:**
@@ -21,7 +21,7 @@
 >
 > *+KZ*
 
-SyobonKZ is a cross-platform port of the unforgiving Japanese platformer ***Shobon's Action***, a rage parody of a very famous NES game.
+SyobonKZ is a cross-platform port of the unforgiving Japanese platformer ***Shobon Action***, a rage parody of a very famous NES game.
 
 It is also known as:
 * Syobon Action
@@ -39,13 +39,13 @@ SyobonKZ includes the following game remakes/ports:
 * Shobon Action (Original):
     * The original game made by Chiku, here is packed as the same game along Bluvel's modification.
 * Shobon Action (Modified by Bluvel):
-    * The "World 2" expansion made by Bluvel, also the most played and popular Syobon Action version thanks to OpenSyobonAction.
+    * The "World 2" expansion made by Bluvel, also the most played and popular Shobon Action version thanks to OpenSyobonAction.
 * Kaizo Syobon:
     * Kaizo Syobon by Zokalal, directly ported from Syobon Action: All Stars!
 
 The following are currently work in progress (depending on my time and motivation, feel free to contribute), you can use the ```--dev-games``` parameter to try the current state (expect bugs and missing things):
 * Syobon Action 3 (Remake):
-    * Custom sequel made by DakaArts (Daka256xr), now remade with original Syobon Action code and physics!
+    * Custom sequel made by DakaArts (Daka256xr), now remade with original Shobon Action code and physics!
 * Syobon Action JAM (Remake):
     * Custom NES rom hack made by StudsX, he made a cool effort to match the original game design, so why not remake it back into the original game code with original physics?
 
@@ -59,7 +59,7 @@ Supported platforms:
 
 About the license
 -----
-Chiku released the source code of Syobon Action to allow others modifying it, however he didnt use a license...
+Chiku released the source code of Shobon Action to allow others modifying it, however he didnt use a license...
 Instead he included a japanese readme.txt with the following text:
 
 ```
@@ -79,7 +79,8 @@ Feel free to modify it as you like.
 However, please refrain from distributing the source code as is.
 ```
 
-So, as you can see, the license situation is unclear... However since OpenSyobonAction source code was released under GPLv2 that license is maintained in this mod, but keep a note that the assets used in this mod may be under different terms.
+So, as you can see, the license situation is unclear... However since OpenSyobonAction source code was released under GPLv2,
+that license is maintained in this fork, but keep a note that the assets used in this mod may be under different terms.
 
 Notes
 -----
@@ -167,7 +168,7 @@ TODO:
 -------------
 * Font thickness (Not really important)
 * Port to other operating systems (iOS, etc.) M0REKZ/SyobonKZ#3
-* Port more classic Syobon Action versions M0REKZ/SyobonKZ#4
+* Port more classic Shobon Action versions M0REKZ/SyobonKZ#4
 * Actually good gamepad/joystick support M0REKZ/SyobonKZ#14
 
 Release Changelog

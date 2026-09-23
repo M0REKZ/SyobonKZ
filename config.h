@@ -11,7 +11,7 @@ void LoadConfig();
 
 struct SSyobonGameLevel
 {
-    ESyobonActionGame Game;
+    EShobonActionGame Game;
     int World;
     int Level;
 

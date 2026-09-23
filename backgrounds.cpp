@@ -86,7 +86,7 @@ void RenderBackground()
                                           255),
                                  "プレイしてくれてありがとー");
 
-            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+            if(currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2)
             {
                 switch(BackgroundType[t])
                 {

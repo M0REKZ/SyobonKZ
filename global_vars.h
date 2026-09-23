@@ -164,9 +164,9 @@ extern bool HelpFlagHandled; // --help cli flag
 extern bool StartFullScreenFlag;
 
 //Dont change the IDs or saves will break!!!
-enum class ESyobonActionGame : int
+enum class EShobonActionGame : int
 {
-    SHOBON_NO_ACTION_1_AND_2 = 0,
+    SHOBON_ACTION_1_AND_2 = 0,
     SYOBON_ACTION_3 = 300,
     SYOBON_ACTION_JAM = 1350,
     KAIZO_SYOBON = 1500,
@@ -175,10 +175,10 @@ enum class ESyobonActionGame : int
     //not actually a game
     SYOBONKZ_CREDITS = 50000, //+KZ
 
-    FIRST = SHOBON_NO_ACTION_1_AND_2,
+    FIRST = SHOBON_ACTION_1_AND_2,
     LAST = SYOBONKZ_CREDITS,
 };
-extern ESyobonActionGame currentGame;
+extern EShobonActionGame currentGame;
 extern bool SADevGamesEnabled;
 extern bool SyobonStartGame;
 extern bool ScreenshotKeyState;

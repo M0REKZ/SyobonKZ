@@ -88,7 +88,7 @@ void RenderEffects()
                 drawarc((xx[0]) / 100 + 15 - 1, (xx[1]) / 100, 10, 10);
             } // 4
 
-            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+            if(currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2)
             {
                 if (EffectType[t] == EEffectType::SA3_MUSHROOM)
                 {

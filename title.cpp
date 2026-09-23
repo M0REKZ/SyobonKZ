@@ -9,7 +9,7 @@
 #include "loadg.h"
 #include "lifts.h"
 
-static ESyobonActionGame prevGame = (ESyobonActionGame)-1;
+static EShobonActionGame prevGame = (EShobonActionGame)-1;
 static std::string author = "";
 
 bool MustWaitReleaseKey = false;
@@ -37,7 +37,7 @@ void HandleTitleKeys()
 
     switch (currentGame)
     {
-    case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
+    case EShobonActionGame::SHOBON_ACTION_1_AND_2:
         if (CheckHitKey(KEY_INPUT_1) == 1)
         {
             SyobonWorld = 1;
@@ -119,12 +119,12 @@ void HandleTitleKeys()
     }
 
     #define ISGAMEALLOWED(game) (   \
-        (currentGame == ESyobonActionGame::SYOBON_ACTION_3 && SADevGamesEnabled) ||  \
-        currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 ||   \
-        (currentGame == ESyobonActionGame::SYOBON_ACTION_JAM && SADevGamesEnabled) ||  \
-        currentGame == ESyobonActionGame::KAIZO_SYOBON ||   \
-        (currentGame == ESyobonActionGame::SYOBONKZ_TRUE_ACTION && false /* Cancelled, i better do my own game xd */ ) ||  \
-        currentGame == ESyobonActionGame::SYOBONKZ_CREDITS \
+        (currentGame == EShobonActionGame::SYOBON_ACTION_3 && SADevGamesEnabled) ||  \
+        currentGame == EShobonActionGame::SHOBON_ACTION_1_AND_2 ||   \
+        (currentGame == EShobonActionGame::SYOBON_ACTION_JAM && SADevGamesEnabled) ||  \
+        currentGame == EShobonActionGame::KAIZO_SYOBON ||   \
+        (currentGame == EShobonActionGame::SYOBONKZ_TRUE_ACTION && false /* Cancelled, i better do my own game xd */ ) ||  \
+        currentGame == EShobonActionGame::SYOBONKZ_CREDITS \
     )
 
     static bool change_game_key_pressed = false;
@@ -134,10 +134,10 @@ void HandleTitleKeys()
         {
             do
             {
-                currentGame = (ESyobonActionGame)((int)currentGame - 1);
-                if(currentGame < ESyobonActionGame::FIRST)
+                currentGame = (EShobonActionGame)((int)currentGame - 1);
+                if(currentGame < EShobonActionGame::FIRST)
                 {
-                    currentGame = ESyobonActionGame::LAST;
+                    currentGame = EShobonActionGame::LAST;
                 }
             } while(!ISGAMEALLOWED(currentGame));
             change_game_key_pressed = true;
@@ -149,10 +149,10 @@ void HandleTitleKeys()
         {
             do
             {
-                currentGame = (ESyobonActionGame)((int)currentGame + 1);
-                if(currentGame > ESyobonActionGame::LAST)
+                currentGame = (EShobonActionGame)((int)currentGame + 1);
+                if(currentGame > EShobonActionGame::LAST)
                 {
-                    currentGame = ESyobonActionGame::FIRST;
+                    currentGame = EShobonActionGame::FIRST;
                 }
             } while(!ISGAMEALLOWED(currentGame));
             change_game_key_pressed = true;
@@ -191,27 +191,27 @@ void UpdateTitleScreen()
     {
         switch (currentGame)
         {
-        case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
+        case EShobonActionGame::SHOBON_ACTION_1_AND_2:
             author = "Originally by Chiku & Bluvel";
             break;
         
-        case ESyobonActionGame::SYOBON_ACTION_3:
+        case EShobonActionGame::SYOBON_ACTION_3:
             author = "Originally by DakaArts";
             break;
 
-        case ESyobonActionGame::KAIZO_SYOBON:
+        case EShobonActionGame::KAIZO_SYOBON:
             author = "Originally by Zokalal";
             break;
 
-        case ESyobonActionGame::SYOBON_ACTION_JAM:
+        case EShobonActionGame::SYOBON_ACTION_JAM:
             author = "StudsX";
             break;
 
-        case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+        case EShobonActionGame::SYOBONKZ_TRUE_ACTION:
             author = "By +KZ";
             break;
 
-        case ESyobonActionGame::SYOBONKZ_CREDITS:
+        case EShobonActionGame::SYOBONKZ_CREDITS:
             author = "Mod By +KZ";
             break;
         }
@@ -265,7 +265,7 @@ void RenderTitleScreen()
     int author_y = 30;
     switch(currentGame)
     {
-    case ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2:
+    case EShobonActionGame::SHOBON_ACTION_1_AND_2:
         //+KZ
         setcolor(0, 0, 0);
         str(PLUSKZ_EDITION_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_EDITION_TEXT) * 9) / 2, 120);
@@ -288,7 +288,7 @@ void RenderTitleScreen()
         setc0();
         str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
         break;
-    case ESyobonActionGame::SYOBON_ACTION_3:
+    case EShobonActionGame::SYOBON_ACTION_3:
         drawimage(Main_GFX_KZ[1], 240 - Main_GFX_KZ[1]->w / 2, 20);
 
         //+KZ
@@ -299,7 +299,7 @@ void RenderTitleScreen()
         setc0();
         str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
         break;
-    case ESyobonActionGame::KAIZO_SYOBON:
+    case EShobonActionGame::KAIZO_SYOBON:
         
         //+KZ
         setcolor(0, 0, 0);
@@ -314,7 +314,7 @@ void RenderTitleScreen()
         setc0();
         str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
         break;
-    case ESyobonActionGame::SYOBON_ACTION_JAM:
+    case EShobonActionGame::SYOBON_ACTION_JAM:
     
         SyobonKZSetFontFile(1);
 
@@ -334,7 +334,7 @@ void RenderTitleScreen()
         setcolor(0, 0, 0);
         str(PLUSKZ_REMAKE_TEXT, SYOBONKZ_SCREEN_SIZE_X / 2 - (sizeof(PLUSKZ_REMAKE_TEXT) * 9) / 2, author_y + 15 * 4);
         break;
-    case ESyobonActionGame::SYOBONKZ_TRUE_ACTION:
+    case EShobonActionGame::SYOBONKZ_TRUE_ACTION:
 
         drawimage(Main_GFX_KZ[13], 240 - Main_GFX_KZ[13]->w / 2, 20);
 
@@ -348,7 +348,7 @@ void RenderTitleScreen()
         setc0();
         str(author, SYOBONKZ_SCREEN_SIZE_X / 2 - (author.length() * 9) / 2, author_y);
         break;
-    case ESyobonActionGame::SYOBONKZ_CREDITS:
+    case EShobonActionGame::SYOBONKZ_CREDITS:
 
         drawimage(Main_GFX_KZ[20], 240 - Main_GFX_KZ[13]->w / 2, 80);
 

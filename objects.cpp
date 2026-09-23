@@ -139,7 +139,7 @@ void RenderWalls()
 
             // 落ちるやつ (The one that falls)
             if (ObjectType[t] == EObjectType::FALLING_FLOOR || 
-                (currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && 
+                (currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2 && 
                     (
                         ObjectType[t] == EObjectType::SA3_FALLING_FLOOR ||
                         ObjectType[t] == EObjectType::SA3_UNTOUCHABLE_FALLING_FLOOR
@@ -242,7 +242,7 @@ void RenderWalls()
             {
                 if (
                     (ObjectType[t] >= EObjectType::TRIGGERS_START && ObjectType[t] <= EObjectType::TRIGGERS_END) ||
-                    (currentGame == ESyobonActionGame::SYOBON_ACTION_3 ?
+                    (currentGame == EShobonActionGame::SYOBON_ACTION_3 ?
                     ObjectType[t] >= EObjectType::SA3_TRIGGER_START && ObjectType[t] < EObjectType::SA3_TRIGGER_END
                     :
                     false
@@ -278,8 +278,8 @@ void RenderWalls()
             if (ObjectType[t] == EObjectType::CHECKPOINT)
             {
                 if(
-                    (currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2 && SyobonWorld == 1) ||
-                    (currentGame == ESyobonActionGame::SYOBON_ACTION_3)
+                    (currentGame == EShobonActionGame::SHOBON_ACTION_1_AND_2 && SyobonWorld == 1) ||
+                    (currentGame == EShobonActionGame::SYOBON_ACTION_3)
                 )
                     drawimage(Sliced_GFX_KZ[6], (ObjectX[t] - fx) / 100, (ObjectY[t] - fy) / 100);
                 else
@@ -287,7 +287,7 @@ void RenderWalls()
             }
 
             //Syobon Action 3
-            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+            if(currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2)
             {
                 
             }
@@ -361,7 +361,7 @@ void RenderOverwritePipe()
 
 void RenderObjectsBehind()
 {
-    if(currentGame == ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+    if(currentGame == EShobonActionGame::SHOBON_ACTION_1_AND_2)
         return;
 
     for (int ground_index = 0; ground_index < OBJECT_MAX; ground_index++)

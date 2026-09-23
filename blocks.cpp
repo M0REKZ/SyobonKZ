@@ -143,7 +143,7 @@ void RenderBlocks()
                           xx[1] / 100 + 1);
             }
 
-            if(currentGame != ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2)
+            if(currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2)
             {
                 switch(BlockType[t])
                 {

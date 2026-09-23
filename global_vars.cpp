@@ -121,7 +121,7 @@ int xx[91];
 long stimeZ;
 
 //+KZ
-ESyobonActionGame currentGame = ESyobonActionGame::SHOBON_NO_ACTION_1_AND_2;
+EShobonActionGame currentGame = EShobonActionGame::SHOBON_ACTION_1_AND_2;
 bool HelpFlagHandled = false;
 bool StartFullScreenFlag = false;
 bool SADevGamesEnabled = false;

@@ -1,4 +1,4 @@
-+KZ NOTE: This file is from Syobon Action 2 original zip file
++KZ NOTE: This file is from Bluvel's Shobon Action original zip file
 
 このゲームは ver0.81です
 
