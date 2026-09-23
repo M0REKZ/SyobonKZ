@@ -4,6 +4,7 @@ Release Changelog
 **SyobonKZ V2.4**
 * Improve credits in readme and in-game credits screen
 * Reference the original games as "Shobon Action by Chiku/Bluvel" in-game and on README.md
+* Fix loading a invalid level after beating Kaizo Syobon level 4
 
 **SyobonKZ V2.3**
 * Use same license as OpenSyobonAction (GPLv2)

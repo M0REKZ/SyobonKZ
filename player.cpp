@@ -440,12 +440,21 @@ void HandlePlayer()
 
                 //+KZ: patch for level 3-1 finish
                 // so we dont get stuck in a invalid level (3-2 does not exist)
-                if(currentGame == EShobonActionGame::SHOBON_ACTION_1_AND_2 &&
+                if(
+                    (currentGame == EShobonActionGame::SHOBON_ACTION_1_AND_2 &&
                     (
                         SyobonWorld == 3 &&
                         SyobonLevel == 1 &&
                         SyobonSection == 0
-                    )
+                    )) ||
+                    //+KZ: for Kaizo Syobon level 4 finish
+                    // another invalid level
+                    (currentGame == EShobonActionGame::KAIZO_SYOBON &&
+                    (
+                        SyobonWorld == 1 &&
+                        SyobonLevel == 4 &&
+                        SyobonSection == 0
+                    ))
                 )
                 {
                     SyobonState = ESyobonGameState::TITLE;
