@@ -18,7 +18,7 @@ Files under CC BY-ND 4.0 License:
 - res/kz/logo_main.png (By +KZ)
 - res/kz/logo.png (By +KZ)
 
-The following files come from https://github.com/toyoshim/SyobonAction/blob/main/chrome/main.html, originally made by Takashi Toyoshima, they were coverted from TSS format into WAV format by +KZ using a old Google Chrome version and are shared under the GPLv2 License:
+The following files come from https://github.com/toyoshim/SyobonAction/blob/81c52f51feef652c7e7d18f297f0fc69fedd4a99/chrome/main.html, originally made by Takashi Toyoshima, they were coverted from TSS format into WAV format by +KZ using a old Google Chrome version and are shared under the CC BY-SA 4.0 License:
 
 - SE/brockbreak.wav
 - SE/brockkinoko.wav
@@ -35,9 +35,9 @@ The following files come from https://github.com/toyoshim/SyobonAction/blob/main
 - SE/Pswitch.wav
 - SE/tekifire.wav
 
-Files under GPLv2 License:
+Files under CC BY-SA 4.0 License:
 
-- SE/sa3/so_1up.wav (By +KZ, work derivated from hintBlock.wav which was under GPLv2)
+- SE/sa3/so_1up.wav (By +KZ, work derivated from hintBlock.wav which was under CC BY-SA 4.0)
 
 Files under any other license:
 
