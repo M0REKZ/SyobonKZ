@@ -43,7 +43,7 @@ Files under any other license:
 
 - res/sazanami-gothic.ttf (Please check the license file included in the same directory)
 
-The following files are modified versions of files found in some Syobon Action releases:
+The following files are modified versions of files found in some Shobon Action releases:
 
 - res/kz/decoration_kz.png
 - res/kz/levelicons.png
