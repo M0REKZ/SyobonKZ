@@ -3,6 +3,7 @@ Licenses for files in this directory:
 
 Files under CC0 License:
 
+- BGM/star4.ogg (Source: https://opengameart.org/content/8bit-action-jingle-mini-loop)
 - res/RasterForge.ttf (Source: https://ggbot.itch.io/raster-forge-font)
 - SE/allclear.wav (Source: https://freesound.org/people/connersaw8/sounds/125691/)
 - SE/goal.ogg (Source: https://opengameart.org/content/8bit-action-jingle-mini-loop)
