@@ -3,6 +3,7 @@ Licenses for files in this directory:
 
 Files under CC0 License:
 
+- res/RasterForge.ttf (Source: https://ggbot.itch.io/raster-forge-font)
 - SE/allclear.wav (Source: https://freesound.org/people/connersaw8/sounds/125691/)
 - SE/goal.ogg (Source: https://opengameart.org/content/8bit-action-jingle-mini-loop)
 - All files inside "text" directory
@@ -40,7 +41,6 @@ Files under GPLv2 License:
 
 Files under any other license:
 
-- res/RasterForge.ttf (CC0 License, Source: https://ggbot.itch.io/raster-forge-font)
 - res/sazanami-gothic.ttf (Please check the license file included in the same directory)
 
 The following files are modified versions of files found in some Syobon Action releases:
