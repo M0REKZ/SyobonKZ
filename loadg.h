@@ -19,7 +19,7 @@ extern SyobonKZMusic *Music[7];
 extern SyobonKZChunk *Sounds[19];
 
 // +KZ: i added these
-#define MAIN_GFX_KZ_MAX 28
+#define MAIN_GFX_KZ_MAX 35
 #define SLICED_GFX_KZ_MAX 8
 #define SOUNDS_KZ_MAX 2
 extern SDL_Surface *Main_GFX_KZ[MAIN_GFX_KZ_MAX]; //+KZ

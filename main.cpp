@@ -104,6 +104,10 @@ void rpaint()
 	{
 		setcolor(110, 130, 200);
 	}
+	if (LevelType == ELevelType::SA_ALL_STARS_WATER)
+	{
+		setcolor(32, 57, 235);
+	}
 	if(LevelType == ELevelType::ICY ||
 		LevelType == ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP)
 	{
@@ -112,6 +116,15 @@ void rpaint()
 	else
 	{
 		PlayerGroundType = EPlayerGroundType::NORMAL;
+	}
+
+	if(LevelType == ELevelType::SA_ALL_STARS_WATER)
+	{
+		PlayerSwimMode = true;
+	}
+	else
+	{
+		PlayerSwimMode = false;
 	}
 
 	//: Clear screen

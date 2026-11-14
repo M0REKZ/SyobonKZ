@@ -37,6 +37,10 @@ std::unordered_map<std::string, SDL_Surface *> apPlayerMessages;
 int prev_player_vel_y = 0;
 int prev_player_grounded = 0;
 
+//From SA:All Stars
+bool PlayerSwimMode;
+int PlayerSwimDelay;
+
 void CreatePlayerMessageCache()
 {
     Uint32 temp_color = GetColor(255, 255, 255);
@@ -85,6 +89,12 @@ void HandlePlayer()
         xx[0] = 20;
         xx[12] = 9;
         xx[13] = 10;
+    }
+    if (PlayerSwimMode)
+    {
+        xx[0] = 25;
+        xx[12] = 1;
+        xx[13] = 2;
     }
     // if (PlayerGrounded==0){xx[0]-=15;}
     if (PlayerAction.Accel == -1)
@@ -160,32 +170,31 @@ void HandlePlayer()
     // ジャンプ (Jump)
     if (PlayerJumpTimer >= 0)
         PlayerJumpTimer--;
-    if (PlayerAction.CanJump == 1 && PlayerGrounded == 1)
+    PlayerSwimDelay--;
+    if (PlayerSwimDelay > 0)
     {
-        PlayerY -= 400;
-        PlayerVelY = -1200;
-        PlayerJumpTimer = 10;
-
-        // PlaySound( "jump.mp3" , DX_PLAYTYPE_NORMAL ) ;
-
-        // PlayMusic( "SE/jump.mp3" , DX_PLAYTYPE_NORMAL ) ;
-
-        // PlaySoundMem( Sounds[1], DX_PLAYTYPE_NORMAL ) ;
-
-        // PlaySoundMem( Sounds[1], DX_PLAYTYPE_BACK) ;
-        PlaySound(Sounds[1]);
-
-        /*
-        md=-1040;
-        xx[1]=600;if (mc>xx[1] || mc<=-xx[1]){md=-1400;}
-        xx[1]=7;xx[2]=400;
-        if (mkasok>xx[1] && (mc>xx[2] || mc<=-xx[2])){
-        md=-1600;
-        if (mc>=800 || mc<=-800){md=-1800;}
+        PlayerAction.CanJump = 10;
+    }
+    if (PlayerAction.CanJump == 1 && (PlayerSwimMode || PlayerGrounded == 1))
+    {
+        if (PlayerSwimMode)
+        {
+            if (PlayerSwimDelay <= 0)// && PlayerY >= 6000)
+            {
+                PlayerSwimDelay = 10;
+                PlayerY -= 400;
+                PlayerVelY = -1200;
+                PlaySound(Sounds[5]);
+            }
         }
-        */
-
-        PlayerGrounded = 0;
+        else
+        {
+            PlayerY -= 400;
+            PlayerVelY = -1200;
+            PlayerJumpTimer = 10;
+            PlaySound(Sounds[1]);
+            PlayerGrounded = 0;
+        }
     }
     if (PlayerAction.CanJump <= 9)
         PlayerAction.CanJump = 0;
@@ -222,10 +231,14 @@ void HandlePlayer()
     {
         if (PlayerAITimer <= 11)
         {
+            if (PlayerSwimMode)
+            {
+                PlayerSwimDelay = -3;
+            }
             PlayerVelX = 0;
             PlayerVelY = 0;
         }
-        if (PlayerAITimer == 12)
+        if (PlayerAITimer == 12 && !PlayerSwimMode)
         {
             PlayerVelY = -1200;
         }
@@ -593,7 +606,35 @@ void HandlePlayer()
         PlayerInputTimer--;
     } // mc=0;}
     PlayerX += PlayerVelX;
-    PlayerY += PlayerVelY;
+    if (PlayerSwimMode)
+    {
+        if (PlayerHealth == 1)
+        {
+            if (PlayerSwimDelay <= -3)
+            {
+                PlayerY += 200;
+            }
+            else
+            {
+                PlayerY += PlayerVelY;
+            }
+        }
+        else if (PlayerHealth != 1)
+        {
+            PlayerY -= 200;
+        }
+
+        //+KZ: added
+        if(PlayerY < 700)
+        {
+            PlayerVelY = 0;
+            PlayerY = 700;
+        }
+    }
+    else
+    {
+        PlayerY += PlayerVelY;
+    }
     if (PlayerVelX < 0)
         PlayerWalkAnimTimer += (-PlayerVelX);
     if (PlayerVelX >= 0)

@@ -138,6 +138,10 @@ extern int PlayerMessageType;
 // +KZ: Keeps the player/camera centered in screen
 extern int PlayerScrollCenterX;	//9000
 
+//From SA:All Stars
+extern bool PlayerSwimMode;
+extern int PlayerSwimDelay;
+
 void HandlePlayer();
 void HandlePlayerInput();
 void HandlePlayerBlocks();

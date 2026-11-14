@@ -21,6 +21,7 @@ enum class ELevelType : int
     CASTLE = 4,
     ICY = 5,
     KAIZO_SYOBON_OVERWORLD_SLIP = 6,
+    SA_ALL_STARS_WATER = 10,
 };
 
 

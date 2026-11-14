@@ -118,6 +118,19 @@ void HandleEnemies()
             //update
             switch (EnemyType[t])
             {
+            case EEnemyType::SA3_SHARK:
+                EnemySizeX[t] = 10000;
+                EnemySizeY[t] = 6000;
+                EnemyMovementType[t] = 0;
+                /*EnemyAITimer++;
+                if (EnemyAITimer % 10 == 0)
+                {
+                    ec.frame ^= 1;
+                }*/
+                HandleEnemyPlayerCollisionKZ(t);
+                EnemyX[t] -= 400;
+                handled = true;
+                break;
             case EEnemyType::SA3_JUMPSCARE_PLANT:
 
                 EnemySizeX[t] = DOUBLE_TO_GAME_X_POS(1);
@@ -299,7 +312,6 @@ void HandleEnemies()
                     HandleEnemiesBlocksKZ();
                 }
             }
-
             if(handled)
                 continue;
         }
@@ -1921,6 +1933,10 @@ void RenderEnemies()
     {
         if(currentGame != EShobonActionGame::SHOBON_ACTION_1_AND_2)
         {
+            if (EnemyType[t] == EEnemyType::SA3_SHARK)
+            {
+                DrawGraphZ((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, Main_GFX_KZ[34]);
+            }
             if(EnemyType[t] == EEnemyType::SA3_BIG_MUSHROOM_FALLING && EnemyX[t] >= -900000)
             {
                 SyobonKZDrawGraphScaled((EnemyX[t] - fx)/100, (EnemyY[t] - fy)/100, 4, 4, Sliced_GFX[1][2]);
@@ -1999,7 +2015,7 @@ void RenderEnemies()
                 mirror = 0;
 
             // メイン (main)
-            if ((int)EnemyType[t] < 200 && xx[16] == 0 && EnemyType[t] != EEnemyType::DEFRAG && EnemyType[t] != EEnemyType::LASER && EnemyType[t] != EEnemyType::NYASSUN && EnemyType[t] != EEnemyType::MOLALLA)
+            if ((int)EnemyType[t] < 200 && xx[16] == 0 && EnemyType[t] != EEnemyType::SA3_SHARK && EnemyType[t] != EEnemyType::DEFRAG && EnemyType[t] != EEnemyType::LASER && EnemyType[t] != EEnemyType::NYASSUN && EnemyType[t] != EEnemyType::MOLALLA)
             {
                 if (!((EnemyType[t] == EEnemyType::EVIL_CLOUD || EnemyType[t] == EEnemyType::EVIL_CLOUD_TOUCHED) && EnemySubType[t] == EEnemySubType::EVIL_CLOUD_HIDDEN))
                 {
@@ -2402,10 +2418,17 @@ void HandleEnemyPlayerCollisionKZ(int enemy_index)
         switch(EnemyType[enemy_index])
         {
             case EEnemyType::SA3_FLYING_SHELL_JIEN:
-                PlaySound(Sounds[5]);
                 EnemyType[enemy_index] = EEnemyType::SHELL_JIEN;
+                PlaySound(Sounds[5]);
                 PlayerY = (EnemyY[enemy_index] - 900 - EnemySizeY[enemy_index]) - fy;
                 PlayerVelY = -1000;
+                can_jump_key_bounce = true;
+                break;
+            case EEnemyType::SA3_SHARK:
+                EnemyX[t] = -900000;
+                PlaySound(Sounds[5]);
+                PlayerVelY = -1000;
+                PlayerSwimDelay = 5;
                 can_jump_key_bounce = true;
                 break;
             
@@ -2434,6 +2457,7 @@ void HandleEnemyPlayerCollisionKZ(int enemy_index)
     {
         switch(EnemyType[enemy_index])
         {
+            case EEnemyType::SA3_SHARK:
             case EEnemyType::SA3_FLYING_SHELL_JIEN:
                 PlayerHealth = 0;
                 break;

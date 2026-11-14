@@ -899,4 +899,21 @@ void HandleSyobonActionThreeLevels()
 
         ObjectCreate(38, 10, 3, 3, EObjectType::GOAL_CASTLE, EObjectSubType::GOAL_CASTLE_NORMAL);
     }
+    else if(SyobonWorld == 1 && SyobonLevel == 3 && SyobonSection == 0)
+    {
+        LevelType = ELevelType::SA_ALL_STARS_WATER;
+
+        scrollx = 0;
+
+        PlayerX = (2 * 29) * 100 - 350;
+        PlayerY = (12 * 29 - 12 - 6) * 100;
+
+        for(int grounds = 0; grounds < 20; grounds++)
+        {
+            BlockCreate(grounds, 13, EBlockType::GROUND_TOP);
+            BlockCreate(grounds, 14, EBlockType::GROUND_BOTTOM);
+        }
+
+        CreateEnemy(16, 7, 0, 0, EEnemyType::SA3_SHARK, EEnemySubType::NONE);
+    }
 }

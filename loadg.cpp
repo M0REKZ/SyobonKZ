@@ -90,6 +90,13 @@ void loadg(void)
     Main_GFX_KZ[25] = LoadGraph("res/better/kuma_super_shobon_2.png", false);
     Main_GFX_KZ[26] = LoadGraph("res/better/defrag_super_shobon_1.png", false);
     Main_GFX_KZ[27] = LoadGraph("res/better/defrag_super_shobon_2.png", false);
+    Main_GFX_KZ[28] = LoadGraph("res/sa3/ground_top_water.png", false);
+    Main_GFX_KZ[29] = LoadGraph("res/sa3/ground_bottom_water.png", false);
+    Main_GFX_KZ[30] = LoadGraph("res/sa3/brick_water.png", false);
+    Main_GFX_KZ[31] = LoadGraph("res/sa3/hard_block_water.png", false);
+    Main_GFX_KZ[32] = LoadGraph("res/sa3/item_block_open_water.png", false);
+    Main_GFX_KZ[33] = LoadGraph("res/sa3/plant_water.png", false);
+    Main_GFX_KZ[34] = LoadGraph("res/sa3/shark.png", false);
 
     Sliced_GFX_KZ[0] = DerivationGraph(0, 0, 64, 29, Main_GFX_KZ[0]);
     Sliced_GFX_KZ[1] = DerivationGraph(0, 31, 70, 40, Main_GFX_KZ[0]);

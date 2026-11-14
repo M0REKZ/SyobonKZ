@@ -53,6 +53,7 @@ void RenderBackground()
                 case ELevelType::SKY:
                 case ELevelType::CASTLE:
                 case ELevelType::KAIZO_SYOBON_OVERWORLD_SLIP:
+                case ELevelType::SA_ALL_STARS_WATER:
                     //Original code is like this
                     drawimage(Sliced_GFX[(int)BackgroundType[t]][4],
                             xx[0] / 100, xx[1] / 100);
