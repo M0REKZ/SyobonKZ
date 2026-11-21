@@ -128,7 +128,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SyobonKZ-macOS-14
+          name: SyobonKZ-macOS-15
           path: build/SyobonKZ-macOS
           
   build-android:
