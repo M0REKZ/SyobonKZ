@@ -59,28 +59,7 @@ Supported platforms:
 
 About the license
 -----
-Chiku released the source code of Shobon Action to allow others modifying it, however he didnt use a license...
-Instead he included a japanese readme.txt with the following text:
-
-```
-スパゲティソース かつ タブが一度も使用されてないうえ、
-クラスわけ無しにif文大量使用のカオスを解読できる方はどーぞｗ
-ご自由に改造なさって下さい。
-
-ただ、そのままのソースを配布するのはご遠慮下さい。
-```
-
-In english it somewhat translates to:
-
-```
-Spaghetti sauce. The tabs aren't used even once, and the code is a chaotic mess of tons of if statements without any class divisions. If you can decipher it, go ahead!
-Feel free to modify it as you like.
-
-However, please refrain from distributing the source code as is.
-```
-
-So, as you can see, the license situation is unclear... However since OpenSyobonAction source code was released under GPLv2,
-that license is maintained in this fork, but keep a note that the assets used in this mod may be under different terms.
+Don't assume all code of this project is under GPLv2, please check [LICENSE-NOTICE.md](LICENSE-NOTICE.md) and [data/README.md](data/README.md) for more information.
 
 Notes
 -----
